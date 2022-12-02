@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/pickle-pushing" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Hero Battler</title>
+</head>
+
+<body style="height: 100%;background-image: linear-gradient(180deg,rgb(30, 30, 30), rgb(0, 0, 0));">
+    <div class="banner">
+        <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
+            <option value="15">15FPS</option>
+            <option value="30">30FPS</option>
+            <option value="60">60FPS</option>
+        </select>
+        <button style="display:inline" onclick="toggleMusic()">Music</button>
+        <button style="display:inline" onclick="save()">Save Game</button>
+        <button style="display:inline" onclick="load()">Load Game</button>
+        <audio controls muted id="audioSource" style="display: none;">
+            <source src="cyberpunk-street.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr auto; grid-template-rows:1fr;column-gap: 20px;">
+        <div style="grid-row: 1; grid-column: 1;">
+            <h1 class="title">I WANT TO BE A HERO</h1>
+            <div style="display: grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr 1fr; row-gap: 20px; column-gap: 20px;">
+                <div style="grid-row: 1; grid-column: 1;">
+                    <div class="blockHeader">COMBAT</div>
+                    <div class="blockBody dotted">
+                        <div style="height: 10px"></div>
+                        <span class="barText" id="playerLevelText" style="text-align: left;">LEVEL</span>
+                        <span id="playerExperienceText" class="barText">0</span>
+                        <progress id="playerExperienceBar" value="100" max="1000"
+                            style="height: 30px;width: 100%;"></progress>
+                        <span class="barText" style="text-align: left" ;>HEALTH</span>
+                        <span id="playerHealthText" class="barText">0</span>
+                        <progress id="playerHealthBar" value="100" max="1000"
+                            style="height: 30px;width: 100%;"></progress>
+                        <span id="playerInitiativeText" class="barText">0</span>
+                        <progress id="playerInitiativeBar" value="100" max="1000" style="height: 22px;width: 100%">
+                        </progress>
+                        <div class="statDisplay" style="text-align: center; height: 50px; padding: 25px;">
+                            Next move: <span id="playerMoveText">0</span></div>
+                    </div>
+                </div>
+                <div style="grid-row: 2; grid-column: 1; align-self: stretch;">
+                    <div class="blockHeader">STATS</div>
+                    <div class="blockBody dotted">
+                        <div class="statDisplay">Max health: <span id="playerMaxHealthDisplay">0</span></div>
+                        <div id="strengthStatText" class="statDisplay">Strength: <span id="strengthText">0</span></div>
+                        <div id="toughhnessStatText" class="statDisplay">Toughness: <span id="toughnessText">0</span>
+                        </div>
+                        <div id="mindStatText" class="statDisplay">Mind: <span id="mindText">0</span></div>
+                        <div id="agilityStatText" class="statDisplay">Agility: <span id="agilityText">0</span></div>
+                    </div>
+                </div>
+                <div style="grid-row: 3; grid-column: 1;">
+                    <div class="blockHeader">TRAINING</div>
+                    <div id="trainingAreaDisplay" class="blockBody dotted">
+                        <div id="trainingAreaName" class="statDisplay"></div>
+                        <div class="statDisplay"
+                            style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
+                            Currently training: <span id="currentTrainingAttribute"></span></div>
+                        <br \>
+                        <button class="attributeButton" id="strengthText"
+                            onclick="changeTrainingAttribute(attribute.strength)"></button>
+                        <button class="attributeButton" id="toughnessText"
+                            onclick="changeTrainingAttribute(attribute.toughness)"></button>
+                        <button class="attributeButton" id="mindText"
+                            onclick="changeTrainingAttribute(attribute.mind)"></button>
+                        <button class="attributeButton" id="agilityText"
+                            onclick="changeTrainingAttribute(attribute.agility)"></button>
+
+                        <div style="width: 100%; height: 40px; margin-top: 25px;">
+                            <span>Training progress: </span><progress id="trainingProgressBar" value="100" max="1000"
+                                style="width:60%; background: green; margin-bottom: 0px" ></progress>
+                        </div>
+                    </div>
+                </div>
+                <div style="grid-row: 1 / span 3; grid-column: 2;">
+                    <div class="blockHeader" style="display: block">
+                        HELP</div>
+                    <div class="blockBody dotted" style="box-sizing: border-box; padding: 10px; text-align:justify; display: block;
+                font-family: 'Pickle Pushing', sans-serif;
+                font-size: 24px;
+                font-weight:lighter ;">
+                        Your hero automatically uses his skills in combat.
+                        <br \><span id="strengthText">Strength</span>is the main component of skill damage.
+                        <br \><span id="toughnessText">Toughness</span>increases your maximum health points,
+                        <br \><span id="mindText">Mind</span>does nothing right now.
+                        <br \><span id="agilityText">Agility</span>also does nothing on its own but is a damage
+                        component of
+                        punch.
+                        <br \>Your only current moves are Move and Punch. Punch's damage ratio is 100% <span
+                            id="strengthText">STR</span> 20% <span id="agilityText">AGI</span>, which is to say that,
+                        that
+                        percentage of the respective attribute value is used in the move's damage formula.
+                        <br \>The damage formula is &ltbaseDamage + SUM(ATTRIBUTE_RATIO*(SQRT(ATTRIBUTE_VALUE + 1) -
+                        1))&gt
+                        where the second part is evaluated and then summed from every contributing attribute.
+                        <br \>Attributes can be increased by training (bottom left).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="grid-row: 1; grid-column: 2;">
+            <div style="width:auto">
+                <div style = "position: relative; padding: 10px; top: 40px;">
+                <canvas id="myCanvas" width="800" height="600" style="border:10px inset goldenrod;
+                outline: 10px solid rgb(200, 145, 12);  box-sizing: border-box;"></canvas>
+                </div>
+                <div id="logBox" class="logBox" webkit-scrollbar-thumb="background: red; border-radius: 10px;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="colors.js"></script>
+<script src="playerstats.js"></script>
+<script src="enemies.js "></script>
+<script src="training.js"></script>
+<script src="main.js"></script>
