@@ -20,16 +20,14 @@ function addPlayerExp(amount){
     playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost*playerStats.level)*Math.pow(baseExperienceCostExponent,playerStats.level)
   }
 }
-console.log(playerStats);
 load();
-console.log(playerStats);
-setInterval(save(),30000);
 function save() {
-    console.log("Saving data...")
-    playerStats.lastSave = Date.now();
-    localStorage.setItem("heroSave", JSON.stringify(playerStats));
-    localStorage.setItem("heroLastSaved", playerStats.lastSave);
+  console.log("Saving data...")
+  playerStats.lastSave = Date.now();
+  localStorage.setItem("heroSave", JSON.stringify(playerStats));
+  localStorage.setItem("heroLastSaved", playerStats.lastSave);
 }
+setInterval(save,30000);
 function load() {
 	//reset()
 	let loadgame = JSON.parse(localStorage.getItem("heroSave"))

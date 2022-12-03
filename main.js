@@ -21,7 +21,7 @@ var slide = document.getElementById('slide');
 
 
 setTimeout(
-document.getElementById("toughnessText").click(),2000);
+    document.getElementById("toughnessText").click(),2000);
 const tryToPlay = setInterval(() => {
     audio.play()
         .then(() => {
@@ -102,24 +102,25 @@ playerMoves = {
 }
 
 class CombatEntity {
-    constructor(health, damage) {
-        this.maxHealth = health;
-        this.health = health;
-        this.damage = damage;
+    constructor() {
+        this.maxHealth = 0;
+        this.health = 0;
         this.distance = 0;
         this.initiative = 0;
         this.nextMove = null;
         this.nextMoveInitiative = 0;
-
+        this.damageReduction = 0;
         this.target = null;
-
         this.spriteSize = { x: 32, y: 32 }
+        this.actionSpeed = 1;
     }
     setTarget(target) {
         this.target = target;
     }
     takeDamage(amount) {
-        this.health -= amount;
+        let d = amount * this.damageReduction;
+        this.health -= d;
+        return d;
     }
     onDeath(){
         return;
@@ -215,11 +216,16 @@ portraitImage.src = "onePortrait.PNG";
 crimImage.src = "crimPortrait.PNG";
 var environmentDistance = 0;
 class Player extends CombatEntity {
-    constructor(health, damage) {
-        super(health, damage)
+    constructor(data) {
+        super();
+        this.data = data;
         this.name = "Saitama?";
+        this.maxHealth = 10 + data.toughness;
+        this.health = this.maxHealth;
         this.image = new Image(32, 32);
         this.image.src = "one.png";
+        this.damageReduction = Math.pow(1-DAMAGE_REDUCTION_BASE,Math.log10(1 + data.toughness));
+        this.actionSpeed = formulas.actionSpeed(data.agility);
         this.moveIntention = 1;
     }
 
@@ -231,13 +237,13 @@ class Player extends CombatEntity {
             case 0:
                 if (target.distance <= this.nextMove.range) {
                     let d = this.nextMove.damage
-                        + Math.sqrt(this.nextMove.damageRatios[0] * playerStats.strength+1) -1
-                        + Math.sqrt(this.nextMove.damageRatios[1] * playerStats.toughness+1) -1
-                        + Math.sqrt(this.nextMove.damageRatios[2] * playerStats.mind + 1) -1
-                        + Math.sqrt(this.nextMove.damageRatios[3] * playerStats.agility + 1) -1;
+                        + Math.sqrt(this.nextMove.damageRatios[0] * this.data.strength+1) -1
+                        + Math.sqrt(this.nextMove.damageRatios[1] * this.data.toughness+1) -1
+                        + Math.sqrt(this.nextMove.damageRatios[2] * this.data.mind + 1) -1
+                        + Math.sqrt(this.nextMove.damageRatios[3] * this.data.agility + 1) -1;
                     d = d * (this.nextMove.damageRange[0] + Math.random()*(this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
-                    target.takeDamage(d);
-                    logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(d)} damage.`);
+                    let dr = target.takeDamage(d);
+                    logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
                     return;
                 }
@@ -309,10 +315,12 @@ class Player extends CombatEntity {
 }
 class Enemy extends CombatEntity {
     constructor(enemyData, distance) {
-        super(1,1);
+        super();
         this.enemyData = enemyData
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
+        this.damageReduction = Math.pow(1-DAMAGE_REDUCTION_BASE,Math.log10(1 + enemyData.attributes[1]));
+        this.actionSpeed = formulas.actionSpeed(enemyData.attributes[3]);
         this.distance = distance;
         this.name = enemyData.name;
         this.image = new Image(32, 32);
@@ -330,8 +338,8 @@ class Enemy extends CombatEntity {
                     + Math.sqrt(this.nextMove.damageRatios[1] * this.enemyData.attributes[1] + 1) -1
                     + Math.sqrt(this.nextMove.damageRatios[2] * this.enemyData.attributes[2] + 1) -1
                     + Math.sqrt(this.nextMove.damageRatios[3] * this.enemyData.attributes[3] + 1) -1;
-                    target.takeDamage(d);
-                    logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(d)} damage.`);
+                    let dr = target.takeDamage(d);
+                    logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
                     return;
                 }
@@ -418,7 +426,7 @@ class Encounter {
         this.enemyArray = [];
         this.enemiesToSpawn = enemyNum;
         let lastHealth = player.health
-        player = new Player(format(10 + playerStats.toughness), 2);
+        player = new Player(playerStats);
         if(lastHealth > 0){ player.health = lastHealth;}
         let enemies = Object.keys(enemyData);
         for (let index = 0; index < this.enemiesToSpawn; index++) {
@@ -469,7 +477,7 @@ function renderLoop() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     c.height = c.clientHeight;
     c.width = c.clientWidth;
-    console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
+    //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
     ctx.scale(c.height/cBuffer.height,c.height/cBuffer.height);
     ctx.drawImage(cBuffer,0,0);
     //Update html values
@@ -479,10 +487,10 @@ function renderLoop() {
     document.getElementById("playerExperienceBar").value = playerStats.experience;
     document.getElementById("playerHealthText").innerHTML = format(player.health) + "/" + format(player.maxHealth);
     document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience) + "/" + format(playerStats.experienceToNext);
-    document.getElementById("playerMaxHealthDisplay").innerHTML = player.maxHealth;
+    document.getElementById("playerMaxHealthDisplay").innerHTML = format(player.maxHealth);
     document.getElementById("playerHealthBar").max = player.maxHealth;
     document.getElementById("playerHealthBar").value = player.health;
-    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative/1000) + "/" + format(player.nextMoveInitiative/1000) +"s";
+    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative/1000/player.actionSpeed) + "/" + format(player.nextMoveInitiative/1000/player.actionSpeed) +"s";
     document.getElementById("playerInitiativeBar").max = player.nextMoveInitiative;
     document.getElementById("playerInitiativeBar").value = player.initiative;
     document.getElementById("trainingAreaName").innerHTML = "Training at: " + currentTrainingArea.name;
