@@ -1,8 +1,25 @@
 var renderTickTime = 1000 / 15;
 var logicTickTime = 1000 / 50;
 var c = document.getElementById("myCanvas");
+console.log(c.width + " " + c.height);
+var ctx = c.getContext("2d");
+var cBuffer = document.createElement('canvas');
+cBuffer.width = 800;
+cBuffer.height = 600;
+var ctxBuffer = cBuffer.getContext("2d");
+ctx.imageSmoothingEnabled = false;
+ctxBuffer.imageSmoothingEnabled = false;
+
 var log = document.getElementById("logBox");
 var audio = document.getElementById("audioSource");
+var slide = document.getElementById('slide');
+// slide.onchange = function() {
+//     ctx.setTransform(1, 0, 0, 1, 0, 0);
+//     ctx.scale(slide.value,slide.value);
+//     console.log("Rescaling");
+// }
+
+
 setTimeout(
 document.getElementById("toughnessText").click(),2000);
 const tryToPlay = setInterval(() => {
@@ -60,8 +77,6 @@ function toggleMusic(){
         fadeOutAudio(0);
     }
 }
-var ctx = c.getContext("2d");
-ctx.imageSmoothingEnabled = false;
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
@@ -287,7 +302,7 @@ class Player extends CombatEntity {
 
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = c.height - 30;
+        let canvasY = cBuffer.height - 30;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
     }
@@ -367,7 +382,7 @@ class Enemy extends CombatEntity {
     }
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = c.height - 30;
+        let canvasY = cBuffer.height - 30;
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
@@ -431,25 +446,32 @@ function mod(n, m) {
 }
 function renderLoop() {
     //Clear frame
-    ctx.clearRect(0, 0, c.width, c.height);
+    ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
     //Background
-    let scrollFactor = c.height / c.width * bgImage.width / bgImage.height;
+    let scrollFactor = cBuffer.height / cBuffer.width * bgImage.width / bgImage.height;
     let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
     //console.log(environmentScrollBase+" "+scrollFactor);
-    ctx.drawImage(bgImage, environmentScrollBase * c.width, 0, c.height / bgImage.height * bgImage.width, c.height);
-    ctx.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * c.width, 0, c.height / bgImage.height * bgImage.width, c.height);
+    ctxBuffer.drawImage(bgImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+    ctxBuffer.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
     //Draw combatants
-    player.draw(ctx);
+    player.draw(ctxBuffer);
     encounter.enemyArray.forEach(enemy => {
         if (enemy == null) { return; }
-        enemy.draw(ctx);
+        enemy.draw(ctxBuffer);
     });
 
-    drawCharacterPortrait(ctx,portraitImage,player,'l');
+    drawCharacterPortrait(ctxBuffer,portraitImage,player,'l');
     if (player.target != null) {
 
-        drawCharacterPortrait(ctx,crimImage,player.target,"r");
+        drawCharacterPortrait(ctxBuffer,crimImage,player.target,"r");
     }
+    //Draw to render canvas
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    c.height = c.clientHeight;
+    c.width = c.clientWidth;
+    console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
+    ctx.scale(c.height/cBuffer.height,c.height/cBuffer.height);
+    ctx.drawImage(cBuffer,0,0);
     //Update html values
     document.getElementById("playerLevelText").innerHTML = "LEVEL " +playerStats.level;
     document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience) + "/" + playerStats.experienceToNext;
@@ -503,65 +525,65 @@ function scaleDistance(distance) {
     let dist = Math.min(100, Math.max(0, distance)) / 100;
     let padding = 50;
     let lower = padding;
-    let upper = c.width - padding;
+    let upper = cBuffer.width - padding;
     return lower + dist * (upper - lower);
 }
 
-function drawCharacterPortrait(ctx,image,character,side){
+function drawCharacterPortrait(context,image,character,side){
 
     let anchor = {x:0,y:0};
     let portraitDimensions = 120;
     let portraitBorder = 4;
     let mirror = 1;
-    if(side == "r"){anchor.x = ctx.canvas.width-portraitDimensions-2*portraitBorder; anchor.y = 0; mirror = -1;console.log("Drawingenemyportrait");}
+    if(side == "r"){anchor.x = context.canvas.width-portraitDimensions-2*portraitBorder; anchor.y = 0; mirror = -1;}
     //Portrait Image
-    ctx.fillStyle = "black";
-    ctx.fillRect(anchor.x, anchor.y, portraitDimensions + 2*portraitBorder, portraitDimensions + 2*portraitBorder);
-    ctx.drawImage(image, anchor.x+portraitBorder, anchor.y+portraitBorder, portraitDimensions, portraitDimensions);
+    context.fillStyle = "black";
+    context.fillRect(anchor.x, anchor.y, portraitDimensions + 2*portraitBorder, portraitDimensions + 2*portraitBorder);
+    context.drawImage(image, anchor.x+portraitBorder, anchor.y+portraitBorder, portraitDimensions, portraitDimensions);
     //Healthbar
     let hanchor = {x:portraitDimensions+2*portraitBorder,y:0};
-    if(side == "r"){hanchor.x = ctx.canvas.width-portraitDimensions-2*portraitBorder;}
+    if(side == "r"){hanchor.x = context.canvas.width-portraitDimensions-2*portraitBorder;}
     //Name
     let nameHeight = 30;    
-    ctx.fillRect(hanchor.x, anchor.y, mirror*200, nameHeight+12);
-    ctx.font = `${nameHeight}px Pickle Pushing`;
-    ctx.fillStyle = "white";
-    ctx.fillText(character.name, hanchor.x + (mirror-1) * 98,hanchor.y + nameHeight);
+    context.fillRect(hanchor.x, anchor.y, mirror*200, nameHeight+12);
+    context.font = `${nameHeight}px Pickle Pushing`;
+    context.fillStyle = "white";
+    context.fillText(character.name, hanchor.x + (mirror-1) * 98,hanchor.y + nameHeight);
     hanchor.y += nameHeight+12;
-    ctx.fillStyle = "grey";
-    ctx.fillRect(hanchor.x, hanchor.y, mirror*200, 16);
-    ctx.fillStyle = "red";
-    ctx.fillRect(hanchor.x+4*mirror, hanchor.y+2, mirror*192, 12);
-    let grdHealth = ctx.createLinearGradient(hanchor.x+mirror*4, 0, hanchor.x+mirror*(4+192), 0);
+    context.fillStyle = "grey";
+    context.fillRect(hanchor.x, hanchor.y, mirror*200, 16);
+    context.fillStyle = "red";
+    context.fillRect(hanchor.x+4*mirror, hanchor.y+2, mirror*192, 12);
+    let grdHealth = context.createLinearGradient(hanchor.x+mirror*4, 0, hanchor.x+mirror*(4+192), 0);
     grdHealth.addColorStop(0, "rgb(0,255,0)");
     grdHealth.addColorStop(0.25, "rgb(0,180,0)");
     grdHealth.addColorStop(0.75, "rgb(0,180,0)");
     grdHealth.addColorStop(1, "rgb(0,255,0)");
-    ctx.fillStyle = grdHealth;
-    ctx.fillRect(hanchor.x+4*mirror, hanchor.y+2, mirror * 192 * (character.health / character.maxHealth), 12);
+    context.fillStyle = grdHealth;
+    context.fillRect(hanchor.x+4*mirror, hanchor.y+2, mirror * 192 * (character.health / character.maxHealth), 12);
     hanchor.y += 20;
     //Action bar
-    ctx.fillStyle = "grey";
-    ctx.fillRect(hanchor.x, hanchor.y, mirror*200, 8);
-    ctx.fillStyle = "white";
-    ctx.fillRect(hanchor.x+mirror*4, hanchor.y+2, mirror*192, 6);
-    let grdAction = ctx.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 192 * (character.initiative / character.nextMoveInitiative), 0);
+    context.fillStyle = "grey";
+    context.fillRect(hanchor.x, hanchor.y, mirror*200, 8);
+    context.fillStyle = "white";
+    context.fillRect(hanchor.x+mirror*4, hanchor.y+2, mirror*192, 6);
+    let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 192 * (character.initiative / character.nextMoveInitiative), 0);
     grdAction.addColorStop(0.5, "rgb(0,255,255)");
     grdAction.addColorStop(1, "rgb(0,110,220)");
-    ctx.fillStyle = grdAction;
-    ctx.fillRect(hanchor.x+mirror*4, hanchor.y+2,mirror* 192 * (character.initiative / character.nextMoveInitiative), 6);
+    context.fillStyle = grdAction;
+    context.fillRect(hanchor.x+mirror*4, hanchor.y+2,mirror* 192 * (character.initiative / character.nextMoveInitiative), 6);
     hanchor.y += 8;
-    //EXP bar
+    //EXP bar   
     if (side == "l") {
-            ctx.fillStyle = "grey";
-    ctx.fillRect(hanchor.x, hanchor.y, 200, 6);
-    ctx.fillStyle = "white";
-    ctx.fillRect(hanchor.x+4, hanchor.y+2, 192, 2);
-    let grdExp = ctx.createLinearGradient(132, 0, 132 + 192 * (playerStats.experience / playerStats.experienceToNext), 0);
+            context.fillStyle = "grey";
+    context.fillRect(hanchor.x, hanchor.y, 200, 6);
+    context.fillStyle = "white";
+    context.fillRect(hanchor.x+4, hanchor.y+2, 192, 2);
+    let grdExp = context.createLinearGradient(132, 0, 132 + 192 * (playerStats.experience / playerStats.experienceToNext), 0);
     grdExp.addColorStop(0.5, "rgb(255,0,255)");
     grdExp.addColorStop(1, "rgb(200,0,200)");
-    ctx.fillStyle = grdExp;
-    ctx.fillRect(hanchor.x+4,hanchor.y+2, 192 * (playerStats.experience / playerStats.experienceToNext) , 2);
+    context.fillStyle = grdExp;
+    context.fillRect(hanchor.x+4,hanchor.y+2, 192 * (playerStats.experience / playerStats.experienceToNext) , 2);
     }
 
 }

@@ -21,12 +21,13 @@
         <button style="display:inline" onclick="toggleMusic()">Music</button>
         <button style="display:inline" onclick="save()">Save Game</button>
         <button style="display:inline" onclick="load()">Load Game</button>
+        <input style="display:inline" id="slide" type="range" min="0.2" max="2" step="0.1" value="1">
         <audio controls muted id="audioSource" style="display: none;">
             <source src="cyberpunk-street.mp3" type="audio/mp3">
             Your browser does not support the audio element.
-        </audio>
+        </audio>    
     </div>
-    <div style="display:grid; grid-template-columns:1fr auto; grid-template-rows:1fr;column-gap: 20px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr;column-gap: 20px; padding: 20px">
         <div style="grid-row: 1; grid-column: 1;">
             <h1 class="title">I WANT TO BE A HERO</h1>
             <div style="display: grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr 1fr; row-gap: 20px; column-gap: 20px;">
@@ -111,9 +112,9 @@
         </div>
         <div style="grid-row: 1; grid-column: 2;">
             <div style="width:auto">
-                <div style = "position: relative; padding: 10px; top: 40px;">
-                <canvas id="myCanvas" width="800" height="600" style="border:10px inset goldenrod;
-                outline: 10px solid rgb(200, 145, 12);  box-sizing: border-box;"></canvas>
+                <div style = "position: relative; padding: 10px; padding-right: 30px; aspect-ratio: 4 / 3">
+                <canvas id="myCanvas" style="border:10px inset goldenrod;  aspect-ratio: 4 / 3; width: 100%;
+                outline: 10px solid rgb(200, 145, 12);"></canvas>
                 </div>
                 <div id="logBox" class="logBox" webkit-scrollbar-thumb="background: red; border-radius: 10px;"></div>
             </div>
