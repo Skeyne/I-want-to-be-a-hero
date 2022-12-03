@@ -93,11 +93,9 @@
                 font-weight:lighter ;">
                         Your hero automatically uses his skills in combat.
                         <br \><span id="strengthText">Strength</span>is the main component of skill damage.
-                        <br \><span id="toughnessText">Toughness</span>increases your maximum health points,
+                        <br \><span id="toughnessText">Toughness</span>increases your maximum health points and damage reduction.
                         <br \><span id="mindText">Mind</span>does nothing right now.
-                        <br \><span id="agilityText">Agility</span>also does nothing on its own but is a damage
-                        component of
-                        punch.
+                        <br \><span id="agilityText">Agility</span>also does nothing on its own but is a damage component of punch.
                         <br \>Your only current moves are Move and Punch. Punch's damage ratio is 100% <span
                             id="strengthText">STR</span> 20% <span id="agilityText">AGI</span>, which is to say that,
                         that
@@ -110,19 +108,20 @@
                 </div>
             </div>
         </div>
-        <div style="grid-row: 1; grid-column: 2;">
-            <div style="width:auto">
+        <div style="grid-row: 1; grid-column: 2; align-self:flex-start; position: sticky; top:60px;">
+            <div>
                 <div style = "position: relative; padding: 10px; padding-right: 30px; aspect-ratio: 4 / 3">
                 <canvas id="myCanvas" style="border:10px inset goldenrod;  aspect-ratio: 4 / 3; width: 100%;
                 outline: 10px solid rgb(200, 145, 12);"></canvas>
                 </div>
-                <div id="logBox" class="logBox" webkit-scrollbar-thumb="background: red; border-radius: 10px;"></div>
+                <div id="logBox" class="logBox"></div>
             </div>
         </div>
     </div>
 </body>
 
 </html>
+<script src = "constants.js"></script>
 <script src="colors.js"></script>
 <script src="playerstats.js"></script>
 <script src="enemies.js "></script>
