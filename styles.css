@@ -19,6 +19,7 @@ body::-webkit-scrollbar {
 body {
     height: 100%;
     background-image: linear-gradient(180deg, rgb(30, 30, 30), rgb(0, 0, 0));
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 header {
@@ -31,12 +32,53 @@ header button, header input {
     display: inline;
 }
 
-div {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+main {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr;
+    column-gap: 20px; 
+    padding: 20px
+}
+
+.pickle {
+    font-family: 'Pickle Pushing', sans-serif;
+}
+
+#gridMain {
+    grid-row: 1; 
+    grid-column: 1;
+}
+
+#grid1 {
+    display: grid; 
+    grid-template-columns:1fr 1fr; 
+    grid-template-rows:1fr 1fr 1fr; 
+    row-gap: 20px; 
+    column-gap: 20px;
+}
+
+#combatBox {
+    grid-row: 1; 
+    grid-column: 1;
+}
+
+#statsBox {
+    grid-row: 2; 
+    grid-column: 1; 
+    align-self: stretch;
+}
+
+#trainingBox {
+    grid-row: 3; 
+    grid-column: 1;
+}
+
+#helpBox {
+    grid-row: 1 / span 3; 
+    grid-column: 2;
 }
 
 .title {
-    font-family: 'Pickle Pushing', sans-serif;
     font-size: 64px;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -61,7 +103,6 @@ div {
 
 .barText{
     width:inherit;
-    font-family: 'Pickle Pushing', sans-serif;
     font-size: 20px;
     color: black;
     box-sizing: border-box;
@@ -74,7 +115,6 @@ div {
     left:0px;
 }
 .blockHeader{
-    font-family: 'Pickle Pushing', sans-serif;
     font-size: 32px;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
@@ -162,7 +202,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .logBox{
-    position:relative;
+    position: relative;
     border: 4px solid rgb(26, 90, 0);
     height: 210px ;overflow-y: scroll;
     background-color: whitesmoke;
@@ -182,7 +222,6 @@ progress[value]::-webkit-progress-bar {
 }
 
 .statDisplay {
-    font-family: 'Pickle Pushing', sans-serif;
     font-size: 20px;
     text-transform: uppercase;
     text-align: left;
