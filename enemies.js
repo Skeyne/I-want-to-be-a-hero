@@ -4,6 +4,7 @@ enemyData.criminal = {
     name: "Criminal",
     maxHealth: 5,
     attributes: [2,1,0,1],
+    healthRegen: 0.005,
     expReward: 1,
     spriteFile: "crim.png",
     moves: {
@@ -29,6 +30,7 @@ enemyData.thug = {
     name: "Thug",
     maxHealth: 15,
     attributes: [6,2,0,1],
+    healthRegen: 0.005,
     expReward: 1,
     spriteFile: "thug.png",
     moves: {
@@ -50,3 +52,22 @@ enemyData.thug = {
         }
     },
 };
+
+playerMoves = {
+    'Punch': {
+        type: 0,
+        name: "punch",
+        damage: 1,
+        damageRatios: [1,0,0,0.5],
+        damageRange: [0.9, 1.1],
+        time: 3000,
+        range: 5,
+    },
+    'Walk': {
+        type: 1,
+        name: "move",
+        damage: 0,
+        time: 500,
+        range: 10,
+    }
+}

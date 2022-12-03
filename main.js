@@ -9,19 +9,9 @@ cBuffer.height = 600;
 var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
-
 var log = document.getElementById("logBox");
 var audio = document.getElementById("audioSource");
 var slide = document.getElementById('slide');
-// slide.onchange = function() {
-//     ctx.setTransform(1, 0, 0, 1, 0, 0);
-//     ctx.scale(slide.value,slide.value);
-//     console.log("Rescaling");
-// }
-
-
-setTimeout(
-    document.getElementById("toughnessText").click(),2000);
 const tryToPlay = setInterval(() => {
     audio.play()
         .then(() => {
@@ -41,7 +31,6 @@ const tryToPlay = setInterval(() => {
             console.info('User has not interacted with document yet.');
         });
 }, 1000);
-
 async function fadeInAudio(target){
     audio.play();
     playerStats.muted = false;
@@ -81,26 +70,6 @@ function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
 }
-
-playerMoves = {
-    'Punch': {
-        type: 0,
-        name: "punch",
-        damage: 1,
-        damageRatios: [1,0,0,0.5],
-        damageRange: [0.9, 1.1],
-        time: 3000,
-        range: 5,
-    },
-    'Walk': {
-        type: 1,
-        name: "move",
-        damage: 0,
-        time: 500,
-        range: 10,
-    }
-}
-
 class CombatEntity {
     constructor() {
         this.maxHealth = 0;
@@ -129,6 +98,8 @@ class CombatEntity {
         if (this.health <= 0) {
             this.onDeath();
             return false;
+        } else {
+            this.health = Math.min(this.health + this.maxHealth * this.data.healthRegen * logicTickTime/1000, this.maxHealth);
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000;
@@ -224,7 +195,7 @@ class Player extends CombatEntity {
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
         this.image.src = "one.png";
-        this.damageReduction = Math.pow(1-DAMAGE_REDUCTION_BASE,Math.log10(1 + data.toughness));
+        this.damageReduction = formulas.damageReduction(data.toughness);
         this.actionSpeed = formulas.actionSpeed(data.agility);
         this.moveIntention = 1;
     }
@@ -316,10 +287,10 @@ class Player extends CombatEntity {
 class Enemy extends CombatEntity {
     constructor(enemyData, distance) {
         super();
-        this.enemyData = enemyData
+        this.data = enemyData
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
-        this.damageReduction = Math.pow(1-DAMAGE_REDUCTION_BASE,Math.log10(1 + enemyData.attributes[1]));
+        this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
         this.actionSpeed = formulas.actionSpeed(enemyData.attributes[3]);
         this.distance = distance;
         this.name = enemyData.name;
@@ -334,10 +305,10 @@ class Enemy extends CombatEntity {
             case 0:
                 if (this.distance <= this.nextMove.range) {
                     let d = this.nextMove.baseDamage
-                    + Math.sqrt(this.nextMove.damageRatios[0] * this.enemyData.attributes[0] + 1) -1
-                    + Math.sqrt(this.nextMove.damageRatios[1] * this.enemyData.attributes[1] + 1) -1
-                    + Math.sqrt(this.nextMove.damageRatios[2] * this.enemyData.attributes[2] + 1) -1
-                    + Math.sqrt(this.nextMove.damageRatios[3] * this.enemyData.attributes[3] + 1) -1;
+                    + Math.sqrt(this.nextMove.damageRatios[0] * this.data.attributes[0] + 1) -1
+                    + Math.sqrt(this.nextMove.damageRatios[1] * this.data.attributes[1] + 1) -1
+                    + Math.sqrt(this.nextMove.damageRatios[2] * this.data.attributes[2] + 1) -1
+                    + Math.sqrt(this.nextMove.damageRatios[3] * this.data.attributes[3] + 1) -1;
                     let dr = target.takeDamage(d);
                     logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
@@ -361,11 +332,11 @@ class Enemy extends CombatEntity {
         let dist = this.distance;
         let weights = [];
         let i = 0;
-        for (let k in this.enemyData.moves) {
-            if (this.enemyData.moves[k].type == 0) {
-                weights[i] = (this.enemyData.moves[k].range >= dist ? 100 : 0);
+        for (let k in this.data.moves) {
+            if (this.data.moves[k].type == 0) {
+                weights[i] = (this.data.moves[k].range >= dist ? 100 : 0);
             }
-            if (this.enemyData.moves[k].type == 1) {
+            if (this.data.moves[k].type == 1) {
                 weights[i] = (dist > 5 ? 100 : 0);
             }
             i++;
@@ -384,8 +355,8 @@ class Enemy extends CombatEntity {
         } else {
             pick = Math.floor(Math.random() * indexes.length);
         }
-        let moveKey = Object.keys(this.enemyData.moves)[indexes[pick]];
-        this.nextMove = this.enemyData.moves[moveKey];
+        let moveKey = Object.keys(this.data.moves)[indexes[pick]];
+        this.nextMove = this.data.moves[moveKey];
         this.nextMoveInitiative = this.nextMove.time;
     }
     draw(context) {
@@ -397,7 +368,31 @@ class Enemy extends CombatEntity {
         drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
     }
     onDeath(){
-        addPlayerExp(this.enemyData.expReward);
+        addPlayerExp(this.data.expReward);
+    }
+}
+class Encounter {
+    constructor(p,enemyNum) {
+        this.enemyArray = [];
+        this.enemiesToSpawn = enemyNum;
+        let lastHealth = p.health
+        p = new Player(playerStats);
+        if(lastHealth > 0){ p.health = lastHealth;}
+        let enemies = Object.keys(enemyData);
+        for (let index = 0; index < this.enemiesToSpawn; index++) {
+            let picked = Math.floor(Math.random() * enemies.length);
+            this.enemyArray.push(new Enemy(enemyData[enemies[picked]], Math.random() * 30 + 70));
+            this.enemyArray[index].setTarget(p);
+        }
+        p.setTarget(this.enemyArray[0]);
+    }
+
+    isActive() {
+        if (p.health <= 0) { return false; }
+        for (let index = 0; index < this.enemyArray.length; index++) {
+            if (this.enemyArray[index] != null) { return true; }
+        }
+        return false;
     }
 }
 function drawSkillIcon(context, skillname, x, y) {
@@ -417,41 +412,16 @@ function drawInfoBars(context, entity, rootx, rooty) {
     context.fillStyle = "cyan";
     context.fillRect(rootx - 20, rooty - heightAbove + 6, 40 * (entity.initiative / entity.nextMoveInitiative), 1);
 }
-
-var player = new Player(format(10 + playerStats.toughness), 2);
-
-
-class Encounter {
-    constructor(enemyNum) {
-        this.enemyArray = [];
-        this.enemiesToSpawn = enemyNum;
-        let lastHealth = player.health
-        player = new Player(playerStats);
-        if(lastHealth > 0){ player.health = lastHealth;}
-        let enemies = Object.keys(enemyData);
-        for (let index = 0; index < this.enemiesToSpawn; index++) {
-            let picked = Math.floor(Math.random() * enemies.length);
-            this.enemyArray.push(new Enemy(enemyData[enemies[picked]], Math.random() * 30 + 70));
-            this.enemyArray[index].setTarget(player);
-        }
-        player.setTarget(this.enemyArray[0]);
-    }
-
-    isActive() {
-        if (player.health <= 0) { return false; }
-        for (let index = 0; index < this.enemyArray.length; index++) {
-            if (this.enemyArray[index] != null) { return true; }
-        }
-        return false;
-    }
-}
-var encounter = new Encounter(1);
-var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
-var bgImage = new Image();
-bgImage.src = "cyberpunk-street.png";
 function mod(n, m) {
     return ((n % m) + m) % m;
 }
+var player = new Player(playerStats);
+var encounter = new Encounter(player,1);
+var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
+var bgImage = new Image();
+ticker = window.setInterval(function () { renderLoop(); }, renderTickTime);
+window.setInterval(function () { logicLoop(); }, logicTickTime);    
+bgImage.src = "cyberpunk-street.png";
 function renderLoop() {
     //Clear frame
     ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
@@ -500,11 +470,10 @@ function renderLoop() {
         document.getElementById(attributeName+"Text").innerHTML = format(playerStats[attributeName]);
     });
 }
-
 function logicLoop() {
     if (!encounter.isActive()) {
         logConsole("Encounter finished, resetting.")
-        encounter = new Encounter(1);
+        encounter = new Encounter(player,1);
     }
     player.tick();
     for (let index = 0; index < encounter.enemyArray.length; index++) {
@@ -519,16 +488,12 @@ function logicLoop() {
     //console.log(encounter.enemyArray);
     currentTrainingArea.tick();
 }
-
-ticker = window.setInterval(function () { renderLoop(); }, renderTickTime);
-window.setInterval(function () { logicLoop(); }, logicTickTime);
 function changeInterval(interval) {
     window.clearInterval(ticker);
     renderTickTime = 1000 / interval
     ticker = window.setInterval(function () { renderLoop(); }, renderTickTime);
     console.log(`Changing refresh rate to ${interval}`);
 }
-
 function scaleDistance(distance) {
     let dist = Math.min(100, Math.max(0, distance)) / 100;
     let padding = 50;
@@ -536,7 +501,6 @@ function scaleDistance(distance) {
     let upper = cBuffer.width - padding;
     return lower + dist * (upper - lower);
 }
-
 function drawCharacterPortrait(context,image,character,side){
 
     let anchor = {x:0,y:0};
@@ -595,7 +559,6 @@ function drawCharacterPortrait(context,image,character,side){
     }
 
 }
-
 function format(number){
     return Math.round((number+Number.EPSILON)*100)/100;
 }
