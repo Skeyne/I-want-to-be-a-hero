@@ -29,40 +29,60 @@
     </header>
     <main>
         <div id="gridMain">
-            <h1 class="title pickle">I WANT TO BE A HERO</h1>
+            <h1 class="title pickle">
+                I WANT TO BE A HERO
+            </h1>
             <div id="grid1">
                 <section class="infoBox" id="combatBox">
-                    <div class="blockHeader pickle">COMBAT</div>
+                    <div class="blockHeader pickle">
+                        COMBAT
+                    </div>
                     <div class="blockBody dotted">
-                        <div style="height: 10px"></div>
-                        <span class="barText pickle" id="playerLevelText" style="text-align: left;">LEVEL</span>
-                        <span id="playerExperienceText" class="barText pickle">0</span>
-                        <progress id="playerExperienceBar" value="100" max="1000"
-                            style="height: 30px;width: 100%;"></progress>
-                        <span class="barText pickle" style="text-align: left" ;>HEALTH</span>
-                        <span id="playerHealthText" class="barText pickle">0</span>
-                        <progress id="playerHealthBar" value="100" max="1000"
-                            style="height: 30px;width: 100%;"></progress>
-                        <span id="playerInitiativeText" class="barText pickle">0</span>
-                        <progress id="playerInitiativeBar" value="100" max="1000" style="height: 22px;width: 100%">
-                        </progress>
-                        <div class="statDisplay pickle" style="text-align: center; height: 50px; padding: 25px;">
-                            Next move: <span id="playerMoveText">0</span></div>
+                        <div id="barWrap">
+                            <span class="barText leftAlign pickle" id="playerLevelText">
+                                LEVEL
+                            </span>
+                            <span id="playerExperienceText" class="barText pickle">0</span>
+                            <progress id="playerExperienceBar" value="100" max="1000"></progress>
+                            <span class="barText leftAlign pickle">
+                                HEALTH
+                            </span>
+                            <span id="playerHealthText" class="barText pickle">0</span>
+                            <progress id="playerHealthBar" value="100" max="1000"></progress>
+                            <span id="playerInitiativeText" class="barText pickle">0</span>
+                            <progress id="playerInitiativeBar" value="100" max="1000"></progress>
+                        </div>
+                        <div class="statDisplay pickle" id="nextMove">
+                            Next move: <span id="playerMoveText">0</span>
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="statsBox">
-                    <div class="blockHeader pickle">STATS</div>
+                    <div class="blockHeader pickle">
+                        STATS
+                    </div>
                     <div class="blockBody dotted">
-                        <div class="statDisplay pickle">Max health: <span id="playerMaxHealthDisplay">0</span></div>
-                        <div id="strengthStatText" class="statDisplay pickle">Strength: <span id="strengthText">0</span></div>
-                        <div id="toughhnessStatText" class="statDisplay pickle">Toughness: <span id="toughnessText">0</span>
+                        <div class="statDisplay pickle">
+                            Max health: <span id="playerMaxHealthDisplay">0</span>
                         </div>
-                        <div id="mindStatText" class="statDisplay pickle">Mind: <span id="mindText">0</span></div>
-                        <div id="agilityStatText" class="statDisplay pickle">Agility: <span id="agilityText">0</span></div>
+                        <div id="strengthStatText" class="statDisplay pickle">
+                            Strength: <span id="strengthText">0</span>
+                        </div>
+                        <div id="toughhnessStatText" class="statDisplay pickle">
+                            Toughness: <span id="toughnessText">0</span>
+                        </div>
+                        <div id="mindStatText" class="statDisplay pickle">
+                            Mind: <span id="mindText">0</span>
+                        </div>
+                        <div id="agilityStatText" class="statDisplay pickle">
+                            Agility: <span id="agilityText">0</span>
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="trainingBox">
-                    <div class="blockHeader pickle">TRAINING</div>
+                    <div class="blockHeader pickle">
+                        TRAINING
+                    </div>
                     <div id="trainingAreaDisplay" class="blockBody dotted">
                         <div id="trainingAreaName" class="statDisplay pickle"></div>
                         <div class="statDisplay pickle"
@@ -85,25 +105,21 @@
                     </div>
                 </section>
                 <section id="helpBox">
-                    <div class="blockHeader pickle" style="display: block">
-                        HELP</div>
-                    <div class="blockBody dotted" style="box-sizing: border-box; padding: 10px; text-align:justify; display: block;
-                font-family: 'Pickle Pushing', sans-serif;
-                font-size: 24px;
-                font-weight:lighter ;">
-                        Your hero automatically uses his skills in combat.
-                        <br \><span id="strengthText">Strength</span>is the main component of skill damage.
-                        <br \><span id="toughnessText">Toughness</span>increases your maximum health points and damage reduction.
-                        <br \><span id="mindText">Mind</span>does nothing right now.
-                        <br \><span id="agilityText">Agility</span>also does nothing on its own but is a damage component of punch.
-                        <br \>Your only current moves are Move and Punch. Punch's damage ratio is 100% <span
-                            id="strengthText">STR</span> 20% <span id="agilityText">AGI</span>, which is to say that,
-                        that
-                        percentage of the respective attribute value is used in the move's damage formula.
-                        <br \>The damage formula is &ltbaseDamage + SUM(ATTRIBUTE_RATIO*(SQRT(ATTRIBUTE_VALUE + 1) -
-                        1))&gt
-                        where the second part is evaluated and then summed from every contributing attribute.
-                        <br \>Attributes can be increased by training (bottom left).
+                    <div class="blockHeader pickle">
+                        HELP
+                    </div>
+                    <div class="blockBody dotted pickle" id="helpText">
+                        Your hero automatically uses his skills in combat.<br \>
+                        <span id="strengthText">Strength</span>is the main component of skill damage.<br \>
+                        <span id="toughnessText">Toughness</span>increases your maximum health points and damage reduction.<br \>
+                        <span id="mindText">Mind</span>does nothing right now.<br \>
+                        <span id="agilityText">Agility</span>also does nothing on its own but is a damage component of punch.<br \>
+                        Your only current moves are Move and Punch. Punch's damage ratio is 100% 
+                        <span id="strengthText">STR</span> 20% <span id="agilityText">AGI</span>, which is to say that, that
+                        percentage of the respective attribute value is used in the move's damage formula.<br \>
+                        The damage formula is &ltbaseDamage + SUM(ATTRIBUTE_RATIO*(SQRT(ATTRIBUTE_VALUE + 1) - 1))&gt
+                        where the second part is evaluated and then summed from every contributing attribute.<br \>
+                        Attributes can be increased by training (bottom left).
                     </div>
                 </section>
             </div>
