@@ -10,6 +10,7 @@ html, body {
     height: max-content;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    box-sizing: border-box;
 }
 
 body::-webkit-scrollbar {
@@ -78,6 +79,10 @@ main {
     grid-column: 2;
 }
 
+#barWrap {
+    margin: 10px 0 10px;
+}
+
 .title {
     font-size: 64px;
     letter-spacing: 5px;
@@ -114,12 +119,18 @@ main {
     right: 0px;
     left:0px;
 }
+
+.leftAlign {
+    text-align: left;
+}
+
 .blockHeader{
     font-size: 32px;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
     padding-left: 10px;
     border: 5px outset goldenrod;
+    display: block;
 }
 
 .blockBody{
@@ -144,6 +155,11 @@ progress[value]::-webkit-progress-bar {
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
 
+#playerExperienceBar {
+    height: 30px;
+    width: 100%;
+}
+
 #playerExperienceBar::-webkit-progress-value {
     background-image:
         -webkit-linear-gradient(-90deg,
@@ -153,24 +169,13 @@ progress[value]::-webkit-progress-bar {
             rgba(255, 255, 255, .25),
             rgba(0, 0, 0, .25)),
         -webkit-linear-gradient(left, rgb(204, 0, 255), rgb(129, 22, 175));
-
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
-    
 }
 
-#playerInitiativeBar::-webkit-progress-value {
-    background-image:
-        -webkit-linear-gradient(-90deg,
-            transparent 33%, rgba(0, 0, 0, .1) 33%,
-            rgba(0, 0, 0, .1) 66%, transparent 66%),
-        -webkit-linear-gradient(top,
-            rgba(255, 255, 255, .25),
-            rgba(0, 0, 0, .25)),
-        -webkit-linear-gradient(left, rgb(0, 255, 242), rgb(24, 120, 205));
-
-    border-radius: 2px;
-    background-size: 35px 20px, 100% 100%, 100% 100%;
+#playerHealthBar {
+    height: 30px;
+    width: 100%;
 }
 
 #playerHealthBar::-webkit-progress-value {
@@ -182,6 +187,25 @@ progress[value]::-webkit-progress-bar {
             rgba(255, 255, 255, .25),
             rgba(0, 0, 0, .25)),
         -webkit-linear-gradient(left, rgb(0, 255, 38), rgb(21, 153, 41));
+
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+#playerInitiativeBar {
+    height: 22px;
+    width: 100%
+}
+
+#playerInitiativeBar::-webkit-progress-value {
+    background-image:
+        -webkit-linear-gradient(-90deg,
+            transparent 33%, rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%, transparent 66%),
+        -webkit-linear-gradient(top,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)),
+        -webkit-linear-gradient(left, rgb(0, 255, 242), rgb(24, 120, 205));
 
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
@@ -199,6 +223,12 @@ progress[value]::-webkit-progress-bar {
 
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+#nextMove {
+    text-align: center; 
+    height: 50px; 
+    padding: 25px;
 }
 
 .logBox{
@@ -293,6 +323,15 @@ progress[value]::-webkit-progress-bar {
     height: 32px;
     margin: 0 6px 0 6px;
     vertical-align: middle;
+}
+
+#helpText {
+    box-sizing: border-box; 
+    padding: 10px; 
+    text-align: justify; 
+    display: block;
+    font-size: 24px;
+    font-weight: lighter ;
 }
 
 .dotted {
