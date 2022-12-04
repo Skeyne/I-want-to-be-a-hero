@@ -4,9 +4,19 @@ var abilityLibrary = {
         name: "Punch",
         iconName: "punch",
         baseDamage: 1,
-        damageRatios: [2,0,0,0.2],
+        damageRatios: [1,0,0,0.2],
         time: 3000,
         range: 5,
+
+    },
+    'Smash': {
+        type: 0,
+        name: "Smash",
+        iconName: "smash",
+        baseDamage: 1,
+        damageRatios: [5,1,0,0],
+        time: 7000,
+        range: 10,
 
     },
     'Walk': {
@@ -24,7 +34,7 @@ var enemyData = {};
 enemyData.criminal = {
     name: "Criminal",
     maxHealth: 5,
-    attributes: [2,1,0,1],
+    attributes: [2,1,1,1],
     healthRegen: 0.005,
     expReward: 1,
     spriteFile: "crim.png",
@@ -33,11 +43,20 @@ enemyData.criminal = {
 enemyData.thug = {
     name: "Thug",
     maxHealth: 15,
-    attributes: [5,2,0,1],
+    attributes: [5,2,1,1],
     healthRegen: 0.005,
     expReward: 1,
     spriteFile: "thug.png",
     moves: ['Punch','Walk'],
+};
+enemyData.prisoner9 = {
+    name: "Prisoner 9",
+    maxHealth: 50,
+    attributes: [25,20,1,5],
+    healthRegen: 0.005,
+    expReward: 10,
+    spriteFile: "prisoner9.png",
+    moves: ['Punch','Smash','Walk'],
 };
 
 playerMoves = {
