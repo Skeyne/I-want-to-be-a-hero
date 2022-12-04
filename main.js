@@ -20,9 +20,9 @@ const tryToPlay = setInterval(() => {
             audio.loop = true;
             audio.muted = false;
             audio.volume = 0;
-            if(playerStats.muted){
+            if (playerStats.muted) {
                 audio.pause();
-            } else{
+            } else {
                 fadeInAudio(0.2);
             }
 
@@ -31,35 +31,35 @@ const tryToPlay = setInterval(() => {
             console.info('User has not interacted with document yet.');
         });
 }, 1000);
-async function fadeInAudio(target){
+async function fadeInAudio(target) {
     audio.play();
     playerStats.muted = false;
     let vol = audio.volume;
     while (vol < target) {
         vol += 0.005;
-        audio.volume = Math.min(1,vol);
+        audio.volume = Math.min(1, vol);
         await new Promise(resolve => {
             setTimeout(() => {
-              resolve('resolved');
+                resolve('resolved');
             }, 100);
-          });  
+        });
     }
 }
-async function fadeOutAudio(target){
+async function fadeOutAudio(target) {
     let vol = audio.volume;
     while (vol > target) {
         vol -= 0.02;
-        audio.volume = Math.max(0,vol);
+        audio.volume = Math.max(0, vol);
         await new Promise(resolve => {
             setTimeout(() => {
-              resolve('resolved');
+                resolve('resolved');
             }, 100);
-          });  
+        });
     }
     audio.pause();
     playerStats.muted = true;
 }
-function toggleMusic(){
+function toggleMusic() {
     if (audio.paused) {
         fadeInAudio(0.2);
     } else {
@@ -91,7 +91,7 @@ class CombatEntity {
         this.health -= d;
         return d;
     }
-    onDeath(){
+    onDeath() {
         return;
     }
     tick() {
@@ -99,7 +99,7 @@ class CombatEntity {
             this.onDeath();
             return false;
         } else {
-            this.health = Math.min(this.health + this.maxHealth * this.data.healthRegen * logicTickTime/1000, this.maxHealth);
+            this.health = Math.min(this.health + this.maxHealth * this.data.healthRegen * logicTickTime / 1000, this.maxHealth);
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000;
@@ -186,6 +186,8 @@ var crimImage = new Image();
 portraitImage.src = "onePortrait.PNG";
 crimImage.src = "crimPortrait.PNG";
 var environmentDistance = 0;
+var gameState = "InCombat";
+let restRate = 5;
 class Player extends CombatEntity {
     constructor(data) {
         super();
@@ -208,11 +210,11 @@ class Player extends CombatEntity {
             case 0:
                 if (target.distance <= this.nextMove.range) {
                     let d = this.nextMove.damage
-                        + Math.sqrt(this.nextMove.damageRatios[0] * this.data.strength+1) -1
-                        + Math.sqrt(this.nextMove.damageRatios[1] * this.data.toughness+1) -1
-                        + Math.sqrt(this.nextMove.damageRatios[2] * this.data.mind + 1) -1
-                        + Math.sqrt(this.nextMove.damageRatios[3] * this.data.agility + 1) -1;
-                    d = d * (this.nextMove.damageRange[0] + Math.random()*(this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
+                        + Math.sqrt(this.nextMove.damageRatios[0] * this.data.strength + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[1] * this.data.toughness + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[2] * this.data.mind + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[3] * this.data.agility + 1) - 1;
+                    d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let dr = target.takeDamage(d);
                     logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
@@ -281,7 +283,10 @@ class Player extends CombatEntity {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 30;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
-        drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
+        if (this.nextMove != null) drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
+    }
+    rest() {
+        this.health = Math.min(this.health + this.maxHealth * this.data.restRate * logicTickTime / 1000, this.maxHealth);
     }
 }
 class Enemy extends CombatEntity {
@@ -305,10 +310,10 @@ class Enemy extends CombatEntity {
             case 0:
                 if (this.distance <= this.nextMove.range) {
                     let d = this.nextMove.baseDamage
-                    + Math.sqrt(this.nextMove.damageRatios[0] * this.data.attributes[0] + 1) -1
-                    + Math.sqrt(this.nextMove.damageRatios[1] * this.data.attributes[1] + 1) -1
-                    + Math.sqrt(this.nextMove.damageRatios[2] * this.data.attributes[2] + 1) -1
-                    + Math.sqrt(this.nextMove.damageRatios[3] * this.data.attributes[3] + 1) -1;
+                        + Math.sqrt(this.nextMove.damageRatios[0] * this.data.attributes[0] + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[1] * this.data.attributes[1] + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[2] * this.data.attributes[2] + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[3] * this.data.attributes[3] + 1) - 1;
                     let dr = target.takeDamage(d);
                     logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
@@ -365,34 +370,45 @@ class Enemy extends CombatEntity {
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
-        drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
+        if(this.nextMove != null) drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
     }
-    onDeath(){
+    onDeath() {
         addPlayerExp(this.data.expReward);
     }
 }
 class Encounter {
-    constructor(p,enemyNum) {
+    constructor(p, enemyNum) {
         this.enemyArray = [];
         this.enemiesToSpawn = enemyNum;
         let lastHealth = player.health
         player = new Player(playerStats);
-        if(lastHealth > 0){ player.health = lastHealth;}
+        if (lastHealth > 0) { player.health = lastHealth; }
         let enemies = Object.keys(enemyData);
         for (let index = 0; index < this.enemiesToSpawn; index++) {
             let picked = Math.floor(Math.random() * enemies.length);
             this.enemyArray.push(new Enemy(enemyData[enemies[picked]], Math.random() * 30 + 70));
-            this.enemyArray[index].setTarget(p);
+            this.enemyArray[index].setTarget(player);
         }
         player.setTarget(this.enemyArray[0]);
     }
+    tick() {
+        for (let index = 0; index < encounter.enemyArray.length; index++) {
+            let e = encounter.enemyArray[index];
+            if (e == null) { continue; }
+            let active = e.tick();
+            if (!active) {
+                encounter.enemyArray[index] = null;
+            }
+        }
+        player.tick();
+    }
 
     isActive() {
-        if (player.health <= 0) { return false; }
+        if (player.health <= 0) { return 2; }
         for (let index = 0; index < this.enemyArray.length; index++) {
-            if (this.enemyArray[index] != null) { return true; }
+            if (this.enemyArray[index] != null) { return 0; }
         }
-        return false;
+        return 1;
     }
 }
 function drawSkillIcon(context, skillname, x, y) {
@@ -415,43 +431,66 @@ function drawInfoBars(context, entity, rootx, rooty) {
 function mod(n, m) {
     return ((n % m) + m) % m;
 }
+
 var player = new Player(playerStats);
-var encounter = new Encounter(player,1);
+player.health = 1;
+var encounter = new Encounter(player, 1);
 var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
 var bgImage = new Image();
-ticker = window.setInterval(function () { renderLoop(); }, renderTickTime);
-window.setInterval(function () { logicLoop(); }, logicTickTime);    
+//ticker = window.setInterval(function () { renderLoop(); }, renderTickTime);
+//window.setInterval(function () { logicLoop(); }, logicTickTime);
+window.setInterval(function () { mainLoop(); }, logicTickTime);
+let loopCounter = 0;
+function mainLoop(){
+    logicLoop();
+    renderLoop();
+
+}
 bgImage.src = "cyberpunk-street.png";
 function renderLoop() {
-    //Clear frame
-    ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
-    //Background
-    let scrollFactor = cBuffer.height / cBuffer.width * bgImage.width / bgImage.height;
-    let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
-    //console.log(environmentScrollBase+" "+scrollFactor);
-    ctxBuffer.drawImage(bgImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
-    ctxBuffer.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
-    //Draw combatants
-    player.draw(ctxBuffer);
-    encounter.enemyArray.forEach(enemy => {
-        if (enemy == null) { return; }
-        enemy.draw(ctxBuffer);
-    });
+    if (gameState == "InCombat") {
+        //Clear frame
+        ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
+        //Background
+        let scrollFactor = cBuffer.height / cBuffer.width * bgImage.width / bgImage.height;
+        let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
+        //console.log(environmentScrollBase+" "+scrollFactor);
+        ctxBuffer.drawImage(bgImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+        ctxBuffer.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+        //Draw combatants
+        player.draw(ctxBuffer);
+        encounter.enemyArray.forEach(enemy => {
+            if (enemy == null) { return; }
+            enemy.draw(ctxBuffer);
+        });
 
-    drawCharacterPortrait(ctxBuffer,portraitImage,player,'l');
-    if (player.target != null) {
+        drawCharacterPortrait(ctxBuffer, portraitImage, player, 'l');
+        if (player.target != null) {
 
-        drawCharacterPortrait(ctxBuffer,crimImage,player.target,"r");
+            drawCharacterPortrait(ctxBuffer, crimImage, player.target, "r");
+        }
+        //Draw to render canvas
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        c.height = c.clientHeight;
+        c.width = c.clientWidth;
+        //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
+        ctx.scale(c.height / cBuffer.height, c.height / cBuffer.height);
+        
+    } else {
+        ctxBuffer.fillStyle = "black";
+        ctxBuffer.fillRect(0,0,cBuffer.width,cBuffer.height);
+        ctxBuffer.font = `80px Pickle Pushing`;
+        ctxBuffer.fillStyle = "white";
+        ctxBuffer.textAlign = 'center';
+        ctxBuffer.fillText("DEFEAT!", cBuffer.width/2,cBuffer.height/2);
+        ctxBuffer.font = `24px Pickle Pushing`;
+        ctxBuffer.fillText("Getting up and trying again...", cBuffer.width/2,cBuffer.height/2 + 50);
+        ctxBuffer.textAlign = 'left';
+
     }
-    //Draw to render canvas
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    c.height = c.clientHeight;
-    c.width = c.clientWidth;
-    //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
-    ctx.scale(c.height/cBuffer.height,c.height/cBuffer.height);
-    ctx.drawImage(cBuffer,0,0);
+    ctx.drawImage(cBuffer, 0, 0);
     //Update html values
-    document.getElementById("playerLevelText").innerHTML = "LEVEL " +playerStats.level;
+    document.getElementById("playerLevelText").innerHTML = "LEVEL " + playerStats.level;
     document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience) + "/" + playerStats.experienceToNext;
     document.getElementById("playerExperienceBar").max = playerStats.experienceToNext;
     document.getElementById("playerExperienceBar").value = playerStats.experience;
@@ -460,32 +499,44 @@ function renderLoop() {
     document.getElementById("playerMaxHealthDisplay").innerHTML = format(player.maxHealth);
     document.getElementById("playerHealthBar").max = player.maxHealth;
     document.getElementById("playerHealthBar").value = player.health;
-    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative/1000/player.actionSpeed) + "/" + format(player.nextMoveInitiative/1000/player.actionSpeed) +"s";
+    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed) + "s";
     document.getElementById("playerInitiativeBar").max = player.nextMoveInitiative;
     document.getElementById("playerInitiativeBar").value = player.initiative;
     document.getElementById("trainingAreaName").innerHTML = "Training at: " + currentTrainingArea.name;
     document.getElementById("trainingProgressBar").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
     Object.values(attribute).forEach(attributeName => {
-        document.getElementById(attributeName+"Text").innerHTML = format(playerStats[attributeName]);
+        document.getElementById(attributeName + "Text").innerHTML = format(playerStats[attributeName]);
     });
 }
-function logicLoop() {
-    if (!encounter.isActive()) {
-        logConsole("Encounter finished, resetting.")
-        encounter = new Encounter(player,1);
-    }
-    player.tick();
-    for (let index = 0; index < encounter.enemyArray.length; index++) {
-        let e = encounter.enemyArray[index];
-        if (e == null) { continue; }
-        let active = e.tick();
-        if (!active) {
-            encounter.enemyArray[index] = null;
-        }
 
+function logicLoop() {
+
+    if (gameState == "InCombat") {
+        switch (encounter.isActive()) {
+            case 0:
+                encounter.tick();
+                break;
+            case 1:
+                logConsole("Encounter finished, resetting.")
+                encounter = new Encounter(player, 1);
+                break;
+            case 2:
+                logConsole("Player died, going to rest.")
+                gameState = "InRest";
+                player = new Player(playerStats);
+                player.health = 0;
+                break;
+            default:
+                break;
+        }
+    } else if (gameState == "InRest") {
+        player.rest()
+        if(player.health == player.maxHealth){
+            encounter = new Encounter(player, 1);
+            gameState = "InCombat";
+        }
     }
-    //console.log(encounter.enemyArray);
     currentTrainingArea.tick();
 }
 function changeInterval(interval) {
@@ -501,64 +552,65 @@ function scaleDistance(distance) {
     let upper = cBuffer.width - padding;
     return lower + dist * (upper - lower);
 }
-function drawCharacterPortrait(context,image,character,side){
+function drawCharacterPortrait(context, image, character, side) {
 
-    let anchor = {x:0,y:0};
+    let anchor = { x: 0, y: 0 };
     let portraitDimensions = 120;
     let portraitBorder = 4;
     let mirror = 1;
-    if(side == "r"){anchor.x = context.canvas.width-portraitDimensions-2*portraitBorder; anchor.y = 0; mirror = -1;}
+    if (side == "r") { anchor.x = context.canvas.width - portraitDimensions - 2 * portraitBorder; anchor.y = 0; mirror = -1; }
     //Portrait Image
     context.fillStyle = "black";
-    context.fillRect(anchor.x, anchor.y, portraitDimensions + 2*portraitBorder, portraitDimensions + 2*portraitBorder);
-    context.drawImage(image, anchor.x+portraitBorder, anchor.y+portraitBorder, portraitDimensions, portraitDimensions);
+    context.fillRect(anchor.x, anchor.y, portraitDimensions + 2 * portraitBorder, portraitDimensions + 2 * portraitBorder);
+    context.drawImage(image, anchor.x + portraitBorder, anchor.y + portraitBorder, portraitDimensions, portraitDimensions);
     //Healthbar
-    let hanchor = {x:portraitDimensions+2*portraitBorder,y:0};
-    if(side == "r"){hanchor.x = context.canvas.width-portraitDimensions-2*portraitBorder;}
+    let hanchor = { x: portraitDimensions + 2 * portraitBorder, y: 0 };
+    if (side == "r") { hanchor.x = context.canvas.width - portraitDimensions - 2 * portraitBorder; }
     //Name
-    let nameHeight = 30;    
-    context.fillRect(hanchor.x, anchor.y, mirror*200, nameHeight+12);
+    let nameHeight = 30;
+    context.fillRect(hanchor.x, anchor.y, mirror * 200, nameHeight + 12);
     context.font = `${nameHeight}px Pickle Pushing`;
     context.fillStyle = "white";
-    context.fillText(character.name, hanchor.x + (mirror-1) * 98,hanchor.y + nameHeight);
-    hanchor.y += nameHeight+12;
+    context.fillText(character.name, hanchor.x + (mirror - 1) * 98, hanchor.y + nameHeight);
+    hanchor.y += nameHeight + 12;
     context.fillStyle = "grey";
-    context.fillRect(hanchor.x, hanchor.y, mirror*200, 16);
+    context.fillRect(hanchor.x, hanchor.y, mirror * 200, 16);
     context.fillStyle = "red";
-    context.fillRect(hanchor.x+4*mirror, hanchor.y+2, mirror*192, 12);
-    let grdHealth = context.createLinearGradient(hanchor.x+mirror*4, 0, hanchor.x+mirror*(4+192), 0);
+    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192, 12);
+    let grdHealth = context.createLinearGradient(hanchor.x + mirror * 4, 0, hanchor.x + mirror * (4 + 192), 0);
     grdHealth.addColorStop(0, "rgb(0,255,0)");
     grdHealth.addColorStop(0.25, "rgb(0,180,0)");
     grdHealth.addColorStop(0.75, "rgb(0,180,0)");
     grdHealth.addColorStop(1, "rgb(0,255,0)");
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x+4*mirror, hanchor.y+2, mirror * 192 * (character.health / character.maxHealth), 12);
+    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * (character.health / character.maxHealth), 12);
     hanchor.y += 20;
     //Action bar
     context.fillStyle = "grey";
-    context.fillRect(hanchor.x, hanchor.y, mirror*200, 8);
+    context.fillRect(hanchor.x, hanchor.y, mirror * 200, 8);
     context.fillStyle = "white";
-    context.fillRect(hanchor.x+mirror*4, hanchor.y+2, mirror*192, 6);
-    let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 192 * (character.initiative / character.nextMoveInitiative), 0);
+    context.fillRect(hanchor.x + mirror * 4, hanchor.y + 2, mirror * 192, 6);
+    if(character.initiative == NaN) console.log("NaN error");
+    let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 192 * (character.initiative / (character.nextMove != null) ? character.nextMoveInitiative : character.initiative), 0);
     grdAction.addColorStop(0.5, "rgb(0,255,255)");
     grdAction.addColorStop(1, "rgb(0,110,220)");
     context.fillStyle = grdAction;
-    context.fillRect(hanchor.x+mirror*4, hanchor.y+2,mirror* 192 * (character.initiative / character.nextMoveInitiative), 6);
+    context.fillRect(hanchor.x + mirror * 4, hanchor.y + 2, mirror * 192 * (character.initiative / character.nextMoveInitiative), 6);
     hanchor.y += 8;
     //EXP bar   
     if (side == "l") {
-            context.fillStyle = "grey";
-    context.fillRect(hanchor.x, hanchor.y, 200, 6);
-    context.fillStyle = "white";
-    context.fillRect(hanchor.x+4, hanchor.y+2, 192, 2);
-    let grdExp = context.createLinearGradient(132, 0, 132 + 192 * (playerStats.experience / playerStats.experienceToNext), 0);
-    grdExp.addColorStop(0.5, "rgb(255,0,255)");
-    grdExp.addColorStop(1, "rgb(200,0,200)");
-    context.fillStyle = grdExp;
-    context.fillRect(hanchor.x+4,hanchor.y+2, 192 * (playerStats.experience / playerStats.experienceToNext) , 2);
+        context.fillStyle = "grey";
+        context.fillRect(hanchor.x, hanchor.y, 200, 6);
+        context.fillStyle = "white";
+        context.fillRect(hanchor.x + 4, hanchor.y + 2, 192, 2);
+        let grdExp = context.createLinearGradient(132, 0, 132 + 192 * (playerStats.experience / playerStats.experienceToNext), 0);
+        grdExp.addColorStop(0.5, "rgb(255,0,255)");
+        grdExp.addColorStop(1, "rgb(200,0,200)");
+        context.fillStyle = grdExp;
+        context.fillRect(hanchor.x + 4, hanchor.y + 2, 192 * (playerStats.experience / playerStats.experienceToNext), 2);
     }
 
 }
-function format(number){
-    return Math.round((number+Number.EPSILON)*100)/100;
+function format(number) {
+    return Math.round((number + Number.EPSILON) * 100) / 100;
 }

@@ -7,6 +7,7 @@ playerStats = {
     mind: 0,
     agility: 0,
     healthRegen: 0.005,
+    restRate: 0.1,
     lastSave: 0,
     muted: true,
 }
