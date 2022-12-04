@@ -283,7 +283,7 @@ class Player extends CombatEntity {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 30;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
-        if (this.nextMove != null) drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
+        if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     rest() {
         this.health = Math.min(this.health + this.maxHealth * this.data.restRate * logicTickTime / 1000, this.maxHealth);
@@ -370,7 +370,7 @@ class Enemy extends CombatEntity {
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
-        if(this.nextMove != null) drawSkillIcon(context, this.nextMove.name, canvasX, canvasY);
+        if(this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     onDeath() {
         addPlayerExp(this.data.expReward);

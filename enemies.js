@@ -20,6 +20,7 @@ enemyData.criminal = {
         'Walk': {
             type: 1,
             name: "Move",
+            iconName: "punch",
             baseDamage: 0,
             time: 500,
             range: 10,
@@ -37,6 +38,7 @@ enemyData.thug = {
         'Punch': {
             type: 0,
             name: "Punch",
+            iconName: "punch",
             baseDamage: 1,
             damageRatios: [1,0,0,0.2],
             time: 3000,
@@ -46,6 +48,7 @@ enemyData.thug = {
         'Walk': {
             type: 1,
             name: "Move",
+            iconName: "punch",
             baseDamage: 0,
             time: 500,
             range: 10,
@@ -57,6 +60,7 @@ playerMoves = {
     'Punch': {
         type: 0,
         name: "punch",
+        iconName: "punch",
         damage: 1,
         damageRatios: [1,0,0,0.2],
         damageRange: [0.9, 1.1],
@@ -66,6 +70,7 @@ playerMoves = {
     'Walk': {
         type: 1,
         name: "move",
+        iconName: "move",
         damage: 0,
         time: 500,
         range: 10,
