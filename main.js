@@ -378,16 +378,16 @@ class Enemy extends CombatEntity {
     }
 }
 class Encounter {
-    constructor(p, enemyNum) {
+    constructor(area,enemyNum) {
         this.enemyArray = [];
         this.enemiesToSpawn = enemyNum;
         let lastHealth = player.health
-        player = new Player(playerStats);
+        this.area = area;
+        player = new Player(playerStats);   
         if (lastHealth > 0) { player.health = lastHealth; }
-        let enemies = Object.keys(enemyData);
         for (let index = 0; index < this.enemiesToSpawn; index++) {
-            let picked = Math.floor(Math.random() * enemies.length);
-            this.enemyArray.push(new Enemy(enemyData[enemies[picked]], Math.random() * 30 + 70));
+            let picked = Math.floor(Math.random() * this.area.enemies.length);
+            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.random() * 30 + 70));
             this.enemyArray[index].setTarget(player);
         }
         player.setTarget(this.enemyArray[0]);
@@ -412,6 +412,31 @@ class Encounter {
         return 1;
     }
 }
+
+class Area {
+    constructor(data){
+        this.name = data.name;
+        this.background = data.background;
+        this.backgroundImage = new Image();
+        this.backgroundImage.src = this.background;
+        this.enemies = data.enemies;
+    }
+}
+
+const areas = [new Area({name:"Alley",background:"alleyBackground.png",enemies : ["criminal"]}),
+            new Area({name:"Streets",background:"cyberpunk-street.png",enemies : ["thug"]})];
+
+areaSelect = document.getElementById("selectArea");
+for (let index = 0; index < areas.length; index++) {
+    areaSelect.options[areaSelect.options.length] = new Option(areas[index].name, index);
+}
+
+currentArea = areas[0];
+function changeArea(index){
+    currentArea = areas[index];
+    encounter = new Encounter(currentArea,1);
+}
+
 function drawSkillIcon(context, skillname, x, y) {
     let heightAbove = 110;
     let img = new Image();
@@ -434,7 +459,7 @@ function mod(n, m) {
 }
 
 var player = new Player(playerStats);
-var encounter = new Encounter(player, 1);
+var encounter = new Encounter(currentArea, 1);
 var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
 var bgImage = new Image();
 bgImage.src = "cyberpunk-street.png";   
@@ -460,11 +485,11 @@ function renderLoop() {
         //Clear frame
         ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
         //Background
-        let scrollFactor = cBuffer.height / cBuffer.width * bgImage.width / bgImage.height;
+        let scrollFactor = cBuffer.height / cBuffer.width * encounter.area.backgroundImage.width / encounter.area.backgroundImage.height;
         let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
         //console.log(environmentScrollBase+" "+scrollFactor);
-        ctxBuffer.drawImage(bgImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
-        ctxBuffer.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+        ctxBuffer.drawImage(encounter.area.backgroundImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
+        ctxBuffer.drawImage(encounter.area.backgroundImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
         //Draw combatants
         player.draw(ctxBuffer);
         encounter.enemyArray.forEach(enemy => {
@@ -526,7 +551,7 @@ function logicLoop() {
                 break;
             case 1:
                 logConsole("Encounter finished, resetting.")
-                encounter = new Encounter(player, 1);
+                encounter = new Encounter(currentArea, 1);
                 break;
             case 2:
                 logConsole("Player died, going to rest.")
@@ -540,7 +565,7 @@ function logicLoop() {
     } else if (gameState == "InRest") {
         player.rest()
         if(player.health == player.maxHealth){
-            encounter = new Encounter(player, 1);
+            encounter = new Encounter(currentArea, 1);
             gameState = "InCombat";
         }
     }
