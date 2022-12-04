@@ -375,20 +375,20 @@ class Encounter {
     constructor(p,enemyNum) {
         this.enemyArray = [];
         this.enemiesToSpawn = enemyNum;
-        let lastHealth = p.health
-        p = new Player(playerStats);
-        if(lastHealth > 0){ p.health = lastHealth;}
+        let lastHealth = player.health
+        player = new Player(playerStats);
+        if(lastHealth > 0){ player.health = lastHealth;}
         let enemies = Object.keys(enemyData);
         for (let index = 0; index < this.enemiesToSpawn; index++) {
             let picked = Math.floor(Math.random() * enemies.length);
             this.enemyArray.push(new Enemy(enemyData[enemies[picked]], Math.random() * 30 + 70));
             this.enemyArray[index].setTarget(p);
         }
-        p.setTarget(this.enemyArray[0]);
+        player.setTarget(this.enemyArray[0]);
     }
 
     isActive() {
-        if (p.health <= 0) { return false; }
+        if (player.health <= 0) { return false; }
         for (let index = 0; index < this.enemyArray.length; index++) {
             if (this.enemyArray[index] != null) { return true; }
         }
