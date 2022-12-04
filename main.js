@@ -259,7 +259,7 @@ class Player extends CombatEntity {
             i++;
         }
         const max = Math.max(...weights);
-        const indexes = [];
+        let indexes = [];
 
         for (let index = 0; index < weights.length; index++) {
             if (weights[index] === max) {
@@ -374,6 +374,7 @@ class Enemy extends CombatEntity {
     }
     onDeath() {
         addPlayerExp(this.data.expReward);
+        logConsole(`${this.name} was defeated!`)
     }
 }
 class Encounter {
@@ -433,20 +434,27 @@ function mod(n, m) {
 }
 
 var player = new Player(playerStats);
-player.health = 1;
 var encounter = new Encounter(player, 1);
 var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
 var bgImage = new Image();
-//ticker = window.setInterval(function () { renderLoop(); }, renderTickTime);
-//window.setInterval(function () { logicLoop(); }, logicTickTime);
-window.setInterval(function () { mainLoop(); }, logicTickTime);
-let loopCounter = 0;
-function mainLoop(){
+bgImage.src = "cyberpunk-street.png";   
+
+//window.setInterval(function () { mainLoop(); }, logicTickTime);
+
+//const worker = new Worker('./worker.js');
+const worker = new Worker(URL.createObjectURL(new Blob(["("+worker_function.toString()+")()"], {type: 'text/javascript'})));
+worker.onmessage = (event) => 
+        mainLoop();
+
+worker.postMessage({
+    interval: logicTickTime, 
+})
+
+function mainLoop(){    
     logicLoop();
-    renderLoop();
+    renderLoop();   
 
 }
-bgImage.src = "cyberpunk-street.png";
 function renderLoop() {
     if (gameState == "InCombat") {
         //Clear frame
@@ -509,7 +517,6 @@ function renderLoop() {
         document.getElementById(attributeName + "Text").innerHTML = format(playerStats[attributeName]);
     });
 }
-
 function logicLoop() {
 
     if (gameState == "InCombat") {
@@ -573,6 +580,7 @@ function drawCharacterPortrait(context, image, character, side) {
     context.fillStyle = "white";
     context.fillText(character.name, hanchor.x + (mirror - 1) * 98, hanchor.y + nameHeight);
     hanchor.y += nameHeight + 12;
+    //Heealth bar
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 16);
     context.fillStyle = "red";
@@ -584,7 +592,7 @@ function drawCharacterPortrait(context, image, character, side) {
     grdHealth.addColorStop(1, "rgb(0,255,0)");
     context.fillStyle = grdHealth;
     context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * (character.health / character.maxHealth), 12);
-    hanchor.y += 20;
+    hanchor.y += 16;
     //Action bar
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 8);
