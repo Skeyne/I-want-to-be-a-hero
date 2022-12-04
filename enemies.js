@@ -1,3 +1,24 @@
+var abilityLibrary = {
+    'Punch': {
+        type: 0,
+        name: "Punch",
+        iconName: "punch",
+        baseDamage: 1,
+        damageRatios: [2,0,0,0.2],
+        time: 3000,
+        range: 5,
+
+    },
+    'Walk': {
+        type: 1,
+        name: "Move",
+        iconName: "move",
+        baseDamage: 0,
+        time: 500,
+        range: 10,
+    }
+};
+
 var enemyData = {};
 
 enemyData.criminal = {
@@ -7,26 +28,7 @@ enemyData.criminal = {
     healthRegen: 0.005,
     expReward: 1,
     spriteFile: "crim.png",
-    moves: {
-        'Punch': {
-            type: 0,
-            name: "Punch",
-            iconName: "punch",
-            baseDamage: 1,
-            damageRatios: [2,0,0,0.2],
-            time: 3000,
-            range: 5,
-    
-        },
-        'Walk': {
-            type: 1,
-            name: "Move",
-            iconName: "move",
-            baseDamage: 0,
-            time: 500,
-            range: 10,
-        }
-    },
+    moves: ['Punch','Walk'],
 };
 enemyData.thug = {
     name: "Thug",
@@ -35,26 +37,7 @@ enemyData.thug = {
     healthRegen: 0.005,
     expReward: 1,
     spriteFile: "thug.png",
-    moves: {
-        'Punch': {
-            type: 0,
-            name: "Punch",
-            iconName: "punch",
-            baseDamage: 1,
-            damageRatios: [1,0,0,0.2],
-            time: 3000,
-            range: 5,
-    
-        },
-        'Walk': {
-            type: 1,
-            name: "Move",
-            iconName: "move",
-            baseDamage: 0,
-            time: 500,
-            range: 10,
-        }
-    },
+    moves: ['Punch','Walk'],
 };
 
 playerMoves = {

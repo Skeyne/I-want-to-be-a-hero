@@ -246,7 +246,7 @@ class Player extends CombatEntity {
             return;
         }
         let dist = this.target.distance;
-        if (dist > 10) this.moveIntention = 1; else this.moveIntention = -1;
+        if (dist > 5) this.moveIntention = 1; else this.moveIntention = -1;
         let weights = [];
         let i = 0;
         for (let k in playerMoves) {
@@ -336,19 +336,20 @@ class Enemy extends CombatEntity {
         }
         let dist = this.distance;
         let weights = [];
-        let i = 0;
-        for (let k in this.data.moves) {
-            if (this.data.moves[k].type == 0) {
-                weights[i] = (this.data.moves[k].range >= dist ? 100 : 0);
+        for (let index = 0; index < this.data.moves.length; index++) {
+            let k = this.data.moves[index];
+            console.log(k);
+            let ability = abilityLibrary[k];
+            if (ability.type == 0) {
+                weights[index] = (ability.range >= dist ? 100 : 0);
             }
-            if (this.data.moves[k].type == 1) {
-                weights[i] = (dist > 5 ? 100 : 0);
+            if (ability.type == 1) {
+                weights[index] = (dist > 5 ? 100 : 0);
             }
-            i++;
         }
+        console.log(weights);
         const max = Math.max(...weights);
         const indexes = [];
-
         for (let index = 0; index < weights.length; index++) {
             if (weights[index] === max) {
                 indexes.push(index);
@@ -361,7 +362,7 @@ class Enemy extends CombatEntity {
             pick = Math.floor(Math.random() * indexes.length);
         }
         let moveKey = Object.keys(this.data.moves)[indexes[pick]];
-        this.nextMove = this.data.moves[moveKey];
+        this.nextMove = abilityLibrary[this.data.moves[moveKey]];
         this.nextMoveInitiative = this.nextMove.time;
     }
     draw(context) {
@@ -616,7 +617,7 @@ function drawCharacterPortrait(context, image, character, side) {
     grdHealth.addColorStop(0.75, "rgb(0,180,0)");
     grdHealth.addColorStop(1, "rgb(0,255,0)");
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * (character.health / character.maxHealth), 12);
+    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * Math.max(0,(character.health / character.maxHealth)), 12);
     hanchor.y += 16;
     //Action bar
     context.fillStyle = "grey";
