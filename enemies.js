@@ -29,7 +29,7 @@ enemyData.criminal = {
 enemyData.thug = {
     name: "Thug",
     maxHealth: 15,
-    attributes: [6,2,0,1],
+    attributes: [5,2,0,1],
     healthRegen: 0.005,
     expReward: 1,
     spriteFile: "thug.png",
@@ -58,7 +58,7 @@ playerMoves = {
         type: 0,
         name: "punch",
         damage: 1,
-        damageRatios: [1,0,0,0.5],
+        damageRatios: [1,0,0,0.2],
         damageRange: [0.9, 1.1],
         time: 3000,
         range: 5,
