@@ -259,7 +259,7 @@ class Player extends CombatEntity {
             i++;
         }
         const max = Math.max(...weights);
-        const indexes = [];
+        let indexes = [];
 
         for (let index = 0; index < weights.length; index++) {
             if (weights[index] === max) {
@@ -374,7 +374,7 @@ class Enemy extends CombatEntity {
     }
     onDeath() {
         addPlayerExp(this.data.expReward);
-        logConsole('${this.name} was defeated!')
+        logConsole(`${this.name} was defeated!`)
     }
 }
 class Encounter {
@@ -580,6 +580,7 @@ function drawCharacterPortrait(context, image, character, side) {
     context.fillStyle = "white";
     context.fillText(character.name, hanchor.x + (mirror - 1) * 98, hanchor.y + nameHeight);
     hanchor.y += nameHeight + 12;
+    //Heealth bar
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 16);
     context.fillStyle = "red";
@@ -591,7 +592,7 @@ function drawCharacterPortrait(context, image, character, side) {
     grdHealth.addColorStop(1, "rgb(0,255,0)");
     context.fillStyle = grdHealth;
     context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * (character.health / character.maxHealth), 12);
-    hanchor.y += 20;
+    hanchor.y += 16;
     //Action bar
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 8);
