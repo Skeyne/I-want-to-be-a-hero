@@ -425,7 +425,8 @@ class Area {
 }
 
 const areas = [new Area({name:"Alley",background:"alleyBackground.png",enemies : ["criminal"]}),
-            new Area({name:"Streets",background:"cyberpunk-street.png",enemies : ["thug"]})];
+            new Area({name:"Streets",background:"cyberpunk-street.png",enemies : ["thug"]}),
+            new Area({name:"Bridge",background:"bridgeAreaBackground-1.png",enemies : ["criminal","thug"]})];
 
 areaSelect = document.getElementById("selectArea");
 for (let index = 0; index < areas.length; index++) {
