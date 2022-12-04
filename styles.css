@@ -111,13 +111,16 @@ main {
     font-size: 20px;
     color: black;
     box-sizing: border-box;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 5px 5px;
     position: absolute;
     display:inline-block; 
     text-align: right;
     right: 0px;
-    left:0px;
+    left: 0px;
+}
+
+#playerInitiativeText {
+    padding: 1px 5px;
 }
 
 .leftAlign {
@@ -140,6 +143,12 @@ main {
     position:relative;
 }
 
+.evenFlex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
 progress[value] {
     /* Reset the default appearance */
     -webkit-appearance: none;
@@ -158,69 +167,190 @@ progress[value]::-webkit-progress-bar {
 #playerExperienceBar {
     height: 30px;
     width: 100%;
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
 
 #playerExperienceBar::-webkit-progress-value {
-    background-image:
-        -webkit-linear-gradient(-90deg,
-            transparent 33%, rgba(0, 0, 0, .1) 33%,
-            rgba(0, 0, 0, .1) 66%, transparent 66%),
-        -webkit-linear-gradient(top,
-            rgba(255, 255, 255, .25),
-            rgba(0, 0, 0, .25)),
-        -webkit-linear-gradient(left, rgb(204, 0, 255), rgb(129, 22, 175));
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)
+            ), linear-gradient(
+                180deg, 
+                rgb(204, 0, 255), 
+                rgb(129, 22, 175)
+                );
+}
+
+#playerExperienceBar::-moz-progress-bar {
+    /* -moz-progress-bar has identical contents to -webkit-progress-value,
+        dont try combine then with commas, it breaks compatability */
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)
+            ), linear-gradient(
+                180deg, 
+                rgb(204, 0, 255), 
+                rgb(129, 22, 175)
+                );
 }
 
 #playerHealthBar {
     height: 30px;
     width: 100%;
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
 
 #playerHealthBar::-webkit-progress-value {
-    background-image:
-        -webkit-linear-gradient(-90deg,
-            transparent 33%, rgba(0, 0, 0, .1) 33%,
-            rgba(0, 0, 0, .1) 66%, transparent 66%),
-        -webkit-linear-gradient(top,
-            rgba(255, 255, 255, .25),
-            rgba(0, 0, 0, .25)),
-        -webkit-linear-gradient(left, rgb(0, 255, 38), rgb(21, 153, 41));
-
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)
+            ), linear-gradient(
+                180deg, 
+                rgb(0, 255, 38), 
+                rgb(21, 153, 41)
+                );
+}
+
+#playerHealthBar::-moz-progress-bar  {
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)
+            ), linear-gradient(
+                180deg, 
+                rgb(0, 255, 38), 
+                rgb(21, 153, 41)
+                );
 }
 
 #playerInitiativeBar {
     height: 22px;
-    width: 100%
+    width: 100%;
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
 
-#playerInitiativeBar::-webkit-progress-value {
-    background-image:
-        -webkit-linear-gradient(-90deg,
-            transparent 33%, rgba(0, 0, 0, .1) 33%,
-            rgba(0, 0, 0, .1) 66%, transparent 66%),
-        -webkit-linear-gradient(top,
-            rgba(255, 255, 255, .25),
-            rgba(0, 0, 0, .25)),
-        -webkit-linear-gradient(left, rgb(0, 255, 242), rgb(24, 120, 205));
-
+#playerInitiativeBar::-webkit-progress-value{
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)
+            ), linear-gradient(
+                180deg, 
+                rgb(0, 255, 242), 
+                rgb(24, 120, 205)
+                );
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-#trainingProgressBar::-webkit-progress-value {
-    background-image:
-        -webkit-linear-gradient(-90deg,
-            transparent 33%, rgba(0, 0, 0, .1) 33%,
-            rgba(0, 0, 0, .1) 66%, transparent 66%),
-        -webkit-linear-gradient(top,
-            rgba(255, 255, 255, .25),
-            rgba(0, 0, 0, .25)),
-        -webkit-linear-gradient(left, rgb(255, 0, 242),rgb(153, 21, 120));
+#playerInitiativeBar::-moz-progress-bar {
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)
+            ), linear-gradient(
+                180deg, 
+                rgb(0, 255, 242), 
+                rgb(24, 120, 205)
+                );
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
 
+#trainingProgressBar, #trainingProgressBar[value]::-webkit-progress-bar {
+    background: green; 
+    margin-bottom: 0px
+}
+
+#trainingProgressBar::-webkit-progress-value {
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)), 
+            linear-gradient(
+                180deg, 
+                rgb(255, 0, 242), 
+                rgb(153, 21, 120)
+                );
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+#trainingProgressBar::-moz-progress-bar {
+    background-image: linear-gradient(
+        0deg, 
+        transparent 33%, 
+        rgba(0, 0, 0, .1) 33%, 
+        rgba(0, 0, 0, .1) 66%, 
+        transparent 66%
+        ), linear-gradient(
+            90deg, 
+            rgba(255, 255, 255, .25), 
+            rgba(0, 0, 0, .25)), 
+            linear-gradient(
+                180deg, 
+                rgb(255, 0, 242), 
+                rgb(153, 21, 120)
+                );
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
