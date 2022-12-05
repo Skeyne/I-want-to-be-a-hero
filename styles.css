@@ -62,7 +62,7 @@ main {
     column-gap: 20px;
 }
 
-#gridSkills {
+.gridSkills {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -293,7 +293,7 @@ progress[value]::-webkit-progress-bar {
 
 #trainingProgressBar,
 #trainingProgressBar[value]::-webkit-progress-bar {
-    background: green;
+    background: rgb(255, 255, 255);
     margin-bottom: 0px
 }
 
@@ -306,8 +306,8 @@ progress[value]::-webkit-progress-bar {
             rgba(255, 255, 255, .25),
             rgba(0, 0, 0, .25)),
         linear-gradient(180deg,
-            rgb(255, 0, 242),
-            rgb(153, 21, 120));
+            rgb(255, 204, 0),
+            rgb(153, 91, 21));
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
@@ -456,10 +456,10 @@ progress[value]::-webkit-progress-bar {
 }
 
 /* Tooltip container */
-.tooltip {
-    border-bottom: 1px dotted black;
-    /* If you want dots under the hoverable text */
-}
+/* .tooltip {
+
+
+} */
 
 /* Tooltip text */
 .tooltip .tooltiptext {

@@ -191,7 +191,7 @@ class Player extends CombatEntity {
         super();
         this.data = data;
         this.name = "Saitama?";
-        this.maxHealth = 10 + data.toughness;
+        this.maxHealth = 10 + getEffectiveValue("toughness");
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
         this.image.src = "one.png";
@@ -208,10 +208,10 @@ class Player extends CombatEntity {
             case 0:
                 if (target.distance <= this.nextMove.range) {
                     let d = this.nextMove.damage
-                        + Math.sqrt(this.nextMove.damageRatios[0] * this.data.strength + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[1] * this.data.toughness + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[2] * this.data.mind + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[3] * this.data.agility + 1) - 1;
+                        + Math.sqrt(this.nextMove.damageRatios[0] * getEffectiveValue("strength") + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[1] * getEffectiveValue("toughness") + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[2] * getEffectiveValue("mind") + 1) - 1
+                        + Math.sqrt(this.nextMove.damageRatios[3] * getEffectiveValue("agility") + 1) - 1;
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let dr = target.takeDamage(d);
                     logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(dr)}(${format(d)}) damage.`);
