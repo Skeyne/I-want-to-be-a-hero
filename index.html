@@ -135,6 +135,17 @@
                     <select name="selectArea" id="selectArea" onchange="changeArea(this.value)"></select>
                     </div>
                 </section>
+                <section id="skillsBox">
+                    <div class="blockHeader pickle" style="display: block">
+                        SKILLS</div>
+                    <div class="blockBody dotted" style="box-sizing: border-box; padding: 10px; text-align:justify; display: block;
+                font-family: 'Pickle Pushing', sans-serif;
+                font-size: 24px;
+                font-weight:lighter ;">
+                    <div>Class:<span id="classText"></span></div>
+                    <div class="gridSkills" id="passiveTreeGrid"></div>
+                    </div>
+                </section>
             </div>
         </div>
         <div style="grid-row: 1; grid-column: 2; align-self:flex-start; position: sticky; top:60px;">
@@ -151,9 +162,10 @@
 
 </html>
 <script src="worker.js"></script>
-<script src = "constants.js"></script>
+<script src ="constants.js"></script>
 <script src="colors.js"></script>
 <script src="playerstats.js"></script>
+<script src ="class.js"></script>
 <script src="enemies.js "></script>
 <script src="training.js"></script>
 <script src="main.js"></script>

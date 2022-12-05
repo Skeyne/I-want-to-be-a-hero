@@ -1,7 +1,6 @@
 var renderTickTime = 1000 / 15;
 var logicTickTime = 1000 / 50;
 var c = document.getElementById("myCanvas");
-console.log(c.width + " " + c.height);
 var ctx = c.getContext("2d");
 var cBuffer = document.createElement('canvas');
 cBuffer.width = 800;
@@ -134,7 +133,6 @@ class CombatEntity {
                 break;
             case 1:
                 this.target.distance -= Math.min(100 - target.distance, this.nextMove.range);
-                logConsole(`${this.name} used Move.`)
                 break;
 
             default:
@@ -231,8 +229,6 @@ class Player extends CombatEntity {
                     this.target.distance += deltaMinus;
                     environmentDistance += deltaMinus;
                 }
-
-                logConsole("Player used Move.")
                 break;
 
             default:
@@ -322,7 +318,7 @@ class Enemy extends CombatEntity {
                 break;
             case 1:
                 this.distance -= Math.min(this.distance - 5, this.nextMove.range);
-                logConsole(`${this.name} used ${this.nextMove.name}`)
+                //logConsole(`${this.name} used ${this.nextMove.name}`)
                 break;
             default:
                 logConsole("ERROR: Not a valid move type");
@@ -338,7 +334,7 @@ class Enemy extends CombatEntity {
         let weights = [];
         for (let index = 0; index < this.data.moves.length; index++) {
             let k = this.data.moves[index];
-            console.log(k);
+            //console.log(k);
             let ability = abilityLibrary[k];
             if (ability.type == 0) {
                 weights[index] = (ability.range >= dist ? 100 : 0);
@@ -347,7 +343,7 @@ class Enemy extends CombatEntity {
                 weights[index] = (dist > 5 ? 100 : 0);
             }
         }
-        console.log(weights);
+        //console.log(weights);
         const max = Math.max(...weights);
         const indexes = [];
         for (let index = 0; index < weights.length; index++) {
@@ -493,11 +489,11 @@ function renderLoop() {
         ctxBuffer.drawImage(encounter.area.backgroundImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
         ctxBuffer.drawImage(encounter.area.backgroundImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
         //Draw combatants
-        player.draw(ctxBuffer);
         encounter.enemyArray.forEach(enemy => {
             if (enemy == null) { return; }
             enemy.draw(ctxBuffer);
         });
+        player.draw(ctxBuffer);
 
         drawCharacterPortrait(ctxBuffer, portraitImage, player, 'l');
         if (player.target != null) {
@@ -541,7 +537,7 @@ function renderLoop() {
     document.getElementById("trainingProgressBar").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
     Object.values(attribute).forEach(attributeName => {
-        document.getElementById(attributeName + "Text").innerHTML = format(playerStats[attributeName]);
+        document.getElementById(attributeName + "Text").innerHTML = format(getEffectiveValue(attributeName));
     });
 }
 function logicLoop() {

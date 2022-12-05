@@ -57,6 +57,13 @@ main {
     row-gap: 20px; 
     column-gap: 20px;
 }
+#gridSkills {
+    display: grid; 
+    grid-template-columns:1fr 1fr 1fr; 
+    grid-template-rows:1fr 1fr 1fr; 
+    row-gap: 5px; 
+    column-gap: 5px;
+}
 
 #combatBox {
     grid-row: 1; 
@@ -75,7 +82,7 @@ main {
 }
 
 #helpBox {
-    grid-row: 1 / span 2; 
+    grid-row: 1 / span 1; 
     grid-column: 2;
 }
 
@@ -424,6 +431,13 @@ progress[value]::-webkit-progress-bar {
 }
 
 .attributeButton {
+    width: 64px;
+    height: 64px;
+    border: 5px grey outset;
+    margin: 0 10px 0 10px;
+}
+
+.passiveSkillButton {
     width: 64px;
     height: 64px;
     border: 5px grey outset;
