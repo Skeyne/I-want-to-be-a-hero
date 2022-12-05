@@ -5,11 +5,14 @@
     --color4: #ffeba8;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     height: max-content;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
     box-sizing: border-box;
 }
 
@@ -24,20 +27,21 @@ body {
 }
 
 header {
-    width:100%;
+    width: 100%;
     height: 50px;
-    background: linear-gradient(180deg,rgb(24, 24, 24), 85%, rgb(0, 0, 0));
+    background: linear-gradient(180deg, rgb(24, 24, 24), 85%, rgb(0, 0, 0));
 }
 
-header button, header input {
+header button,
+header input {
     display: inline;
 }
 
 main {
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    column-gap: 20px; 
+    column-gap: 20px;
     padding: 20px
 }
 
@@ -46,48 +50,49 @@ main {
 }
 
 #gridMain {
-    grid-row: 1; 
+    grid-row: 1;
     grid-column: 1;
 }
 
 #grid1 {
-    display: grid; 
-    grid-template-columns:1fr 1fr; 
-    grid-template-rows:1fr 1fr 1fr; 
-    row-gap: 20px; 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 20px;
     column-gap: 20px;
 }
+
 #gridSkills {
-    display: grid; 
-    grid-template-columns:1fr 1fr 1fr; 
-    grid-template-rows:1fr 1fr 1fr; 
-    row-gap: 5px; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 5px;
     column-gap: 5px;
 }
 
 #combatBox {
-    grid-row: 1; 
+    grid-row: 1;
     grid-column: 1;
 }
 
 #statsBox {
-    grid-row: 2; 
-    grid-column: 1; 
+    grid-row: 2;
+    grid-column: 1;
     align-self: stretch;
 }
 
 #trainingBox {
-    grid-row: 3; 
+    grid-row: 3;
     grid-column: 1;
 }
 
 #helpBox {
-    grid-row: 1 / span 1; 
+    grid-row: 1 / span 1;
     grid-column: 2;
 }
 
 #areasBox {
-    grid-row: 3 / span 1; 
+    grid-row: 3 / span 1;
     grid-column: 2;
 }
 
@@ -104,28 +109,28 @@ main {
     text-align: center;
     /* text-decoration: turquoise wavy 2px; */
     text-shadow:
-            -2px -2px 0px rgb(255, 255, 255),
-            2px 2px 0px rgb(255, 255, 255),
+        -2px -2px 0px rgb(255, 255, 255),
+        2px 2px 0px rgb(255, 255, 255),
 
-            3px 3px 0px rgb(0, 0, 0),
-            4px 4px 0px rgb(0, 0, 0),
-            4px 4px 0px rgb(255, 255, 255),
-            6px 6px 0px rgb(255, 255, 255),
-            7px 7px 0px rgb(0, 0, 0),
-            8px 8px 0px rgb(211, 3, 3),
-            10px 10px 0px rgb(211, 3, 3),
-            12px 12px 0px rgb(255, 255, 0),
-            14px 14px 0px rgb(255, 255, 0);
+        3px 3px 0px rgb(0, 0, 0),
+        4px 4px 0px rgb(0, 0, 0),
+        4px 4px 0px rgb(255, 255, 255),
+        6px 6px 0px rgb(255, 255, 255),
+        7px 7px 0px rgb(0, 0, 0),
+        8px 8px 0px rgb(211, 3, 3),
+        10px 10px 0px rgb(211, 3, 3),
+        12px 12px 0px rgb(255, 255, 0),
+        14px 14px 0px rgb(255, 255, 0);
 }
 
-.barText{
-    width:inherit;
+.barText {
+    width: inherit;
     font-size: 20px;
     color: black;
     box-sizing: border-box;
     padding: 5px 5px;
     position: absolute;
-    display:inline-block; 
+    display: inline-block;
     text-align: right;
     right: 0px;
     left: 0px;
@@ -139,7 +144,7 @@ main {
     text-align: left;
 }
 
-.blockHeader{
+.blockHeader {
     font-size: 32px;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
@@ -148,11 +153,11 @@ main {
     display: block;
 }
 
-.blockBody{
+.blockBody {
     border: 5px inset grey;
     height: calc(100% - 45px);
     box-sizing: border-box;
-    position:relative;
+    position: relative;
 }
 
 .evenFlex {
@@ -187,21 +192,15 @@ progress[value]::-webkit-progress-bar {
 #playerExperienceBar::-webkit-progress-value {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)
-            ), linear-gradient(
-                180deg, 
-                rgb(204, 0, 255), 
-                rgb(129, 22, 175)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)), linear-gradient(180deg,
+            rgb(204, 0, 255),
+            rgb(129, 22, 175));
 }
 
 #playerExperienceBar::-moz-progress-bar {
@@ -209,21 +208,15 @@ progress[value]::-webkit-progress-bar {
         dont try combine then with commas, it breaks compatability */
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)
-            ), linear-gradient(
-                180deg, 
-                rgb(204, 0, 255), 
-                rgb(129, 22, 175)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)), linear-gradient(180deg,
+            rgb(204, 0, 255),
+            rgb(129, 22, 175));
 }
 
 #playerHealthBar {
@@ -237,41 +230,29 @@ progress[value]::-webkit-progress-bar {
 #playerHealthBar::-webkit-progress-value {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)
-            ), linear-gradient(
-                180deg, 
-                rgb(0, 255, 38), 
-                rgb(21, 153, 41)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)), linear-gradient(180deg,
+            rgb(0, 255, 38),
+            rgb(21, 153, 41));
 }
 
-#playerHealthBar::-moz-progress-bar  {
+#playerHealthBar::-moz-progress-bar {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)
-            ), linear-gradient(
-                180deg, 
-                rgb(0, 255, 38), 
-                rgb(21, 153, 41)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)), linear-gradient(180deg,
+            rgb(0, 255, 38),
+            rgb(21, 153, 41));
 }
 
 #playerInitiativeBar {
@@ -282,105 +263,85 @@ progress[value]::-webkit-progress-bar {
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
 
-#playerInitiativeBar::-webkit-progress-value{
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)
-            ), linear-gradient(
-                180deg, 
-                rgb(0, 255, 242), 
-                rgb(24, 120, 205)
-                );
+#playerInitiativeBar::-webkit-progress-value {
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)), linear-gradient(180deg,
+            rgb(0, 255, 242),
+            rgb(24, 120, 205));
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
 #playerInitiativeBar::-moz-progress-bar {
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)
-            ), linear-gradient(
-                180deg, 
-                rgb(0, 255, 242), 
-                rgb(24, 120, 205)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)), linear-gradient(180deg,
+            rgb(0, 255, 242),
+            rgb(24, 120, 205));
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-#trainingProgressBar, #trainingProgressBar[value]::-webkit-progress-bar {
-    background: green; 
+#trainingProgressBar,
+#trainingProgressBar[value]::-webkit-progress-bar {
+    background: green;
     margin-bottom: 0px
 }
 
 #trainingProgressBar::-webkit-progress-value {
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)), 
-            linear-gradient(
-                180deg, 
-                rgb(255, 0, 242), 
-                rgb(153, 21, 120)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)),
+        linear-gradient(180deg,
+            rgb(255, 0, 242),
+            rgb(153, 21, 120));
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
 #trainingProgressBar::-moz-progress-bar {
-    background-image: linear-gradient(
-        0deg, 
-        transparent 33%, 
-        rgba(0, 0, 0, .1) 33%, 
-        rgba(0, 0, 0, .1) 66%, 
-        transparent 66%
-        ), linear-gradient(
-            90deg, 
-            rgba(255, 255, 255, .25), 
-            rgba(0, 0, 0, .25)), 
-            linear-gradient(
-                180deg, 
-                rgb(255, 0, 242), 
-                rgb(153, 21, 120)
-                );
+    background-image: linear-gradient(0deg,
+            transparent 33%,
+            rgba(0, 0, 0, .1) 33%,
+            rgba(0, 0, 0, .1) 66%,
+            transparent 66%), linear-gradient(90deg,
+            rgba(255, 255, 255, .25),
+            rgba(0, 0, 0, .25)),
+        linear-gradient(180deg,
+            rgb(255, 0, 242),
+            rgb(153, 21, 120));
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
 #nextMove {
-    text-align: center; 
-    height: 50px; 
+    text-align: center;
+    height: 50px;
     padding: 25px;
 }
 
-.logBox{
+.logBox {
     position: relative;
     border: 4px solid rgb(26, 90, 0);
-    height: 210px ;overflow-y: scroll;
+    height: 210px;
+    overflow-y: scroll;
     background-color: whitesmoke;
-    background-image: linear-gradient(180deg,rgb(0, 62, 12), rgb(0, 0, 0));
+    background-image: linear-gradient(180deg, rgb(0, 62, 12), rgb(0, 0, 0));
     font-style: oblique;
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: rgb(0, 255, 0);
 }
 
@@ -475,12 +436,12 @@ progress[value]::-webkit-progress-bar {
 }
 
 #helpText {
-    box-sizing: border-box; 
-    padding: 10px; 
-    text-align: justify; 
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: justify;
     display: block;
     font-size: 24px;
-    font-weight: lighter ;
+    font-weight: lighter;
 }
 
 .dotted {
@@ -494,3 +455,29 @@ progress[value]::-webkit-progress-bar {
     background-size: 6px 6px;
 }
 
+/* Tooltip container */
+.tooltip {
+    border-bottom: 1px dotted black;
+    /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    background-color: black;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

@@ -536,6 +536,8 @@ function renderLoop() {
     document.getElementById("trainingAreaName").innerHTML = "Training at: " + currentTrainingArea.name;
     document.getElementById("trainingProgressBar").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
+    document.getElementById("classText").innerHTML = playerStats.class;
+    document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
     Object.values(attribute).forEach(attributeName => {
         document.getElementById(attributeName + "Text").innerHTML = format(getEffectiveValue(attributeName));
     });

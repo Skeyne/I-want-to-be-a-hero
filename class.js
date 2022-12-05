@@ -9,23 +9,50 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additiveFlat", //additive
-                effectMagnitude: 5,
-                maxLevel : 5,
-            }
+                effectMagnitude: 5,  
+            },
+            maxLevel : 5,
+        },
+        'h_1' : {
+            id: 'h_1',
+            name: 'Five Mile Run',
+            iconName: 'milerun',
+            desc:'Coach said this would toughen you up.',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "toughness",
+                effectType: "additiveFlat", //additive
+                effectMagnitude: 5,  
+            },
+            maxLevel : 5,
         }
     },
 
 }
+function generatePassiveTooltip(skill){
+    return skill.name +"<br />"+
+        skill.desc +"<br />"+
+        `<span id="${skill.effect.effectTarget}Text">${skill.effect.effectTarget}</span> +${skill.effect.effectMagnitude} (${skill.effect.effectType})`+"<br />"+
+        "Max levels: " + skill.maxLevel;
+}
 let grid = document.getElementById("passiveTreeGrid")
 let i = 0;
 Object.values(skillLibrary[playerStats.class]).forEach(skill => {
+    // let d = document.createElement("div");
+    // d.setAttribute("class","tooltip");
+    // grid.appendChild(d);
     let b = document.createElement("button");
     b.style.gridRow = i;
     b.style.gridColumn = i;
     b.style.background = "url("+skill.iconName+"PassiveIcon.png)"+" no-repeat";
     b.style.backgroundSize = "contain";
-    b.setAttribute("class","passiveSkillButton")
+    b.setAttribute("class","passiveSkillButton tooltip");
+    b.setAttribute("onclick",`checkSkillPurchase("${skill.id}")`)
     grid.appendChild(b);
+    let t = document.createElement("div");
+    t.setAttribute("class","tooltiptext pickle");
+    t.innerHTML = generatePassiveTooltip(skill);
+    b.appendChild(t);
     
 });
 
@@ -96,11 +123,16 @@ function removeEffect(skillId){
 }
 
 function checkSkillPurchase(skillId){
+    console.log("Test");
+    let cost = 0;
     if(playerStats.unlockedSkills.hasOwnProperty(skillId)){
-        if (playerStats.unlockedSkills[skillId] <= (playerStats.level - playerStats.passivePointsSpent)) {
-            playerStats.passivePointsSpent -= playerStats.unlockedSkills[skillId];
-            addSkill(skillId);
-        }
+        cost = playerStats.unlockedSkills[skillId];
+    } else {
+        cost = 1;
+    }
+    if (cost <= (playerStats.level - playerStats.passivePointsSpent)) {
+        playerStats.passivePointsSpent += cost;
+        addSkill(skillId);
     }
 }
 
