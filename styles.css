@@ -25,7 +25,7 @@ body {
 
 header {
     width:100%;
-    height: 50px;
+    height: 10%;
     background: linear-gradient(180deg,rgb(24, 24, 24), 85%, rgb(0, 0, 0));
 }
 
@@ -89,6 +89,9 @@ main {
 }
 
 .title {
+    display: block;
+    margin: 0px 10px;
+    padding: 10px 10px;
     font-size: 64px;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -316,7 +319,6 @@ progress[value]::-webkit-progress-bar {
 }
 
 #trainingProgressBar, #trainingProgressBar[value]::-webkit-progress-bar {
-    background: green; 
     margin-bottom: 0px
 }
 
@@ -467,6 +469,30 @@ progress[value]::-webkit-progress-bar {
     display: block;
     font-size: 24px;
     font-weight: lighter ;
+}
+
+.dropdown {
+    appearance: none;
+    width: 100%;
+    height: 20%;
+    border: 5px grey outset;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+#canvasWrap {
+    grid-row: 1; 
+    grid-column: 2; 
+    align-self: flex-start; 
+    position: sticky; 
+    top:10px;
+}
+
+#myCanvas {
+    border:10px inset goldenrod; 
+    aspect-ratio: 4 / 3; 
+    width: 100%; 
+    outline: 10px solid rgb(200, 145, 12);
 }
 
 .dotted {
