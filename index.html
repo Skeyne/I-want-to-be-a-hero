@@ -25,13 +25,13 @@
         <audio controls muted id="audioSource" style="display: none;">
             <source src="cyberpunk-street.mp3" type="audio/mp3">
             Your browser does not support the audio element.
-        </audio>    
+        </audio>
+        <h1 class="title pickle">
+            I WANT TO BE A HERO
+        </h1>    
     </header>
     <main>
         <div id="gridMain">
-            <h1 class="title pickle">
-                I WANT TO BE A HERO
-            </h1>
             <div id="grid1">
                 <section class="infoBox" id="combatBox">
                     <div class="blockHeader pickle">
@@ -126,13 +126,13 @@
                     </div>
                 </section>
                 <section id="areasBox">
-                    <div class="blockHeader pickle" style="display: block">
+                    <div class="blockHeader pickle">
                         AREAS</div>
                     <div class="blockBody dotted" style="box-sizing: border-box; padding: 10px; text-align:justify; display: block;
                 font-family: 'Pickle Pushing', sans-serif;
                 font-size: 24px;
                 font-weight:lighter ;">
-                    <select name="selectArea" id="selectArea" onchange="changeArea(this.value)"></select>
+                    <select name="selectArea" class="dropdown pickle" id="selectArea" onchange="changeArea(this.value)"></select>
                     </div>
                 </section>
                 <section id="skillsBox">
@@ -152,7 +152,7 @@
                 </section>
             </div>
         </div>
-        <div style="grid-row: 1; grid-column: 2; align-self:flex-start; position: sticky; top:60px;">
+        <section id="canvasWrap">
             <div>
                 <div style = "position: relative; padding: 10px; padding-right: 30px; aspect-ratio: 4 / 3">
                 <canvas id="myCanvas" style="border:10px inset goldenrod;  aspect-ratio: 4 / 3; width: 100%;
@@ -160,7 +160,7 @@
                 </div>
                 <div id="logBox" class="logBox"></div>
             </div>
-        </div>
+        </section>
     </main>
 </body>
 
