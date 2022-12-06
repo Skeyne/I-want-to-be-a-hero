@@ -22,6 +22,7 @@ class TrainingArea{
     }
     reward(){
         playerStats[this.attribute] += this.base;
+        checkTrainingQuest();
     }   
 
 }

@@ -1,5 +1,11 @@
 const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
+const attributeDisplayNames = {
+    strength: "Strength",
+    toughness: "Toughness",
+    mind: "Mind",
+    agility: "Agility",
+}
 const statColors = {
     strength: "rgb(255,0,0)",
     toughness: "rgb(255,0,0)",
@@ -14,4 +20,8 @@ formulas.actionSpeed = function(value){
 }
 formulas.damageReduction = function(value){
     return Math.pow(1-DAMAGE_REDUCTION_BASE,Math.log10(1 + value));
+}
+
+function format(number) {
+    return Math.round((number + Number.EPSILON) * 100) / 100;
 }

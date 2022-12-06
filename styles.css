@@ -57,7 +57,7 @@ main {
 #grid1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     row-gap: 20px;
     column-gap: 20px;
 }
@@ -70,31 +70,38 @@ main {
     column-gap: 5px;
 }
 
+#areasBox {
+    grid-row: 3 / span 1;
+    grid-column: 2;
+}
 #combatBox {
     grid-row: 1;
     grid-column: 1;
 }
-
+#skillsBox {
+    grid-row: 3;
+    grid-column: 1;
+}
 #statsBox {
     grid-row: 2;
     grid-column: 1;
     align-self: stretch;
 }
+#storyBox {
+    grid-row: 1;
+    grid-column: 2;
+}
 
 #trainingBox {
-    grid-row: 3;
-    grid-column: 1;
+    grid-row: 2;
+    grid-column: 2;
 }
 
 #helpBox {
-    grid-row: 1 / span 1;
-    grid-column: 2;
+    grid-row: 4 / span 1;
+    grid-column: 1 / span 2;
 }
 
-#areasBox {
-    grid-row: 3 / span 1;
-    grid-column: 2;
-}
 
 #barWrap {
     margin: 10px 0 10px;

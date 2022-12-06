@@ -32,6 +32,7 @@ var abilityLibrary = {
 var enemyData = {};
 
 enemyData.criminal = {
+    id:"criminal",
     name: "Criminal",
     maxHealth: 5,
     attributes: [2,1,1,1],
@@ -41,6 +42,7 @@ enemyData.criminal = {
     moves: ['Punch','Walk'],
 };
 enemyData.thug = {
+    id:"thug",
     name: "Thug",
     maxHealth: 15,
     attributes: [5,2,1,1],
@@ -50,6 +52,7 @@ enemyData.thug = {
     moves: ['Punch','Walk'],
 };
 enemyData.prisoner9 = {
+    id:"prisoner9",
     name: "Prisoner 9",
     maxHealth: 50,
     attributes: [25,20,1,5],

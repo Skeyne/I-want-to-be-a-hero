@@ -371,6 +371,7 @@ class Enemy extends CombatEntity {
     }
     onDeath() {
         addPlayerExp(this.data.expReward);
+        checkDefeatQuest(this.data.id);
         logConsole(`${this.name} was defeated!`)
     }
 }
@@ -643,7 +644,4 @@ function drawCharacterPortrait(context, image, character, side) {
         context.fillRect(hanchor.x + 4, hanchor.y + 2, 192 * (playerStats.experience / playerStats.experienceToNext), 2);
     }
 
-}
-function format(number) {
-    return Math.round((number + Number.EPSILON) * 100) / 100;
 }
