@@ -91,16 +91,16 @@
                         <div class="statDisplay pickle"
                             style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
                             Currently training: <span id="currentTrainingAttribute"></span></div>
-                        <br \>
-                        <button class="attributeButton" id="strengthText"
-                            onclick="changeTrainingAttribute(attribute.strength)"></button>
-                        <button class="attributeButton" id="toughnessText"
-                            onclick="changeTrainingAttribute(attribute.toughness)"></button>
-                        <button class="attributeButton" id="mindText"
-                            onclick="changeTrainingAttribute(attribute.mind)"></button>
-                        <button class="attributeButton" id="agilityText"
-                            onclick="changeTrainingAttribute(attribute.agility)"></button>
-
+                            <div id="trainingButtonWrap">
+                                <button class="attributeButton" id="strengthText"
+                                    onclick="changeTrainingAttribute(attribute.strength)"></button>
+                                <button class="attributeButton" id="toughnessText"
+                                    onclick="changeTrainingAttribute(attribute.toughness)"></button>
+                                <button class="attributeButton" id="mindText"
+                                    onclick="changeTrainingAttribute(attribute.mind)"></button>
+                                <button class="attributeButton" id="agilityText"
+                                    onclick="changeTrainingAttribute(attribute.agility)"></button>
+                            </div>
                         <div style="width: -webkit-fill-available;height: 40px;margin-top: 25px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" style="width:inherit;"value="100" max="1000"></progress>
                         </div>
