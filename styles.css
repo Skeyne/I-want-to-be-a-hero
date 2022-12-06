@@ -41,8 +41,8 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    column-gap: 20px;
-    padding: 20px
+    column-gap: 1vw;
+    padding: 0.5vw;
 }
 
 .pickle {
@@ -58,8 +58,8 @@ main {
     display: grid;
     grid-template-columns: minmax(350px, 1fr) 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    row-gap: 20px;
-    column-gap: 20px;
+    row-gap: 0.5vw;
+    column-gap: 1vw;
 }
 
 .gridSkills {
@@ -462,7 +462,7 @@ progress[value]::-webkit-progress-bar {
 #canvasWrap {
     position: block; 
     padding: 10px; 
-    padding-right: 30px; 
+    padding-right: 1vw; 
     aspect-ratio: 4 / 3
 }
 
@@ -532,7 +532,7 @@ progress[value]::-webkit-progress-bar {
     visibility: visible;
 }
 
-@media (max-width:600px) {
+@media (max-width:1200px) {
     header {
         width: 100vw;
         height: 10%;
