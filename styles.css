@@ -27,9 +27,9 @@ body {
 }
 
 header {
-    width: 100%;
-    height: 50px;
-    background: linear-gradient(180deg, rgb(24, 24, 24), 85%, rgb(0, 0, 0));
+    width:100%;
+    height: 10%;
+    background: linear-gradient(180deg,rgb(24, 24, 24), 85%, rgb(0, 0, 0));
 }
 
 header button,
@@ -56,7 +56,7 @@ main {
 
 #grid1 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(350px, 1fr) 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     row-gap: 20px;
     column-gap: 20px;
@@ -108,6 +108,9 @@ main {
 }
 
 .title {
+    display: block;
+    margin: 0px 10px;
+    padding: 10px 10px;
     font-size: 64px;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -340,27 +343,6 @@ progress[value]::-webkit-progress-bar {
     padding: 25px;
 }
 
-.logBox {
-    position: relative;
-    border: 4px solid rgb(26, 90, 0);
-    height: 210px;
-    overflow-y: scroll;
-    background-color: whitesmoke;
-    background-image: linear-gradient(180deg, rgb(0, 62, 12), rgb(0, 0, 0));
-    font-style: oblique;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: rgb(0, 255, 0);
-}
-
-.logBox::-webkit-scrollbar-thumb {
-    background: rgb(0, 255, 0);
-    border-radius: 2px;
-}
-
-.logBox::-webkit-scrollbar {
-    width: 5px;
-}
-
 .statDisplay {
     font-size: 20px;
     text-transform: uppercase;
@@ -448,7 +430,68 @@ progress[value]::-webkit-progress-bar {
     text-align: justify;
     display: block;
     font-size: 24px;
-    font-weight: lighter;
+    font-weight: lighter ;
+}
+
+.dropdown {
+    appearance: none;
+    width: 100%;
+    height: 20%;
+    border: 5px grey outset;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+#skillsWrap {
+    box-sizing: border-box; 
+    padding: 10px; 
+    text-align: justify; 
+    display: block; 
+    font-size: 24px;
+    font-weight:lighter ;
+}
+
+#canvasLogWrap {
+    grid-row: 1; 
+    grid-column: 2;
+    position: sticky;  
+    align-self: flex-start; 
+    top: 10px;
+}
+
+#canvasWrap {
+    position: block; 
+    padding: 10px; 
+    padding-right: 30px; 
+    aspect-ratio: 4 / 3
+}
+
+#myCanvas {
+    border:0.5vw inset goldenrod; 
+    aspect-ratio: 4 / 3; 
+    width: 100%; 
+    outline: 0.5vw solid rgb(200, 145, 12);
+}
+
+.logBox {
+    position: block;
+    border: 4px solid rgb(26, 90, 0);
+    height: 19vh;
+    overflow-y: scroll;
+    background-color: whitesmoke;
+    background-image: linear-gradient(180deg, rgb(0, 62, 12), rgb(0, 0, 0));
+    font-style: oblique;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: rgb(0, 255, 0);
+}
+
+.logBox::-webkit-scrollbar-thumb {
+    background: rgb(0, 255, 0);
+    border-radius: 2px;
+}
+
+.logBox::-webkit-scrollbar {
+    width: 5px;
 }
 
 .dotted {
@@ -487,4 +530,32 @@ progress[value]::-webkit-progress-bar {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+@media (max-width:600px) {
+    header {
+        width: 100vw;
+        height: 10%;
+        background: linear-gradient(180deg,rgb(24, 24, 24), 85%, rgb(0, 0, 0));
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(1fr, 400px) 1fr;
+        row-gap: 20px;
+        padding: 20px;
+    }
+
+    #canvasLogWrap {
+        top: 190px;
+        grid-row: 1; 
+        grid-column: 1;
+        background-color: black;
+    }
+
+    #gridMain {
+        grid-row: 2;
+        grid-column: 1;
+    }
 }
