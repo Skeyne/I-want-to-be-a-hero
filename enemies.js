@@ -34,8 +34,8 @@ var enemyData = {};
 enemyData.criminal = {
     id:"criminal",
     name: "Criminal",
-    maxHealth: 5,
-    attributes: [2,1,1,1],
+    maxHealth: 3,
+    attributes: [1,1,0,1],
     healthRegen: 0.005,
     expReward: 1,
     moneyReward: 0.01,

@@ -306,10 +306,10 @@ class Enemy extends CombatEntity {
             case 0:
                 if (this.distance <= this.nextMove.range) {
                     let d = this.nextMove.baseDamage
-                        + Math.sqrt(this.nextMove.damageRatios[0] * this.data.attributes[0] + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[1] * this.data.attributes[1] + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[2] * this.data.attributes[2] + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[3] * this.data.attributes[3] + 1) - 1;
+                        + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
+                        + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
+                        + this.nextMove.damageRatios[2] * (Math.sqrt( this.data.attributes[2] + 1) - 1)
+                        + this.nextMove.damageRatios[3] * (Math.sqrt( this.data.attributes[3] + 1) - 1);
                     let dr = target.takeDamage(d);
                     logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {

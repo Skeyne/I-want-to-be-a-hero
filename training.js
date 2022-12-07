@@ -58,3 +58,9 @@ function updateTrainingText(){
     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward);
 }
 
+function updateTrainingNextText(){
+    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost)+'$';
+    document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward) +
+             " -> " + format(currentTrainingArea.Reward*TRAINING_REWARD_GROWTH_BASE);
+}
+
