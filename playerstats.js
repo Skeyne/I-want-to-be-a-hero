@@ -17,7 +17,7 @@ const cleanPlayerStats = {
     unlockedSkills: {},
     effectMultipliers: {},
     storyProgress: 0,
-    currentStoryQuestProgress: 0,
+    currentStoryQuestProgress: [],
     currentTrainingAttribute: "strength",
     trainingAreaLevels: {},
 }
