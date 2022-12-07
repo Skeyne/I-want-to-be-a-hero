@@ -54,7 +54,7 @@ function upgradeTrainingArea(){
 }
 
 function updateTrainingText(){
-    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost);
+    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost)+'$';
     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward);
 }
 
