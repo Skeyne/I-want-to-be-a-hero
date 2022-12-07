@@ -22,30 +22,38 @@ const storyQuests = [
         requirementAmount: [10],
     },
     {
-        title: `The Beginning IV`,
+        title: `Streetfights I`,
         text: `Moving up to a tougher crowd.`,
         requirementType: `defeat`,
         requirementTarget: [`thug`],
         requirementAmount: [1],
     },
     {
-        title: `The Beginning V`,
+        title: `Streetfights II`,
         text: `Ok maybe I wasn't ready to take them on yet. Back to the training board.`,
         requirementType: `training`,
         requirementTarget: [`strength`,`toughness`,`agility`],
-        requirementAmount: [20,20,20],
+        requirementAmount: [10,10,10],
     },
     {
-        title: `The Beginning VI`,
+        title: `Streetfights III`,
         text: `The whole gang.`,
-        requirementType: `training`,
+        requirementType: `defeat`,
         requirementTarget: [`thug`],
         requirementAmount: [10],
     },
+    {
+        title: `Vigilante I`,
+        text: `You heard news that a maximum security prisoner escaped and is wreaking havoc on the bridge. This is it, a real chance to be a hero. You better be ready for this.`,
+        requirementType: `defeat`,
+        requirementTarget: [`prisoner9`],
+        requirementAmount: [1],
+    },
+    
 ];
 const endOfStoryQuest = {
     title: `The End So Far`,
-    text: `You did it. This is the end of the content so far`,
+    text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. Can you beat Prisoner 9 twice in a row?`,
     requirementType: `none`,
     requirementTarget: 1,
     requirementAmount: 1,
@@ -110,7 +118,7 @@ function storyQuestText(progress) {
     switch (quest.requirementType) {
         case 'defeat':
             for (let index = 0; index < quest.requirementTarget.length; index++) {
-                requirementsString += `Defeat ${enemyData[quest.requirementTarget[index]].name} ${playerStats.currentStoryQuestProgress[index]}/${quest.requirementAmount[index]}<br />`;
+                requirementsString += `Defeat ${enemyData[quest.requirementTarget[index]].name}: ${playerStats.currentStoryQuestProgress[index]}/${quest.requirementAmount[index]}<br />`;
             }
             break;
         case 'training':
@@ -120,6 +128,7 @@ function storyQuestText(progress) {
             break;
         case 'none':
             requirementsString = "";
+            break;
         default:
             requirementsString = "ERROR: unkown quest requirement";
             break;

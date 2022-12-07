@@ -191,12 +191,12 @@ class Player extends CombatEntity {
         super();
         this.data = data;
         this.name = "Saitama?";
-        this.maxHealth = 10 + getEffectiveValue("toughness");
+        this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
         this.image.src = "one.png";
-        this.damageReduction = formulas.damageReduction(data.toughness);
-        this.actionSpeed = formulas.actionSpeed(data.agility);
+        this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
+        this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.moveIntention = 1;
     }
 
@@ -371,6 +371,8 @@ class Enemy extends CombatEntity {
     }
     onDeath() {
         addPlayerExp(this.data.expReward);
+        addPlayerMoney(this.data.moneyReward);
+        addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
         logConsole(`${this.name} was defeated!`)
     }
@@ -539,6 +541,8 @@ function renderLoop() {
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
     document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
+    document.getElementById("moneyText").innerHTML = format(playerStats.money);
+    document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
     Object.values(attribute).forEach(attributeName => {
         document.getElementById(attributeName + "Text").innerHTML = format(getEffectiveValue(attributeName));
     });

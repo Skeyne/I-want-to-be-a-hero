@@ -1,6 +1,8 @@
 const cleanPlayerStats = {
     experience: 0,
     experienceToNext: 10,
+    money: 0,
+    reputation: 0,
     class: "Human",
     level: 0,
     passivePointsSpent: 0,
@@ -16,6 +18,8 @@ const cleanPlayerStats = {
     effectMultipliers: {},
     storyProgress: 0,
     currentStoryQuestProgress: 0,
+    currentTrainingAttribute: "strength",
+    trainingAreaLevels: {},
 }
 
 var playerStats = {};
@@ -63,6 +67,12 @@ function addPlayerExp(amount) {
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level)
     }
 }
+function addPlayerMoney(amount) {
+    playerStats.money += amount;
+}
+function addPlayerReputation(amount) {
+    playerStats.reputation += amount;
+}
 load();
 function save() {
     console.log("Saving data...")
@@ -71,9 +81,9 @@ function save() {
     localStorage.setItem("heroLastSaved", playerStats.lastSave);
 }
 setInterval(save, 30000);
-function load() {
+function load(file = null) {
     //reset()
-    let loadgame = JSON.parse(localStorage.getItem("heroSave"))
+    if(file != null){loadgame = file;} else {loadgame = JSON.parse(localStorage.getItem("heroSave"));}
     if (loadgame != null) {
         Object.keys(loadgame).forEach(property => {
             playerStats[property] = loadgame[property];
@@ -119,7 +129,7 @@ function exportGame() {
 }
 
 function importGame() {
-    loadgame = JSON.parse(atob(prompt("Input your save here:")))
+    let loadgame = JSON.parse(atob(prompt("Input your save here:")))
     if (loadgame && loadgame != null && loadgame != "") {
         load(loadgame)
         save()

@@ -53,7 +53,7 @@ skillLibrary = {
             maxLevel : 5,
         },
         'h_4' : {
-            id: 'h_1',
+            id: 'h_4',
             name: 'Construction Job',
             iconName: 'milerun',
             desc:'And a cold one after work.',

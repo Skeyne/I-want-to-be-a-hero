@@ -38,6 +38,8 @@ enemyData.criminal = {
     attributes: [2,1,1,1],
     healthRegen: 0.005,
     expReward: 1,
+    moneyReward: 0.01,
+    reputationReward: 1,
     spriteFile: "crim.png",
     moves: ['Punch','Walk'],
 };
@@ -47,7 +49,9 @@ enemyData.thug = {
     maxHealth: 15,
     attributes: [5,2,1,1],
     healthRegen: 0.005,
-    expReward: 1,
+    expReward: 2,
+    moneyReward: 0.03,
+    reputationReward: 1,
     spriteFile: "thug.png",
     moves: ['Punch','Walk'],
 };
@@ -58,6 +62,8 @@ enemyData.prisoner9 = {
     attributes: [25,20,1,5],
     healthRegen: 0.005,
     expReward: 10,
+    moneyReward: 0.2,
+    reputationReward: 10,
     spriteFile: "prisoner9.png",
     moves: ['Punch','Smash','Walk'],
 };

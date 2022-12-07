@@ -58,6 +58,8 @@
                         <div class="statDisplay pickle" id="nextMove">
                             Next move: <span id="playerMoveText">0</span>
                         </div>
+                        <div class="pickle"> Money: <span id="moneyText">0</span></div>
+                        <div class="pickle"> Reputation: <span id="reputationText">0</span></div>
                     </div>
                 </section>
                 <section class="infoBox" id="statsBox">
@@ -104,6 +106,8 @@
                         <div style="width: -webkit-fill-available;height: 40px;margin-top: 25px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" style="width:inherit;"value="100" max="1000"></progress>
                         </div>
+                        <div class="pickle">Attributes per session: <span id="trainingReward"></span></div>
+                        <button class="pickle" onclick="upgradeTrainingArea()">Upgrade:<span id="trainingUpgradeCost"></span></button>
                     </div>
                 </section>
                 <section id="helpBox">
