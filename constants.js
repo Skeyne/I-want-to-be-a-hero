@@ -2,9 +2,9 @@ const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
 const PLAYER_BASE_HEALTH = 5;
 const HEALTH_GROWTH_EXPONENT = 1.2;
-const TRAINING_REWARD_GROWTH_BASE = 1.05;
-const TRAINING_COST_GROWTH_BASE = 1.1;
-const attributeDisplayNames = {
+const TRAINING_REWARD_GROWTH_BASE = 1.5;
+const TRAINING_COST_GROWTH_BASE = 1.7;
+const attributeDisplayNames = { 
     strength: "Strength",
     toughness: "Toughness",
     mind: "Mind",
