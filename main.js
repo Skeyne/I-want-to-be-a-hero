@@ -195,6 +195,8 @@ class Player extends CombatEntity {
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
         this.image.src = "one.png";
+        this.portraitImage = new Image();
+        this.portraitImage.src = "onePortrait.PNG";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.moveIntention = 1;
@@ -297,6 +299,8 @@ class Enemy extends CombatEntity {
         this.name = enemyData.name;
         this.image = new Image(32, 32);
         this.image.src = enemyData.spriteFile;
+        this.portraitImage = new Image(32, 32);
+        this.portraitImage.src = enemyData.portraitFile;
     }
     act(target) {
         if (target == null) {
@@ -498,10 +502,10 @@ function renderLoop() {
         });
         player.draw(ctxBuffer);
 
-        drawCharacterPortrait(ctxBuffer, portraitImage, player, 'l');
+        drawCharacterPortrait(ctxBuffer, player, 'l');
         if (player.target != null) {
 
-            drawCharacterPortrait(ctxBuffer, crimImage, player.target, "r");
+            drawCharacterPortrait(ctxBuffer, player.target, "r");
         }
         //Draw to render canvas
         ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -589,8 +593,7 @@ function scaleDistance(distance) {
     let upper = cBuffer.width - padding;
     return lower + dist * (upper - lower);
 }
-function drawCharacterPortrait(context, image, character, side) {
-
+function drawCharacterPortrait(context,character, side) {
     let anchor = { x: 0, y: 0 };
     let portraitDimensions = 120;
     let portraitBorder = 4;
@@ -599,7 +602,7 @@ function drawCharacterPortrait(context, image, character, side) {
     //Portrait Image
     context.fillStyle = "black";
     context.fillRect(anchor.x, anchor.y, portraitDimensions + 2 * portraitBorder, portraitDimensions + 2 * portraitBorder);
-    context.drawImage(image, anchor.x + portraitBorder, anchor.y + portraitBorder, portraitDimensions, portraitDimensions);
+    context.drawImage(character.portraitImage, anchor.x + portraitBorder, anchor.y + portraitBorder, portraitDimensions, portraitDimensions);
     //Healthbar
     let hanchor = { x: portraitDimensions + 2 * portraitBorder, y: 0 };
     if (side == "r") { hanchor.x = context.canvas.width - portraitDimensions - 2 * portraitBorder; }

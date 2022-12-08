@@ -41,6 +41,7 @@ enemyData.criminal = {
     moneyReward: 0.01,
     reputationReward: 1,
     spriteFile: "crim.png",
+    portraitFile: "crimPortrait.png",
     moves: ['Punch','Walk'],
 };
 enemyData.thug = {
@@ -53,6 +54,7 @@ enemyData.thug = {
     moneyReward: 0.03,
     reputationReward: 1,
     spriteFile: "thug.png",
+    portraitFile: "thugPortrait.png",
     moves: ['Punch','Walk'],
 };
 enemyData.prisoner9 = {
@@ -65,6 +67,7 @@ enemyData.prisoner9 = {
     moneyReward: 0.2,
     reputationReward: 10,
     spriteFile: "prisoner9.png",
+    portraitFile: "prisoner9Portrait.png",
     moves: ['Punch','Smash','Walk'],
 };
 

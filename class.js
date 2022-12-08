@@ -1,179 +1,207 @@
 skillLibrary = {
     "Human": {
-        'h_0' : {
+        'h_0': {
             id: 'h_0',
             name: 'Calisthenics',
             iconName: 'calisthenics',
-            desc:'Increase your Strength through the power of home workouts',
+            desc: 'Increase your Strength through the power of home workouts',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1,  
+                effectMagnitude: 0.5,
             },
-            maxLevel : 5,
+            maxLevel: 5,
+            cost: [1, 1, 1, 1, 1],
         },
-        'h_1' : {
+        'h_1': {
             id: 'h_1',
             name: '"Borrowed Dumbells"',
             iconName: 'calisthenics',
-            desc:'They weren\'t using them anyways.',
+            desc: 'They weren\'t using them anyways.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additivePercent",
-                effectMagnitude: 0.05,  
+                effectMagnitude: 0.05,
             },
-            maxLevel : 5,
+            maxLevel: 3,
+            cost: [2, 2, 2],
         },
-        'h_2' : {
+        'h_2': {
             id: 'h_2',
             name: '"Big Boy Pills"',
             iconName: 'calisthenics',
-            desc:'It\'s just like hard candy.',
+            desc: 'It\'s just like hard candy.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "multPercent",
-                effectMagnitude: 1.2,  
+                effectMagnitude: 1.2,
             },
-            maxLevel : 1,
+            maxLevel: 1,
+            cost: [5],
         },
-        'h_3' : {
+        'h_3': {
             id: 'h_3',
             name: 'Five Mile Run',
             iconName: 'milerun',
-            desc:'Coach said this would toughen you up.',
+            desc: 'Coach said this would toughen you up.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additiveFlat", //additive
-                effectMagnitude: 2,  
+                effectMagnitude: 1,
             },
-            maxLevel : 5,
+            maxLevel: 5,
+            cost: [1, 1, 1, 1, 1],
         },
-        'h_4' : {
+        'h_4': {
             id: 'h_4',
             name: 'Construction Job',
             iconName: 'milerun',
-            desc:'And a cold one after work.',
+            desc: 'And a cold one after work.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additivePercent", //additive
-                effectMagnitude: 0.1,  
+                effectMagnitude: 0.1,
             },
-            maxLevel : 2,
+            maxLevel: 2,
+            cost: [2, 2, 2],
         },
-        'h_5' : {
+        'h_5': {
             id: 'h_5',
             name: '8200 Postcode Night Run',
             iconName: 'milerun',
-            desc:'Hey this area doesn\'t look so b-',
+            desc: 'Hey this area doesn\'t look so b-',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "multPercent", //additive
-                effectMagnitude: 1.5,  
+                effectMagnitude: 1.2,
             },
-            maxLevel : 1,
+            maxLevel: 1,
+            cost: [5],
         },
-        'h_6' : {
+        'h_6': {
             id: 'h_6',
             name: 'Dodge the swing',
             iconName: 'calisthenics',
-            desc:'We used to do this as kids.',
+            desc: 'We used to do this as kids.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1,  
+                effectMagnitude: 0.5,
             },
-            maxLevel : 5,
+            maxLevel: 5,
+            cost: [1, 1, 1, 1, 1],
         },
-        'h_7' : {
+        'h_7': {
             id: 'h_7',
             name: 'Shadow boxing',
             iconName: 'calisthenics',
-            desc:'Shadows to keep you light.',
+            desc: 'Shadows to keep you light.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 0.05,  
+                effectMagnitude: 0.1,
             },
-            maxLevel : 5,
+            maxLevel: 3,
+            cost: [2, 2, 2],
         },
-        'h_8' : {
+        'h_8': {
             id: 'h_8',
             name: 'Acquire J\'s',
             iconName: 'calisthenics',
-            desc:'Jays on my feet.',
+            desc: 'Jays on my feet.',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "multPercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1.5,  
+                effectMagnitude: 1.3,
             },
-            maxLevel : 1,
+            maxLevel: 1,
+            cost: [5],
         },
     },
 
 }
-function generatePassiveTooltip(skill){
-    let numberDisplay ="";
+function generatePassiveTooltip(skill) {
+    let numberDisplay = "";
     switch (skill.effect.effectType) {
         case "additiveFlat":
-            numberDisplay = "+"+ skill.effect.effectMagnitude;
+            numberDisplay = "+" + skill.effect.effectMagnitude;
             break;
         case "additivePercent":
-            numberDisplay = "+"+ skill.effect.effectMagnitude*100+"%";
+            numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
             break;
         case "multPercent":
-            numberDisplay = "x"+ skill.effect.effectMagnitude;
+            numberDisplay = "x" + skill.effect.effectMagnitude;
             break;
         default:
             console.log("Undefined effect type")
             break;
     }
-    return skill.name +"<br />"+
-        skill.desc +"<br />"+
-        `<span id="${skill.effect.effectTarget}Text">${skill.effect.effectTarget}</span> ${numberDisplay}`+"<br />"+
-        "Max levels: " + skill.maxLevel;
+    return  `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
+        skill.desc + "<br />" +
+        `<span id="${skill.effect.effectTarget}Text">${skill.effect.effectTarget}</span> ${numberDisplay}` + "<br />" +
+        "Cost: " + skill.cost[getPlayerPassiveLevel(skill.id)] + " Points";
 }
-let grid = document.getElementById("passiveTreeGrid")
+
+function getPlayerPassiveLevel(skillId) {
+    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+        return 0;
+    } else {
+        return playerStats.unlockedSkills[skillId];
+    }
+}
+
+let grid = document.getElementById("passiveTreeGrid");
+let passiveButtonDict = {};
 let i = 0;
 Object.values(skillLibrary[playerStats.class]).forEach(skill => {
     // let d = document.createElement("div");
     // d.setAttribute("class","tooltip");
     // grid.appendChild(d);
     let b = document.createElement("button");
+    passiveButtonDict[skill.id] = b;
     b.style.gridRow = i;
     b.style.gridColumn = i;
-    b.style.background = "url("+skill.iconName+"PassiveIcon.png)"+" no-repeat";
+    b.style.background = "url(" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
     b.style.backgroundSize = "contain";
-    b.setAttribute("class","passiveSkillButton tooltip");
-    b.setAttribute("onclick",`checkSkillPurchase("${skill.id}")`)
+    b.setAttribute("class", "passiveSkillButton tooltip");
+    b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
     grid.appendChild(b);
     let t = document.createElement("div");
-    t.setAttribute("class","tooltiptext pickle");
+    t.setAttribute("class", "tooltiptext pickle");
     t.innerHTML = generatePassiveTooltip(skill);
     b.appendChild(t);
-    
+    let l = document.createElement("div");
+    l.setAttribute("class", "passiveSkillLevel");
+    if (!playerStats.unlockedSkills.hasOwnProperty(skill.id)) {
+        l.innerHTML = 0;
+    } else {
+        l.innerHTML = playerStats.unlockedSkills[skill.id];
+    }
+    b.appendChild(l);
+
 });
 
-function addSkill(skillId){
-    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)){
+function addSkill(skillId) {
+    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
         playerStats.unlockedSkills[skillId] = 1;
-    } else{
+    } else {
         playerStats.unlockedSkills[skillId] += 1;
     }
     addEffect(skillId);
 }
-function reduceSkill(skillId){
-    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)){
-        console.log("Failed skill removal. Player did not have that skill (id: "+skillId+")");
-    } else if(playerStats.unlockedSkills[skillId] < 2){
+function reduceSkill(skillId) {
+    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+        console.log("Failed skill removal. Player did not have that skill (id: " + skillId + ")");
+    } else if (playerStats.unlockedSkills[skillId] < 2) {
         removeEffect(skillId);
         delete playerStats.unlockedSkills[skillId];
     } else {
@@ -182,9 +210,9 @@ function reduceSkill(skillId){
     }
     //addEffect(skillId);
 }
-function removeSkill(skillId){
-    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)){
-        console.log("Failed skill removal. Player did not have that skill (id: "+skillId+")");
+function removeSkill(skillId) {
+    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+        console.log("Failed skill removal. Player did not have that skill (id: " + skillId + ")");
         return false;
     } else {
         removeEffect(skillId);
@@ -192,63 +220,79 @@ function removeSkill(skillId){
         return true;
     }
 }
-function setSkill(skillId,level){
-    if(isNaN(level)) return false;
-    if(level <= 0){
-    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)){
-        console.log("Failed skill removal. Player did not have that skill (id: "+skillId+")");
-    } else {
-        removeEffect(skillId);
-        delete playerStats.unlockedSkills[skillId];
-    }}
+function setSkill(skillId, level) {
+    if (isNaN(level)) return false;
+    if (level <= 0) {
+        if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+            console.log("Failed skill removal. Player did not have that skill (id: " + skillId + ")");
+        } else {
+            removeEffect(skillId);
+            delete playerStats.unlockedSkills[skillId];
+        }
+    }
     else {
         playerStats.unlockedSkills[skillId] = level;
         addEffect(skillId);
-    }  
+    }
     return true;
 }
 
-function addEffect(skillId){
+function addEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)){
-        playerStats.effectMultipliers[skill.effect.effectTarget] = {additiveFlat:{},additivePercent:{},multPercent:{},};
+    if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
+        playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
     }
     playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
         skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
 }
-function removeEffect(skillId){
+function removeEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)){
-        playerStats.effectMultipliers[skill.effect.effectTarget] = {additiveFlat:{},additivePercent:{},multPercent:{},};
+    if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
+        playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
     }
-    if (playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType].hasOwnProperty(skill.id)){
+    if (playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType].hasOwnProperty(skill.id)) {
         delete playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id];
     } else {
-        console.log("::ERROR:: Attempting to delete non-existing effect (id:"+skillId+")");
+        console.log("::ERROR:: Attempting to delete non-existing effect (id:" + skillId + ")");
     }
 }
 
-function checkSkillPurchase(skillId){
+function checkSkillPurchase(skillId) {
     console.log("Test");
     let cost = 0;
-    
-    if(playerStats.unlockedSkills.hasOwnProperty(skillId)){
+
+    if (playerStats.unlockedSkills.hasOwnProperty(skillId)) {
         let skill = skillLibrary[playerStats.class][skillId];
-        if(playerStats.unlockedSkills[skillId]>= skill.maxLevel){logConsole(`${skill.name} is already max level!`);return false;}
-        cost = playerStats.unlockedSkills[skillId];
+        if (playerStats.unlockedSkills[skillId] >= skill.maxLevel) { logConsole(`${skill.name} is already max level!`); return false; }
+        cost = skillLibrary[playerStats.class][skillId].cost[playerStats.unlockedSkills[skillId]];
     } else {
-        cost = 1;
+        cost = skillLibrary[playerStats.class][skillId].cost[0];
     }
     if (cost <= (playerStats.level - playerStats.passivePointsSpent)) {
         playerStats.passivePointsSpent += cost;
         addSkill(skillId);
     }
+    updateButton(skillId);
 }
 
-function resetSkills(){
+function updateButton(skillId) {
+    let l = passiveButtonDict[skillId].querySelector('.passiveSkillLevel');
+    if (playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+        l.innerHTML = playerStats.unlockedSkills[skillId];
+    } else {
+        l.innerHTML = 0;
+    }
+    let t = passiveButtonDict[skillId].querySelector('.tooltiptext');
+    t.innerHTML = generatePassiveTooltip(skillLibrary[playerStats.class][skillId]);
+}
+
+function resetSkills() {
     let old = Object.keys(playerStats.unlockedSkills);
     old.forEach(skillId => {
         removeSkill(skillId);
     });
     playerStats.passivePointsSpent = 0;
+    for (const [key, value] of Object.entries(passiveButtonDict)) {
+        updateButton(key);
+    }
 }

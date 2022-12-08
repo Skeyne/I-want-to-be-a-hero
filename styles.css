@@ -66,8 +66,13 @@ main {
 
 .gridSkills {
     display: grid;
+    width:100%;
+    aspect-ratio: 1/1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: minmax(2fr, 200px);
+    justify-items: center;
+    justify-content: space-around;
+    align-items:center;
     row-gap: 5px;
     column-gap: 5px;
 }
@@ -113,7 +118,7 @@ main {
     display: block;
     margin: 0px 10px;
     padding: 10px 10px;
-    font-size: 64px;
+    font-size: 5vw;
     letter-spacing: 5px;
     text-transform: uppercase;
     color: black;
@@ -403,7 +408,19 @@ progress[value]::-webkit-progress-bar {
     width: 64px;
     height: 64px;
     border: 5px grey outset;
-    margin: 0 10px 0 10px;
+    position: relative;
+}
+.passiveSkillLevel {
+    position: absolute;
+    aspect-ratio: 1/1;
+    background: black;
+    color: white;
+    height: 1.1em;
+    width: 1.1em;
+    bottom: 0;
+    right: 0;
+    border-left: 2px solid grey;
+    border-top: 2px solid grey;
 }
 
 #mindText {

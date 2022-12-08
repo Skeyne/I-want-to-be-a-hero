@@ -131,8 +131,9 @@ function exportGame() {
 function importGame() {
     let loadgame = JSON.parse(atob(prompt("Input your save here:")))
     if (loadgame && loadgame != null && loadgame != "") {
-        load(loadgame)
-        save()
+        load(loadgame);
+        save();
+        location.reload();
     }
     else {
         alert("Invalid input.")
