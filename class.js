@@ -145,10 +145,13 @@ function generatePassiveTooltip(skill) {
             console.log("Undefined effect type")
             break;
     }
+    let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
+    let costString = "";
+    if(isNaN(cost)) {costString = "MAXED!"} else {costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points"};
     return  `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
         skill.desc + "<br />" +
         `<span id="${skill.effect.effectTarget}Text">${skill.effect.effectTarget}</span> ${numberDisplay}` + "<br />" +
-        "Cost: " + skill.cost[getPlayerPassiveLevel(skill.id)] + " Points";
+        "Cost: " + costString;
 }
 
 function getPlayerPassiveLevel(skillId) {

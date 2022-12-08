@@ -95,19 +95,20 @@
                             Currently training: <span id="currentTrainingAttribute"></span></div>
                             <div id="trainingButtonWrap">
                                 <button class="attributeButton" id="strengthText"
-                                    onclick="changeTrainingAttribute(attribute.strength)"></button>
+                                onclick="changeTrainingAttribute(attribute.strength)"></button>
                                 <button class="attributeButton" id="toughnessText"
-                                    onclick="changeTrainingAttribute(attribute.toughness)"></button>
+                                onclick="changeTrainingAttribute(attribute.toughness)"></button>
                                 <button class="attributeButton" id="mindText"
                                     onclick="changeTrainingAttribute(attribute.mind)"></button>
-                                <button class="attributeButton" id="agilityText"
+                                    <button class="attributeButton" id="agilityText"
                                     onclick="changeTrainingAttribute(attribute.agility)"></button>
-                            </div>
-                        <div style="width: -webkit-fill-available;height: 40px;margin-top: 25px;margin-left: 10px;margin-right: 10px;">
+                                </div>
+                                <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session: <span id="trainingReward"></span></div>
+                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" style="width:inherit;"value="100" max="1000"></progress>
                         </div>
-                        <div class="pickle">Attributes per session: <span id="trainingReward"></span></div>
-                        <button class="pickle" onclick="upgradeTrainingArea()" onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span id="trainingUpgradeCost"></span></button>
+                        <button class="pickle" style="position: absolute;left: 50%;transform: translateX(-50%);"
+                            onclick="upgradeTrainingArea()" onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span id="trainingUpgradeCost"></span></button>
                     </div>
                 </section>
                 <section id="helpBox">
