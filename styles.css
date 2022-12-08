@@ -57,6 +57,14 @@ main {
     font-size: 20px;
 }
 
+.center {
+    text-align: center;
+}
+
+.biggerText {
+    font-size: 1.4rem;
+}
+
 #gridMain {
     grid-row: 1;
     grid-column: 1;
@@ -421,6 +429,20 @@ progress[value]::-webkit-progress-bar {
 }
 
 .attributeButton:active {
+    border: 5px grey inset;
+}
+
+#trainingUpgradeButton {
+    appearance: none;
+    width: 60%;
+    height: 10%;
+    border: 5px grey outset;
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 0 20% 0;
+}
+
+#trainingUpgradeButton:active {
     border: 5px grey inset;
 }
 
