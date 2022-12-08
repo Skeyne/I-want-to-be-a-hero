@@ -51,6 +51,12 @@ main {
     font-size: 20px;
 }
 
+.oxanium {
+    font-family: Oxanium, 'Pickle Pushing', sans-serif;
+    padding-left: 6px;
+    font-size: 20px;
+}
+
 #gridMain {
     grid-row: 1;
     grid-column: 1;
@@ -109,6 +115,15 @@ main {
     grid-column: 1 / span 2;
 }
 
+#helpBody {
+    box-sizing: border-box; 
+    padding: 10px; 
+    text-align:justify; 
+    display: block;
+    font-family: Oxanium, 'Pickle Pushing', sans-serif;
+    font-size: 24px;
+    font-weight:lighter ;
+}
 
 #barWrap {
     margin: 10px 0 10px;
@@ -181,6 +196,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
 }
 
 progress[value] {
