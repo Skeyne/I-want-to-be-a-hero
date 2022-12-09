@@ -534,31 +534,35 @@ progress[value]::-webkit-progress-bar {
 }
 
 #canvasLogWrap {
-    grid-row: 1; 
+    display: grid;
+    grid-template-rows: min-content auto;
+    grid-row: 1;
     grid-column: 2;
-    position: sticky;  
-    align-self: flex-start; 
-    top: 10px;
+    row-gap: 1vh;
+    position: sticky;
+    top: 1vh;
+    height: 98vh;
 }
 
 #canvasWrap {
-    position: block; 
-    padding: 10px; 
-    padding-right: 1vw; 
-    aspect-ratio: 4 / 3
+    border: 0.5vw inset goldenrod;
+    outline: -0.5vw solid rgb(200, 145, 12);
+    aspect-ratio: 4 / 3;
+    display: grid;
+    grid-row: 1;
+    box-sizing: border-box;
 }
 
 #myCanvas {
-    border:0.5vw inset goldenrod; 
     aspect-ratio: 4 / 3; 
     width: 100%; 
-    outline: 0.5vw solid rgb(200, 145, 12);
 }
 
 .logBox {
     position: block;
     border: 4px solid rgb(26, 90, 0);
-    height: 19vh;
+    height: auto;
+    align-self: stretch;
     overflow-y: scroll;
     background-color: whitesmoke;
     background-image: linear-gradient(180deg, rgb(0, 62, 12), rgb(0, 0, 0));
