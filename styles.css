@@ -133,6 +133,11 @@ main {
     font-weight:lighter ;
 }
 
+#damageFormula {
+    position: relative;
+    top: 1%
+}
+
 #barWrap {
     margin: 10px 0 10px;
 }
