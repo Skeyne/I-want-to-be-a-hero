@@ -539,26 +539,37 @@ progress[value]::-webkit-progress-bar {
     position: sticky;  
     align-self: flex-start; 
     top: 10px;
+    height: 100vh;
 }
 
-#canvasWrap {
+/* #canvasWrap {
     position: block; 
     padding: 10px; 
     padding-right: 1vw; 
     aspect-ratio: 4 / 3
-}
+    width: 100%;
+    height: 75%;
+} */
 
 #myCanvas {
     border:0.5vw inset goldenrod; 
-    aspect-ratio: 4 / 3; 
-    width: 100%; 
+    box-sizing: border-box;
+    margin-top: 1vh;
+    /* aspect-ratio: 4 / 3;  */
+    width: 100%;
+    height: 75%;
+    /* width: 100%;  */
     outline: 0.5vw solid rgb(200, 145, 12);
 }
 
 .logBox {
+    box-sizing: border-box;
     position: block;
+    margin-top: 10px;
+    margin-left: -0.9%;
+    margin-right: -0.9%;
     border: 4px solid rgb(26, 90, 0);
-    height: 19vh;
+    height: calc(25% - 20px - 2vh);
     overflow-y: scroll;
     background-color: whitesmoke;
     background-image: linear-gradient(180deg, rgb(0, 62, 12), rgb(0, 0, 0));
@@ -670,13 +681,13 @@ progress[value]::-webkit-progress-bar {
         padding: 20px;
     }
 
-    #canvasLogWrap {
+    /* #canvasLogWrap {
         position: static;
         top: 10vh;
         grid-row: 1; 
         grid-column: 1;
         background-color: black;
-    }
+    } */
 
     #gridMain {
         grid-row: 2;
