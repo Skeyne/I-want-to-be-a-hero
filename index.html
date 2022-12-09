@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.cdnfonts.com/css/pickle-pushing" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css">
 
     <title>Hero Battler</title>
@@ -111,24 +112,21 @@
                         <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" style="width:inherit;"value="100" max="1000"></progress>
                         </div>
-                        <button class="pickle" style="position: absolute;left: 50%;transform: translateX(-50%);"
-                            onclick="upgradeTrainingArea()" onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span id="trainingUpgradeCost"></span></button>
+                        <div class="pickle center biggerText">Attributes per session: <span id="trainingReward"></span></div>
+                        <button class="pickle" id="trainingUpgradeButton" onclick="upgradeTrainingArea()" onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span id="trainingUpgradeCost"></span></button>
                     </div>
                 </section>
                 <section id="helpBox">
                     <div class="blockHeader pickle" style="display: block">
                         HELP</div>
-                    <div class="blockBody dotted" style="box-sizing: border-box; padding: 10px; text-align:justify; display: block;
-                font-family: 'Pickle Pushing', sans-serif;
-                font-size: 24px;
-                font-weight:lighter ;">
+                    <div class="blockBody dotted" id="helpBody">
                         Your hero automatically uses his skills in combat.
-                        <br \><span id="strengthText">Strength</span>is the main component of skill damage.
-                        <br \><span id="toughnessText">Toughness</span>increases your maximum health points and damage reduction.
-                        <br \><span id="mindText">Mind</span>does nothing right now.
-                        <br \><span id="agilityText">Agility</span>increases your action speed and is a damage component of punch.
+                        <br \><span id="strengthText" class="pickle">Strength</span>is the main component of skill damage.
+                        <br \><span id="toughnessText" class="pickle">Toughness</span>increases your maximum health points and damage reduction.
+                        <br \><span id="mindText" class="pickle">Mind</span>does nothing right now.
+                        <br \><span id="agilityText" class="pickle">Agility</span>increases your action speed and is a damage component of punch.
                         <br \>Your only current moves are Move and Punch. Punch's damage ratio is 100% <span
-                            id="strengthText">STR</span> 20% <span id="agilityText">AGI</span>, which is to say that,
+                            id="strengthText" class="pickle">STR</span> 20% <span id="agilityText" class="pickle">AGI</span>, which is to say that,
                         that
                         percentage of the respective attribute value is used in the move's damage formula.
                         <br \>The damage formula is &ltbaseDamage + SUM(ATTRIBUTE_RATIO*(SQRT(ATTRIBUTE_VALUE + 1) -
@@ -151,7 +149,7 @@
                 <section id="storyBox">
                     <div class="blockHeader pickle" style="display: block">
                         STORY</div>
-                    <div class="blockBody dotted pickle" style="padding: 10px; text-align: justify; display: block;font-size: 24px;">
+                    <div class="blockBody dotted oxanium" style="padding: 10px; text-align: justify; display: block;font-size: 24px;">
                         <div id = "storyText"></div>
                     </div>
                 </section>
