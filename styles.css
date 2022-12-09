@@ -460,6 +460,7 @@ progress[value]::-webkit-progress-bar {
 
 .passiveSkillLevel {
     position: relative;
+    font-family: 'Pickle Pushing';
     /* aspect-ratio: 1/1; */
     background: black;
     color: white;
@@ -669,17 +670,19 @@ progress[value]::-webkit-progress-bar {
     main {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: minmax(1fr, 400px) 1fr;
-        row-gap: 20px;
-        padding: 20px;
+        grid-template-rows: minmax(min-content,max-content) 1fr;
+        row-gap: 1vh;
+        padding: 1vmin;
     }
 
     #canvasLogWrap {
         position: static;
         top: 10vh;
+        height:98vw;
         grid-row: 1; 
         grid-column: 1;
         background-color: black;
+        grid-template-rows: min-content minmax(5em,auto);
     }
 
     #gridMain {

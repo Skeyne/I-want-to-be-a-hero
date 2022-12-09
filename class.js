@@ -87,7 +87,7 @@ skillLibrary = {
         'h_6': {
             id: 'h_6',
             name: 'Dodge the swing',
-            iconName: 'calisthenics',
+            iconName: 'shadowB',
             desc: 'We used to do this as kids.',
             effect: {
                 type: 0, // attribute boost
@@ -101,7 +101,7 @@ skillLibrary = {
         'h_7': {
             id: 'h_7',
             name: 'Shadow boxing',
-            iconName: 'calisthenics',
+            iconName: 'shadowB',
             desc: 'Shadows to keep you light.',
             effect: {
                 type: 0, // attribute boost
@@ -115,7 +115,7 @@ skillLibrary = {
         'h_8': {
             id: 'h_8',
             name: 'Acquire J\'s',
-            iconName: 'calisthenics',
+            iconName: 'shadowB',
             desc: 'Jays on my feet.',
             effect: {
                 type: 0, // attribute boost
