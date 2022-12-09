@@ -187,10 +187,6 @@ class CombatEntity {
         return;
     }
 }
-var portraitImage = new Image();
-var crimImage = new Image();
-portraitImage.src = "onePortrait.PNG";
-crimImage.src = "crimPortrait.PNG";
 var environmentDistance = 0;
 var gameState = "InCombat";
 let restRate = 5;
@@ -204,7 +200,7 @@ class Player extends CombatEntity {
         this.image = new Image(32, 32);
         this.image.src = "one.png";
         this.portraitImage = new Image();
-        this.portraitImage.src = "onePortrait.PNG";
+        this.portraitImage.src = "onePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.moveIntention = 1;
