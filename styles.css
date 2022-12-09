@@ -547,11 +547,12 @@ progress[value]::-webkit-progress-bar {
 
 #canvasWrap {
     border: 0.5vw inset goldenrod;
-    outline: -0.5vw solid rgb(200, 145, 12);
+    outline: 0.5vw solid rgb(200, 145, 12);
     aspect-ratio: 4 / 3;
     display: grid;
     grid-row: 1;
     box-sizing: border-box;
+    margin: 0.5vw;
 }
 
 #myCanvas {
