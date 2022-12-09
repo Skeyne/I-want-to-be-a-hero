@@ -13,18 +13,22 @@
 
 <body>
     <header>
-        <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
+        <!-- FPS setting to be revised -->
+        <!-- <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
             <option value="15">15FPS</option>
             <option value="30">30FPS</option>
             <option value="60">60FPS</option>
-        </select>
-        <button onclick="toggleMusic()">Music</button>
-        <button onclick="save()">Save Game</button>
-        <button onclick="load()">Load Game</button>
-        <button onclick="exportGame()">Export</button>
-        <button onclick="importGame()">Import</button>
-        <button onclick="hardReset()">HARD RESET</button>
-        <input id="slide" type="range" min="0.2" max="2" step="0.1" value="1">
+        </select> -->
+        <section>
+        <button class="bannerButton" onclick="toggleMusic()">Music</button>
+        <input type="range" min="1" max="100" value="20" class="slider" id="volumeSlider" onchange="setVolume(this.value)">
+        <button class="bannerButton" onclick="save()">Save Game</button>
+        <button class="bannerButton" onclick="load()">Load Game</button>
+        <button class="bannerButton" onclick="exportGame()">Export</button>
+        <button class="bannerButton" onclick="importGame()">Import</button>
+        <button class="bannerButton" style="float:right" onclick="hardReset()">HARD RESET</button>
+        </section>
+
         <audio controls muted id="audioSource" style="display: none;">
             <source src="cyberpunk-street.mp3" type="audio/mp3">
             Your browser does not support the audio element.
@@ -95,19 +99,20 @@
                             Currently training: <span id="currentTrainingAttribute"></span></div>
                             <div id="trainingButtonWrap">
                                 <button class="attributeButton" id="strengthText"
-                                    onclick="changeTrainingAttribute(attribute.strength)"></button>
+                                onclick="changeTrainingAttribute(attribute.strength)"></button>
                                 <button class="attributeButton" id="toughnessText"
-                                    onclick="changeTrainingAttribute(attribute.toughness)"></button>
+                                onclick="changeTrainingAttribute(attribute.toughness)"></button>
                                 <button class="attributeButton" id="mindText"
                                     onclick="changeTrainingAttribute(attribute.mind)"></button>
-                                <button class="attributeButton" id="agilityText"
+                                    <button class="attributeButton" id="agilityText"
                                     onclick="changeTrainingAttribute(attribute.agility)"></button>
-                            </div>
-                        <div style="width: -webkit-fill-available;height: 40px;margin-top: 25px;margin-left: 10px;margin-right: 10px;">
+                                </div>
+                                <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session: <span id="trainingReward"></span></div>
+                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" style="width:inherit;"value="100" max="1000"></progress>
                         </div>
-                        <div class="pickle">Attributes per session: <span id="trainingReward"></span></div>
-                        <button class="pickle" onclick="upgradeTrainingArea()" onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span id="trainingUpgradeCost"></span></button>
+                        <button class="pickle" style="position: absolute;left: 50%;transform: translateX(-50%);"
+                            onclick="upgradeTrainingArea()" onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span id="trainingUpgradeCost"></span></button>
                     </div>
                 </section>
                 <section id="helpBox">
@@ -129,7 +134,8 @@
                         <br \>The damage formula is &ltbaseDamage + SUM(ATTRIBUTE_RATIO*(SQRT(ATTRIBUTE_VALUE + 1) -
                         1))&gt
                         where the second part is evaluated and then summed from every contributing attribute.
-                        <br \>Attributes can be increased by training (bottom left).
+                        <br \>Attributes can be increased by training.
+                        <br \>Get passive skills to further boost your attributes.
                     </div>
                 </section>
                 <section id="areasBox">
