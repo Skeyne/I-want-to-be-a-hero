@@ -376,7 +376,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .statDisplay {
-    font-size: 20px;
+    font-size: 1.5em;
     text-transform: uppercase;
     text-align: left;
     padding-left: 6px;
