@@ -13,7 +13,8 @@ const cleanPlayerStats = {
     healthRegen: 0.005,
     restRate: 0.1,
     lastSave: 0,
-    muted: true,
+    muted: false,
+    musicVolume: 0.2,
     unlockedSkills: {},
     effectMultipliers: {},
     storyProgress: 0,
@@ -56,16 +57,15 @@ function arrayMult(array) {
     }, 1);
 }
 
-const baseExperienceCost = 10;
-const baseLinearExperieneCost = 5;
-const baseExperienceCostExponent = 1.07;
+
 function addPlayerExp(amount) {
     playerStats.experience += amount;
-    if (playerStats.experience > playerStats.experienceToNext) {
+    if (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level)
     }
+    checkLevelQuest();
 }
 function addPlayerMoney(amount) {
     playerStats.money += amount;

@@ -13,7 +13,7 @@ var abilityLibrary = {
         type: 0,
         name: "Smash",
         iconName: "smash",
-        baseDamage: 1,
+        baseDamage: 5,
         damageRatios: [5,1,0,0],
         time: 7000,
         range: 10,
@@ -33,7 +33,7 @@ var enemyData = {};
 
 enemyData.criminal = {
     id:"criminal",
-    name: "Criminal",
+    name: "Purse thief",
     maxHealth: 3,
     attributes: [1,1,0,1],
     healthRegen: 0.005,

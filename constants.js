@@ -1,3 +1,6 @@
+const baseExperienceCost = 10;
+const baseLinearExperieneCost = 5;
+const baseExperienceCostExponent = 1.07;
 const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
 const PLAYER_BASE_HEALTH = 5;
@@ -26,7 +29,7 @@ const attribute = {
 var formulas = {}
 
 formulas.actionSpeed = function(value){
-    return Math.pow(1 + ACTION_SPEED_BASE, Math.max(0,Math.log10(value)));
+    return Math.pow(1 + ACTION_SPEED_BASE, Math.max(0,Math.log10(1 + value)));
 }
 formulas.damageReduction = function(value){
     return Math.pow(1-DAMAGE_REDUCTION_BASE,Math.log10(1 + value));

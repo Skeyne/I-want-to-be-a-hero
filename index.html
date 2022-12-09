@@ -13,18 +13,22 @@
 
 <body>
     <header>
-        <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
+        <!-- FPS setting to be revised -->
+        <!-- <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
             <option value="15">15FPS</option>
             <option value="30">30FPS</option>
             <option value="60">60FPS</option>
-        </select>
-        <button onclick="toggleMusic()">Music</button>
-        <button onclick="save()">Save Game</button>
-        <button onclick="load()">Load Game</button>
-        <button onclick="exportGame()">Export</button>
-        <button onclick="importGame()">Import</button>
-        <button onclick="hardReset()">HARD RESET</button>
-        <input id="slide" type="range" min="0.2" max="2" step="0.1" value="1">
+        </select> -->
+        <section>
+        <button class="bannerButton" onclick="toggleMusic()">Music</button>
+        <input type="range" min="1" max="100" value="20" class="slider" id="volumeSlider" onchange="setVolume(this.value)">
+        <button class="bannerButton" onclick="save()">Save Game</button>
+        <button class="bannerButton" onclick="load()">Load Game</button>
+        <button class="bannerButton" onclick="exportGame()">Export</button>
+        <button class="bannerButton" onclick="importGame()">Import</button>
+        <button class="bannerButton" style="float:right" onclick="hardReset()">HARD RESET</button>
+        </section>
+
         <audio controls muted id="audioSource" style="display: none;">
             <source src="cyberpunk-street.mp3" type="audio/mp3">
             Your browser does not support the audio element.
@@ -130,7 +134,8 @@
                         <br \>The damage formula is &ltbaseDamage + SUM(ATTRIBUTE_RATIO*(SQRT(ATTRIBUTE_VALUE + 1) -
                         1))&gt
                         where the second part is evaluated and then summed from every contributing attribute.
-                        <br \>Attributes can be increased by training (bottom left).
+                        <br \>Attributes can be increased by training.
+                        <br \>Get passive skills to further boost your attributes.
                     </div>
                 </section>
                 <section id="areasBox">

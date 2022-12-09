@@ -10,7 +10,9 @@ ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var log = document.getElementById("logBox");
 var audio = document.getElementById("audioSource");
-var slide = document.getElementById('slide');
+var slide = document.getElementById('volumeSlider');
+slide.value = playerStats.musicVolume*100;
+audio.vol = slide.value;
 const tryToPlay = setInterval(() => {
     audio.play()
         .then(() => {
@@ -22,7 +24,7 @@ const tryToPlay = setInterval(() => {
             if (playerStats.muted) {
                 audio.pause();
             } else {
-                fadeInAudio(0.2);
+                fadeInAudio(playerStats.musicVolume);
             }
 
         })
@@ -30,19 +32,21 @@ const tryToPlay = setInterval(() => {
             console.info('User has not interacted with document yet.');
         });
 }, 1000);
-async function fadeInAudio(target) {
+async function fadeInAudio() {
     audio.play();
     playerStats.muted = false;
-    let vol = audio.volume;
-    while (vol < target) {
-        vol += 0.005;
-        audio.volume = Math.min(1, vol);
+    audio.volume = 0;
+    while (audio.volume < playerStats.musicVolume) {
+        audio.volume += 0.005
+        audio.volume = Math.min(1, audio.volume);
         await new Promise(resolve => {
             setTimeout(() => {
                 resolve('resolved');
             }, 100);
         });
     }
+    audio.volume = playerStats.musicVolume;
+    playerStats.musicVolume = audio.volume;
 }
 async function fadeOutAudio(target) {
     let vol = audio.volume;
@@ -60,10 +64,14 @@ async function fadeOutAudio(target) {
 }
 function toggleMusic() {
     if (audio.paused) {
-        fadeInAudio(0.2);
+        fadeInAudio(playerStats.musicVolume);
     } else {
         fadeOutAudio(0);
     }
+}
+function setVolume(value){
+    playerStats.musicVolume = value/100;
+    audio.volume = playerStats.musicVolume;
 }
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
@@ -378,7 +386,7 @@ class Enemy extends CombatEntity {
         addPlayerMoney(this.data.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`${this.name} was defeated!`)
+        logConsole(`${this.name} was defeated! +${this.data.moneyReward}$ +${this.data.reputationReward}REP`)
     }
 }
 class Encounter {
@@ -397,6 +405,7 @@ class Encounter {
         player.setTarget(this.enemyArray[0]);
     }
     tick() {
+        player.tick();
         for (let index = 0; index < encounter.enemyArray.length; index++) {
             let e = encounter.enemyArray[index];
             if (e == null) { continue; }
@@ -405,7 +414,6 @@ class Encounter {
                 encounter.enemyArray[index] = null;
             }
         }
-        player.tick();
     }
 
     isActive() {
@@ -559,7 +567,7 @@ function logicLoop() {
                 encounter.tick();
                 break;
             case 1:
-                logConsole("Encounter finished, resetting.")
+                logConsole("Encounter finished.")
                 encounter = new Encounter(currentArea, 1);
                 break;
             case 2:
@@ -608,6 +616,7 @@ function drawCharacterPortrait(context,character, side) {
     if (side == "r") { hanchor.x = context.canvas.width - portraitDimensions - 2 * portraitBorder; }
     //Name
     let nameHeight = 30;
+    context.fillStyle = "rgba(0,0,0,.5)";
     context.fillRect(hanchor.x, anchor.y, mirror * 200, nameHeight + 12);
     context.font = `${nameHeight}px Pickle Pushing`;
     context.fillStyle = "white";

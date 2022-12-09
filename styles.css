@@ -522,6 +522,40 @@ progress[value]::-webkit-progress-bar {
 .logBox::-webkit-scrollbar {
     width: 5px;
 }
+.bannerButton{
+    border: 2px solid black;
+    font-family: 'Pickle Pushing';
+    font-size: 1em;
+    background-color: whitesmoke;
+}
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    background: goldenrod; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1; 
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    height: 1em;
+    width: 10%;
+    background: #000000; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #000000; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
 
 .dotted {
     background-image: radial-gradient(at 50% 50%, rgb(200, 200, 200) 20%, transparent 20%),
