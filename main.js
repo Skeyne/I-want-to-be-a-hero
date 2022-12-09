@@ -626,46 +626,46 @@ function drawCharacterPortrait(context,character, side) {
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 16);
     context.fillStyle = "rgb(200, 35, 35)";
-    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192, 12);
-    let grdHealth = context.createLinearGradient(hanchor.x + mirror * 4, 0, hanchor.x + mirror * (4 + 192), 0);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196, 12);
+    let grdHealth = context.createLinearGradient(hanchor.x + mirror * 2, 0, hanchor.x + mirror * (196), 0);
     grdHealth.addColorStop(0, "rgb(21, 153, 41)");
     grdHealth.addColorStop(1, "rgb(0, 255, 38)");
     let grdHealth2 = context.createLinearGradient(0, hanchor.y + 2, 0, hanchor.y + 14);
     grdHealth2.addColorStop(0, "rgba(255, 255, 255, .25)");
     grdHealth2.addColorStop(1, "rgba(0, 0, 0, .25)");
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * Math.max(0,(character.health / character.maxHealth)), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,(character.health / character.maxHealth)), 12);
     context.fillStyle = grdHealth2;
-    context.fillRect(hanchor.x + 4 * mirror, hanchor.y + 2, mirror * 192 * Math.max(0,(character.health / character.maxHealth)), 12);
-    hanchor.y += 16;
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,(character.health / character.maxHealth)), 12);
+    hanchor.y += 12;
     //Action bar
     context.fillStyle = "grey";
-    context.fillRect(hanchor.x, hanchor.y, mirror * 200, 8);
+    context.fillRect(hanchor.x, hanchor.y, mirror * 200, 10);
     context.fillStyle = "white";
-    context.fillRect(hanchor.x + mirror * 4, hanchor.y + 2, mirror * 192, 6);
+    context.fillRect(hanchor.x + mirror * 2, hanchor.y + 2, mirror * 196, 6);
     if(character.initiative == NaN) console.log("NaN error");
-    let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 192 * (character.initiative / (character.nextMove != null) ? character.nextMoveInitiative : character.initiative), 0);
+    let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 196 * (character.initiative / (character.nextMove != null) ? character.nextMoveInitiative : character.initiative), 0);
     grdAction.addColorStop(0.5, "rgb(0,255,255)");
     grdAction.addColorStop(1, "rgb(0,110,220)");
     context.fillStyle = grdAction;
-    context.fillRect(hanchor.x + mirror * 4, hanchor.y + 2, mirror * 192 * (character.initiative / character.nextMoveInitiative), 6);
+    context.fillRect(hanchor.x + mirror * 2, hanchor.y + 2, mirror * 196 * (character.initiative / character.nextMoveInitiative), 6);
     let grdAction2 = context.createLinearGradient(0, hanchor.y + 2, 0, hanchor.y + 8);
     grdAction2.addColorStop(0, "rgba(255, 255, 255, .25)");
     grdAction2.addColorStop(1, "rgba(0, 0, 0, .25)");
     context.fillStyle = grdAction2;
     context.fillRect(hanchor.x + mirror * 4, hanchor.y + 2, mirror * 192 * (character.initiative / character.nextMoveInitiative), 6);
-    hanchor.y += 8;
+    //hanchor.y += 8;
     //EXP bar   
-    if (side == "l") {
-        context.fillStyle = "grey";
-        context.fillRect(hanchor.x, hanchor.y, 200, 6);
-        context.fillStyle = "white";
-        context.fillRect(hanchor.x + 4, hanchor.y + 2, 192, 2);
-        let grdExp = context.createLinearGradient(132, 0, 132 + 192 * (playerStats.experience / playerStats.experienceToNext), 0);
-        grdExp.addColorStop(0.5, "rgb(255,0,255)");
-        grdExp.addColorStop(1, "rgb(200,0,200)");
-        context.fillStyle = grdExp;
-        context.fillRect(hanchor.x + 4, hanchor.y + 2, 192 * (playerStats.experience / playerStats.experienceToNext), 2);
-    }
+    // if (side == "l") {
+    //     context.fillStyle = "grey";
+    //     context.fillRect(hanchor.x, hanchor.y, 200, 6);
+    //     context.fillStyle = "white";
+    //     context.fillRect(hanchor.x + 4, hanchor.y + 2, 192, 2);
+    //     let grdExp = context.createLinearGradient(132, 0, 132 + 192 * (playerStats.experience / playerStats.experienceToNext), 0);
+    //     grdExp.addColorStop(0.5, "rgb(255,0,255)");
+    //     grdExp.addColorStop(1, "rgb(200,0,200)");
+    //     context.fillStyle = grdExp;
+    //     context.fillRect(hanchor.x + 4, hanchor.y + 2, 192 * (playerStats.experience / playerStats.experienceToNext), 2);
+    // }
 
 }
