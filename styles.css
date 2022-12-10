@@ -7,6 +7,7 @@
 
 html,
 body {
+    color: whitesmoke;
     margin: 0;
     height: max-content;
     -ms-overflow-style: none;
@@ -204,6 +205,7 @@ main {
 
 .blockHeader {
     font-size: 32px;
+    color:black;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
     padding-left: 10px;
@@ -212,7 +214,7 @@ main {
 }
 
 .blockBody {
-    border: 5px inset grey;
+    border: 5px inset rgb(53, 53, 53);
     height: calc(100% - 45px);
     box-sizing: border-box;
     position: relative;
@@ -400,6 +402,36 @@ progress[value]::-webkit-progress-bar {
     padding-left: 6px;
 }
 
+#reputationText {
+    color: rgb(0, 15, 180);
+}
+
+#reputationText:after {
+    content: "";
+    display: inline-block;
+    background: url("reputationTextIcon.png") no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0 6px 0 6px;
+    vertical-align: middle;
+}
+#moneyText {
+    color: rgb(44, 190, 0);
+}
+
+#moneyText:after {
+    content: "";
+    display: inline-block;
+    background: url("moneyTextIcon.png") no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0 6px 0 6px;
+    vertical-align: middle;
+}
+
+
 #strengthText {
     color: red;
 }
@@ -465,11 +497,12 @@ progress[value]::-webkit-progress-bar {
 }
 
 .passiveSkillButton {
-    width: 64px;
-    height: 64px;
+    width: 6em;
+    height: 6em;
     border: 5px grey outset;
     position: relative;
     padding: 0;
+    image-rendering: pixelated;
 }
 
 .passiveSkillButton:active {
@@ -483,7 +516,8 @@ progress[value]::-webkit-progress-bar {
     background: black;
     color: white;
     text-align: center;
-    height: 30%;
+    padding-top: 5%;
+    height: 25%;
     width: 30%;
     bottom: -34%;
     right: -67%;
@@ -649,12 +683,12 @@ progress[value]::-webkit-progress-bar {
 }
 
 .dotted {
-    background-image: radial-gradient(at 50% 50%, rgb(200, 200, 200) 20%, transparent 20%),
-        radial-gradient(at 0% 0%, rgb(200, 200, 200) 10%, transparent 10%),
-        radial-gradient(at 100% 0%, rgb(200, 200, 200) 10%, transparent 10%),
-        radial-gradient(at 100% 100%, rgb(200, 200, 200) 10%, transparent 10%),
-        radial-gradient(at 0% 100%, rgb(200, 200, 200) 10%, transparent 10%);
-    background-color: rgb(177, 177, 177);
+    background-image: radial-gradient(at 50% 50%, rgb(0, 0, 0) 20%, transparent 20%),
+        radial-gradient(at 0% 0%, rgb(0, 0, 0) 10%, transparent 10%),
+        radial-gradient(at 100% 0%, rgb(0, 0, 0) 10%, transparent 10%),
+        radial-gradient(at 100% 100%, rgb(0, 0, 0) 10%, transparent 10%),
+        radial-gradient(at 0% 100%, rgb(0, 0, 0) 10%, transparent 10%);
+    background-color: rgb(23, 23, 23);
     /* background-position: 0 0, 50px 50px; */
     background-size: 6px 6px;
 }

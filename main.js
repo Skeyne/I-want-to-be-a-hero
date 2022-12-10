@@ -549,7 +549,7 @@ function renderLoop() {
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
     document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
-    document.getElementById("moneyText").innerHTML = format(playerStats.money)+'$';
+    document.getElementById("moneyText").innerHTML = format(playerStats.money);
     document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
     Object.values(attribute).forEach(attributeName => {
         document.getElementById(attributeName + "Text").innerHTML = format(getEffectiveValue(attributeName));
