@@ -403,7 +403,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #reputationText {
-    color: rgb(0, 15, 180);
+    color: rgb(33, 44, 172);
 }
 
 #reputationText:after {
@@ -433,7 +433,7 @@ progress[value]::-webkit-progress-bar {
 
 
 #strengthText {
-    color: red;
+    color: rgb(255, 53, 53);
 }
 
 #strengthText:after {
@@ -448,7 +448,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #toughnessText {
-    color: rgb(7, 144, 0);
+    color: rgb(41, 153, 35);
 }
 
 #toughnessText:after {
@@ -526,7 +526,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #mindText {
-    color: rgb(140, 0, 255);
+    color: rgb(170, 66, 255);
 }
 
 #mindText:after {
@@ -541,7 +541,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #agilityText {
-    color: rgb(255, 255, 0);
+    color: rgb(255, 255, 63);
 }
 
 #agilityText:after {
