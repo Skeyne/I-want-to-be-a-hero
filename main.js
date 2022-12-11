@@ -128,7 +128,7 @@ class CombatEntity {
                 weights[i] = (playerMoves[k].range > dist ? 100 : 0);
             }
             if (playerMoves[k].type == 1) {
-                weights[i] = (dist < 50 ? 100 : 0);
+                weights[i] = (dist > 10 ? 100 : 0);
             }
         }
         const max = Math.max(...weights);

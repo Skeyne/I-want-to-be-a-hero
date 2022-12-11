@@ -138,7 +138,7 @@ playerMoves = {
         damageRatios: [1,0,0,0.2],
         damageRange: [0.9, 1.1],
         time: 3000,
-        range: 5,
+        range: 10,
     },
     'Kick': {
         type: 0,
@@ -167,38 +167,6 @@ playerMoves = {
         damage: 0,
         time: 1000,
         range: 10,
-    }
-}
-function generatePassiveTooltip(skill) {
-    let numberDisplay = "";
-    switch (skill.effect.effectType) {
-        case "additiveFlat":
-            numberDisplay = "+" + skill.effect.effectMagnitude;
-            break;
-        case "additivePercent":
-            numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
-            break;
-        case "multPercent":
-            numberDisplay = "x" + skill.effect.effectMagnitude;
-            break;
-        default:
-            console.log("Undefined effect type")
-            break;
-    }
-    let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
-    let costString = "";
-    if(isNaN(cost)) {costString = "MAXED!"} else {costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points"};
-    return  `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
-        skill.desc + "<br />" +
-        `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span> ${numberDisplay}` + "<br />" +
-        "Cost: " + costString;
-}
-
-function getPlayerPassiveLevel(skillId) {
-    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
-        return 0;
-    } else {
-        return playerStats.unlockedSkills[skillId];
     }
 }
 
@@ -232,6 +200,68 @@ Object.values(skillLibrary[playerStats.class]).forEach(skill => {
     b.appendChild(l);
 
 });
+let loadoutContainer = document.getElementById("abilityLoadoutContainer");
+let slots = [];
+for (let index = 0; index < playerStats.abilitySlots; index++) {
+    let slot = document.createElement("select");
+    slot.setAttribute("class", "abilitySlot");
+    slot.style.height = "4rem";
+    slot.style.width = "4rem";
+    slots.push(slot);
+    loadoutContainer.appendChild(slot);
+}
+let currentAbilities = playerStats.equippedAbilities.slice(1);
+console.log(currentAbilities);
+for (let slotN = 0; slotN < slots.length; slotN++) {
+    const element = slots[slotN];
+    let noOption = document.createElement("option");
+    noOption.innerHTML = "None";
+    noOption.value = null;
+    element.appendChild(noOption);
+    Object.keys(playerStats.unlockedAbilities).forEach(ability => {
+        let option = document.createElement("option");
+        option.innerHTML = ability;
+        option.value = ability;
+        element.appendChild(option);
+        if (currentAbilities[slotN] == ability) {option.setAttribute("selected", "selected");
+            element.style.backgroundImage = "url("+playerMoves[ability].name+"Icon.png)"};
+    });
+}
+
+function generatePassiveTooltip(skill) {
+    let numberDisplay = "";
+    switch (skill.effect.effectType) {
+        case "additiveFlat":
+            numberDisplay = "+" + skill.effect.effectMagnitude;
+            break;
+        case "additivePercent":
+            numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
+            break;
+        case "multPercent":
+            numberDisplay = "x" + skill.effect.effectMagnitude;
+            break;
+        default:
+            console.log("Undefined effect type")
+            break;
+    }
+    let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
+    let costString = "";
+    if(isNaN(cost)) {costString = "MAXED!"} else {costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points"};
+    return  `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
+        skill.desc + "<br />" +
+        `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span> ${numberDisplay}` + "<br />" +
+        "Cost: " + costString;
+}
+
+function getPlayerPassiveLevel(skillId) {
+    if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+        return 0;
+    } else {
+        return playerStats.unlockedSkills[skillId];
+    }
+}
+
+
 
 function addSkill(skillId) {
     if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {

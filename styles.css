@@ -61,8 +61,16 @@ main {
     display: none;
 }
 
-
-
+.abilitySlot{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+    color: transparent;
+    image-rendering: pixelated;
+}
+.abilitySlot option{
+    color: whitesmoke;
+}
 .pickle {
     font-family: 'Pickle Pushing', sans-serif;
     padding-left: 6px;
