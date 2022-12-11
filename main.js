@@ -9,70 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var log = document.getElementById("logBox");
-var audio = document.getElementById("audioSource");
-var slide = document.getElementById('volumeSlider');
-slide.value = playerStats.musicVolume*100;
-audio.vol = slide.value;
-const tryToPlay = setInterval(() => {
-    audio.play()
-        .then(() => {
-            clearInterval(tryToPlay);
-            console.info('Successful play().');
-            audio.loop = true;
-            audio.muted = false;
-            audio.volume = 0;
-            if (playerStats.muted) {
-                audio.pause();
-            } else {
-                fadeInAudio(playerStats.musicVolume);
-            }
 
-        })
-        .catch(error => {
-            console.info('User has not interacted with document yet.');
-        });
-}, 1000);
-async function fadeInAudio() {
-    audio.play();
-    playerStats.muted = false;
-    audio.volume = 0;
-    while (audio.volume < playerStats.musicVolume) {
-        audio.volume += 0.005
-        audio.volume = Math.min(1, audio.volume);
-        await new Promise(resolve => {
-            setTimeout(() => {
-                resolve('resolved');
-            }, 100);
-        });
-    }
-    audio.volume = playerStats.musicVolume;
-    playerStats.musicVolume = audio.volume;
-}
-async function fadeOutAudio(target) {
-    let vol = audio.volume;
-    while (vol > target) {
-        vol -= 0.02;
-        audio.volume = Math.max(0, vol);
-        await new Promise(resolve => {
-            setTimeout(() => {
-                resolve('resolved');
-            }, 100);
-        });
-    }
-    audio.pause();
-    playerStats.muted = true;
-}
-function toggleMusic() {
-    if (audio.paused) {
-        fadeInAudio(playerStats.musicVolume);
-    } else {
-        fadeOutAudio(0);
-    }
-}
-function setVolume(value){
-    playerStats.musicVolume = value/100;
-    audio.volume = playerStats.musicVolume;
-}
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
@@ -214,10 +151,10 @@ class Player extends CombatEntity {
             case 0:
                 if (target.distance <= this.nextMove.range) {
                     let d = this.nextMove.damage
-                        + Math.sqrt(this.nextMove.damageRatios[0] * getEffectiveValue("strength") + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[1] * getEffectiveValue("toughness") + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[2] * getEffectiveValue("mind") + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[3] * getEffectiveValue("agility") + 1) - 1;
+                        + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
+                        + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
+                        + this.nextMove.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
+                        + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let dr = target.takeDamage(d);
                     logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(dr)}(${format(d)}) damage.`);
@@ -249,16 +186,18 @@ class Player extends CombatEntity {
         }
         let dist = this.target.distance;
         if (dist > 5) this.moveIntention = 1; else this.moveIntention = -1;
-        let weights = [];
+        let weights = [playerStats.equippedAbilities.length];
         let i = 0;
-        for (let k in playerMoves) {
+        for (let index = 0; index < playerStats.equippedAbilities.length; index++) {
+            let k = playerStats.equippedAbilities[index];
+            if(k == null){weights[index] = 0; continue;}
+            
             if (playerMoves[k].type == 0) {
-                weights[i] = (playerMoves[k].range >= dist ? 100 : 0);
+                weights[index] = (playerMoves[k].range >= dist ? 100 : 0);
             }
             if (playerMoves[k].type == 1) {
-                weights[i] = (dist < 10 ? 50 : 100);
-            }
-            i++;
+                weights[index] = (dist <= 5 ? 0 : 100);
+            }  
         }
         const max = Math.max(...weights);
         let indexes = [];
@@ -274,7 +213,7 @@ class Player extends CombatEntity {
         } else {
             pick = Math.floor(Math.random() * indexes.length);
         }
-        let moveKey = Object.keys(playerMoves)[indexes[pick]];
+        let moveKey = playerStats.equippedAbilities[indexes[pick]];
         this.nextMove = playerMoves[moveKey];
         this.nextMoveInitiative = this.nextMove.time;
         document.getElementById("playerMoveText").innerHTML = moveKey;
@@ -316,8 +255,8 @@ class Enemy extends CombatEntity {
                     let d = this.nextMove.baseDamage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
-                        + this.nextMove.damageRatios[2] * (Math.sqrt( this.data.attributes[2] + 1) - 1)
-                        + this.nextMove.damageRatios[3] * (Math.sqrt( this.data.attributes[3] + 1) - 1);
+                        + this.nextMove.damageRatios[2] * (Math.sqrt(this.data.attributes[2] + 1) - 1)
+                        + this.nextMove.damageRatios[3] * (Math.sqrt(this.data.attributes[3] + 1) - 1);
                     let dr = target.takeDamage(d);
                     logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
@@ -375,7 +314,7 @@ class Enemy extends CombatEntity {
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
-        if(this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
+        if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     onDeath() {
         addPlayerExp(this.data.expReward);
@@ -386,12 +325,12 @@ class Enemy extends CombatEntity {
     }
 }
 class Encounter {
-    constructor(area,enemyNum) {
+    constructor(area, enemyNum) {
         this.enemyArray = [];
         this.enemiesToSpawn = enemyNum;
         let lastHealth = player.health
         this.area = area;
-        player = new Player(playerStats);   
+        player = new Player(playerStats);
         if (lastHealth > 0) { player.health = lastHealth; }
         for (let index = 0; index < this.enemiesToSpawn; index++) {
             let picked = Math.floor(Math.random() * this.area.enemies.length);
@@ -422,7 +361,7 @@ class Encounter {
 }
 
 class Area {
-    constructor(data){
+    constructor(data) {
         this.name = data.name;
         this.background = data.background;
         this.backgroundImage = new Image();
@@ -431,9 +370,9 @@ class Area {
     }
 }
 
-const areas = [new Area({name:"Alley",background:"alleyBackground.png",enemies : ["criminal"]}),
-            new Area({name:"Streets",background:"cyberpunk-street.png",enemies : ["thug"]}),
-            new Area({name:"Bridge",background:"bridgeAreaBackground-1.png",enemies : ["prisoner9"]})];
+const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"] }),
+new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"] }),
+new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner9"] })];
 
 areaSelect = document.getElementById("selectArea");
 for (let index = 0; index < areas.length; index++) {
@@ -441,9 +380,9 @@ for (let index = 0; index < areas.length; index++) {
 }
 
 currentArea = areas[0];
-function changeArea(index){
+function changeArea(index) {
     currentArea = areas[index];
-    encounter = new Encounter(currentArea,1);
+    encounter = new Encounter(currentArea, 1);
 }
 
 function drawSkillIcon(context, skillname, x, y) {
@@ -471,22 +410,22 @@ var player = new Player(playerStats);
 var encounter = new Encounter(currentArea, 1);
 var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
 var bgImage = new Image();
-bgImage.src = "cyberpunk-street.png";   
+bgImage.src = "cyberpunk-street.png";
 
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 
 //const worker = new Worker('./worker.js');
-const worker = new Worker(URL.createObjectURL(new Blob(["("+worker_function.toString()+")()"], {type: 'text/javascript'})));
-worker.onmessage = (event) => 
-        mainLoop();
+const worker = new Worker(URL.createObjectURL(new Blob(["(" + worker_function.toString() + ")()"], { type: 'text/javascript' })));
+worker.onmessage = (event) =>
+    mainLoop();
 
 worker.postMessage({
-    interval: logicTickTime, 
+    interval: logicTickTime,
 })
 
-function mainLoop(){    
+function mainLoop() {
     logicLoop();
-    renderLoop();   
+    renderLoop();
 
 }
 function renderLoop() {
@@ -517,16 +456,16 @@ function renderLoop() {
         c.width = c.clientWidth;
         //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
         ctx.scale(c.height / cBuffer.height, c.height / cBuffer.height);
-        
+
     } else {
         ctxBuffer.fillStyle = "black";
-        ctxBuffer.fillRect(0,0,cBuffer.width,cBuffer.height);
+        ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
         ctxBuffer.font = `80px Pickle Pushing`;
         ctxBuffer.fillStyle = "white";
         ctxBuffer.textAlign = 'center';
-        ctxBuffer.fillText("DEFEAT!", cBuffer.width/2,cBuffer.height/2);
+        ctxBuffer.fillText("DEFEAT!", cBuffer.width / 2, cBuffer.height / 2);
         ctxBuffer.font = `24px Pickle Pushing`;
-        ctxBuffer.fillText("Getting up and trying again...", cBuffer.width/2,cBuffer.height/2 + 50);
+        ctxBuffer.fillText("Getting up and trying again...", cBuffer.width / 2, cBuffer.height / 2 + 50);
         ctxBuffer.textAlign = 'left';
 
     }
@@ -577,7 +516,7 @@ function logicLoop() {
         }
     } else if (gameState == "InRest") {
         player.rest()
-        if(player.health == player.maxHealth){
+        if (player.health == player.maxHealth) {
             encounter = new Encounter(currentArea, 1);
             gameState = "InCombat";
         }
@@ -597,7 +536,7 @@ function scaleDistance(distance) {
     let upper = cBuffer.width - padding;
     return lower + dist * (upper - lower);
 }
-function drawCharacterPortrait(context,character, side) {
+function drawCharacterPortrait(context, character, side) {
     let anchor = { x: 0, y: 0 };
     let portraitDimensions = 120;
     let portraitBorder = 4;
@@ -630,16 +569,16 @@ function drawCharacterPortrait(context,character, side) {
     grdHealth2.addColorStop(0, "rgba(255, 255, 255, .25)");
     grdHealth2.addColorStop(1, "rgba(0, 0, 0, .25)");
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,(character.health / character.maxHealth)), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, (character.health / character.maxHealth)), 12);
     context.fillStyle = grdHealth2;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,(character.health / character.maxHealth)), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, (character.health / character.maxHealth)), 12);
     hanchor.y += 12;
     //Action bar
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 10);
     context.fillStyle = "white";
     context.fillRect(hanchor.x + mirror * 2, hanchor.y + 2, mirror * 196, 6);
-    if(character.initiative == NaN) console.log("NaN error");
+    if (character.initiative == NaN) console.log("NaN error");
     let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 196 * (character.initiative / (character.nextMove != null) ? character.nextMoveInitiative : character.initiative), 0);
     grdAction.addColorStop(0.5, "rgb(0,255,255)");
     grdAction.addColorStop(1, "rgb(0,110,220)");

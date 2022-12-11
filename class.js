@@ -129,6 +129,46 @@ skillLibrary = {
     },
 
 }
+playerMoves = {
+    'Punch': {
+        type: 0,
+        name: "punch",
+        iconName: "punch",
+        damage: 1,
+        damageRatios: [1,0,0,0.2],
+        damageRange: [0.9, 1.1],
+        time: 3000,
+        range: 5,
+    },
+    'Kick': {
+        type: 0,
+        name: "kick",
+        iconName: "kick",
+        damage: 2,
+        damageRatios: [1.6,0,0,0.8],
+        damageRange: [1, 1.2],
+        time: 4000,
+        range: 10,
+    },
+    'Haymaker': {
+        type: 0,
+        name: "haymaker",
+        iconName: "smash",
+        damage: 10,
+        damageRatios: [3,2,0,0],
+        damageRange: [1, 1.5],
+        time: 7000,
+        range: 10,
+    },
+    'Walk': {
+        type: 1,
+        name: "move",
+        iconName: "move",
+        damage: 0,
+        time: 1000,
+        range: 10,
+    }
+}
 function generatePassiveTooltip(skill) {
     let numberDisplay = "";
     switch (skill.effect.effectType) {
@@ -150,7 +190,7 @@ function generatePassiveTooltip(skill) {
     if(isNaN(cost)) {costString = "MAXED!"} else {costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points"};
     return  `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
         skill.desc + "<br />" +
-        `<span id="${skill.effect.effectTarget}Text">${skill.effect.effectTarget}</span> ${numberDisplay}` + "<br />" +
+        `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span> ${numberDisplay}` + "<br />" +
         "Cost: " + costString;
 }
 

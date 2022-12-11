@@ -16,6 +16,8 @@ const cleanPlayerStats = {
     muted: false,
     musicVolume: 0.2,
     unlockedSkills: {},
+    unlockedAbilities: {},
+    equippedAbilities: ["Walk","Punch",null,null],
     effectMultipliers: {},
     storyProgress: 0,
     currentStoryQuestProgress: [0],

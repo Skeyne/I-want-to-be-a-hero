@@ -24,7 +24,7 @@ var abilityLibrary = {
         name: "Move",
         iconName: "move",
         baseDamage: 0,
-        time: 500,
+        time: 1000,
         range: 10,
     }
 };
@@ -35,7 +35,7 @@ enemyData.criminal = {
     id:"criminal",
     name: "Purse thief",
     maxHealth: 3,
-    attributes: [1,1,0,1],
+    attributes: [.5,1,0,1],
     healthRegen: 0.005,
     expReward: 1,
     moneyReward: 0.01,
@@ -60,8 +60,8 @@ enemyData.thug = {
 enemyData.prisoner9 = {
     id:"prisoner9",
     name: "Prisoner 9",
-    maxHealth: 50,
-    attributes: [25,20,1,5],
+    maxHealth: 100,
+    attributes: [50,20,1,5],
     healthRegen: 0.005,
     expReward: 10,
     moneyReward: 0.2,
@@ -71,23 +71,3 @@ enemyData.prisoner9 = {
     moves: ['Punch','Smash','Walk'],
 };
 
-playerMoves = {
-    'Punch': {
-        type: 0,
-        name: "punch",
-        iconName: "punch",
-        damage: 1,
-        damageRatios: [1,0,0,0.2],
-        damageRange: [0.9, 1.1],
-        time: 3000,
-        range: 5,
-    },
-    'Walk': {
-        type: 1,
-        name: "move",
-        iconName: "move",
-        damage: 0,
-        time: 500,
-        range: 10,
-    }
-}

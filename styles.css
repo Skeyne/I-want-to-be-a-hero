@@ -432,11 +432,11 @@ progress[value]::-webkit-progress-bar {
 }
 
 
-#strengthText {
+.strengthText {
     color: rgb(255, 53, 53);
 }
 
-#strengthText:after {
+.strengthText:after {
     content: "";
     display: inline-block;
     background: url("strengthTextIcon.png") no-repeat;
@@ -447,11 +447,11 @@ progress[value]::-webkit-progress-bar {
     vertical-align: middle;
 }
 
-#toughnessText {
+.toughnessText {
     color: rgb(41, 153, 35);
 }
 
-#toughnessText:after {
+.toughnessText:after {
     content: "";
     display: inline-block;
     background: url("toughnessTextIcon.png") no-repeat;
@@ -525,11 +525,11 @@ progress[value]::-webkit-progress-bar {
     border-top: 2px solid grey;
 }
 
-#mindText {
+.mindText {
     color: rgb(170, 66, 255);
 }
 
-#mindText:after {
+.mindText:after {
     content: "";
     display: inline-block;
     background: url("mindTextIcon.png") no-repeat;
@@ -540,11 +540,11 @@ progress[value]::-webkit-progress-bar {
     vertical-align: middle;
 }
 
-#agilityText {
+.agilityText {
     color: rgb(255, 255, 63);
 }
 
-#agilityText:after {
+.agilityText:after {
     content: "";
     display: inline-block;
     background: url("agilityTextIcon.png") no-repeat;
@@ -712,10 +712,9 @@ progress[value]::-webkit-progress-bar {
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-
     /* Position the tooltip text - see examples below! */
     position: absolute;
-    z-index: 1;
+    z-index: 10;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
