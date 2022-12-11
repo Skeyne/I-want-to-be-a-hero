@@ -51,8 +51,10 @@ main {
     grid-row: 1;
     grid-column: 1;
     height: 100%;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    width: 49vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
 }
 
 #gridMain::-webkit-scrollbar{
@@ -83,11 +85,10 @@ main {
 
 #grid1 {
     display: grid;
-    grid-template-columns: 1fr;
     grid-template-rows: 98vh;
     grid-auto-rows: 98vh;
+    grid-auto-columns: 49vw;
     row-gap: 0.5vw;
-    column-gap: 1vw;
 }
 
 .gridSkills {
@@ -109,25 +110,24 @@ main {
 
 
 #storyBox {
-    grid-column: 1;
+    grid-row: 1;
 }
 #combatBox {
-    grid-column: 1;
+    grid-row: 1;
 }
 #trainingBox {
-    grid-column: 1;
+    grid-row: 1;
 }
 
 #skillsBox {
-    grid-column: 1;
+    grid-row: 1;
 }
 
 #statsBox {
-    grid-column: 1;
-    align-self: stretch;
+    grid-row: 1;
 }
 #areasBox {
-    grid-column: 1;
+    grid-row: 1;
 }
 
 
@@ -208,10 +208,35 @@ main {
     color:black;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
-    padding-left: 10px;
     border: 5px outset goldenrod;
     display: block;
+    text-align: center;
+    padding-left: 0;
 }
+.blockHeader::after {
+    content: "";
+    background-image: url(rightAngleBracket.png);
+    height: 20px;
+    width:20px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-left:20px;
+    margin-bottom: 4px;
+}
+.blockHeader::before {
+    content: "";
+    background-image: url(leftAngleBracket.png);
+    height: 20px;
+    width:20px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 20px;
+    margin-bottom: 4px;
+    }
 
 .blockBody {
     border: 5px inset rgb(53, 53, 53);
