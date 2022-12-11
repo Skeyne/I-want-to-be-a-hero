@@ -9,7 +9,37 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var log = document.getElementById("logBox");
+var pageY = 0;
+function disableScroll() {
+    // if any scroll is attempted, set this to the previous value
+    window.onscroll = function () {
+        window.scrollTo(0, pageY);
+    };
+}
 
+function enableScroll() {
+    window.onscroll = function () { };
+}
+var leftWindow = document.getElementById("gridMain");
+let isMouseHover = false
+leftWindow.addEventListener("mouseleave", function (event) {
+    pageY = 0;
+    isMouseHover = false
+    enableScroll();
+    console.log(isMouseHover)
+}, false);
+leftWindow.addEventListener("mouseover", function (event) {
+    if (pageY == 0) pageY = window.pageYOffset;
+    isMouseHover = true
+    disableScroll();
+    console.log(isMouseHover)
+}, false);
+
+window.addEventListener("wheel", function (e) {
+    if (!isMouseHover) return;
+    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + 773, behavious: 'smooth', });
+    else leftWindow.scroll({ left: leftWindow.scrollLeft - 773, behavious: 'smooth', });
+});
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
@@ -190,14 +220,14 @@ class Player extends CombatEntity {
         let i = 0;
         for (let index = 0; index < playerStats.equippedAbilities.length; index++) {
             let k = playerStats.equippedAbilities[index];
-            if(k == null){weights[index] = 0; continue;}
-            
+            if (k == null) { weights[index] = 0; continue; }
+
             if (playerMoves[k].type == 0) {
                 weights[index] = (playerMoves[k].range >= dist ? 100 : 0);
             }
             if (playerMoves[k].type == 1) {
                 weights[index] = (dist <= 5 ? 0 : 100);
-            }  
+            }
         }
         const max = Math.max(...weights);
         let indexes = [];

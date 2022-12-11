@@ -111,13 +111,13 @@
                             style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
                             Currently training: <span id="currentTrainingAttribute"></span></div>
                         <div id="trainingButtonWrap">
-                            <button class="attributeButton" id="strengthText"
+                            <button class="attributeButton strengthText"
                                 onclick="changeTrainingAttribute(attribute.strength)"></button>
-                            <button class="attributeButton" id="toughnessText"
+                            <button class="attributeButton toughnessText"
                                 onclick="changeTrainingAttribute(attribute.toughness)"></button>
-                            <button class="attributeButton" id="mindText"
+                            <button class="attributeButton mindText"
                                 onclick="changeTrainingAttribute(attribute.mind)"></button>
-                            <button class="attributeButton" id="agilityText"
+                            <button class="attributeButton agilityText"
                                 onclick="changeTrainingAttribute(attribute.agility)"></button>
                         </div>
                         <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session:
@@ -169,7 +169,7 @@
                         that
                         percentage of the respective attribute value is used in the move's damage formula.
                         <br \>The damage formula is:
-                        <br \><img id="damageFormula" src="./damageFormula.png" />,
+                        <br \><img id="damageFormula" src="./damageFormulaInvert.png" />,
                         where the second part is evaluated and then summed from every contributing attribute.
                         <br \>Attributes can be increased by training.
                         <br \>Get passive skills to further boost your attributes.

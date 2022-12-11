@@ -23,14 +23,14 @@ body::-webkit-scrollbar {
 
 body {
     height: 100%;
-    background-image: linear-gradient(180deg, rgb(30, 30, 30), rgb(0, 0, 0));
+    background-image: linear-gradient(180deg, rgb(44, 44, 44), rgb(0, 0, 0));
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 header {
     width: 100%;
     height: 10%;
-    background: linear-gradient(180deg, rgb(24, 24, 24), 85%, rgb(0, 0, 0));
+    background: linear-gradient(180deg, rgb(32, 32, 32), 85%, rgb(0, 0, 0));
 }
 
 header button,
@@ -57,7 +57,7 @@ main {
     scroll-snap-type: x mandatory;
 }
 
-#gridMain::-webkit-scrollbar{
+#gridMain::-webkit-scrollbar {
     display: none;
 }
 
@@ -88,7 +88,7 @@ main {
     grid-template-rows: 98vh;
     grid-auto-rows: 98vh;
     grid-auto-columns: 49vw;
-    row-gap: 0.5vw;
+    column-gap: 10vw;
 }
 
 .gridSkills {
@@ -112,9 +112,11 @@ main {
 #storyBox {
     grid-row: 1;
 }
+
 #combatBox {
     grid-row: 1;
 }
+
 #trainingBox {
     grid-row: 1;
 }
@@ -126,6 +128,7 @@ main {
 #statsBox {
     grid-row: 1;
 }
+
 #areasBox {
     grid-row: 1;
 }
@@ -133,8 +136,7 @@ main {
 
 
 #helpBox {
-    grid-column: 1;
-    height: 98vh;
+    grid-row: 1;
 }
 
 #helpBody {
@@ -205,7 +207,7 @@ main {
 
 .blockHeader {
     font-size: 32px;
-    color:black;
+    color: black;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
     border: 5px outset goldenrod;
@@ -213,30 +215,41 @@ main {
     text-align: center;
     padding-left: 0;
 }
+
 .blockHeader::after {
     content: "";
     background-image: url(rightAngleBracket.png);
     height: 20px;
-    width:20px;
+    width: 20px;
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
     vertical-align: middle;
-    margin-left:20px;
+    margin-left: 20px;
     margin-bottom: 4px;
 }
+section:last-child div.blockHeader::after {
+    content: "";
+    background-image: none;
+}
+
 .blockHeader::before {
     content: "";
     background-image: url(leftAngleBracket.png);
     height: 20px;
-    width:20px;
+    width: 20px;
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
     vertical-align: middle;
     margin-right: 20px;
     margin-bottom: 4px;
-    }
+}
+
+section:first-child div.blockHeader::before {
+    content: "";
+    background-image: none;
+}
 
 .blockBody {
     border: 5px inset rgb(53, 53, 53);
@@ -441,6 +454,7 @@ progress[value]::-webkit-progress-bar {
     margin: 0 6px 0 6px;
     vertical-align: middle;
 }
+
 #moneyText {
     color: rgb(44, 190, 0);
 }
@@ -713,7 +727,7 @@ progress[value]::-webkit-progress-bar {
         radial-gradient(at 100% 0%, rgb(0, 0, 0) 10%, transparent 10%),
         radial-gradient(at 100% 100%, rgb(0, 0, 0) 10%, transparent 10%),
         radial-gradient(at 0% 100%, rgb(0, 0, 0) 10%, transparent 10%);
-    background-color: rgb(23, 23, 23);
+    background-color: rgb(18, 18, 18);
     /* background-position: 0 0, 50px 50px; */
     background-size: 6px 6px;
 }
