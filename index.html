@@ -101,7 +101,7 @@
                                 Agility: <span class="agilityText" id="agilityText">0</span>
                             </div>
                         </div>
-                        <div class="pickle">Active skills:</div>
+                        <div class="pickle">Active abilities:</div>
                         <div class="blockBody" id="abilityLoadoutContainer" style="height:auto ;display: grid;grid-template-columns: auto;
                         grid-auto-flow:column;column-gap: normal;justify-items: center;">
                         </div>
@@ -145,6 +145,13 @@
                 font-weight:lighter ;">
                         <select name="selectArea" class="dropdown pickle" id="selectArea"
                             onchange="changeArea(this.value)"></select>
+                    </div>
+                </section>
+                <section class="infoBox" id="abilitiesBox">
+                    <div class="blockHeader pickle" style="display: block">ABILITIES</div>
+                    <div class="blockBody dotted pickle">
+                        <div id="abilityRequirementsGrid" style="height:100%;width:100%;display: grid;
+                        grid-template-columns: 20% 80%;grid-template-rows: 10%; grid-auto-rows: 10%; justify-content: center;"></div>
                     </div>
                 </section>
                 <section class="infoBox" id="skillsBox">

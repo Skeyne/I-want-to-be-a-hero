@@ -130,45 +130,90 @@ skillLibrary = {
 
 }
 playerMoves = {
-    'Punch': {
+    'punch': {
         type: 0,
         name: "punch",
         iconName: "punch",
         damage: 1,
-        damageRatios: [1,0,0,0.2],
+        damageRatios: [1, 0, 0, 0.2],
         damageRange: [0.9, 1.1],
         time: 3000,
+        cooldownTime: 0,
         range: 10,
     },
-    'Kick': {
+    'kick': {
         type: 0,
         name: "kick",
         iconName: "kick",
         damage: 2,
-        damageRatios: [1.6,0,0,0.8],
+        damageRatios: [1.6, 0, 0, 0.8],
         damageRange: [1, 1.2],
         time: 4000,
+        cooldownTime: 5000,
         range: 10,
     },
-    'Haymaker': {
+    'jab': {
+        type: 0,
+        name: "jab",
+        iconName: "punch",
+        damage: 1,
+        damageRatios: [.1, 0, 0, .4],
+        damageRange: [.95, 1.05],
+        time: 1000,
+        cooldownTime: 0,
+        range: 10,
+    },
+    'haymaker': {
         type: 0,
         name: "haymaker",
         iconName: "smash",
         damage: 10,
-        damageRatios: [3,2,0,0],
+        damageRatios: [3, 2, 0, 0],
         damageRange: [1, 1.5],
         time: 7000,
+        cooldownTime: 10000,
         range: 10,
     },
-    'Walk': {
+    'walk': {
         type: 1,
         name: "move",
         iconName: "move",
         damage: 0,
         time: 1000,
+        cooldownTime: 0,
         range: 10,
     }
 }
+abilityUnlocks = {
+    0:['punch','walk'],
+    5:['kick'],
+    10:['haymaker'],
+}
+
+let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
+populateAbilityRequirements();
+function populateAbilityRequirements(){
+    let levels = Object.keys(abilityUnlocks);
+    for (let index = 0; index < levels.length; index++) {
+        let abilities = abilityUnlocks[levels[index]]
+        let label = document.createElement("div");
+        label.setAttribute("class","pickle abilityPickContainerLabel");
+        label.innerHTML = "Level " + levels[index];
+        abilityRequirementsGrid.append(label);
+        let c = document.createElement("div");
+        c.setAttribute("class","abilityPickContainer");
+        abilityRequirementsGrid.append(c);
+        for (let abilityN = 0; abilityN < abilities.length; abilityN++) {
+            const ability = abilities[abilityN];
+            let b = document.createElement("button");
+            b.setAttribute("class","abilityPickButton");
+            b.style.backgroundImage = `url("${playerMoves[ability].iconName}Icon.png")`;
+            c.append(b);
+        }
+    }
+}
+
+
 
 let grid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
@@ -208,26 +253,51 @@ for (let index = 0; index < playerStats.abilitySlots; index++) {
     slot.style.height = "4rem";
     slot.style.width = "4rem";
     slots.push(slot);
+    slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
     loadoutContainer.appendChild(slot);
 }
-let currentAbilities = playerStats.equippedAbilities.slice(1);
-console.log(currentAbilities);
-for (let slotN = 0; slotN < slots.length; slotN++) {
-    const element = slots[slotN];
-    let noOption = document.createElement("option");
-    noOption.innerHTML = "None";
-    noOption.value = null;
-    element.appendChild(noOption);
-    Object.keys(playerStats.unlockedAbilities).forEach(ability => {
-        let option = document.createElement("option");
-        option.innerHTML = ability;
-        option.value = ability;
-        element.appendChild(option);
-        if (currentAbilities[slotN] == ability) {option.setAttribute("selected", "selected");
-            element.style.backgroundImage = "url("+playerMoves[ability].name+"Icon.png)"};
-    });
+populateAbilitySlots();
+function populateAbilitySlots() {
+    let currentAbilities = playerStats.equippedAbilities.slice(1);
+    console.log(currentAbilities);
+    for (let slotN = 0; slotN < slots.length; slotN++) {
+        const element = slots[slotN];
+        let noOption = document.createElement("option");
+        noOption.innerHTML = "None";
+        noOption.value = null;
+        element.appendChild(noOption);
+        Object.keys(playerStats.unlockedAbilities).forEach(ability => {
+            let option = document.createElement("option");
+            option.innerHTML = ability;
+            option.value = ability;
+            element.appendChild(option);
+            if (currentAbilities[slotN] == ability) {
+                option.setAttribute("selected", "selected");
+                element.style.backgroundImage = "url(" + playerMoves[ability].iconName + "Icon.png)"
+            };
+        });
+    }
 }
-
+function changeAbilitySlot(slotN) {
+    const slot = slots[slotN];
+    const newAbility = slot.value;
+    console.log("Slot:"+slotN+": "+newAbility);
+    if (newAbility == "null") {
+        slot.style.backgroundImage = "none";
+        playerStats.equippedAbilities[slotN+1] = null;
+    } else {
+        for (let i = 0; i < slots.length; i++) {
+            const otherSlot = slots[i];
+            if (i == slotN) continue;
+            if (otherSlot.value == newAbility) {
+                otherSlot.value = null;
+                changeAbilitySlot(i);
+            }
+        }
+        slot.style.backgroundImage = "url(" + playerMoves[newAbility].iconName + "Icon.png)";
+        playerStats.equippedAbilities[slotN+1] = newAbility;
+    }
+}
 function generatePassiveTooltip(skill) {
     let numberDisplay = "";
     switch (skill.effect.effectType) {
@@ -246,8 +316,8 @@ function generatePassiveTooltip(skill) {
     }
     let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
     let costString = "";
-    if(isNaN(cost)) {costString = "MAXED!"} else {costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points"};
-    return  `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
+    if (isNaN(cost)) { costString = "MAXED!" } else { costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points" };
+    return `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
         skill.desc + "<br />" +
         `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span> ${numberDisplay}` + "<br />" +
         "Cost: " + costString;

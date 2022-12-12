@@ -32,7 +32,6 @@ leftWindow.addEventListener("mouseover", function (event) {
     if (pageY == 0) pageY = window.pageYOffset;
     isMouseHover = true
     disableScroll();
-    console.log(isMouseHover)
 }, false);
 
 window.addEventListener("wheel", function (e) {
@@ -85,70 +84,16 @@ class CombatEntity {
             this.act(this.target);
             this.think();
         }
+        playerStats.equippedAbilities.forEach(ability => {
+            playerStats.abilityCooldowns[ability] -= logicTickTime;
+        });
         return true;
     }
     act(target) {
-        if (target == null) {
-            return;
-        }
-        switch (this.nextMove.type) {
-            case 0:
-                if (target.distance <= this.nextMove.range) {
-                    let d = this.nextMove.damage
-                        + this.nextMove.damageRatios[0] * playerStats.strength
-                        + this.nextMove.damageRatios[1] * playerStats.toughness
-                        + this.nextMove.damageRatios[2] * playerStats.mind
-                        + this.nextMove.damageRatios[3] * playerStats.agility;
-                    console.log(d);
-                    target.takeDamage(d);
-                    logConsole(`${this.name} hit with ${document.getElementById("playerMoveText").innerHTML} for ${d} damage.`);
-                } else {
-                    return;
-                }
-                break;
-            case 1:
-                this.target.distance -= Math.min(100 - target.distance, this.nextMove.range);
-                break;
-
-            default:
-                logConsole("ERROR: Not a valid move type");
-                break;
-        }
+        console.error("Do not use CombatEntity directly.")
     }
     think() {
-        if (this.target == null) {
-            document.getElementById("playerMoveText").innerHTML = "No target";
-            return;
-        }
-        let dist = this.target.distance;
-        let weights = [];
-        let i = 0;
-        for (let k in playerMoves) {
-            if (playerMoves[k].type == 0) {
-                weights[i] = (playerMoves[k].range > dist ? 100 : 0);
-            }
-            if (playerMoves[k].type == 1) {
-                weights[i] = (dist > 10 ? 100 : 0);
-            }
-        }
-        const max = Math.max(...weights);
-        const indexes = [];
-
-        for (let index = 0; index < weights.length; index++) {
-            if (weights[index] === max) {
-                indexes.push(index);
-            }
-        }
-        let pick;
-        if (indexes.length == 1) {
-            pick = 0;
-        } else {
-            pick = Math.floor(Math.random() * indexes.length);
-        }
-        let moveKey = Object.keys(playerMoves)[indexes[pick]];
-        this.nextMove = playerMoves[moveKey];
-        this.nextMoveInitiative = this.nextMove.time;
-        document.getElementById("playerMoveText").innerHTML = moveKey;
+        console.error("Do not use CombatEntity directly.")
     }
     draw(context) {
         return;
@@ -171,6 +116,16 @@ class Player extends CombatEntity {
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.moveIntention = 1;
+        this.nextMoveKey = null;
+        this.equippedAbilities = [...playerStats.equippedAbilities];
+        this.equippedAbilities.forEach(ability => {
+            if(ability != null){
+                if(!playerStats.abilityCooldowns.hasOwnProperty(ability)){
+                    playerStats.abilityCooldowns[ability] = 0;
+                }
+            }
+        });
+        
     }
 
     act(target) {
@@ -208,6 +163,7 @@ class Player extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
+        playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime;
     }
     think() {
         if (this.target == null) {
@@ -216,12 +172,12 @@ class Player extends CombatEntity {
         }
         let dist = this.target.distance;
         if (dist > 5) this.moveIntention = 1; else this.moveIntention = -1;
-        let weights = [playerStats.equippedAbilities.length];
+        let weights = [this.equippedAbilities.length];
         let i = 0;
-        for (let index = 0; index < playerStats.equippedAbilities.length; index++) {
-            let k = playerStats.equippedAbilities[index];
-            if (k == null) { weights[index] = 0; continue; }
-
+        for (let index = 0; index < this.equippedAbilities.length; index++) {
+            let k = this.equippedAbilities[index];
+            if (k == null) { weights[index] = -1; continue; }
+            if (playerStats.abilityCooldowns[k] > 0) {weights[index] = -1; continue; }
             if (playerMoves[k].type == 0) {
                 weights[index] = (playerMoves[k].range >= dist ? 100 : 0);
             }
@@ -230,6 +186,7 @@ class Player extends CombatEntity {
             }
         }
         const max = Math.max(...weights);
+        //console.log("Weights:",weights," Max:",max)
         let indexes = [];
 
         for (let index = 0; index < weights.length; index++) {
@@ -243,8 +200,9 @@ class Player extends CombatEntity {
         } else {
             pick = Math.floor(Math.random() * indexes.length);
         }
-        let moveKey = playerStats.equippedAbilities[indexes[pick]];
+        let moveKey = this.equippedAbilities[indexes[pick]];
         this.nextMove = playerMoves[moveKey];
+        this.nextMoveKey = moveKey;
         this.nextMoveInitiative = this.nextMove.time;
         document.getElementById("playerMoveText").innerHTML = moveKey;
 

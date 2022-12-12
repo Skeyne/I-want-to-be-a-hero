@@ -61,16 +61,6 @@ main {
     display: none;
 }
 
-.abilitySlot{
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: black;
-    color: transparent;
-    image-rendering: pixelated;
-}
-.abilitySlot option{
-    color: whitesmoke;
-}
 .pickle {
     font-family: 'Pickle Pushing', sans-serif;
     padding-left: 6px;
@@ -118,6 +108,10 @@ main {
 
 
 #storyBox {
+    grid-row: 1;
+}
+
+#abilitiesBox {
     grid-row: 1;
 }
 
@@ -212,7 +206,38 @@ main {
 .leftAlign {
     text-align: left;
 }
-
+.abilityPickContainerLabel{
+    grid-column: 1;
+    font-size: 2vw;
+    text-align: center;
+}
+.abilityPickContainer{
+    display: flex;
+    justify-content: space-around;
+    grid-column: 2;
+}
+.abilityPickButton{
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+    color: transparent;
+    image-rendering: pixelated;
+    grid-column: 2;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1vmin inset rgb(34, 34, 34);
+}
+.abilitySlot{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+    color: transparent;
+    image-rendering: pixelated;
+}
+.abilitySlot option{
+    color: whitesmoke;
+}
 .blockHeader {
     font-size: 32px;
     color: black;
@@ -265,7 +290,11 @@ section:first-child div.blockHeader::before {
     box-sizing: border-box;
     position: relative;
 }
-
+#abilityLoadoutContainer{
+    border: 5px outset rgb(53, 53, 53);
+    background-color: rgb(54, 54, 54);
+    padding: 1em;
+}
 .evenFlex {
     display: flex;
     flex-direction: column;

@@ -16,14 +16,15 @@ const cleanPlayerStats = {
     muted: false,
     musicVolume: 0.2,
     unlockedSkills: {},
-    unlockedAbilities: {"Punch":1,},
+    unlockedAbilities: {"punch":1,"jab":1},
     abilitySlots : 3,
-    equippedAbilities: ["Walk","Punch",null,null],
+    equippedAbilities: ["walk","punch",null,null],
     effectMultipliers: {},
     storyProgress: 0,
     currentStoryQuestProgress: [0],
     currentTrainingAttribute: "strength",
     trainingAreaLevels: {},
+    abilityCooldowns: {},
 }
 
 var playerStats = {};

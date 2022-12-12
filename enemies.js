@@ -34,9 +34,9 @@ var enemyData = {};
 enemyData.criminal = {
     id:"criminal",
     name: "Purse thief",
-    maxHealth: 3,
-    attributes: [.5,1,0,1],
-    healthRegen: 0.005,
+    maxHealth: 2.5,
+    attributes: [.5,.5,0,1],
+    healthRegen: 0,
     expReward: 1,
     moneyReward: 0.01,
     reputationReward: 1,
