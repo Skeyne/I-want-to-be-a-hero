@@ -3,6 +3,7 @@ const baseLinearExperieneCost = 5;
 const baseExperienceCostExponent = 1.07;
 const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
+const COOLDOWN_BASE = 0.04;
 const PLAYER_BASE_HEALTH = 5;
 const HEALTH_GROWTH_EXPONENT = 1.12;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
@@ -40,6 +41,9 @@ const attribute = {
 }
 var formulas = {}
 
+formulas.cooldownReduction = function(value){
+    return Math.pow(1 - COOLDOWN_BASE, Math.max(0,Math.log10(1 + value)));
+}
 formulas.actionSpeed = function(value){
     return Math.pow(1 + ACTION_SPEED_BASE, Math.max(0,Math.log10(1 + value)));
 }

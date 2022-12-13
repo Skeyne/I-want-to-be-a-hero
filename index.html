@@ -29,6 +29,7 @@
             <button class="bannerButton" onclick="load()">Load Game</button>
             <button class="bannerButton" onclick="exportGame()">Export</button>
             <button class="bannerButton" onclick="importGame()">Import</button>
+            <span class="pickle" style="float:right">v0.02 Alpha</span>
             <button class="bannerButton" style="float:right" onclick="hardReset()">HARD RESET</button>
         </section>
 
@@ -39,6 +40,8 @@
         <h1 class="title pickle">
             I WANT TO BE A HERO
         </h1>
+        <div style="width:100%"><div class="pickle" style="text-align: center;">\/ SCROLL DOWN \/</div></div>
+
     </header>
     <main>
         <section id="canvasLogWrap">
@@ -152,7 +155,7 @@
                     <div class="blockBody dotted pickle">
                         <div id="abilityRequirementsGrid" style="height:100%;width:100%;display: grid;
                         grid-template-columns: 20% 80%;grid-template-rows: 10%; grid-auto-rows: 10%;
-                        justify-content: center;row-gap: 2.5vh; padding: 2%;"></div>
+                        justify-content: center;row-gap: 2.5vh; padding: 2%;box-sizing: border-box;"></div>
                     </div>
                 </section>
                 <section class="infoBox" id="skillsBox">
@@ -160,6 +163,7 @@
                     <div class="blockBody dotted pickle" id="skillsWrap">
                         <div>Class: <span id="classText"></span></div>
                         <div>Points available: <span id="passivePointsText"></span></div>
+                        <button style="float:right" onclick="resetSkills()"></button>
                         <!-- <div class="tooltip"> Tooltip text<span class = "tooltiptext">TEST</span></div> -->
                         <div class="gridSkills" id="passiveTreeGrid"></div>
                     </div>
@@ -168,14 +172,14 @@
                     <div class="blockHeader pickle" style="display: block">HELP</div>
                     <div class="blockBody dotted" id="helpBody">
                         Your hero automatically uses his skills in combat.
-                        <br \><span  class="pickle strengthText">Strength</span>is the main component of skill
+                        <br \>
+                        <br \><span  class="pickle strengthText">STR</span>is the main component of skill
                         damage.
-                        <br \><span  class="pickle toughnessText">Toughness</span>increases your maximum health
-                        points and damage reduction.
-                        <br \><span  class="pickle mindText">Mind</span>does nothing right now.
-                        <br \><span  class="pickle agilityText">Agility</span>increases your action speed and is a
-                        damage component of punch.
-                        <br \>Your only current moves are Move and Punch. Punch's damage ratio is 100% <span
+                        <br \><span  class="pickle toughnessText">TGH</span>increases your maximum health and damage reduction.
+                        <br \><span  class="pickle mindText">MND</span>reduces your cooldowns.
+                        <br \><span  class="pickle agilityText">AGI</span>increases your action speed.
+                        <br \>
+                        <br \>Your only current moves are Move and Punch. Punch's damage ratio is 80% <span
                              class="pickle strengthText">STR</span> 20% <span 
                             class="pickle agilityText">AGI</span>, which is to say that,
                         that
@@ -183,6 +187,7 @@
                         <br \>The damage formula is:
                         <br \><img id="damageFormula" src="./damageFormulaInvert.png" />,
                         where the second part is evaluated and then summed from every contributing attribute.
+                        <br \>
                         <br \>Attributes can be increased by training.
                         <br \>Get passive skills to further boost your attributes.
                     </div>

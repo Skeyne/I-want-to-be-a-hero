@@ -14,7 +14,7 @@ const cleanPlayerStats = {
     restRate: 0.1,
     lastSave: 0,
     muted: false,
-    musicVolume: 0.2,
+    musicVolume: 0.05,
     unlockedSkills: {},
     unlockedAbilities: {"punch":1},
     abilitySlots : 3,

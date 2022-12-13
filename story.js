@@ -9,7 +9,7 @@ const storyQuests = [
     },
     {
         title: `The Beginning II`,
-        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first. (Below)`,
+        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.</br>(Arrow keys or scroll down over this area).`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`],
         requirementAmount: [1, 1]
@@ -26,7 +26,7 @@ const storyQuests = [
         text: `I should work on my skills so I can take down the real criminals. (Skills menu below)`,
         requirementType: `level`,
         requirementTarget: [`level`],
-        requirementAmount: [3],
+        requirementAmount: [5],
     },
     {
         title: `Streetfights I`,
@@ -37,7 +37,7 @@ const storyQuests = [
     },
     {
         title: `Streetfights II`,
-        text: `Those guys are pretty tough. Back to the training board.`,
+        text: `That guy had a freakin' crowbar. Back to the training board.`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`, `agility`],
         requirementAmount: [10, 10, 10],

@@ -35,8 +35,8 @@ leftWindow.addEventListener("mouseover", function (event) {
 
 window.addEventListener("wheel", function (e) {
     if (!isMouseHover) return;
-    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + 773, behavious: 'smooth', });
-    else leftWindow.scroll({ left: leftWindow.scrollLeft - 773, behavious: 'smooth', });
+    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + leftWindow.clientWidth, behavious: 'smooth', });
+    else leftWindow.scroll({ left: leftWindow.scrollLeft - leftWindow.clientWidth, behavious: 'smooth', });
 });
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
@@ -86,7 +86,7 @@ class CombatEntity {
         }
         return true;
     }
-    tickCooldowns(){
+    tickCooldowns() {
         console.error("Do not use CombatEntity directly.");
     }
     act(target) {
@@ -106,7 +106,7 @@ class Player extends CombatEntity {
     constructor(data) {
         super();
         this.data = data;
-        this.name = " Hero";
+        this.name = "Hero";
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
@@ -115,19 +115,20 @@ class Player extends CombatEntity {
         this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
+        this.cooldownReduction = formulas.cooldownReduction(getEffectiveValue("mind"));
         this.moveIntention = 1;
         this.nextMoveKey = null;
         this.equippedAbilities = [...playerStats.equippedAbilities];
         this.equippedAbilities.forEach(ability => {
-            if(ability != null){
-                if(!playerStats.abilityCooldowns.hasOwnProperty(ability)){
+            if (ability != null) {
+                if (!playerStats.abilityCooldowns.hasOwnProperty(ability)) {
                     playerStats.abilityCooldowns[ability] = 0;
                 }
             }
         });
-        
+
     }
-    tickCooldowns(){
+    tickCooldowns() {
         playerStats.equippedAbilities.forEach(ability => {
             playerStats.abilityCooldowns[ability] -= logicTickTime;
         });
@@ -137,9 +138,22 @@ class Player extends CombatEntity {
         if (target == null) {
             return;
         }
+        let dist = target.distance;
         switch (this.nextMove.type) {
             case 0:
-                if (target.distance <= this.nextMove.range) {
+                let inRange = false;
+                switch (this.nextMove.category) {
+                    case 'melee':
+                        inRange = (this.nextMove.range[0] >= dist);
+                        break;
+                    case 'ranged':
+                        inRange = (this.nextMove.range[1] >= dist && this.nextMove.range[0] <= dist);
+                        break;
+                    default:
+                        console.log("UNKOWN ABILITY CATEGORY")
+                        break;
+                }
+                if (inRange) {
                     let d = this.nextMove.damage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
@@ -147,14 +161,14 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let dr = target.takeDamage(d);
-                    logConsole(`Player hit with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
+                    logConsole(`Hero hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
                     return;
                 }
                 break;
             case 1:
-                let deltaMinus = Math.min(100 - target.distance, this.nextMove.range);
-                let deltaPlus = Math.min(target.distance - 5, this.nextMove.range);
+                let deltaMinus = Math.min(100 - dist, this.nextMove.range);
+                let deltaPlus = Math.min(dist - 5, this.nextMove.range);
                 if (this.moveIntention > 0) {
                     this.target.distance -= deltaPlus;
                     environmentDistance -= deltaPlus;
@@ -168,7 +182,7 @@ class Player extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
-        playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime;
+        playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
     }
     think() {
         if (this.target == null) {
@@ -183,12 +197,22 @@ class Player extends CombatEntity {
             let k = this.equippedAbilities[index];
             let ability = playerMoves[k];
             if (k == null) { weights[index] = -1; continue; }
-            if (playerStats.abilityCooldowns[k] > 0) {weights[index] = -1; continue; }
+            if (playerStats.abilityCooldowns[k] > 0) { weights[index] = -1; continue; }
             if (ability.type == 0) {
-                weights[index] = (ability.range >= ability.range ? arraySum(ability.damageRatios) : 0);
+                switch (ability.category) {
+                    case 'melee':
+                        weights[index] = (ability.range[0] >= dist ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                        break;
+                    case 'ranged':
+                        weights[index] = ((ability.range[1] >= dist && ability.range[0] <= dist) ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                        break;
+                    default:
+                        console.log("UNKOWN ABILITY CATEGORY")
+                        break;
+                }
             }
             if (ability.type == 1) {
-                weights[index] = (dist <= 5 ? 0 : 100);
+                weights[index] = (dist <= 5 ? 0 : 10);
             }
         }
         const max = Math.max(...weights);
@@ -227,7 +251,8 @@ class Player extends CombatEntity {
 class Enemy extends CombatEntity {
     constructor(enemyData, distance) {
         super();
-        this.data = enemyData
+        this.data = enemyData;
+        this.name = enemyData.name;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
         this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
@@ -239,7 +264,7 @@ class Enemy extends CombatEntity {
         this.portraitImage = new Image(32, 32);
         this.portraitImage.src = enemyData.portraitFile;
     }
-    tickCooldowns(){
+    tickCooldowns() {
         return;
     }
     act(target) {
@@ -255,7 +280,7 @@ class Enemy extends CombatEntity {
                         + this.nextMove.damageRatios[2] * (Math.sqrt(this.data.attributes[2] + 1) - 1)
                         + this.nextMove.damageRatios[3] * (Math.sqrt(this.data.attributes[3] + 1) - 1);
                     let dr = target.takeDamage(d);
-                    logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
+                    logConsole(`${this.name} hit ${this.target.name} with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
                     return;
                 }
@@ -318,7 +343,7 @@ class Enemy extends CombatEntity {
         addPlayerMoney(this.data.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`${this.name} was defeated! +${this.data.moneyReward}$ +${this.data.reputationReward}REP`)
+        logConsole(`${this.name} was defeated! +${this.data.moneyReward}$ +${this.data.expReward}EXP +${this.data.reputationReward}REP`)
     }
 }
 class Encounter {
@@ -331,7 +356,7 @@ class Encounter {
         if (lastHealth > 0) { player.health = lastHealth; }
         for (let index = 0; index < this.enemiesToSpawn; index++) {
             let picked = Math.floor(Math.random() * this.area.enemies.length);
-            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.random() * 30 + 70));
+            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.round(3 * Math.random()) * 10 + 70));
             this.enemyArray[index].setTarget(player);
         }
         player.setTarget(this.enemyArray[0]);

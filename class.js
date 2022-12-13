@@ -8,11 +8,11 @@ skillLibrary = {
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "strength",
-                effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 0.5,
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
             },
-            maxLevel: 5,
-            cost: [1, 1, 1, 1, 1],
+            maxLevel: 99,
+            cost: Array(99).fill(1),
         },
         'h_1': {
             id: 'h_1',
@@ -53,8 +53,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additive
                 effectMagnitude: 1,
             },
-            maxLevel: 5,
-            cost: [1, 1, 1, 1, 1],
+            maxLevel: 99,
+            cost: Array(99).fill(1),
         },
         'h_4': {
             id: 'h_4',
@@ -95,8 +95,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 0.5,
             },
-            maxLevel: 5,
-            cost: [1, 1, 1, 1, 1],
+            maxLevel: 99,
+            cost: Array(99).fill(1),
         },
         'h_7': {
             id: 'h_7',
@@ -107,10 +107,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 0.1,
+                effectMagnitude: 0.05,
             },
-            maxLevel: 3,
-            cost: [2, 2, 2],
+            maxLevel: 5,
+            cost: [1, 1, 1, 1, 1],
         },
         'h_8': {
             id: 'h_8',
@@ -126,12 +126,55 @@ skillLibrary = {
             maxLevel: 1,
             cost: [5],
         },
+        'h_9': {
+            id: 'h_9',
+            name: 'Read algebra book',
+            iconName: 'studying',
+            desc: 'Actually learn it. Don\'t memorize it.',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "mind",
+                effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
+                effectMagnitude: 1,
+            },
+            maxLevel: 99,
+            cost: Array(99).fill(1),
+        },
+        'h_10': {
+            id: 'h_10',
+            name: 'Attend debate club',
+            iconName: 'studying',
+            desc: 'Let\'s say, hypothetically....',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "mind",
+                effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 1,
+            cost: [3],
+        },
+        'h_11': {
+            id: 'h_11',
+            name: 'Win at street chess',
+            iconName: 'studying',
+            desc: 'Check it, mate, I won.',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "mind",
+                effectType: "multPercent", //additiveDlat, additivePercent, multPercent
+                effectMagnitude: 1.15,
+            },
+            maxLevel: 2,
+            cost: [3,3],
+        },
     },
 
 }
 playerMoves = {
     'punch': {
         type: 0,
+        category:'melee',
         name: "Punch",
         description: "A simple punch, everyone knows how to do it.",
         iconName: "punch",
@@ -140,10 +183,11 @@ playerMoves = {
         damageRange: [0.9, 1.1],
         time: 3000,
         cooldownTime: 0,
-        range: 10,
+        range: [10,10],
     },
     'kick': {
         type: 0,
+        category:'melee',
         name: "Kick",
         description: "Leverage your lower body strength to knock those criminals on their asses",
         iconName: "kick",
@@ -152,10 +196,11 @@ playerMoves = {
         damageRange: [1, 1.2],
         time: 4000,
         cooldownTime: 5000,
-        range: 10,
+        range: [10,10],
     },
     'jab': {
         type: 0,
+        category:'melee',
         name: "Jab",
         description: "Faster than a punch but weaker, good to knockout small fry and get out of the way.",
         iconName: "jab",
@@ -164,10 +209,11 @@ playerMoves = {
         damageRange: [.95, 1.05],
         time: 1000,
         cooldownTime: 0,
-        range: 10,
+        range: [10,10],
     },
     'haymaker': {
         type: 0,
+        category:'melee',
         name: "Haymaker",
         description: "Prepare to deliver a massive blow to your foe. Slow.",
         iconName: "smash",
@@ -176,22 +222,50 @@ playerMoves = {
         damageRange: [1, 1.5],
         time: 7000,
         cooldownTime: 10000,
-        range: 10,
+        range: [10,10],
     },
     'crowbar': {
         type: 0,
+        category:'melee',
         name: "Crowbar",
         description: "This does not seem fair?",
         iconName: "crowbar",
         damage: 10,
-        damageRatios: [3, 0, 0, 0],
+        damageRatios: [2, 0, 0, 0],
         damageRange: [1, 2],
         time: 4000,
         cooldownTime: 20000,
-        range: 10,
+        range: [10,10],
+    },
+    'throwingKnife': {
+        type: 0,
+        category:'ranged',
+        name: "Throwing Knife",
+        description: "It's funnier in the circus",
+        iconName: "throwingKnife",
+        damage: 1,
+        damageRatios: [0, 0, .4, .6],
+        damageRange: [0.8, 1],
+        time: 2000,
+        cooldownTime: 5000,
+        range: [10,60],
+    },
+    'firecrackers': {
+        type: 0,
+        category:'ranged',
+        name: "Firecackers",
+        description: "You're more likely to blow off your own fingers than theirs.",
+        iconName: "firecrackers",
+        damage: 1,
+        damageRatios: [0, 0, 1, .2],
+        damageRange: [0.5, 3],
+        time: 3000, 
+        cooldownTime: 9000,
+        range: [0,30],
     },
     'walk': {
         type: 1,
+        category:'movement',
         name: "move",
         description: "1. 2. 1. 2.",
         iconName: "move",
@@ -204,11 +278,17 @@ playerMoves = {
 abilityUnlocks = {
     0: ['punch'],
     5: ['kick', 'jab'],
-    10: ['haymaker'],
-    15: ['crowbar'],
+    10: ['haymaker','firecrackers'],
+    15: ['crowbar','throwingKnife'],
 }
+let previewRowHeader = document.createElement("div");
+previewRowHeader.setAttribute("id","previewRowHeader");
+let previewRowBody = document.createElement("div");
+previewRowBody.setAttribute("id","previewRowBody");
 let loadoutContainer = document.getElementById("abilityLoadoutContainer");
 let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
+abilityRequirementsGrid.append(previewRowHeader);
+abilityRequirementsGrid.append(previewRowBody);
 let slots = [];
 for (let index = 0; index < playerStats.abilitySlots; index++) {
     let slot = document.createElement("select");
@@ -240,10 +320,12 @@ function populateAbilityRequirements() {
         let abilities = abilityUnlocks[levels[index]]
         let label = document.createElement("div");
         label.setAttribute("class", "pickle abilityPickContainerLabel");
+        label.style.gridRow = index+1;
         label.innerHTML = "Level " + levels[index];
         abilityRequirementsGrid.append(label);
         let c = document.createElement("div");
         c.setAttribute("class", "abilityPickContainer");
+        c.style.gridRow = index+1;
         abilityRequirementsGrid.append(c);
         for (let abilityN = 0; abilityN < abilities.length; abilityN++) {
             const ability = abilities[abilityN];
@@ -258,8 +340,22 @@ function populateAbilityRequirements() {
         }
     }
 }
-
-
+UpdateAbilityPreview();
+function UpdateAbilityPreview(){
+    let levels = Object.keys(abilityUnlocks);
+    let previewIndex = 0;
+    for (let index = 0; index < levels.length; index++) {
+        if(playerStats.level >= levels[index]){
+            previewIndex = index;
+        } else {
+            break;
+        }
+    }
+    previewRowHeader.style.gridRow = `${previewIndex+2}/${previewIndex+3}`;
+    previewRowHeader.style.gridColumn = "1/-1";
+    previewRowBody.style.gridRow = `${previewIndex+3}/${Math.max(previewIndex+3,levels.length)}`;
+    previewRowBody.style.gridColumn = `1/-1`;
+}
 
 let grid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
