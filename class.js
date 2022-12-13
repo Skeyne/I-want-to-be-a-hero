@@ -132,10 +132,11 @@ skillLibrary = {
 playerMoves = {
     'punch': {
         type: 0,
-        name: "punch",
+        name: "Punch",
+        description: "A simple punch, everyone knows how to do it.",
         iconName: "punch",
         damage: 1,
-        damageRatios: [1, 0, 0, 0.2],
+        damageRatios: [.8, 0, 0, 0.2],
         damageRange: [0.9, 1.1],
         time: 3000,
         cooldownTime: 0,
@@ -143,10 +144,11 @@ playerMoves = {
     },
     'kick': {
         type: 0,
-        name: "kick",
+        name: "Kick",
+        description: "Leverage your lower body strength to knock those criminals on their asses",
         iconName: "kick",
         damage: 2,
-        damageRatios: [1.6, 0, 0, 0.8],
+        damageRatios: [1.2, 0, 0, 0.4],
         damageRange: [1, 1.2],
         time: 4000,
         cooldownTime: 5000,
@@ -154,10 +156,11 @@ playerMoves = {
     },
     'jab': {
         type: 0,
-        name: "jab",
-        iconName: "punch",
+        name: "Jab",
+        description: "Faster than a punch but weaker, good to knockout small fry and get out of the way.",
+        iconName: "jab",
         damage: 1,
-        damageRatios: [.1, 0, 0, .4],
+        damageRatios: [.08, 0, 0, .22],
         damageRange: [.95, 1.05],
         time: 1000,
         cooldownTime: 0,
@@ -165,18 +168,32 @@ playerMoves = {
     },
     'haymaker': {
         type: 0,
-        name: "haymaker",
+        name: "Haymaker",
+        description: "Prepare to deliver a massive blow to your foe. Slow.",
         iconName: "smash",
         damage: 10,
-        damageRatios: [3, 2, 0, 0],
+        damageRatios: [2, .8, 0, 0],
         damageRange: [1, 1.5],
         time: 7000,
         cooldownTime: 10000,
         range: 10,
     },
+    'crowbar': {
+        type: 0,
+        name: "Crowbar",
+        description: "This does not seem fair?",
+        iconName: "crowbar",
+        damage: 10,
+        damageRatios: [3, 0, 0, 0],
+        damageRange: [1, 2],
+        time: 4000,
+        cooldownTime: 20000,
+        range: 10,
+    },
     'walk': {
         type: 1,
         name: "move",
+        description: "1. 2. 1. 2.",
         iconName: "move",
         damage: 0,
         time: 1000,
@@ -185,30 +202,59 @@ playerMoves = {
     }
 }
 abilityUnlocks = {
-    0:['punch','walk'],
-    5:['kick'],
-    10:['haymaker'],
+    0: ['punch'],
+    5: ['kick', 'jab'],
+    10: ['haymaker'],
+    15: ['crowbar'],
+}
+let loadoutContainer = document.getElementById("abilityLoadoutContainer");
+let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
+let slots = [];
+for (let index = 0; index < playerStats.abilitySlots; index++) {
+    let slot = document.createElement("select");
+    slot.setAttribute("class", "abilitySlot");
+    slot.style.height = "4rem";
+    slot.style.width = "4rem";
+    slots.push(slot);
+    slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
+    loadoutContainer.appendChild(slot);
+}
+checkAbilityRequirements();
+
+populateAbilityRequirements();
+populateAbilitySlots();
+function checkAbilityRequirements() {
+    for (const [levelRequirement, abilities] of Object.entries(abilityUnlocks)) {
+        if (playerStats.level >= levelRequirement) {
+            abilities.forEach(ability => {
+                playerStats.unlockedAbilities[ability] = 1;
+            });
+        }
+    }
+    populateAbilitySlots();
 }
 
-let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
-populateAbilityRequirements();
-function populateAbilityRequirements(){
+function populateAbilityRequirements() {
     let levels = Object.keys(abilityUnlocks);
     for (let index = 0; index < levels.length; index++) {
         let abilities = abilityUnlocks[levels[index]]
         let label = document.createElement("div");
-        label.setAttribute("class","pickle abilityPickContainerLabel");
+        label.setAttribute("class", "pickle abilityPickContainerLabel");
         label.innerHTML = "Level " + levels[index];
         abilityRequirementsGrid.append(label);
         let c = document.createElement("div");
-        c.setAttribute("class","abilityPickContainer");
+        c.setAttribute("class", "abilityPickContainer");
         abilityRequirementsGrid.append(c);
         for (let abilityN = 0; abilityN < abilities.length; abilityN++) {
             const ability = abilities[abilityN];
             let b = document.createElement("button");
-            b.setAttribute("class","abilityPickButton");
+            b.setAttribute("class", "abilityPickButton tooltip");
             b.style.backgroundImage = `url("${playerMoves[ability].iconName}Icon.png")`;
             c.append(b);
+            let t = document.createElement("div");
+            t.setAttribute("class", "tooltiptext pickle");
+            t.innerHTML = generateAbilityRequirementTooltip(ability);
+            b.appendChild(t);
         }
     }
 }
@@ -245,30 +291,18 @@ Object.values(skillLibrary[playerStats.class]).forEach(skill => {
     b.appendChild(l);
 
 });
-let loadoutContainer = document.getElementById("abilityLoadoutContainer");
-let slots = [];
-for (let index = 0; index < playerStats.abilitySlots; index++) {
-    let slot = document.createElement("select");
-    slot.setAttribute("class", "abilitySlot");
-    slot.style.height = "4rem";
-    slot.style.width = "4rem";
-    slots.push(slot);
-    slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
-    loadoutContainer.appendChild(slot);
-}
-populateAbilitySlots();
 function populateAbilitySlots() {
     let currentAbilities = playerStats.equippedAbilities.slice(1);
-    console.log(currentAbilities);
     for (let slotN = 0; slotN < slots.length; slotN++) {
         const element = slots[slotN];
+        element.innerHTML = "";
         let noOption = document.createElement("option");
         noOption.innerHTML = "None";
         noOption.value = null;
         element.appendChild(noOption);
         Object.keys(playerStats.unlockedAbilities).forEach(ability => {
             let option = document.createElement("option");
-            option.innerHTML = ability;
+            option.innerHTML = playerMoves[ability].name;
             option.value = ability;
             element.appendChild(option);
             if (currentAbilities[slotN] == ability) {
@@ -278,24 +312,38 @@ function populateAbilitySlots() {
         });
     }
 }
-function changeAbilitySlot(slotN) {
+function changeAbilitySlot(slotN, internal = false) {
     const slot = slots[slotN];
     const newAbility = slot.value;
-    console.log("Slot:"+slotN+": "+newAbility);
+    console.log("Slot:" + slotN + ": " + newAbility);
     if (newAbility == "null") {
+        let allow = false;
+        if (!internal) {
+            for (let index = 1; index < playerStats.equippedAbilities.length; index++) {
+                if (index - 1 == slotN) continue;
+                if (playerStats.equippedAbilities[index] != null) {
+                    allow = true;
+                    break;
+                }
+            }
+        } else {
+            allow = true;
+        }
+        console.log(allow);
+        if (!allow) { slot.value = playerStats.equippedAbilities[slotN + 1]; return; }
         slot.style.backgroundImage = "none";
-        playerStats.equippedAbilities[slotN+1] = null;
+        playerStats.equippedAbilities[slotN + 1] = null;
     } else {
         for (let i = 0; i < slots.length; i++) {
-            const otherSlot = slots[i];
             if (i == slotN) continue;
+            const otherSlot = slots[i];
             if (otherSlot.value == newAbility) {
                 otherSlot.value = null;
-                changeAbilitySlot(i);
+                changeAbilitySlot(i, true);
             }
         }
         slot.style.backgroundImage = "url(" + playerMoves[newAbility].iconName + "Icon.png)";
-        playerStats.equippedAbilities[slotN+1] = newAbility;
+        playerStats.equippedAbilities[slotN + 1] = newAbility;
     }
 }
 function generatePassiveTooltip(skill) {
@@ -321,6 +369,27 @@ function generatePassiveTooltip(skill) {
         skill.desc + "<br />" +
         `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span> ${numberDisplay}` + "<br />" +
         "Cost: " + costString;
+}
+function generateAbilityRequirementTooltip(ability) {
+    const abilityData = playerMoves[ability];
+    let stringDisplay = "";
+    stringDisplay += abilityData.name + "<br />";
+    stringDisplay += abilityData.description + "<br />";
+    if (abilityData.type == 0) {
+        stringDisplay += "Damage:" + "<br />";
+        for (let attributeRatio = 0; attributeRatio < abilityData.damageRatios.length; attributeRatio++) {
+            let ratio = abilityData.damageRatios[attributeRatio] * 100;
+            if (ratio == 0) continue;
+            let attributeId = attributeIndexToId[attributeRatio];
+            let attributeName = attributeDisplayNames[attributeRatio];
+            stringDisplay += `${ratio}% <span class="${attributeId}Text">${attributeDisplayShort[attributeId]}</span><br />`;
+        }
+    }
+    stringDisplay += `Use time: ${abilityData.time / 1000}s<br />`
+    if (abilityData.cooldownTime > 0) {
+        stringDisplay += `Cooldown: ${abilityData.cooldownTime / 1000}s<br />`
+    }
+    return stringDisplay;
 }
 
 function getPlayerPassiveLevel(skillId) {
@@ -401,7 +470,6 @@ function removeEffect(skillId) {
 }
 
 function checkSkillPurchase(skillId) {
-    console.log("Test");
     let cost = 0;
 
     if (playerStats.unlockedSkills.hasOwnProperty(skillId)) {

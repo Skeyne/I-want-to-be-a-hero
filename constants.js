@@ -7,11 +7,23 @@ const PLAYER_BASE_HEALTH = 5;
 const HEALTH_GROWTH_EXPONENT = 1.12;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
 const TRAINING_COST_GROWTH_BASE = 1.55;
+const attributeIndexToId = { 
+    0: "strength",
+    1: "toughness",
+    2: "mind",
+    3: "agility",
+}
 const attributeDisplayNames = { 
     strength: "Strength",
     toughness: "Toughness",
     mind: "Mind",
     agility: "Agility",
+}
+const attributeDisplayShort = { 
+    strength: "STR",
+    toughness: "TGH",
+    mind: "MND",
+    agility: "AGI",
 }
 const statColors = {
     strength: "rgb(255,0,0)",
@@ -40,4 +52,14 @@ formulas.maxHealth = function(value){
 
 function format(number) {
     return Math.round((number + Number.EPSILON) * 100) / 100;
+}
+function arraySum(array) {
+    return array.reduce((accumulator, value) => {
+        return accumulator + value;
+    }, 0);
+}
+function arrayMult(array) {
+    return array.reduce((accumulator, value) => {
+        return accumulator * value;
+    }, 1);
 }

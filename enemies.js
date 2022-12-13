@@ -4,7 +4,7 @@ var abilityLibrary = {
         name: "Punch",
         iconName: "punch",
         baseDamage: 1,
-        damageRatios: [1,0,0,0.2],
+        damageRatios: [.8,0,0,0.2],
         time: 3000,
         range: 5,
 
@@ -14,10 +14,21 @@ var abilityLibrary = {
         name: "Smash",
         iconName: "smash",
         baseDamage: 5,
-        damageRatios: [5,1,0,0],
+        damageRatios: [2.5,1,0,0],
         time: 7000,
         range: 10,
 
+    },
+    'crowbar': {
+        type: 0,
+        name: "Crowbar",
+        iconName: "crowbar",
+        baseDamage: 1,
+        damageRatios: [3, 0, 0, 0],
+        damageRange: [1, 2],
+        time: 4000,
+        cooldownTime: 20000,
+        range: 10,
     },
     'Walk': {
         type: 1,
@@ -55,7 +66,7 @@ enemyData.thug = {
     reputationReward: 1,
     spriteFile: "thug.png",
     portraitFile: "thugPortrait.png",
-    moves: ['Punch','Walk'],
+    moves: ['Punch','Walk','crowbar'],
 };
 enemyData.prisoner9 = {
     id:"prisoner9",

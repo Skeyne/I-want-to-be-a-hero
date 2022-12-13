@@ -16,7 +16,7 @@ const cleanPlayerStats = {
     muted: false,
     musicVolume: 0.2,
     unlockedSkills: {},
-    unlockedAbilities: {"punch":1,"jab":1},
+    unlockedAbilities: {"punch":1},
     abilitySlots : 3,
     equippedAbilities: ["walk","punch",null,null],
     effectMultipliers: {},
@@ -25,6 +25,7 @@ const cleanPlayerStats = {
     currentTrainingAttribute: "strength",
     trainingAreaLevels: {},
     abilityCooldowns: {},
+    currentArea: 0,
 }
 
 var playerStats = {};
@@ -50,16 +51,7 @@ function recalculateMultipliers() {
 
 }
 
-function arraySum(array) {
-    return array.reduce((accumulator, value) => {
-        return accumulator + value;
-    }, 0);
-}
-function arrayMult(array) {
-    return array.reduce((accumulator, value) => {
-        return accumulator * value;
-    }, 1);
-}
+
 
 
 function addPlayerExp(amount) {
@@ -68,6 +60,7 @@ function addPlayerExp(amount) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level)
+    checkAbilityRequirements();
     }
     checkLevelQuest();
 }

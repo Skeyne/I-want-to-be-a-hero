@@ -217,6 +217,7 @@ main {
     grid-column: 2;
 }
 .abilityPickButton{
+    position: relative;
     display: inline-block;
     background-repeat: no-repeat;
     background-size: cover;
@@ -646,6 +647,7 @@ progress[value]::-webkit-progress-bar {
     border: 5px grey outset;
     text-align: center;
     font-size: 1.6rem;
+    padding: 1rem;
 }
 
 .dropdown:active {
@@ -778,24 +780,22 @@ progress[value]::-webkit-progress-bar {
 /* Tooltip text */
 .tooltip .tooltiptext {
     visibility: hidden;
-    position: relative;
-    bottom: -200%;
-    right: -400px;
-    width: 400px;
+    position: absolute;
+    top: 110%;
+    right: 20%;
+    width: 20vw;
     background-color: black;
     color: #fff;
     font-size: 20px;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 10;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
+    z-index: 1;;
 }
 
 @media (max-width:1200px) {

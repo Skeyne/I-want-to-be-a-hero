@@ -26,7 +26,6 @@ leftWindow.addEventListener("mouseleave", function (event) {
     pageY = 0;
     isMouseHover = false
     enableScroll();
-    console.log(isMouseHover)
 }, false);
 leftWindow.addEventListener("mouseover", function (event) {
     if (pageY == 0) pageY = window.pageYOffset;
@@ -76,6 +75,7 @@ class CombatEntity {
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000;
+            this.tickCooldowns();
         } else {
             this.think();
         }
@@ -84,16 +84,16 @@ class CombatEntity {
             this.act(this.target);
             this.think();
         }
-        playerStats.equippedAbilities.forEach(ability => {
-            playerStats.abilityCooldowns[ability] -= logicTickTime;
-        });
         return true;
     }
+    tickCooldowns(){
+        console.error("Do not use CombatEntity directly.");
+    }
     act(target) {
-        console.error("Do not use CombatEntity directly.")
+        console.error("Do not use CombatEntity directly.");
     }
     think() {
-        console.error("Do not use CombatEntity directly.")
+        console.error("Do not use CombatEntity directly.");
     }
     draw(context) {
         return;
@@ -106,13 +106,13 @@ class Player extends CombatEntity {
     constructor(data) {
         super();
         this.data = data;
-        this.name = "Saitama?";
+        this.name = " Hero";
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
-        this.image.src = "one.png";
+        this.image.src = "joe.png";
         this.portraitImage = new Image();
-        this.portraitImage.src = "onePortrait.png";
+        this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.moveIntention = 1;
@@ -126,6 +126,11 @@ class Player extends CombatEntity {
             }
         });
         
+    }
+    tickCooldowns(){
+        playerStats.equippedAbilities.forEach(ability => {
+            playerStats.abilityCooldowns[ability] -= logicTickTime;
+        });
     }
 
     act(target) {
@@ -142,7 +147,7 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let dr = target.takeDamage(d);
-                    logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(dr)}(${format(d)}) damage.`);
+                    logConsole(`Player hit with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
                     return;
                 }
@@ -176,12 +181,13 @@ class Player extends CombatEntity {
         let i = 0;
         for (let index = 0; index < this.equippedAbilities.length; index++) {
             let k = this.equippedAbilities[index];
+            let ability = playerMoves[k];
             if (k == null) { weights[index] = -1; continue; }
             if (playerStats.abilityCooldowns[k] > 0) {weights[index] = -1; continue; }
-            if (playerMoves[k].type == 0) {
-                weights[index] = (playerMoves[k].range >= dist ? 100 : 0);
+            if (ability.type == 0) {
+                weights[index] = (ability.range >= ability.range ? arraySum(ability.damageRatios) : 0);
             }
-            if (playerMoves[k].type == 1) {
+            if (ability.type == 1) {
                 weights[index] = (dist <= 5 ? 0 : 100);
             }
         }
@@ -232,6 +238,9 @@ class Enemy extends CombatEntity {
         this.image.src = enemyData.spriteFile;
         this.portraitImage = new Image(32, 32);
         this.portraitImage.src = enemyData.portraitFile;
+    }
+    tickCooldowns(){
+        return;
     }
     act(target) {
         if (target == null) {
@@ -364,12 +373,14 @@ new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["
 
 areaSelect = document.getElementById("selectArea");
 for (let index = 0; index < areas.length; index++) {
-    areaSelect.options[areaSelect.options.length] = new Option(areas[index].name, index);
+    let option = new Option(areas[index].name, index);
+    areaSelect.options[areaSelect.options.length] = option;
 }
 
-currentArea = areas[0];
+currentArea = areas[playerStats.currentArea];
 function changeArea(index) {
-    currentArea = areas[index];
+    playerStats.currentArea = index;
+    currentArea = areas[playerStats.currentArea];
     encounter = new Encounter(currentArea, 1);
 }
 
