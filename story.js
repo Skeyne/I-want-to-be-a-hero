@@ -115,7 +115,6 @@ function updateStoryQuest() {
     let completed = true;
     for (let index = 0; index < quest.requirementTarget.length; index++) {
         if (playerStats.currentStoryQuestProgress[index] >= quest.requirementAmount[index]) {
-            console.log(completed);
             continue;
         } else {
             completed = false;
@@ -127,7 +126,9 @@ function updateStoryQuest() {
         updateDiaryEntries();
     }
     let textBox = document.getElementById("storyText");
+    let overviewText = document.getElementById("storyRequirementsOverviewText");
     textBox.innerHTML = storyQuestText(playerStats.storyProgress);
+    overviewText.innerHTML = storyRequirementsText(playerStats.storyProgress);
 
 }
 
@@ -157,6 +158,32 @@ function storyQuestText(progress, diary=false) {
             break;
     }
     return `${quest.title}<br /><br />${quest.text}<br /><br />${(diary? "":requirementsString)}`;
+}
+function storyRequirementsText(progress) {
+    let quest = getStoryQuest(progress);
+    let requirementsString = "";
+    switch (quest.requirementType) {
+        case 'defeat':
+            for (let index = 0; index < quest.requirementTarget.length; index++) {
+                requirementsString += `Defeat ${enemyData[quest.requirementTarget[index]].name}: ${playerStats.currentStoryQuestProgress[index]}/${quest.requirementAmount[index]} `;
+            }
+            break;
+        case 'training':
+            for (let index = 0; index < quest.requirementTarget.length; index++) {
+                requirementsString += `Get to ${format(playerStats.currentStoryQuestProgress[index])}/${quest.requirementAmount[index]} <span class="${quest.requirementTarget[index]}Text">${attributeDisplayNames[quest.requirementTarget[index]]}</span> `;
+            }
+            break;
+        case 'level':
+            requirementsString = `Get to level ${format(playerStats.level)}/${quest.requirementAmount[0]}`;
+            break;
+        case 'none':
+            requirementsString = "";
+            break;
+        default:
+            requirementsString = "ERROR: unkown quest requirement";
+            break;
+    }
+    return `${requirementsString}`;
 }
 
 function updateDiaryEntries(){

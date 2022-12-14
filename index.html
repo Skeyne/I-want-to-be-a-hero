@@ -90,6 +90,7 @@
                         <div class="statDisplay pickle" style="display: none;">
                             Max health: <span id="playerMaxHealthDisplay">0</span>
                         </div>
+                        <div class="pickle subHeader">Resources:</div>
                         <div id="resourceGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr;">
                             <div class="pickle" style="font-size: 1.5em;margin: 0.5em;"> Money: <span class="moneyText"
@@ -97,6 +98,7 @@
                             <div class="pickle" style="font-size: 1.5em;margin: 0.5em;"> Reputation: <span
                                     class="reputationText" id="reputationText">0</span></div>
                         </div>
+                        <div class="pickle subHeader">Attributes:</div>
                         <div id="statsGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
                             <div class="statDisplay pickle">
@@ -116,6 +118,12 @@
                         <div class="blockBody" id="abilityLoadoutContainer" style="height:auto ;display: grid;grid-template-columns: auto;
                         grid-auto-flow:column;column-gap: normal;justify-items: center;">
                         </div>
+                        <div class="pickle subHeader">Training (<span id="trainingBarOverviewIcon" class="strengthText"></span>) <span id="trainingCanUpgradeText"></span></div>
+                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;margin:1%">
+                            <progress id="trainingProgressBarOverview" class = "trainingProgressBar" style="width:inherit;" value="100" max="1000"></progress>
+                        </div>
+                        <div class="pickle subHeader">Story Progression</div>
+                        <div id="storyRequirementsOverviewText" class="pickle" style="text-align: center;padding: 1%;"></div>
                     </div>
                 </section>
                 <section class="infoBox" id="trainingBox">
@@ -123,7 +131,7 @@
                     <div id="trainingAreaDisplay" class="blockBody dotted">
                         <div id="trainingAreaName" class="statDisplay pickle"></div>
                         <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
-                            <progress id="trainingProgressBar" style="width:inherit;" value="100" max="1000"></progress>
+                            <progress id="trainingProgressBar" class = "trainingProgressBar"  style="width:inherit;" value="100" max="1000"></progress>
                         </div>
                         <div class="statDisplay pickle"
                             style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
@@ -197,14 +205,13 @@
                     <div class="blockBody dotted" id="helpBody">
                         Your hero automatically uses his skills in combat.
                         <br \>
-                        <br \><span class="pickle strengthText">STR</span>is the main component of skill
-                        damage.
-                        <br \><span class="pickle toughnessText">TGH</span>increases your maximum health and damage
+                        <br \><span class="pickle strengthText">STR</span>is the main component of damage in physical moves.
+                        <br \><span class="pickle toughnessText">TGH</span>increases your health and damage
                         reduction.
                         <br \><span class="pickle mindText">MND</span>reduces your cooldowns.
                         <br \><span class="pickle agilityText">AGI</span>increases your action speed.
                         <br \>
-                        <br \>Your only current moves are Move and Punch. Punch's damage ratio is 80% <span
+                        <br \>Your first move is Punch. Punch's damage ratio is 80% <span
                             class="pickle strengthText">STR</span> 20% <span class="pickle agilityText">AGI</span>,
                         which is to say that,
                         that
@@ -213,6 +220,7 @@
                         <br \><img id="damageFormula" src="./damageFormulaInvert.png" />,
                         where the second part is evaluated and then summed from every contributing attribute.
                         <br \>
+                        <br \> The damage ratio of abilities can be found by hovering them on the "Abilities" tab.
                         <br \>Attributes can be increased by training.
                         <br \>Get passive skills to further boost your attributes.
                     </div>

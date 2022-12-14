@@ -493,13 +493,13 @@ progress[value]::-webkit-progress-bar {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-#trainingProgressBar,
-#trainingProgressBar[value]::-webkit-progress-bar {
+.trainingProgressBar,
+.trainingProgressBar[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);
     margin-bottom: 0px
 }
 
-#trainingProgressBar::-webkit-progress-value {
+.trainingProgressBar::-webkit-progress-value {
     background-image: linear-gradient(0deg,
             transparent 33%,
             rgba(0, 0, 0, .1) 33%,
@@ -514,7 +514,7 @@ progress[value]::-webkit-progress-bar {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-#trainingProgressBar::-moz-progress-bar {
+.trainingProgressBar::-moz-progress-bar {
     background-image: linear-gradient(0deg,
             transparent 33%,
             rgba(0, 0, 0, .1) 33%,
@@ -531,6 +531,7 @@ progress[value]::-webkit-progress-bar {
 
 #nextMove {
     text-align: center;
+    margin-bottom: 1%;
     padding: 25px;
 }
 

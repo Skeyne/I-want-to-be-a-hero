@@ -163,7 +163,7 @@ class Player extends CombatEntity {
                     let dr = target.takeDamage(d);
                     logConsole(`Hero hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
-                    return;
+                    
                 }
                 break;
             case 1:
@@ -252,6 +252,10 @@ class Enemy extends CombatEntity {
     constructor(enemyData, distance) {
         super();
         this.data = enemyData;
+        this.abilityCooldowns = {};
+        enemyData.moves.forEach(ability => {
+            this.abilityCooldowns[ability] = 0;
+        });
         this.name = enemyData.name;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
@@ -263,9 +267,12 @@ class Enemy extends CombatEntity {
         this.image.src = enemyData.spriteFile;
         this.portraitImage = new Image(32, 32);
         this.portraitImage.src = enemyData.portraitFile;
+        this.nextMoveKey = null;
     }
     tickCooldowns() {
-        return;
+        this.data.moves.forEach(ability => {
+            this.abilityCooldowns[ability] -= logicTickTime;
+        });
     }
     act(target) {
         if (target == null) {
@@ -282,7 +289,7 @@ class Enemy extends CombatEntity {
                     let dr = target.takeDamage(d);
                     logConsole(`${this.name} hit ${this.target.name} with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
-                    return;
+
                 }
                 break;
             case 1:
@@ -293,6 +300,7 @@ class Enemy extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
+        this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime;
     }
     think() {
         if (this.target == null) {
@@ -303,8 +311,8 @@ class Enemy extends CombatEntity {
         let weights = [];
         for (let index = 0; index < this.data.moves.length; index++) {
             let k = this.data.moves[index];
-            //console.log(k);
             let ability = abilityLibrary[k];
+            if (this.abilityCooldowns[k] > 0) { weights[index] = -1; continue; }
             if (ability.type == 0) {
                 weights[index] = (ability.range >= dist ? 100 : 0);
             }
@@ -327,6 +335,7 @@ class Enemy extends CombatEntity {
             pick = Math.floor(Math.random() * indexes.length);
         }
         let moveKey = Object.keys(this.data.moves)[indexes[pick]];
+        this.nextMoveKey = this.data.moves[moveKey];
         this.nextMove = abilityLibrary[this.data.moves[moveKey]];
         this.nextMoveInitiative = this.nextMove.time;
     }
@@ -511,6 +520,9 @@ function renderLoop() {
     document.getElementById("trainingAreaName").innerHTML = "Training at: " + currentTrainingArea.name;
     document.getElementById("trainingProgressBar").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
+    document.getElementById("trainingProgressBarOverview").max = currentTrainingArea.timeToComplete;
+    document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
+    
     document.getElementById("classText").innerHTML = playerStats.class;
     document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
     document.getElementById("moneyText").innerHTML = format(playerStats.money);

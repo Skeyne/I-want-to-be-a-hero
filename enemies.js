@@ -6,6 +6,7 @@ var abilityLibrary = {
         baseDamage: 1,
         damageRatios: [.8,0,0,0.2],
         time: 3000,
+        cooldownTime: 0,
         range: 5,
 
     },
@@ -16,6 +17,7 @@ var abilityLibrary = {
         baseDamage: 5,
         damageRatios: [2.5,1,0,0],
         time: 7000,
+        cooldownTime: 10000,
         range: 5,
 
     },
@@ -36,6 +38,7 @@ var abilityLibrary = {
         iconName: "move",
         baseDamage: 0,
         time: 1000,
+        cooldownTime: 0,
         range: 5,
     }
 };

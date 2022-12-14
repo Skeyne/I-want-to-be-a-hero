@@ -18,7 +18,7 @@ const tryToPlay = setInterval(() => {
 
         })
         .catch(error => {
-            console.info('User has not interacted with document yet.');
+            //console.info('User has not interacted with document yet.');
         });
 }, 1000);
 async function fadeInAudio() {
