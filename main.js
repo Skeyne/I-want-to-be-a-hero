@@ -75,10 +75,11 @@ class CombatEntity {
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000 * this.actionSpeed;
-            this.tickCooldowns();
+            
         } else {
             this.think();
         }
+        this.tickCooldowns();
         if (this.initiative >= this.nextMoveInitiative) {
             this.initiative -= this.nextMoveInitiative;
             this.act(this.target);
@@ -100,7 +101,7 @@ class CombatEntity {
     }
 }
 var environmentDistance = 0;
-var gameState = "InCombat";
+
 let restRate = 5;
 class Player extends CombatEntity {
     constructor(data) {
@@ -163,7 +164,7 @@ class Player extends CombatEntity {
                     let dr = target.takeDamage(d);
                     logConsole(`Hero hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
-                    
+
                 }
                 break;
             case 1:
@@ -398,12 +399,24 @@ class Area {
         this.backgroundImage = new Image();
         this.backgroundImage.src = this.background;
         this.enemies = data.enemies;
+        //this.patrolDifficulty = data.patrolDifficulty;
+        this.patrolTime = data.patrolTime;
+        this.patrolCounter = 0;
+    }
+    tick() {
+        this.patrolCounter += logicTickTime * player.actionSpeed;
+        if (this.patrolCounter >= this.patrolTime) {
+            this.patrolCounter = 0;
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
 
-const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"] }),
-new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"] }),
-new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner9"] })];
+const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"], patrolTime: 5000 }),
+new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"], patrolTime: 7000 }),
+new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner9"], patrolTime: 10000 })];
 
 areaSelect = document.getElementById("selectArea");
 for (let index = 0; index < areas.length; index++) {
@@ -413,39 +426,11 @@ for (let index = 0; index < areas.length; index++) {
 
 currentArea = areas[playerStats.currentArea];
 areaSelect.value = playerStats.currentArea;
-function changeArea(index) {
-    playerStats.currentArea = index;
-    currentArea = areas[playerStats.currentArea];
-    encounter = new Encounter(currentArea, 1);
-}
-
-function drawSkillIcon(context, skillname, x, y) {
-    let heightAbove = 110;
-    let img = new Image();
-    img.src = skillname + "Icon.png";
-    context.drawImage(img, x - img.width / 2, y - img.height - heightAbove);
-}
-function drawInfoBars(context, entity, rootx, rooty) {
-    let heightAbove = 100;
-    context.fillStyle = "black";
-    context.fillRect(rootx - 20, rooty - heightAbove, 42, 8);
-    context.fillStyle = "red";
-    context.fillRect(rootx - 20, rooty - heightAbove, 40, 5);
-    context.fillStyle = "green";
-    context.fillRect(rootx - 20, rooty - heightAbove, 40 * (entity.health / entity.maxHealth), 5);
-    context.fillStyle = "cyan";
-    context.fillRect(rootx - 20, rooty - heightAbove + 6, 40 * (entity.initiative / entity.nextMoveInitiative), 1);
-}
-function mod(n, m) {
-    return ((n % m) + m) % m;
-}
 
 var player = new Player(playerStats);
-var encounter = new Encounter(currentArea, 1);
-var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
+//var encounter = new Encounter(currentArea, 1);
 var bgImage = new Image();
-bgImage.src = "cyberpunk-street.png";
-
+var gameState = "InPatrol";
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 
 //const worker = new Worker('./worker.js');
@@ -463,46 +448,52 @@ function mainLoop() {
 
 }
 function renderLoop() {
-    if (gameState == "InCombat") {
-        //Clear frame
-        ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
-        //Background
-        let scrollFactor = cBuffer.height / cBuffer.width * encounter.area.backgroundImage.width / encounter.area.backgroundImage.height;
-        let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
-        //console.log(environmentScrollBase+" "+scrollFactor);
-        ctxBuffer.drawImage(encounter.area.backgroundImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
-        ctxBuffer.drawImage(encounter.area.backgroundImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
-        //Draw combatants
-        encounter.enemyArray.forEach(enemy => {
-            if (enemy == null) { return; }
-            enemy.draw(ctxBuffer);
-        });
-        player.draw(ctxBuffer);
-
-        drawCharacterPortrait(ctxBuffer, player, 'l');
-        if (player.target != null) {
-
-            drawCharacterPortrait(ctxBuffer, player.target, "r");
-        }
-        //Draw to render canvas
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        c.height = c.clientHeight;
-        c.width = c.clientWidth;
-        //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
-        ctx.scale(c.height / cBuffer.height, c.height / cBuffer.height);
-
-    } else {
-        ctxBuffer.fillStyle = "black";
-        ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
-        ctxBuffer.font = `80px Pickle Pushing`;
-        ctxBuffer.fillStyle = "white";
-        ctxBuffer.textAlign = 'center';
-        ctxBuffer.fillText("DEFEAT!", cBuffer.width / 2, cBuffer.height / 2);
-        ctxBuffer.font = `24px Pickle Pushing`;
-        ctxBuffer.fillText("Getting up and trying again...", cBuffer.width / 2, cBuffer.height / 2 + 50);
-        ctxBuffer.textAlign = 'left';
-
+    ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
+    switch (gameState) {
+        case "InCombat":
+            drawBackground();
+            drawEnemies();
+            drawPlayer();
+            drawCharacterPortrait(ctxBuffer, player, 'l');
+            if (player.target != null) {
+                drawCharacterPortrait(ctxBuffer, player.target, "r");
+            }
+            break;
+        case "InRest":
+            ctxBuffer.fillStyle = "black";
+            ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
+            ctxBuffer.font = `80px Pickle Pushing`;
+            ctxBuffer.fillStyle = "white";
+            ctxBuffer.textAlign = 'center';
+            ctxBuffer.fillText("DEFEAT!", cBuffer.width / 2, cBuffer.height / 2);
+            ctxBuffer.font = `24px Pickle Pushing`;
+            ctxBuffer.fillText("Getting up and trying again...", cBuffer.width / 2, cBuffer.height / 2 + 50);
+            ctxBuffer.textAlign = 'left';
+            break;
+        case "InPatrol":
+            environmentDistance -= logicTickTime/1000 * 10;
+            drawBackground();
+            drawPlayer();
+            drawCharacterPortrait(ctxBuffer, player, 'l');
+            ctxBuffer.fillStyle = "black";
+            ctxBuffer.fillRect(0, cBuffer.height/2 - 40, cBuffer.width, 100);
+            ctxBuffer.font = `50px Pickle Pushing`;
+            ctxBuffer.fillStyle = "white";
+            ctxBuffer.textAlign = 'center';
+            
+            ctxBuffer.fillText((currentArea.patrolTime - currentArea.patrolCounter > 500) ? "Patrolling...":"FIGHT!", cBuffer.width / 2, cBuffer.height / 2 + 30);
+            ctxBuffer.textAlign = 'left';
+            break;
+        default:
+            console.error("UNKOWN GAME STATE TO DRAW");
+            break;
     }
+    //Draw to render canvas
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    c.height = c.clientHeight;
+    c.width = c.clientWidth;
+    //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
+    ctx.scale(c.height / cBuffer.height, c.height / cBuffer.height);
     ctx.drawImage(cBuffer, 0, 0);
     //Update html values
     document.getElementById("playerLevelText").innerHTML = "LEVEL " + playerStats.level;
@@ -522,7 +513,6 @@ function renderLoop() {
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
     document.getElementById("trainingProgressBarOverview").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
-    
     document.getElementById("classText").innerHTML = playerStats.class;
     document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
     document.getElementById("moneyText").innerHTML = format(playerStats.money);
@@ -532,31 +522,51 @@ function renderLoop() {
     });
 }
 function logicLoop() {
-
-    if (gameState == "InCombat") {
-        switch (encounter.isActive()) {
-            case 0:
-                encounter.tick();
-                break;
-            case 1:
-                logConsole("Encounter finished.")
-                encounter = new Encounter(currentArea, 1);
-                break;
-            case 2:
-                logConsole("Player died, going to rest.")
-                gameState = "InRest";
-                player = new Player(playerStats);
-                player.health = 0;
-                break;
-            default:
-                break;
-        }
-    } else if (gameState == "InRest") {
-        player.rest()
-        if (player.health == player.maxHealth) {
-            encounter = new Encounter(currentArea, 1);
-            gameState = "InCombat";
-        }
+    switch (gameState) {
+        case "InCombat":
+            switch (encounter.isActive()) {
+                case 0:
+                    encounter.tick();
+                    break;
+                case 1:
+                    logConsole("Encounter finished.")
+                    gameState = "InPatrol";
+                    player.target = null;
+                    logConsole("Starting patrol.")
+                    break;
+                case 2:
+                    logConsole("Player defeated, resting.")
+                    gameState = "InRest";
+                    player = new Player(playerStats);
+                    player.health = 0;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case "InRest":
+            player.rest();
+            if (player.health == player.maxHealth) {
+                gameState = "InPatrol";
+                logConsole("Starting patrol.")
+            }
+            break;
+        case "InPatrol":
+            switch (currentArea.tick()) {
+                case 0:
+                    player.tick();
+                    break;
+                case 1:
+                    encounter = new Encounter(currentArea, 1);
+                    gameState = "InCombat";
+                    logConsole("Entering combat.")
+                    break;
+                default:
+                    console.error("UNKNOWN PATROL RETURN STATE");
+                    break;
+            }
+        default:
+            break;
     }
     currentTrainingArea.tick();
 }
@@ -640,4 +650,47 @@ function drawCharacterPortrait(context, character, side) {
     //     context.fillRect(hanchor.x + 4, hanchor.y + 2, 192 * (playerStats.experience / playerStats.experienceToNext), 2);
     // }
 
+}
+function changeArea(index) {
+    playerStats.currentArea = index;
+    currentArea = areas[playerStats.currentArea];
+    gameState = "InPatrol";
+}
+
+function drawSkillIcon(context, skillname, x, y) {
+    let heightAbove = 110;
+    let img = new Image();
+    img.src = skillname + "Icon.png";
+    context.drawImage(img, x - img.width / 2, y - img.height - heightAbove);
+}
+function drawInfoBars(context, entity, rootx, rooty) {
+    let heightAbove = 100;
+    context.fillStyle = "black";
+    context.fillRect(rootx - 20, rooty - heightAbove, 42, 8);
+    context.fillStyle = "red";
+    context.fillRect(rootx - 20, rooty - heightAbove, 40, 5);
+    context.fillStyle = "green";
+    context.fillRect(rootx - 20, rooty - heightAbove, 40 * (entity.health / entity.maxHealth), 5);
+    context.fillStyle = "cyan";
+    context.fillRect(rootx - 20, rooty - heightAbove + 6, 40 * (entity.initiative / entity.nextMoveInitiative), 1);
+}
+function drawBackground() {
+    let bgImage = currentArea.backgroundImage;
+    let scrollFactor = cBuffer.height / cBuffer.width * bgImage.width / bgImage.height;
+    let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
+    //console.log(environmentScrollBase+" "+scrollFactor);
+    ctxBuffer.drawImage(bgImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+    ctxBuffer.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+}
+function drawPlayer() {
+    player.draw(ctxBuffer);
+}
+function drawEnemies() {
+    encounter.enemyArray.forEach(enemy => {
+        if (enemy == null) { return; }
+        enemy.draw(ctxBuffer);
+    });
+}
+function mod(n, m) {
+    return ((n % m) + m) % m;
 }

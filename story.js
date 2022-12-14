@@ -23,10 +23,17 @@ const storyQuests = [
     },
     {
         title: `The Beginning IV`,
-        text: `I should work on my skills so I can take down the real criminals. (Skills menu below)`,
+        text: `I should work on my skills so I can take down criminals more effectively. (Skills menu below)`,
         requirementType: `level`,
         requirementTarget: [`level`],
         requirementAmount: [5],
+    },
+    {
+        title: `The Beginning V`,
+        text: `Time to clean the streets.`,
+        requirementType: `defeat`,
+        requirementTarget: [`criminal`],
+        requirementAmount: [30],
     },
     {
         title: `Streetfights I`,
@@ -40,7 +47,7 @@ const storyQuests = [
         text: `That guy had a freakin' crowbar. Back to the training board.`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`, `agility`],
-        requirementAmount: [10, 10, 10],
+        requirementAmount: [7, 7, 7],
     },
     {
         title: `Streetfights III`,
