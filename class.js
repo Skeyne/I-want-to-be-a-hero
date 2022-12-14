@@ -272,7 +272,7 @@ playerMoves = {
         damage: 0,
         time: 1000,
         cooldownTime: 0,
-        range: 10,
+        range: 5,
     }
 }
 abilityUnlocks = {
@@ -550,8 +550,13 @@ function addEffect(skillId) {
     if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
         playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
     }
-    playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-        skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+    if(skill.effect.effectType == 'multPercent'){
+        playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+            Math.pow(skill.effect.effectMagnitude,playerStats.unlockedSkills[skillId]);
+    } else {
+        playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+            skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+    }
 }
 function removeEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];

@@ -16,7 +16,7 @@ var abilityLibrary = {
         baseDamage: 5,
         damageRatios: [2.5,1,0,0],
         time: 7000,
-        range: 10,
+        range: 5,
 
     },
     'crowbar': {
@@ -28,7 +28,7 @@ var abilityLibrary = {
         damageRange: [1, 1.1],
         time: 4000,
         cooldownTime: 20000,
-        range: 10,
+        range: 5,
     },
     'Walk': {
         type: 1,
@@ -36,7 +36,7 @@ var abilityLibrary = {
         iconName: "move",
         baseDamage: 0,
         time: 1000,
-        range: 10,
+        range: 5,
     }
 };
 
