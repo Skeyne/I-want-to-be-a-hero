@@ -16,7 +16,7 @@ const storyQuests = [
     },
     {
         title: `The Beginning III`,
-        text: `Go at 'em`,
+        text: `Time to fight crime`,
         requirementType: `defeat`,
         requirementTarget: [`criminal`],
         requirementAmount: [10],
@@ -62,16 +62,21 @@ const endOfStoryQuest = {
     title: `The End So Far`,
     text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. Can you beat Prisoner 9 twice in a row?`,
     requirementType: `none`,
-    requirementTarget: 1,
-    requirementAmount: 1,
+    requirementTarget: [1],
+    requirementAmount: [1],
 };
+
+
+updateStoryQuest();
+updateDiaryEntries();
+
 
 function resetStoryline() {
     playerStats.storyProgress = 0;
     playerStats.currentStoryQuestProgress = [0];
     updateStoryQuest();
 }
-updateStoryQuest();
+
 function getStoryQuest(index) {
     if (index < storyQuests.length) { return storyQuests[index] }
     else { return endOfStoryQuest }
@@ -110,6 +115,7 @@ function updateStoryQuest() {
     let completed = true;
     for (let index = 0; index < quest.requirementTarget.length; index++) {
         if (playerStats.currentStoryQuestProgress[index] >= quest.requirementAmount[index]) {
+            console.log(completed);
             continue;
         } else {
             completed = false;
@@ -118,13 +124,14 @@ function updateStoryQuest() {
     if (completed) {
         playerStats.storyProgress += 1;
         playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
+        updateDiaryEntries();
     }
     let textBox = document.getElementById("storyText");
     textBox.innerHTML = storyQuestText(playerStats.storyProgress);
 
 }
 
-function storyQuestText(progress) {
+function storyQuestText(progress, diary=false) {
     let quest = getStoryQuest(progress);
     let requirementsString = "";
     let number = 0;
@@ -149,5 +156,23 @@ function storyQuestText(progress) {
             requirementsString = "ERROR: unkown quest requirement";
             break;
     }
-    return `${quest.title}<br /><br />${quest.text}<br /><br />${requirementsString}`;
+    return `${quest.title}<br /><br />${quest.text}<br /><br />${(diary? "":requirementsString)}`;
+}
+
+function updateDiaryEntries(){
+    let container = document.getElementById("diaryEntries");
+    container.innerHTML = "";
+    for (let index = 0; index < playerStats.storyProgress; index++) {
+        let quest = storyQuests[index];
+        let b = document.createElement("button");
+        b.setAttribute("onclick",`updateDiaryText(${index})`);
+        b.setAttribute("class","diaryButton");
+        b.innerHTML = quest.title;
+        container.append(b);
+    }
+}
+
+function updateDiaryText(progress){
+    let container = document.getElementById("diaryText");
+    container.innerHTML = storyQuestText(progress,diary=true);
 }

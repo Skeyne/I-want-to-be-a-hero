@@ -10,6 +10,7 @@ const cleanPlayerStats = {
     toughness: 0,
     mind: 0,
     agility: 0,
+    attributeSoftcaps: [100,100,100,100],
     healthRegen: 0.005,
     restRate: 0.1,
     lastSave: 0,
@@ -36,7 +37,8 @@ function getEffectiveValue(property) {
         console.log("Accessing invalid property");
         return 0;
     }
-    if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return playerStats[property]; }
+    let baseValue = formulas.softcappedAttribute(attributeIdToIndex[property])
+    if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
     else {
         return (playerStats[property]
             + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))

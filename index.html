@@ -40,7 +40,9 @@
         <h1 class="title pickle">
             I WANT TO BE A HERO
         </h1>
-        <div style="width:100%"><div class="pickle" style="text-align: center;">\/ SCROLL DOWN \/</div></div>
+        <div style="width:100%">
+            <div class="pickle" style="text-align: center;">\/ SCROLL DOWN \/</div>
+        </div>
 
     </header>
     <main>
@@ -56,7 +58,15 @@
                     <div class="blockHeader pickle" style="display: block">STORY</div>
                     <div class="blockBody dotted oxanium"
                         style="padding: 10px; text-align: justify; display: block;font-size: 24px;">
-                        <div id="storyText"></div>
+                        <div id="storyText" style="height:50%;"></div>
+                        <div id="diaryContainer">
+                            <div class="subHeader">Diary</div>
+                            <div id="diaryGrid">
+                                <div id="diaryEntries">
+                                </div>
+                                <div id="diaryText" class="blockPanel">Select a diary entry to view.</div>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="combatBox">
@@ -76,9 +86,7 @@
                             <span id="playerInitiativeText" class="barText pickle">0</span>
                             <progress id="playerInitiativeBar" value="100" max="1000"></progress>
                         </div>
-                        <div class="statDisplay pickle" id="nextMove">
-                            Next move: <span id="playerMoveText">0</span>
-                        </div>
+                        <div class="statDisplay pickle blockPanel" id="nextMove">Next move: <span id="playerMoveText">0</span></div>
                         <div class="statDisplay pickle" style="display: none;">
                             Max health: <span id="playerMaxHealthDisplay">0</span>
                         </div>
@@ -104,7 +112,7 @@
                                 Agility: <span class="agilityText" id="agilityText">0</span>
                             </div>
                         </div>
-                        <div class="pickle">Active abilities:</div>
+                        <div class="pickle subHeader">Active abilities:</div>
                         <div class="blockBody" id="abilityLoadoutContainer" style="height:auto ;display: grid;grid-template-columns: auto;
                         grid-auto-flow:column;column-gap: normal;justify-items: center;">
                         </div>
@@ -114,6 +122,9 @@
                     <div class="blockHeader pickle">TRAINING</div>
                     <div id="trainingAreaDisplay" class="blockBody dotted">
                         <div id="trainingAreaName" class="statDisplay pickle"></div>
+                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
+                            <progress id="trainingProgressBar" style="width:inherit;" value="100" max="1000"></progress>
+                        </div>
                         <div class="statDisplay pickle"
                             style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
                             Currently training: <span id="currentTrainingAttribute"></span></div>
@@ -129,9 +140,6 @@
                         </div>
                         <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session:
                             <span id="trainingReward"></span>
-                        </div>
-                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
-                            <progress id="trainingProgressBar" style="width:inherit;" value="100" max="1000"></progress>
                         </div>
                         <div class="pickle center biggerText">Attributes per session: <span id="trainingReward"></span>
                         </div>
@@ -163,7 +171,8 @@
                     <div class="blockBody dotted pickle" id="skillsWrap">
                         <div>Class: <span id="classText"></span></div>
                         <div>Points available: <span id="passivePointsText"></span></div>
-                        <button class="bannerButton" style="position: absolute;top:0;right:0;" onclick="resetSkills()">Reset</button>
+                        <button class="bannerButton" style="position: absolute;top:0;right:0;"
+                            onclick="resetSkills()">Reset</button>
                         <!-- <div class="tooltip"> Tooltip text<span class = "tooltiptext">TEST</span></div> -->
                         <div class="gridSkills" id="passiveTreeGrid"></div>
                     </div>
@@ -173,15 +182,16 @@
                     <div class="blockBody dotted" id="helpBody">
                         Your hero automatically uses his skills in combat.
                         <br \>
-                        <br \><span  class="pickle strengthText">STR</span>is the main component of skill
+                        <br \><span class="pickle strengthText">STR</span>is the main component of skill
                         damage.
-                        <br \><span  class="pickle toughnessText">TGH</span>increases your maximum health and damage reduction.
-                        <br \><span  class="pickle mindText">MND</span>reduces your cooldowns.
-                        <br \><span  class="pickle agilityText">AGI</span>increases your action speed.
+                        <br \><span class="pickle toughnessText">TGH</span>increases your maximum health and damage
+                        reduction.
+                        <br \><span class="pickle mindText">MND</span>reduces your cooldowns.
+                        <br \><span class="pickle agilityText">AGI</span>increases your action speed.
                         <br \>
                         <br \>Your only current moves are Move and Punch. Punch's damage ratio is 80% <span
-                             class="pickle strengthText">STR</span> 20% <span 
-                            class="pickle agilityText">AGI</span>, which is to say that,
+                            class="pickle strengthText">STR</span> 20% <span class="pickle agilityText">AGI</span>,
+                        which is to say that,
                         that
                         percentage of the respective attribute value is used in the move's damage formula.
                         <br \>The damage formula is:

@@ -403,6 +403,7 @@ for (let index = 0; index < areas.length; index++) {
 }
 
 currentArea = areas[playerStats.currentArea];
+areaSelect.value = playerStats.currentArea;
 function changeArea(index) {
     playerStats.currentArea = index;
     currentArea = areas[playerStats.currentArea];

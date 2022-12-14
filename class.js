@@ -292,7 +292,7 @@ abilityRequirementsGrid.append(previewRowBody);
 let slots = [];
 for (let index = 0; index < playerStats.abilitySlots; index++) {
     let slot = document.createElement("select");
-    slot.setAttribute("class", "abilitySlot");
+    slot.setAttribute("class", "abilitySlot pickle");
     slot.style.height = "4rem";
     slot.style.width = "4rem";
     slots.push(slot);
@@ -343,6 +343,13 @@ function populateAbilityRequirements() {
 UpdateAbilityPreview();
 function UpdateAbilityPreview(){
     let levels = Object.keys(abilityUnlocks);
+    if(playerStats.level >= levels[levels.length - 1]){
+        previewRowHeader.style.display = 'none';
+        previewRowBody.style.display = 'none';
+    } else {
+        previewRowHeader.style.display = 'flex';
+        previewRowBody.style.display = 'block';
+    }
     let previewIndex = 0;
     for (let index = 0; index < levels.length; index++) {
         if(playerStats.level >= levels[index]){
@@ -353,7 +360,7 @@ function UpdateAbilityPreview(){
     }
     previewRowHeader.style.gridRow = `${previewIndex+2}/${previewIndex+3}`;
     previewRowHeader.style.gridColumn = "1/-1";
-    previewRowBody.style.gridRow = `${previewIndex+3}/${Math.max(previewIndex+3,levels.length)}`;
+    previewRowBody.style.gridRow = `${previewIndex+3}/${Math.max(previewIndex+3,levels.length+1)}`;
     previewRowBody.style.gridColumn = `1/-1`;
 }
 
@@ -472,7 +479,7 @@ function generateAbilityRequirementTooltip(ability) {
     stringDisplay += abilityData.name + "<br />";
     stringDisplay += abilityData.description + "<br />";
     if (abilityData.type == 0) {
-        stringDisplay += "Damage:" + "<br />";
+        stringDisplay += "Ratios:" + "<br />";
         for (let attributeRatio = 0; attributeRatio < abilityData.damageRatios.length; attributeRatio++) {
             let ratio = abilityData.damageRatios[attributeRatio] * 100;
             if (ratio == 0) continue;
@@ -480,8 +487,18 @@ function generateAbilityRequirementTooltip(ability) {
             let attributeName = attributeDisplayNames[attributeRatio];
             stringDisplay += `${ratio}% <span class="${attributeId}Text">${attributeDisplayShort[attributeId]}</span><br />`;
         }
+        //let d = getMoveBasePower(abilityData);
+        //For dynamic tooltips later
+        //stringDisplay += `Damage: ${format(d*abilityData.damageRange[0])} - ${format(d*abilityData.damageRange[1])}<br />`
+        stringDisplay += `Damage range: x${abilityData.damageRange[0]} - ${abilityData.damageRange[1]}<br />`
     }
-    stringDisplay += `Use time: ${abilityData.time / 1000}s<br />`
+    
+    stringDisplay += `Use time: ${format(abilityData.time / 1000)}s<br />`
+    if(abilityData.range[1] != abilityData.range[0]){
+        stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br />`
+    } else {
+        stringDisplay += `Range: ${abilityData.range[0]}<br />`
+    }
     if (abilityData.cooldownTime > 0) {
         stringDisplay += `Cooldown: ${abilityData.cooldownTime / 1000}s<br />`
     }
