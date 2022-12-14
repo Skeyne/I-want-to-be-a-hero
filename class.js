@@ -93,7 +93,7 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 0.5,
+                effectMagnitude: 1,
             },
             maxLevel: 99,
             cost: Array(99).fill(1),
