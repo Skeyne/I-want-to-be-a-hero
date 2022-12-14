@@ -74,7 +74,7 @@ class CombatEntity {
             this.health = Math.min(this.health + this.maxHealth * this.data.healthRegen * logicTickTime / 1000, this.maxHealth);
         }
         if (this.nextMove != null) {
-            this.initiative += 1000 * logicTickTime / 1000;
+            this.initiative += 1000 * logicTickTime / 1000 * this.actionSpeed;
             this.tickCooldowns();
         } else {
             this.think();
