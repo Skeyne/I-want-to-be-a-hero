@@ -177,8 +177,26 @@
                 font-family: 'Pickle Pushing', sans-serif;
                 font-size: 24px;
                 font-weight:lighter ;">
-                        <select name="selectArea" class="dropdown pickle" id="selectArea"
-                            onchange="changeArea(this.value)"></select>
+                        <!-- <select name="selectArea" class="dropdown pickle" id="selectArea"
+                            onchange="changeArea(this.value)"></select> -->
+                            <div class="radioWrap">
+                                <input type="radio" class="radioArea" name="selectArea" id="Alley" onchange="changeArea(this.value)">
+                                <label for="Alley" class="radioAreaLabel" style="background-image: url(./alleyBackground.png);">
+                                    Alley
+                                </label>
+                            </div>
+                            <div class="radioWrap">
+                                <input type="radio" class="radioArea" name="selectArea" id="Streets" onchange="changeArea(this.value)">
+                                <label for="Streets" class="radioAreaLabel" style="background-image: url(./cyberpunk-street.png);">
+                                    Streets
+                                </label>
+                            </div>
+                            <div class="radioWrap">  
+                                <input type="radio" class="radioArea" name="selectArea" id="Bridge" onchange="changeArea(this.value)">
+                                <label for="Bridge" class="radioAreaLabel" style="background-image: url(./bridgeAreaBackground-1.png);">
+                                    Bridge    
+                                </label>
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="abilitiesBox">
