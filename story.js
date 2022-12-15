@@ -184,7 +184,7 @@ function storyRequirementsText(progress) {
             requirementsString = `Get to level ${format(playerStats.level)}/${quest.requirementAmount[0]}`;
             break;
         case 'none':
-            requirementsString = "";
+            requirementsString = "Congratulations! You reached the end of current content.";
             break;
         default:
             requirementsString = "ERROR: unkown quest requirement";

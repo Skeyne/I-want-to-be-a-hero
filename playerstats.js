@@ -3,7 +3,7 @@ const cleanPlayerStats = {
     experienceToNext: 10,
     money: 0,
     reputation: 0,
-    class: "Human",
+    class: "human",
     level: 0,
     passivePointsSpent: 0,
     strength: 0,
@@ -62,7 +62,7 @@ function addPlayerExp(amount) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level)
-    checkAbilityRequirements();
+        checkAbilityRequirements();
     }
     checkLevelQuest();
 }

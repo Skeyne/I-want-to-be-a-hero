@@ -1,5 +1,5 @@
 skillLibrary = {
-    "Human": {
+    "human": {
         'h_0': {
             id: 'h_0',
             name: 'Calisthenics',
@@ -169,7 +169,182 @@ skillLibrary = {
             cost: [3,3],
         },
     },
-
+    "superhuman": {
+        'sh_0': {
+            id: 'sh_0',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve ever been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'sh_1': {
+            id: 'sh_1',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'sh_2': {
+            id: 'sh_2',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+    },
+    "esper": {
+        'es_0': {
+            id: 'es_0',
+            name: 'Superior Intellect',
+            iconName: 'studying',
+            desc: 'Everything seems so simple',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "mind",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'es_1': {
+            id: 'es_1',
+            name: 'Master of the Mind',
+            iconName: 'studying',
+            desc: 'Nothing in this world is infinite except for your intellect.',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "mind",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 2,
+            },
+            maxLevel: 3,
+            cost: [10,100,1000],
+        },
+        'es_2': {
+            id: 'es_2',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+    },
+    "mutant": {
+        'mu_0': {
+            id: 'mu_0',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'mu_1': {
+            id: 'mu_1',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'mu_2': {
+            id: 'mu_2',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+    },
+    "cyborg": {
+        'cy_0': {
+            id: 'cy_0',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'cy_1': {
+            id: 'cy_1',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+        'cy_2': {
+            id: 'cy_2',
+            name: 'Inhuman strength',
+            iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            },
+            maxLevel: 5,
+            cost: [1,2,2,2,3],
+        },
+    },
 }
 playerMoves = {
     'punch': {
@@ -263,6 +438,45 @@ playerMoves = {
         cooldownTime: 9000,
         range: [0,30],
     },
+    'spiritFist': {
+        type: 0,
+        category:'melee',
+        name: "Spirit Fist",
+        description: "Empower your fist with psionic energy for an enhanced strike.",
+        iconName: "spiritFist",
+        damage: 1,
+        damageRatios: [.2, 0, 1, .2],
+        damageRange: [0.9, 1.1],
+        time: 3000, 
+        cooldownTime: 0,
+        range: [10,10],
+    },
+    'telekineticProjectile': {
+        type: 0,
+        category:'ranged',
+        name: "Telekinetic Projectile",
+        description: "Use your psionic powers to thrust nearby matter towards your enemy.",
+        iconName: "telekineticProjectile",
+        damage: 1,
+        damageRatios: [0, 0, 2, 0],
+        damageRange: [0.8, 1.1],
+        time: 3000, 
+        cooldownTime: 5000,
+        range: [20,100],
+    },
+    'psionicPulse': {
+        type: 0,
+        category:'melee',
+        name: "Psionic Pulse",
+        description: "Emit a short-range pulse that damages nearby enemies.",
+        iconName: "psionicPulse",
+        damage: 1,
+        damageRatios: [0, 1, 3, 0],
+        damageRange: [1, 1.2],
+        time: 5000, 
+        cooldownTime: 10000,
+        range: [20,20],
+    },
     'walk': {
         type: 1,
         category:'movement',
@@ -276,10 +490,29 @@ playerMoves = {
     }
 }
 abilityUnlocks = {
-    0: ['punch'],
-    5: ['kick', 'jab'],
-    10: ['haymaker','firecrackers'],
-    15: ['crowbar','throwingKnife'],
+    'human': {
+        0: ['punch'],
+        5: ['kick', 'jab'],
+        10: ['haymaker','firecrackers'],
+        15: ['crowbar','throwingKnife'],
+    },
+    'superhuman': {
+        0: ['punch'],
+    },
+    'mutant': {
+        0: ['punch'],
+    },
+    'esper': {
+        0: ['spiritFist'],
+        10: ['telekineticProjectile','psionicPulse'],
+        20: ['spiritFist'],
+    },
+    'ninja': {
+        0: ['punch'],
+    },
+    'cyborg': {
+        0: ['punch'],
+    },
 }
 let previewRowHeader = document.createElement("div");
 previewRowHeader.setAttribute("id","previewRowHeader");
@@ -288,7 +521,7 @@ previewRowBody.setAttribute("id","previewRowBody");
 let loadoutContainer = document.getElementById("abilityLoadoutContainer");
 let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
 abilityRequirementsGrid.append(previewRowHeader);
-abilityRequirementsGrid.append(previewRowBody);
+abilityRequirementsGrid.append(previewRowBody); 
 let slots = [];
 for (let index = 0; index < playerStats.abilitySlots; index++) {
     let slot = document.createElement("select");
@@ -302,9 +535,11 @@ for (let index = 0; index < playerStats.abilitySlots; index++) {
 checkAbilityRequirements();
 
 populateAbilityRequirements();
+UpdateAbilityPreview();
 populateAbilitySlots();
 function checkAbilityRequirements() {
-    for (const [levelRequirement, abilities] of Object.entries(abilityUnlocks)) {
+    if(!abilityUnlocks.hasOwnProperty(playerStats.class)){console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS "+ playerStats.class); return}
+    for (const [levelRequirement, abilities] of Object.entries(abilityUnlocks[playerStats.class])) {
         if (playerStats.level >= levelRequirement) {
             abilities.forEach(ability => {
                 playerStats.unlockedAbilities[ability] = 1;
@@ -312,12 +547,20 @@ function checkAbilityRequirements() {
         }
     }
     populateAbilitySlots();
+    UpdateAbilityPreview();
 }
 
 function populateAbilityRequirements() {
-    let levels = Object.keys(abilityUnlocks);
+    if(!abilityUnlocks.hasOwnProperty(playerStats.class)){console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS "+ playerStats.class); return}
+    if(abilityRequirementsGrid.childElementCount > 2){
+        while (abilityRequirementsGrid.childElementCount > 2) {
+            abilityRequirementsGrid.removeChild(abilityRequirementsGrid.lastChild);
+            console.log("Removing ",abilityRequirementsGrid.lastChild);
+        }
+    }
+    let levels = Object.keys(abilityUnlocks[playerStats.class]);
     for (let index = 0; index < levels.length; index++) {
-        let abilities = abilityUnlocks[levels[index]]
+        let abilities = abilityUnlocks[playerStats.class][levels[index]]
         let label = document.createElement("div");
         label.setAttribute("class", "pickle abilityPickContainerLabel");
         label.style.gridRow = index+1;
@@ -340,9 +583,10 @@ function populateAbilityRequirements() {
         }
     }
 }
-UpdateAbilityPreview();
+
 function UpdateAbilityPreview(){
-    let levels = Object.keys(abilityUnlocks);
+    if(!abilityUnlocks.hasOwnProperty(playerStats.class)){console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS "+ playerStats.class); return}
+    let levels = Object.keys(abilityUnlocks[playerStats.class]);
     if(playerStats.level >= levels[levels.length - 1]){
         previewRowHeader.style.display = 'none';
         previewRowBody.style.display = 'none';
@@ -364,36 +608,39 @@ function UpdateAbilityPreview(){
     previewRowBody.style.gridColumn = `1/-1`;
 }
 
-let grid = document.getElementById("passiveTreeGrid");
+let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
-let i = 0;
-Object.values(skillLibrary[playerStats.class]).forEach(skill => {
-    // let d = document.createElement("div");
-    // d.setAttribute("class","tooltip");
-    // grid.appendChild(d);
-    let b = document.createElement("button");
-    passiveButtonDict[skill.id] = b;
-    b.style.gridRow = i;
-    b.style.gridColumn = i;
-    b.style.background = "url(" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
-    b.style.backgroundSize = "contain";
-    b.setAttribute("class", "passiveSkillButton tooltip");
-    b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
-    grid.appendChild(b);
-    let t = document.createElement("div");
-    t.setAttribute("class", "tooltiptext pickle");
-    t.innerHTML = generatePassiveTooltip(skill);
-    b.appendChild(t);
-    let l = document.createElement("div");
-    l.setAttribute("class", "passiveSkillLevel");
-    if (!playerStats.unlockedSkills.hasOwnProperty(skill.id)) {
-        l.innerHTML = 0;
-    } else {
-        l.innerHTML = playerStats.unlockedSkills[skill.id];
-    }
-    b.appendChild(l);
+populatePassiveTree();
+function populatePassiveTree(){
+    let i = 0;
+    passiveTreeGrid.innerHTML = "";
+    passiveButtonDict = {};
+    if(!skillLibrary.hasOwnProperty(playerStats.class)) {console.error("ERROR: CLASS PASSIVE TREE DOES NOT EXIST"); return;}
+    Object.values(skillLibrary[playerStats.class]).forEach(skill => {
+        let b = document.createElement("button");
+        passiveButtonDict[skill.id] = b;
+        b.style.gridRow = i;
+        b.style.gridColumn = i;
+        b.style.background = "url(" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
+        b.style.backgroundSize = "contain";
+        b.setAttribute("class", "passiveSkillButton tooltip");
+        b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
+        passiveTreeGrid.appendChild(b);
+        let t = document.createElement("div");
+        t.setAttribute("class", "tooltiptext pickle");
+        t.innerHTML = generatePassiveTooltip(skill);
+        b.appendChild(t);
+        let l = document.createElement("div");
+        l.setAttribute("class", "passiveSkillLevel");
+        if (!playerStats.unlockedSkills.hasOwnProperty(skill.id)) {
+            l.innerHTML = 0;
+        } else {
+            l.innerHTML = playerStats.unlockedSkills[skill.id];
+        }
+        b.appendChild(l);
+    });
+}
 
-});
 function populateAbilitySlots() {
     let currentAbilities = playerStats.equippedAbilities.slice(1);
     for (let slotN = 0; slotN < slots.length; slotN++) {
@@ -624,4 +871,24 @@ function resetSkills() {
     for (const [key, value] of Object.entries(passiveButtonDict)) {
         updateButton(key);
     }
+}
+
+function changeClass(className){
+    resetSkills();
+    playerStats.class = className;
+    populatePassiveTree();
+    playerStats.level = 0;
+    playerStats.experience = 0;
+    addPlayerExp(0);
+    playerStats.unlockedAbilities = {};
+    populateAbilityRequirements();
+    checkAbilityRequirements();
+    for (let index = 0; index < slots.length; index++) {
+        if (index == 0){
+            playerStats.equippedAbilities[index+1] = abilityUnlocks[playerStats.class][0][0];
+        } else {
+            playerStats.equippedAbilities[index+1] = null;
+        }
+    }
+    populateAbilitySlots();
 }

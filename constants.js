@@ -8,6 +8,7 @@ const PLAYER_BASE_HEALTH = 5;
 const HEALTH_GROWTH_EXPONENT = 1.12;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
 const TRAINING_COST_GROWTH_BASE = 1.55;
+const PLAYER_CLASSES = ["human","superhuman","mutant","ninja","esper","cyborg"];
 const attributeIndexToId = {
     0: "strength",
     1: "toughness",

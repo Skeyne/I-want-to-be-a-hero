@@ -94,7 +94,7 @@ main {
     width: 100%;
     aspect-ratio: 1/1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: minmax(2fr, 200px);
+    grid-template-rows: 1fr 1fr 1fr;
     justify-items: center;
     justify-content: space-around;
     align-items: center;
