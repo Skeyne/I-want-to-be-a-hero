@@ -31,37 +31,35 @@ const cleanPlayerStats = {
 
 var playerStats = {};
 reset();
-
+function getTotalPassivePoints(){
+    let decades = Math.floor(playerStats.level/10);
+    return ((decades+1)/2 * decades * 10) + (playerStats.level - decades*10)*(decades+1);
+}
 function getEffectiveValue(property) {
     if (!playerStats.hasOwnProperty(property)) {
         console.log("Accessing invalid property");
         return 0;
     }
-    let baseValue = formulas.softcappedAttribute(attributeIdToIndex[property])
+    let baseValue = formulas.softcappedAttribute(attributeIdToIndex[property]);
     if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
     else {
-        return (playerStats[property]
+        return (baseValue
             + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
             * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
             * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
     }
 
 }
-
 function recalculateMultipliers() {
     playerStats.effectMultipliers = {};
 
 }
-
-
-
-
 function addPlayerExp(amount) {
     playerStats.experience += amount;
     if (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
-        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level)
+        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
         checkAbilityRequirements();
     }
     checkLevelQuest();

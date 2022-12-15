@@ -462,7 +462,7 @@ playerMoves = {
         damageRange: [0.8, 1.1],
         time: 3000, 
         cooldownTime: 5000,
-        range: [20,100],
+        range: [20,60],
     },
     'psionicPulse': {
         type: 0,
@@ -473,7 +473,10 @@ playerMoves = {
         damage: 1,
         damageRatios: [0, 1, 3, 0],
         damageRange: [1, 1.2],
-        time: 5000, 
+        effects: {
+            'knockback': 10,
+        },
+        time: 3000, 
         cooldownTime: 10000,
         range: [20,20],
     },
@@ -555,7 +558,7 @@ function populateAbilityRequirements() {
     if(abilityRequirementsGrid.childElementCount > 2){
         while (abilityRequirementsGrid.childElementCount > 2) {
             abilityRequirementsGrid.removeChild(abilityRequirementsGrid.lastChild);
-            console.log("Removing ",abilityRequirementsGrid.lastChild);
+            //console.log("Removing ",abilityRequirementsGrid.lastChild);
         }
     }
     let levels = Object.keys(abilityUnlocks[playerStats.class]);
@@ -844,7 +847,7 @@ function checkSkillPurchase(skillId) {
     } else {
         cost = skillLibrary[playerStats.class][skillId].cost[0];
     }
-    if (cost <= (playerStats.level - playerStats.passivePointsSpent)) {
+    if (cost <= (getTotalPassivePoints() - playerStats.passivePointsSpent)) {
         playerStats.passivePointsSpent += cost;
         addSkill(skillId);
     }
@@ -880,6 +883,7 @@ function changeClass(className){
     playerStats.level = 0;
     playerStats.experience = 0;
     addPlayerExp(0);
+    playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
     playerStats.unlockedAbilities = {};
     populateAbilityRequirements();
     checkAbilityRequirements();

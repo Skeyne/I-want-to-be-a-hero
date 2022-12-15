@@ -161,6 +161,19 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
+                    if(this.nextMove.hasOwnProperty("effects")){
+                        Object.keys(this.nextMove.effects).forEach(effect =>{
+                            switch (effect) {
+                                case "knockback":
+                                    target.distance += this.nextMove.effects[effect];
+                                    break;
+                            
+                                default:
+                                    console.error("ERROR UNKOWN SKILL EFFECT");
+                                    break;
+                            }
+                        });
+                    }
                     let dr = target.takeDamage(d);
                     logConsole(`Hero hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
@@ -241,7 +254,7 @@ class Player extends CombatEntity {
 
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = cBuffer.height - 30;
+        let canvasY = cBuffer.height - 40;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
@@ -342,7 +355,7 @@ class Enemy extends CombatEntity {
     }
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = cBuffer.height - 30;
+        let canvasY = cBuffer.height - 40;
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
@@ -366,7 +379,7 @@ class Encounter {
         if (lastHealth > 0) { player.health = lastHealth; }
         for (let index = 0; index < this.enemiesToSpawn; index++) {
             let picked = Math.floor(Math.random() * this.area.enemies.length);
-            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.round(3 * Math.random()) * 10 + 70));
+            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.round(5 * Math.random()) * 10 + 50));
             this.enemyArray[index].setTarget(player);
         }
         player.setTarget(this.enemyArray[0]);
@@ -416,7 +429,11 @@ class Area {
 
 const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"], patrolTime: 5000 }),
 new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"], patrolTime: 7000 }),
-new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner9"], patrolTime: 10000 })];
+new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner"], patrolTime: 10000 }),
+new Area({ name: "Prison Courtyard", background: "prisonCourtyardBackground.png", enemies: ["prisoner9"], patrolTime: 10000 }),
+new Area({ name: "Prison Underground", background: "bulkheadBackground.png", enemies: ["infectedPrisoner"], patrolTime: 10000 }),
+new Area({ name: "Underground Lab", background: "scifilabBackground.png", enemies: ["experiment999"], patrolTime: 10000 }),
+new Area({ name: "The Void", background: "voidBackground.png", enemies: ["prisoner999"], patrolTime: 10000 })];
 
 areaSelect = document.getElementById("selectArea");
 for (let index = 0; index < areas.length; index++) {
@@ -514,7 +531,7 @@ function renderLoop() {
     document.getElementById("trainingProgressBarOverview").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
-    document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
+    document.getElementById("passivePointsText").innerHTML = getTotalPassivePoints() - playerStats.passivePointsSpent;
     document.getElementById("moneyText").innerHTML = format(playerStats.money);
     document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
     Object.values(attribute).forEach(attributeName => {
@@ -532,6 +549,7 @@ function logicLoop() {
                     logConsole("Encounter finished.")
                     gameState = "InPatrol";
                     player.target = null;
+                    player.nextMove = null;
                     logConsole("Starting patrol.")
                     break;
                 case 2:

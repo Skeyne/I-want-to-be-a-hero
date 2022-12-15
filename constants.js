@@ -46,7 +46,7 @@ const attribute = {
     mind: "mind",
     agility: "agility",
 }
-var formulas = {}
+var formulas = {};
 
 formulas.cooldownReduction = function (value) {
     return Math.pow(1 - COOLDOWN_BASE, Math.max(0, Math.log10(1 + value)));
@@ -62,10 +62,12 @@ formulas.maxHealth = function (value) {
 }
 formulas.softcappedAttribute = function (index){
     let baseValue = playerStats[attributeIndexToId[index]];
+    
     let softCap = playerStats.attributeSoftcaps[index];
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;
     let softCapFactor = Math.max(1,1+Math.log10(baseValue/softCap));
+    //if(index == 2) console.log("Base: ",baseValue," Softcap factor: ",softCapFactor," Softcapped: ",Math.min(baseValue,softCap) * softCapFactor);
     return Math.min(baseValue,softCap) * softCapFactor;
 }
 
