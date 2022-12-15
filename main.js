@@ -455,6 +455,9 @@ for (let index = 0; index < areas.length; index++) {
     l.setAttribute("for",`${area.name}`);
     l.style.backgroundImage = `url(${area.background})`;
     l.innerHTML = area.name;
+    dGradient = document.createElement('div');
+    dGradient.setAttribute("class","radioAreaGradient");
+    d.append(dGradient);
     d.append(l);
 }
 console.log(document.querySelector('input[name="selectArea"]:checked').value);
