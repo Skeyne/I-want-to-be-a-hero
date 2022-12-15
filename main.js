@@ -690,6 +690,8 @@ function changeArea(index) {
     playerStats.currentArea = index;
     currentArea = areas[playerStats.currentArea];
     gameState = "InPatrol";
+    player.target = null;
+    player.nextMove = null;
 }
 
 function drawSkillIcon(context, skillname, x, y) {

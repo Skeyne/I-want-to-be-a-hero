@@ -409,7 +409,7 @@ playerMoves = {
         damageRatios: [2, 0, 0, 0],
         damageRange: [1, 2],
         time: 4000,
-        cooldownTime: 20000,
+        cooldownTime: 15000,
         range: [10,10],
     },
     'throwingKnife': {
@@ -422,7 +422,7 @@ playerMoves = {
         damageRatios: [0, 0, .4, .6],
         damageRange: [0.8, 1],
         time: 2000,
-        cooldownTime: 5000,
+        cooldownTime: 4000,
         range: [10,60],
     },
     'firecrackers': {
@@ -432,7 +432,7 @@ playerMoves = {
         description: "You're more likely to blow off your own fingers than theirs.",
         iconName: "firecrackers",
         damage: 1,
-        damageRatios: [0, 0, 1, .2],
+        damageRatios: [0, 0, 1.2, .2],
         damageRange: [0.5, 3],
         time: 3000, 
         cooldownTime: 9000,

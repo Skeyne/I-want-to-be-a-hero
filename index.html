@@ -86,7 +86,8 @@
                             <span id="playerInitiativeText" class="barText pickle">0</span>
                             <progress id="playerInitiativeBar" value="100" max="1000"></progress>
                         </div>
-                        <div class="statDisplay pickle blockPanel" id="nextMove">Next move: <span id="playerMoveText">0</span></div>
+                        <div class="statDisplay pickle blockPanel" id="nextMove">Next move: <span
+                                id="playerMoveText">0</span></div>
                         <div class="statDisplay pickle" style="display: none;">
                             Max health: <span id="playerMaxHealthDisplay">0</span>
                         </div>
@@ -118,12 +119,16 @@
                         <div class="blockBody" id="abilityLoadoutContainer" style="height:auto ;display: grid;grid-template-columns: auto;
                         grid-auto-flow:column;column-gap: normal;justify-items: center;">
                         </div>
-                        <div class="pickle subHeader">Training (<span id="trainingBarOverviewIcon" class="strengthText"></span>) <span id="trainingCanUpgradeText"></span></div>
-                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;margin:1%">
-                            <progress id="trainingProgressBarOverview" class = "trainingProgressBar" style="width:inherit;" value="100" max="1000"></progress>
+                        <div class="pickle subHeader">Training (<span id="trainingBarOverviewIcon"
+                                class="strengthText"></span>) <span id="trainingCanUpgradeText"></span></div>
+                        <div
+                            style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;margin:1%">
+                            <progress id="trainingProgressBarOverview" class="trainingProgressBar"
+                                style="width:inherit;" value="100" max="1000"></progress>
                         </div>
                         <div class="pickle subHeader">Story Progression</div>
-                        <div id="storyRequirementsOverviewText" class="pickle" style="text-align: center;padding: 1%;"></div>
+                        <div id="storyRequirementsOverviewText" class="pickle" style="text-align: center;padding: 1%;">
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="trainingBox">
@@ -131,7 +136,8 @@
                     <div id="trainingAreaDisplay" class="blockBody dotted">
                         <div id="trainingAreaName" class="statDisplay pickle"></div>
                         <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
-                            <progress id="trainingProgressBar" class = "trainingProgressBar"  style="width:inherit;" value="100" max="1000"></progress>
+                            <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
+                                value="100" max="1000"></progress>
                         </div>
                         <div class="statDisplay pickle"
                             style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
@@ -141,7 +147,7 @@
                                 onclick="changeTrainingAttribute(attribute.strength)"></button>
                             <button class="attributeButton toughnessText"
                                 onclick="changeTrainingAttribute(attribute.toughness)"></button>
-                            <button class="attributeButton mindText"
+                            <button class="attributeButton   mindText"
                                 onclick="changeTrainingAttribute(attribute.mind)"></button>
                             <button class="attributeButton agilityText"
                                 onclick="changeTrainingAttribute(attribute.agility)"></button>
@@ -154,21 +160,21 @@
                         <button class="pickle" id="trainingUpgradeButton" onclick="upgradeTrainingArea()"
                             onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span
                                 id="trainingUpgradeCost"></span></button>
-                                <div id="statsGrid"
-                                style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
-                                <div id="strengthStatText" class="statDisplay pickle">
-                                    Strength: <span class="strengthText" id="strengthText">0</span>
-                                </div>
-                                <div id="toughhnessStatText" class="statDisplay pickle">
-                                    Toughness: <span class="toughnessText" id="toughnessText">0</span>
-                                </div>
-                                <div id="mindStatText" class="statDisplay pickle">
-                                    Mind: <span class="mindText" id="mindText">0</span>
-                                </div>
-                                <div id="agilityStatText" class="statDisplay pickle">
-                                    Agility: <span class="agilityText" id="agilityText">0</span>
-                                </div>
+                        <div id="statsGrid"
+                            style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
+                            <div id="strengthStatText" class="statDisplay pickle">
+                                Strength: <span class="strengthText" id="strengthText">0</span>
                             </div>
+                            <div id="toughhnessStatText" class="statDisplay pickle">
+                                Toughness: <span class="toughnessText" id="toughnessText">0</span>
+                            </div>
+                            <div id="mindStatText" class="statDisplay pickle">
+                                Mind: <span class="mindText" id="mindText">0</span>
+                            </div>
+                            <div id="agilityStatText" class="statDisplay pickle">
+                                Agility: <span class="agilityText" id="agilityText">0</span>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="areasBox">
@@ -179,10 +185,10 @@
                 font-weight:lighter ;">
                         <!-- <select name="selectArea" class="dropdown pickle" id="selectArea"
                             onchange="changeArea(this.value)"></select> -->
-                            <div class="radioWrap">
-                            </div>
+                        <div class="radioWrap">
                         </div>
                     </div>
+
                 </section>
                 <section class="infoBox" id="abilitiesBox">
                     <div class="blockHeader pickle" style="display: block">ABILITIES</div>
@@ -208,7 +214,8 @@
                     <div class="blockBody dotted" id="helpBody">
                         Your hero automatically uses his skills in combat.
                         <br \>
-                        <br \><span class="pickle strengthText">STR</span>is the main component of damage in physical moves.
+                        <br \><span class="pickle strengthText">STR</span>is the main component of damage in physical
+                        moves.
                         <br \><span class="pickle toughnessText">TGH</span>increases your health and damage
                         reduction.
                         <br \><span class="pickle mindText">MND</span>reduces your cooldowns.
@@ -229,6 +236,7 @@
                     </div>
                 </section>
             </div>
+        </div>
         </div>
 
     </main>
