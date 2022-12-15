@@ -437,10 +437,27 @@ new Area({ name: "The Void", background: "voidBackground.png", enemies: ["prison
 
 areaSelect = document.getElementById("selectArea");
 for (let index = 0; index < areas.length; index++) {
-    let option = new Option(areas[index].name, index);
-    areaSelect.options[areaSelect.options.length] = option;
+    let area = areas[index];
+    let d =  document.createElement('div');
+    d.setAttribute("class","radioWrap");
+    areaSelect.append(d);
+    let radioSelect =  document.createElement('input');
+    radioSelect.setAttribute('type', 'radio');
+    radioSelect.setAttribute('name', 'selectArea');
+    radioSelect.setAttribute("id",`${area.name}`);
+    radioSelect.setAttribute("value",index);
+    radioSelect.setAttribute("class","radioArea");
+    radioSelect.setAttribute("onChange","changeArea(this.value)");
+    if(index == playerStats.currentArea) radioSelect.setAttribute("checked","checked");
+    d.append(radioSelect);
+    l = document.createElement('label');
+    l.setAttribute("class","radioAreaLabel");
+    l.setAttribute("for",`${area.name}`);
+    l.style.backgroundImage = `url(${area.background})`;
+    l.innerHTML = area.name;
+    d.append(l);
 }
-
+console.log(document.querySelector('input[name="selectArea"]:checked').value);
 currentArea = areas[playerStats.currentArea];
 areaSelect.value = playerStats.currentArea;
 

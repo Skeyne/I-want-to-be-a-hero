@@ -95,7 +95,6 @@ main {
     aspect-ratio: 1/1;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    grid-auto-rows: 1fr;
     justify-items: center;
     justify-content: space-around;
     align-items: center;
@@ -717,6 +716,40 @@ progress[value]::-webkit-progress-bar {
 
 .dropdown:active {
     border: 5px grey inset;
+}
+
+.radioWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    column-gap: 20px;
+}
+
+.radioAreaLabel {
+    box-sizing: border-box;
+    width: 100%;
+    height: min-content;
+    border: 5px grey outset;
+    text-align: center;
+    font-size: 1.6rem;
+    padding: 1rem;
+    /* background-color: blue; */
+    background-size: contain;
+    filter:saturate(0);
+}
+
+.radioAreaLabel:active {
+    border: 5px grey inset;
+}
+
+.radioArea {
+    position: fixed;
+    opacity: 0; 
+    pointer-events: none;
+}
+
+.radioArea:checked ~ label {
+    filter: saturate(1);
 }
 
 #skillsWrap {
