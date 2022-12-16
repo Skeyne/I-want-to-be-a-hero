@@ -9,70 +9,35 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var log = document.getElementById("logBox");
-var audio = document.getElementById("audioSource");
-var slide = document.getElementById('volumeSlider');
-slide.value = playerStats.musicVolume*100;
-audio.vol = slide.value;
-const tryToPlay = setInterval(() => {
-    audio.play()
-        .then(() => {
-            clearInterval(tryToPlay);
-            console.info('Successful play().');
-            audio.loop = true;
-            audio.muted = false;
-            audio.volume = 0;
-            if (playerStats.muted) {
-                audio.pause();
-            } else {
-                fadeInAudio(playerStats.musicVolume);
-            }
+var pageY = 0;
+function disableScroll() {
+    // if any scroll is attempted, set this to the previous value
+    window.onscroll = function () {
+        window.scrollTo(0, pageY);
+    };
+}
 
-        })
-        .catch(error => {
-            console.info('User has not interacted with document yet.');
-        });
-}, 1000);
-async function fadeInAudio() {
-    audio.play();
-    playerStats.muted = false;
-    audio.volume = 0;
-    while (audio.volume < playerStats.musicVolume) {
-        audio.volume += 0.005
-        audio.volume = Math.min(1, audio.volume);
-        await new Promise(resolve => {
-            setTimeout(() => {
-                resolve('resolved');
-            }, 100);
-        });
-    }
-    audio.volume = playerStats.musicVolume;
-    playerStats.musicVolume = audio.volume;
+function enableScroll() {
+    window.onscroll = function () { };
 }
-async function fadeOutAudio(target) {
-    let vol = audio.volume;
-    while (vol > target) {
-        vol -= 0.02;
-        audio.volume = Math.max(0, vol);
-        await new Promise(resolve => {
-            setTimeout(() => {
-                resolve('resolved');
-            }, 100);
-        });
-    }
-    audio.pause();
-    playerStats.muted = true;
-}
-function toggleMusic() {
-    if (audio.paused) {
-        fadeInAudio(playerStats.musicVolume);
-    } else {
-        fadeOutAudio(0);
-    }
-}
-function setVolume(value){
-    playerStats.musicVolume = value/100;
-    audio.volume = playerStats.musicVolume;
-}
+var leftWindow = document.getElementById("gridMain");
+let isMouseHover = false
+leftWindow.addEventListener("mouseleave", function (event) {
+    pageY = 0;
+    isMouseHover = false
+    enableScroll();
+}, false);
+leftWindow.addEventListener("mouseover", function (event) {
+    if (pageY == 0) pageY = window.pageYOffset;
+    isMouseHover = true
+    disableScroll();
+}, false);
+
+window.addEventListener("wheel", function (e) {
+    if (!isMouseHover) return;
+    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + leftWindow.clientWidth, behavious: 'smooth', });
+    else leftWindow.scroll({ left: leftWindow.scrollLeft - leftWindow.clientWidth, behavious: 'smooth', });
+});
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
@@ -110,9 +75,11 @@ class CombatEntity {
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000 * this.actionSpeed;
+
         } else {
             this.think();
         }
+        this.tickCooldowns();
         if (this.initiative >= this.nextMoveInitiative) {
             this.initiative -= this.nextMoveInitiative;
             this.act(this.target);
@@ -120,114 +87,102 @@ class CombatEntity {
         }
         return true;
     }
+    tickCooldowns() {
+        console.error("Do not use CombatEntity directly.");
+    }
     act(target) {
-        if (target == null) {
-            return;
-        }
-        switch (this.nextMove.type) {
-            case 0:
-                if (target.distance <= this.nextMove.range) {
-                    let d = this.nextMove.damage
-                        + this.nextMove.damageRatios[0] * playerStats.strength
-                        + this.nextMove.damageRatios[1] * playerStats.toughness
-                        + this.nextMove.damageRatios[2] * playerStats.mind
-                        + this.nextMove.damageRatios[3] * playerStats.agility;
-                    console.log(d);
-                    target.takeDamage(d);
-                    logConsole(`${this.name} hit with ${document.getElementById("playerMoveText").innerHTML} for ${d} damage.`);
-                } else {
-                    return;
-                }
-                break;
-            case 1:
-                this.target.distance -= Math.min(100 - target.distance, this.nextMove.range);
-                break;
-
-            default:
-                logConsole("ERROR: Not a valid move type");
-                break;
-        }
+        console.error("Do not use CombatEntity directly.");
     }
     think() {
-        if (this.target == null) {
-            document.getElementById("playerMoveText").innerHTML = "No target";
-            return;
-        }
-        let dist = this.target.distance;
-        let weights = [];
-        let i = 0;
-        for (let k in playerMoves) {
-            if (playerMoves[k].type == 0) {
-                weights[i] = (playerMoves[k].range > dist ? 100 : 0);
-            }
-            if (playerMoves[k].type == 1) {
-                weights[i] = (dist < 50 ? 100 : 0);
-            }
-        }
-        const max = Math.max(...weights);
-        const indexes = [];
-
-        for (let index = 0; index < weights.length; index++) {
-            if (weights[index] === max) {
-                indexes.push(index);
-            }
-        }
-        let pick;
-        if (indexes.length == 1) {
-            pick = 0;
-        } else {
-            pick = Math.floor(Math.random() * indexes.length);
-        }
-        let moveKey = Object.keys(playerMoves)[indexes[pick]];
-        this.nextMove = playerMoves[moveKey];
-        this.nextMoveInitiative = this.nextMove.time;
-        document.getElementById("playerMoveText").innerHTML = moveKey;
+        console.error("Do not use CombatEntity directly.");
     }
     draw(context) {
         return;
     }
 }
 var environmentDistance = 0;
-var gameState = "InCombat";
+
 let restRate = 5;
 class Player extends CombatEntity {
     constructor(data) {
         super();
         this.data = data;
-        this.name = "Saitama?";
+        this.name = "Hero";
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.image = new Image(32, 32);
-        this.image.src = "one.png";
+        this.image.src = "joe.png";
         this.portraitImage = new Image();
-        this.portraitImage.src = "onePortrait.png";
+        this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
+        this.cooldownReduction = formulas.cooldownReduction(getEffectiveValue("mind"));
         this.moveIntention = 1;
+        this.nextMoveKey = null;
+        this.equippedAbilities = [...playerStats.equippedAbilities];
+        this.equippedAbilities.forEach(ability => {
+            if (ability != null) {
+                if (!playerStats.abilityCooldowns.hasOwnProperty(ability)) {
+                    playerStats.abilityCooldowns[ability] = 0;
+                }
+            }
+        });
+
+    }
+    tickCooldowns() {
+        playerStats.equippedAbilities.forEach(ability => {
+            playerStats.abilityCooldowns[ability] -= logicTickTime;
+        });
     }
 
     act(target) {
         if (target == null) {
             return;
         }
+        let dist = target.distance;
         switch (this.nextMove.type) {
             case 0:
-                if (target.distance <= this.nextMove.range) {
+                let inRange = false;
+                switch (this.nextMove.category) {
+                    case 'melee':
+                        inRange = (this.nextMove.range[0] >= dist);
+                        break;
+                    case 'ranged':
+                        inRange = (this.nextMove.range[1] >= dist && this.nextMove.range[0] <= dist);
+                        break;
+                    default:
+                        console.log("UNKOWN ABILITY CATEGORY")
+                        break;
+                }
+                if (inRange) {
                     let d = this.nextMove.damage
-                        + Math.sqrt(this.nextMove.damageRatios[0] * getEffectiveValue("strength") + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[1] * getEffectiveValue("toughness") + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[2] * getEffectiveValue("mind") + 1) - 1
-                        + Math.sqrt(this.nextMove.damageRatios[3] * getEffectiveValue("agility") + 1) - 1;
+                        + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
+                        + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
+                        + this.nextMove.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
+                        + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
+                    if (this.nextMove.hasOwnProperty("effects")) {
+                        Object.keys(this.nextMove.effects).forEach(effect => {
+                            switch (effect) {
+                                case "knockback":
+                                    target.distance += this.nextMove.effects[effect];
+                                    break;
+
+                                default:
+                                    console.error("ERROR UNKOWN SKILL EFFECT");
+                                    break;
+                            }
+                        });
+                    }
                     let dr = target.takeDamage(d);
-                    logConsole(`Player hit with ${document.getElementById("playerMoveText").innerHTML} for ${format(dr)}(${format(d)}) damage.`);
+                    logConsole(`Hero hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
-                    return;
+
                 }
                 break;
             case 1:
-                let deltaMinus = Math.min(100 - target.distance, this.nextMove.range);
-                let deltaPlus = Math.min(target.distance - 5, this.nextMove.range);
+                let deltaMinus = Math.min(100 - dist, this.nextMove.range);
+                let deltaPlus = Math.min(dist - 5, this.nextMove.range);
                 if (this.moveIntention > 0) {
                     this.target.distance -= deltaPlus;
                     environmentDistance -= deltaPlus;
@@ -241,6 +196,7 @@ class Player extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
+        playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
     }
     think() {
         if (this.target == null) {
@@ -249,18 +205,32 @@ class Player extends CombatEntity {
         }
         let dist = this.target.distance;
         if (dist > 5) this.moveIntention = 1; else this.moveIntention = -1;
-        let weights = [];
+        let weights = [this.equippedAbilities.length];
         let i = 0;
-        for (let k in playerMoves) {
-            if (playerMoves[k].type == 0) {
-                weights[i] = (playerMoves[k].range >= dist ? 100 : 0);
+        for (let index = 0; index < this.equippedAbilities.length; index++) {
+            let k = this.equippedAbilities[index];
+            let ability = playerMoves[k];
+            if (k == null) { weights[index] = -1; continue; }
+            if (playerStats.abilityCooldowns[k] > 0) { weights[index] = -1; continue; }
+            if (ability.type == 0) {
+                switch (ability.category) {
+                    case 'melee':
+                        weights[index] = (ability.range[0] >= dist ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                        break;
+                    case 'ranged':
+                        weights[index] = ((ability.range[1] >= dist && ability.range[0] <= dist) ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                        break;
+                    default:
+                        console.log("UNKOWN ABILITY CATEGORY")
+                        break;
+                }
             }
-            if (playerMoves[k].type == 1) {
-                weights[i] = (dist < 10 ? 50 : 100);
+            if (ability.type == 1) {
+                weights[index] = (dist <= 5 ? 0 : 10);
             }
-            i++;
         }
         const max = Math.max(...weights);
+        //console.log("Weights:",weights," Max:",max)
         let indexes = [];
 
         for (let index = 0; index < weights.length; index++) {
@@ -274,8 +244,9 @@ class Player extends CombatEntity {
         } else {
             pick = Math.floor(Math.random() * indexes.length);
         }
-        let moveKey = Object.keys(playerMoves)[indexes[pick]];
+        let moveKey = this.equippedAbilities[indexes[pick]];
         this.nextMove = playerMoves[moveKey];
+        this.nextMoveKey = moveKey;
         this.nextMoveInitiative = this.nextMove.time;
         document.getElementById("playerMoveText").innerHTML = moveKey;
 
@@ -283,7 +254,7 @@ class Player extends CombatEntity {
 
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = cBuffer.height - 30;
+        let canvasY = cBuffer.height - 40;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
@@ -294,7 +265,12 @@ class Player extends CombatEntity {
 class Enemy extends CombatEntity {
     constructor(enemyData, distance) {
         super();
-        this.data = enemyData
+        this.data = enemyData;
+        this.abilityCooldowns = {};
+        enemyData.moves.forEach(ability => {
+            this.abilityCooldowns[ability] = 0;
+        });
+        this.name = enemyData.name;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
         this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
@@ -305,6 +281,12 @@ class Enemy extends CombatEntity {
         this.image.src = enemyData.spriteFile;
         this.portraitImage = new Image(32, 32);
         this.portraitImage.src = enemyData.portraitFile;
+        this.nextMoveKey = null;
+    }
+    tickCooldowns() {
+        this.data.moves.forEach(ability => {
+            this.abilityCooldowns[ability] -= logicTickTime;
+        });
     }
     act(target) {
         if (target == null) {
@@ -316,12 +298,12 @@ class Enemy extends CombatEntity {
                     let d = this.nextMove.baseDamage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
-                        + this.nextMove.damageRatios[2] * (Math.sqrt( this.data.attributes[2] + 1) - 1)
-                        + this.nextMove.damageRatios[3] * (Math.sqrt( this.data.attributes[3] + 1) - 1);
+                        + this.nextMove.damageRatios[2] * (Math.sqrt(this.data.attributes[2] + 1) - 1)
+                        + this.nextMove.damageRatios[3] * (Math.sqrt(this.data.attributes[3] + 1) - 1);
                     let dr = target.takeDamage(d);
-                    logConsole(`${this.name} hit with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
+                    logConsole(`${this.name} hit ${this.target.name} with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 } else {
-                    return;
+
                 }
                 break;
             case 1:
@@ -332,6 +314,7 @@ class Enemy extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
+        this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime;
     }
     think() {
         if (this.target == null) {
@@ -342,8 +325,8 @@ class Enemy extends CombatEntity {
         let weights = [];
         for (let index = 0; index < this.data.moves.length; index++) {
             let k = this.data.moves[index];
-            //console.log(k);
             let ability = abilityLibrary[k];
+            if (this.abilityCooldowns[k] > 0) { weights[index] = -1; continue; }
             if (ability.type == 0) {
                 weights[index] = (ability.range >= dist ? 100 : 0);
             }
@@ -366,36 +349,37 @@ class Enemy extends CombatEntity {
             pick = Math.floor(Math.random() * indexes.length);
         }
         let moveKey = Object.keys(this.data.moves)[indexes[pick]];
+        this.nextMoveKey = this.data.moves[moveKey];
         this.nextMove = abilityLibrary[this.data.moves[moveKey]];
         this.nextMoveInitiative = this.nextMove.time;
     }
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = cBuffer.height - 30;
+        let canvasY = cBuffer.height - 40;
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
-        if(this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
+        if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     onDeath() {
         addPlayerExp(this.data.expReward);
         addPlayerMoney(this.data.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`${this.name} was defeated! +${this.data.moneyReward}$ +${this.data.reputationReward}REP`)
+        logConsole(`${this.name} was defeated! +${this.data.moneyReward}$ +${this.data.expReward}EXP +${this.data.reputationReward}REP`)
     }
 }
 class Encounter {
-    constructor(area,enemyNum) {
+    constructor(area, enemyNum) {
         this.enemyArray = [];
         this.enemiesToSpawn = enemyNum;
         let lastHealth = player.health
         this.area = area;
-        player = new Player(playerStats);   
+        player = new Player(playerStats);
         if (lastHealth > 0) { player.health = lastHealth; }
         for (let index = 0; index < this.enemiesToSpawn; index++) {
             let picked = Math.floor(Math.random() * this.area.enemies.length);
-            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.random() * 30 + 70));
+            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.round(5 * Math.random()) * 10 + 50));
             this.enemyArray[index].setTarget(player);
         }
         player.setTarget(this.enemyArray[0]);
@@ -421,115 +405,79 @@ class Encounter {
     }
 }
 
-class Area {
-    constructor(data){
-        this.name = data.name;
-        this.background = data.background;
-        this.backgroundImage = new Image();
-        this.backgroundImage.src = this.background;
-        this.enemies = data.enemies;
-    }
-}
 
-const areas = [new Area({name:"Alley",background:"alleyBackground.png",enemies : ["criminal"]}),
-            new Area({name:"Streets",background:"cyberpunk-street.png",enemies : ["thug"]}),
-            new Area({name:"Bridge",background:"bridgeAreaBackground-1.png",enemies : ["prisoner9"]})];
 
-areaSelect = document.getElementById("selectArea");
-for (let index = 0; index < areas.length; index++) {
-    areaSelect.options[areaSelect.options.length] = new Option(areas[index].name, index);
-}
-
-currentArea = areas[0];
-function changeArea(index){
-    currentArea = areas[index];
-    encounter = new Encounter(currentArea,1);
-}
-
-function drawSkillIcon(context, skillname, x, y) {
-    let heightAbove = 110;
-    let img = new Image();
-    img.src = skillname + "Icon.png";
-    context.drawImage(img, x - img.width / 2, y - img.height - heightAbove);
-}
-function drawInfoBars(context, entity, rootx, rooty) {
-    let heightAbove = 100;
-    context.fillStyle = "black";
-    context.fillRect(rootx - 20, rooty - heightAbove, 42, 8);
-    context.fillStyle = "red";
-    context.fillRect(rootx - 20, rooty - heightAbove, 40, 5);
-    context.fillStyle = "green";
-    context.fillRect(rootx - 20, rooty - heightAbove, 40 * (entity.health / entity.maxHealth), 5);
-    context.fillStyle = "cyan";
-    context.fillRect(rootx - 20, rooty - heightAbove + 6, 40 * (entity.initiative / entity.nextMoveInitiative), 1);
-}
-function mod(n, m) {
-    return ((n % m) + m) % m;
-}
+//console.log(document.querySelector('input[name="selectArea"]:checked').value);
+currentArea = areas[playerStats.currentArea];
+areaSelect.value = playerStats.currentArea;
 
 var player = new Player(playerStats);
-var encounter = new Encounter(currentArea, 1);
-var buildingHeights = [0.4, 0.5, 0.3, 0.5, 0.9, 0.3, 0.8, 0.2];
+//var encounter = new Encounter(currentArea, 1);
 var bgImage = new Image();
-bgImage.src = "cyberpunk-street.png";   
-
+var gameState = "InPatrol";
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 
 //const worker = new Worker('./worker.js');
-const worker = new Worker(URL.createObjectURL(new Blob(["("+worker_function.toString()+")()"], {type: 'text/javascript'})));
-worker.onmessage = (event) => 
-        mainLoop();
+const worker = new Worker(URL.createObjectURL(new Blob(["(" + worker_function.toString() + ")()"], { type: 'text/javascript' })));
+worker.onmessage = (event) =>
+    mainLoop();
 
 worker.postMessage({
-    interval: logicTickTime, 
+    interval: logicTickTime,
 })
 
-function mainLoop(){    
+function mainLoop() {
     logicLoop();
-    renderLoop();   
+    renderLoop();
 
 }
 function renderLoop() {
-    if (gameState == "InCombat") {
-        //Clear frame
-        ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
-        //Background
-        let scrollFactor = cBuffer.height / cBuffer.width * encounter.area.backgroundImage.width / encounter.area.backgroundImage.height;
-        let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
-        //console.log(environmentScrollBase+" "+scrollFactor);
-        ctxBuffer.drawImage(encounter.area.backgroundImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
-        ctxBuffer.drawImage(encounter.area.backgroundImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / encounter.area.backgroundImage.height * encounter.area.backgroundImage.width, cBuffer.height);
-        //Draw combatants
-        encounter.enemyArray.forEach(enemy => {
-            if (enemy == null) { return; }
-            enemy.draw(ctxBuffer);
-        });
-        player.draw(ctxBuffer);
+    ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
+    switch (gameState) {
+        case "InCombat":
+            drawBackground();
+            drawEnemies();
+            drawPlayer();
+            drawCharacterPortrait(ctxBuffer, player, 'l');
+            if (player.target != null) {
+                drawCharacterPortrait(ctxBuffer, player.target, "r");
+            }
+            break;
+        case "InRest":
+            ctxBuffer.fillStyle = "black";
+            ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
+            ctxBuffer.font = `80px Pickle Pushing`;
+            ctxBuffer.fillStyle = "white";
+            ctxBuffer.textAlign = 'center';
+            ctxBuffer.fillText("DEFEAT!", cBuffer.width / 2, cBuffer.height / 2);
+            ctxBuffer.font = `24px Pickle Pushing`;
+            ctxBuffer.fillText("Getting up and trying again...", cBuffer.width / 2, cBuffer.height / 2 + 50);
+            ctxBuffer.textAlign = 'left';
+            break;
+        case "InPatrol":
+            environmentDistance -= logicTickTime / 1000 * 10;
+            drawBackground();
+            drawPlayer();
+            drawCharacterPortrait(ctxBuffer, player, 'l');
+            ctxBuffer.fillStyle = "black";
+            ctxBuffer.fillRect(0, cBuffer.height / 2 - 40, cBuffer.width, 100);
+            ctxBuffer.font = `50px Pickle Pushing`;
+            ctxBuffer.fillStyle = "white";
+            ctxBuffer.textAlign = 'center';
 
-        drawCharacterPortrait(ctxBuffer, player, 'l');
-        if (player.target != null) {
-
-            drawCharacterPortrait(ctxBuffer, player.target, "r");
-        }
-        //Draw to render canvas
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        c.height = c.clientHeight;
-        c.width = c.clientWidth;
-        //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
-        ctx.scale(c.height / cBuffer.height, c.height / cBuffer.height);
-        
-    } else {
-        ctxBuffer.fillStyle = "black";
-        ctxBuffer.fillRect(0,0,cBuffer.width,cBuffer.height);
-        ctxBuffer.font = `80px Pickle Pushing`;
-        ctxBuffer.fillStyle = "white";
-        ctxBuffer.textAlign = 'center';
-        ctxBuffer.fillText("DEFEAT!", cBuffer.width/2,cBuffer.height/2);
-        ctxBuffer.font = `24px Pickle Pushing`;
-        ctxBuffer.fillText("Getting up and trying again...", cBuffer.width/2,cBuffer.height/2 + 50);
-        ctxBuffer.textAlign = 'left';
-
+            ctxBuffer.fillText((currentArea.patrolTime - currentArea.patrolCounter > 500) ? "Patrolling..." : "FIGHT!", cBuffer.width / 2, cBuffer.height / 2 + 30);
+            ctxBuffer.textAlign = 'left';
+            break;
+        default:
+            console.error("UNKOWN GAME STATE TO DRAW");
+            break;
     }
+    //Draw to render canvas
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    c.height = c.clientHeight;
+    c.width = c.clientWidth;
+    //console.log("Buffer dimension:"+ cBuffer.width + " " + cBuffer.height + "\n"+ "Canvas dimensions" + c.width + " " + c.height);
+    ctx.scale(c.height / cBuffer.height, c.height / cBuffer.height);
     ctx.drawImage(cBuffer, 0, 0);
     //Update html values
     document.getElementById("playerLevelText").innerHTML = "LEVEL " + playerStats.level;
@@ -547,40 +495,75 @@ function renderLoop() {
     document.getElementById("trainingAreaName").innerHTML = "Training at: " + currentTrainingArea.name;
     document.getElementById("trainingProgressBar").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
+    document.getElementById("trainingProgressBarOverview").max = currentTrainingArea.timeToComplete;
+    document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
-    document.getElementById("passivePointsText").innerHTML = playerStats.level - playerStats.passivePointsSpent;
-    document.getElementById("moneyText").innerHTML = format(playerStats.money)+'$';
+    document.getElementById("passivePointsText").innerHTML = getTotalPassivePoints() - playerStats.passivePointsSpent;
+    document.getElementById("moneyText").innerHTML = format(playerStats.money);
     document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
     Object.values(attribute).forEach(attributeName => {
-        document.getElementById(attributeName + "Text").innerHTML = format(getEffectiveValue(attributeName));
+        let baseAttributeValue = playerStats[attributeName];
+        let effectiveValue = format(getEffectiveValue(attributeName))
+        let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]));
+        let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]];
+        let softCapText = (baseAttributeValue > softCap)?`EFFECTIVE BASE: ${softCappedValue}`:`${softCappedValue}`;
+        if (baseAttributeValue > softCap) {
+            softCapText += `<br>(RAW: ${format(baseAttributeValue)})`
+            softCapText += `<br>[SOFTCAP: ${softCap}]`;
+            effectiveValue = effectiveValue + "(!)";
+        }
+        document.getElementById(attributeName + "Text").innerHTML = effectiveValue;
+        document.getElementById(attributeName + "SoftcapText").innerHTML = softCapText;
     });
 }
 function logicLoop() {
-
-    if (gameState == "InCombat") {
-        switch (encounter.isActive()) {
-            case 0:
-                encounter.tick();
-                break;
-            case 1:
-                logConsole("Encounter finished.")
-                encounter = new Encounter(currentArea, 1);
-                break;
-            case 2:
-                logConsole("Player died, going to rest.")
-                gameState = "InRest";
-                player = new Player(playerStats);
-                player.health = 0;
-                break;
-            default:
-                break;
-        }
-    } else if (gameState == "InRest") {
-        player.rest()
-        if(player.health == player.maxHealth){
-            encounter = new Encounter(currentArea, 1);
-            gameState = "InCombat";
-        }
+    switch (gameState) {
+        case "InCombat":
+            switch (encounter.isActive()) {
+                case 0:
+                    encounter.tick();
+                    break;
+                case 1:
+                    logConsole("Encounter finished.")
+                    gameState = "InPatrol";
+                    player.target = null;
+                    player.nextMove = null;
+                    currentArea.patrolCounter = 0;
+                    logConsole("Starting patrol.")
+                    break;
+                case 2:
+                    logConsole("Player defeated, resting.")
+                    gameState = "InRest";
+                    player = new Player(playerStats);
+                    player.health = 0;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case "InRest":
+            player.rest();
+            if (player.health == player.maxHealth) {
+                gameState = "InPatrol";
+                logConsole("Starting patrol.")
+            }
+            break;
+        case "InPatrol":
+            switch (currentArea.tick()) {
+                case 0:
+                    player.tick();
+                    break;
+                case 1:
+                    encounter = new Encounter(currentArea, 1);
+                    gameState = "InCombat";
+                    logConsole("Entering combat.")
+                    break;
+                default:
+                    console.error("UNKNOWN PATROL RETURN STATE");
+                    break;
+            }
+        default:
+            break;
     }
     currentTrainingArea.tick();
 }
@@ -597,7 +580,7 @@ function scaleDistance(distance) {
     let upper = cBuffer.width - padding;
     return lower + dist * (upper - lower);
 }
-function drawCharacterPortrait(context,character, side) {
+function drawCharacterPortrait(context, character, side) {
     let anchor = { x: 0, y: 0 };
     let portraitDimensions = 120;
     let portraitBorder = 4;
@@ -630,16 +613,16 @@ function drawCharacterPortrait(context,character, side) {
     grdHealth2.addColorStop(0, "rgba(255, 255, 255, .25)");
     grdHealth2.addColorStop(1, "rgba(0, 0, 0, .25)");
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,(character.health / character.maxHealth)), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, (character.health / character.maxHealth)), 12);
     context.fillStyle = grdHealth2;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,(character.health / character.maxHealth)), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, (character.health / character.maxHealth)), 12);
     hanchor.y += 12;
     //Action bar
     context.fillStyle = "grey";
     context.fillRect(hanchor.x, hanchor.y, mirror * 200, 10);
     context.fillStyle = "white";
     context.fillRect(hanchor.x + mirror * 2, hanchor.y + 2, mirror * 196, 6);
-    if(character.initiative == NaN) console.log("NaN error");
+    if (character.initiative == NaN) console.log("NaN error");
     let grdAction = context.createLinearGradient(hanchor.x, 0, hanchor.x + mirror * 196 * (character.initiative / (character.nextMove != null) ? character.nextMoveInitiative : character.initiative), 0);
     grdAction.addColorStop(0.5, "rgb(0,255,255)");
     grdAction.addColorStop(1, "rgb(0,110,220)");
@@ -664,4 +647,49 @@ function drawCharacterPortrait(context,character, side) {
     //     context.fillRect(hanchor.x + 4, hanchor.y + 2, 192 * (playerStats.experience / playerStats.experienceToNext), 2);
     // }
 
+}
+function changeArea(index) {
+    playerStats.currentArea = index;
+    currentArea = areas[playerStats.currentArea];
+    gameState = "InPatrol";
+    player.target = null;
+    player.nextMove = null;
+}
+
+function drawSkillIcon(context, skillname, x, y) {
+    let heightAbove = 110;
+    let img = new Image();
+    img.src = skillname + "Icon.png";
+    context.drawImage(img, x - img.width / 2, y - img.height - heightAbove);
+}
+function drawInfoBars(context, entity, rootx, rooty) {
+    let heightAbove = 100;
+    context.fillStyle = "black";
+    context.fillRect(rootx - 20, rooty - heightAbove, 42, 8);
+    context.fillStyle = "red";
+    context.fillRect(rootx - 20, rooty - heightAbove, 40, 5);
+    context.fillStyle = "green";
+    context.fillRect(rootx - 20, rooty - heightAbove, 40 * (entity.health / entity.maxHealth), 5);
+    context.fillStyle = "cyan";
+    context.fillRect(rootx - 20, rooty - heightAbove + 6, 40 * (entity.initiative / entity.nextMoveInitiative), 1);
+}
+function drawBackground() {
+    let bgImage = currentArea.backgroundImage;
+    let scrollFactor = cBuffer.height / cBuffer.width * bgImage.width / bgImage.height;
+    let environmentScrollBase = (mod(environmentDistance, (100 * scrollFactor))) / 100;
+    //console.log(environmentScrollBase+" "+scrollFactor);
+    ctxBuffer.drawImage(bgImage, environmentScrollBase * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+    ctxBuffer.drawImage(bgImage, (environmentScrollBase - 1 * scrollFactor) * cBuffer.width, 0, cBuffer.height / bgImage.height * bgImage.width, cBuffer.height);
+}
+function drawPlayer() {
+    player.draw(ctxBuffer);
+}
+function drawEnemies() {
+    encounter.enemyArray.forEach(enemy => {
+        if (enemy == null) { return; }
+        enemy.draw(ctxBuffer);
+    });
+}
+function mod(n, m) {
+    return ((n % m) + m) % m;
 }

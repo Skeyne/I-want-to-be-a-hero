@@ -7,6 +7,7 @@
 
 html,
 body {
+    color: whitesmoke;
     margin: 0;
     height: max-content;
     -ms-overflow-style: none;
@@ -22,14 +23,14 @@ body::-webkit-scrollbar {
 
 body {
     height: 100%;
-    background-image: linear-gradient(180deg, rgb(30, 30, 30), rgb(0, 0, 0));
+    background-image: linear-gradient(180deg, rgb(44, 44, 44), rgb(0, 0, 0));
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 header {
-    width:100%;
+    width: 100%;
     height: 10%;
-    background: linear-gradient(180deg,rgb(24, 24, 24), 85%, rgb(0, 0, 0));
+    background: linear-gradient(180deg, rgb(32, 32, 32), 85%, rgb(0, 0, 0));
 }
 
 header button,
@@ -42,7 +43,22 @@ main {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     column-gap: 1vw;
-    padding: 0.5vw;
+    padding: 1vh 0.5vw 1vh 0.5vw;
+    height: 98vh;
+}
+
+#gridMain {
+    grid-row: 1;
+    grid-column: 1;
+    height: 100%;
+    width: 49vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+}
+
+#gridMain::-webkit-scrollbar {
+    display: none;
 }
 
 .pickle {
@@ -65,72 +81,81 @@ main {
     font-size: 1.4rem;
 }
 
-#gridMain {
-    grid-row: 1;
-    grid-column: 1;
-}
-
 #grid1 {
     display: grid;
-    grid-template-columns: minmax(350px, 1fr) 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    row-gap: 0.5vw;
-    column-gap: 1vw;
+    grid-template-rows: 98vh;
+    grid-auto-rows: 98vh;
+    grid-auto-columns: 49vw;
+    column-gap: 10vw;
 }
 
 .gridSkills {
     display: grid;
-    width:100%;
+    width: 100%;
+    height: 84vh;
     aspect-ratio: 1/1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: minmax(2fr, 200px);
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
     justify-items: center;
     justify-content: space-around;
-    align-items:center;
+    align-items: center;
     row-gap: 5px;
     column-gap: 5px;
 }
 
-#areasBox {
-    grid-row: 3 / span 1;
-    grid-column: 2;
+.infoBox {
+    scroll-snap-align: start;
 }
-#combatBox {
-    grid-row: 1;
-    grid-column: 1;
-}
-#skillsBox {
-    grid-row: 3;
-    grid-column: 1;
-}
-#statsBox {
-    grid-row: 2;
-    grid-column: 1;
-    align-self: stretch;
-}
+
+
 #storyBox {
     grid-row: 1;
-    grid-column: 2;
+}
+
+#abilitiesBox {
+    grid-row: 1;
+}
+
+#combatBox {
+    grid-row: 1;
 }
 
 #trainingBox {
-    grid-row: 2;
-    grid-column: 2;
+    grid-row: 1;
 }
 
+#skillsBox {
+    grid-row: 1;
+}
+
+#statsBox {
+    grid-row: 1;
+}
+
+#areasBox {
+    grid-row: 1;
+}
+
+
+
 #helpBox {
-    grid-row: 4 / span 1;
-    grid-column: 1 / span 2;
+    grid-row: 1;
 }
 
 #helpBody {
-    box-sizing: border-box; 
-    padding: 10px; 
-    text-align:justify; 
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: justify;
     display: block;
     font-family: Oxanium, 'Pickle Pushing', sans-serif;
     font-size: 24px;
-    font-weight:lighter ;
+    font-weight: lighter;
+}
+
+#damageFormula {
+    position: relative;
+    top: 1%
 }
 
 #barWrap {
@@ -162,7 +187,30 @@ main {
         12px 12px 0px rgb(255, 255, 0),
         14px 14px 0px rgb(255, 255, 0);
 }
+#previewRowHeader{
+    background: rgba(0, 0, 0, 0.616);
+    text-align: center;
+    line-height: 2rem;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+#previewRowHeader::before{
+    font-size: 2rem;
 
+    content: "LOCKED";
+}
+#previewRowBody{
+    background: rgba(0, 0, 0);
+    text-align: center;
+    z-index: 1;
+}
+#previewRowBody::before{
+    font-size: 2rem;
+    content: "I need to get stronger...";
+}
 .barText {
     width: inherit;
     font-size: 20px;
@@ -183,23 +231,107 @@ main {
 .leftAlign {
     text-align: left;
 }
-
+.abilityPickContainerLabel{
+    grid-column: 1;
+    font-size: 2vw;
+    text-align: center;
+}
+.abilityPickContainer{
+    display: flex;
+    justify-content: space-around;
+    grid-column: 2;
+}
+.abilityPickButton{
+    position: relative;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+    color: transparent;
+    image-rendering: pixelated;
+    grid-column: 2;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1vmin inset rgb(34, 34, 34);
+}
+.abilitySlot{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+    color: transparent;
+    image-rendering: pixelated;
+}
+.abilitySlot option{
+    color: whitesmoke;
+}
 .blockHeader {
+    height:5%;
     font-size: 32px;
+    color: black;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
-    padding-left: 10px;
     border: 5px outset goldenrod;
     display: block;
+    text-align: center;
+    padding-left: 0;
 }
 
+.blockHeader::after {
+    content: "";
+    background-image: url(rightAngleBracket.png);
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-left: 20px;
+    margin-bottom: 4px;
+}
+section:last-child div.blockHeader::after {
+    content: "";
+    background-image: none;
+}
+
+.blockHeader::before {
+    content: "";
+    background-image: url(leftAngleBracket.png);
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 20px;
+    margin-bottom: 4px;
+}
+
+section:first-child div.blockHeader::before {
+    content: "";
+    background-image: none;
+}
+.subHeader{
+    text-transform: uppercase;
+    border-bottom: solid white;
+    background: linear-gradient(0deg, black, transparent);
+}
 .blockBody {
-    border: 5px inset grey;
-    height: calc(100% - 45px);
+    border: 5px inset rgb(53, 53, 53);
+    height: 95%;
     box-sizing: border-box;
     position: relative;
 }
-
+.blockPanel{
+    border: 5px inset rgb(53, 53, 53);
+    background: rgb(255 255 255 / 9%);
+    box-sizing: border-box;
+    position: relative;
+}
+#abilityLoadoutContainer{
+    border: 5px outset rgb(53, 53, 53);
+    background: rgb(255 255 255 / 9%);
+    padding: 1em;
+}
 .evenFlex {
     display: flex;
     flex-direction: column;
@@ -207,6 +339,36 @@ main {
     align-items: center;
 }
 
+#diaryEntries{
+    width: 100%;
+    display: grid;
+    grid-auto-rows: 15%;
+    justify-items: stretch;
+    background: rgb(255 255 255 / 9%);
+    row-gap: 1%;
+    overflow-y: scroll;
+}
+#diaryEntries::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+#diaryEntries::-webkit-scrollbar {
+    width: 1vw;
+}
+#diaryText{
+    padding: 1em;
+}
+#diaryContainer{
+    height: 50%;
+    display:grid;
+    grid-template-rows: min-content 1fr;
+}
+#diaryGrid{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 4fr;
+}
 progress[value] {
     /* Reset the default appearance */
     -webkit-appearance: none;
@@ -280,7 +442,7 @@ progress[value]::-webkit-progress-bar {
             rgba(0, 0, 0, .25)), linear-gradient(180deg,
             rgb(0, 255, 38),
             rgb(21, 153, 41));
-            
+
 }
 
 #playerHealthBar::-moz-progress-bar {
@@ -333,13 +495,13 @@ progress[value]::-webkit-progress-bar {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-#trainingProgressBar,
-#trainingProgressBar[value]::-webkit-progress-bar {
+.trainingProgressBar,
+.trainingProgressBar[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);
     margin-bottom: 0px
 }
 
-#trainingProgressBar::-webkit-progress-value {
+.trainingProgressBar::-webkit-progress-value {
     background-image: linear-gradient(0deg,
             transparent 33%,
             rgba(0, 0, 0, .1) 33%,
@@ -354,7 +516,7 @@ progress[value]::-webkit-progress-bar {
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
-#trainingProgressBar::-moz-progress-bar {
+.trainingProgressBar::-moz-progress-bar {
     background-image: linear-gradient(0deg,
             transparent 33%,
             rgba(0, 0, 0, .1) 33%,
@@ -371,7 +533,7 @@ progress[value]::-webkit-progress-bar {
 
 #nextMove {
     text-align: center;
-    height: 50px;
+    margin-bottom: 1%;
     padding: 25px;
 }
 
@@ -382,11 +544,42 @@ progress[value]::-webkit-progress-bar {
     padding-left: 6px;
 }
 
-#strengthText {
-    color: red;
+#reputationText {
+    color: rgb(33, 44, 172);
 }
 
-#strengthText:after {
+#reputationText:after {
+    content: "";
+    display: inline-block;
+    background: url("reputationTextIcon.png") no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0 6px 0 6px;
+    vertical-align: middle;
+}
+
+#moneyText {
+    color: rgb(44, 190, 0);
+}
+
+#moneyText:after {
+    content: "";
+    display: inline-block;
+    background: url("moneyTextIcon.png") no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0 6px 0 6px;
+    vertical-align: middle;
+}
+
+
+.strengthText {
+    color: rgb(255, 53, 53);
+}
+
+.strengthText:after {
     content: "";
     display: inline-block;
     background: url("strengthTextIcon.png") no-repeat;
@@ -397,11 +590,11 @@ progress[value]::-webkit-progress-bar {
     vertical-align: middle;
 }
 
-#toughnessText {
-    color: rgb(7, 144, 0);
+.toughnessText {
+    color: rgb(41, 153, 35);
 }
 
-#toughnessText:after {
+.toughnessText:after {
     content: "";
     display: inline-block;
     background: url("toughnessTextIcon.png") no-repeat;
@@ -435,11 +628,12 @@ progress[value]::-webkit-progress-bar {
 #trainingUpgradeButton {
     appearance: none;
     width: 60%;
-    height: 10%;
+    height: min-content;
     border: 5px grey outset;
     text-align: center;
     font-size: 1.4rem;
     margin: 0 20% 0;
+    margin-bottom: 5vh;
 }
 
 #trainingUpgradeButton:active {
@@ -447,11 +641,12 @@ progress[value]::-webkit-progress-bar {
 }
 
 .passiveSkillButton {
-    width: 64px;
-    height: 64px;
+    width: 6em;
+    height: 6em;
     border: 5px grey outset;
     position: relative;
     padding: 0;
+    image-rendering: pixelated;
 }
 
 .passiveSkillButton:active {
@@ -465,7 +660,8 @@ progress[value]::-webkit-progress-bar {
     background: black;
     color: white;
     text-align: center;
-    height: 30%;
+    padding-top: 5%;
+    height: 25%;
     width: 30%;
     bottom: -34%;
     right: -67%;
@@ -473,11 +669,11 @@ progress[value]::-webkit-progress-bar {
     border-top: 2px solid grey;
 }
 
-#mindText {
-    color: rgb(140, 0, 255);
+.mindText {
+    color: rgb(170, 66, 255);
 }
 
-#mindText:after {
+.mindText:after {
     content: "";
     display: inline-block;
     background: url("mindTextIcon.png") no-repeat;
@@ -488,11 +684,11 @@ progress[value]::-webkit-progress-bar {
     vertical-align: middle;
 }
 
-#agilityText {
-    color: rgb(255, 255, 0);
+.agilityText {
+    color: rgb(255, 255, 63);
 }
 
-#agilityText:after {
+.agilityText:after {
     content: "";
     display: inline-block;
     background: url("agilityTextIcon.png") no-repeat;
@@ -509,28 +705,70 @@ progress[value]::-webkit-progress-bar {
     text-align: justify;
     display: block;
     font-size: 24px;
-    font-weight: lighter ;
+    font-weight: lighter;
 }
 
 .dropdown {
     width: 100%;
-    height: 20%;
+    height: min-content;
     border: 5px grey outset;
     text-align: center;
     font-size: 1.6rem;
+    padding: 1rem;
 }
 
 .dropdown:active {
     border: 5px grey inset;
 }
 
+.radioWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    column-gap: 20px;
+}
+
+.radioAreaLabel {
+    box-sizing: border-box;
+    width: 100%;
+    height: min-content;
+    border: 5px grey outset;
+    text-align: center;
+    font-size: 1.6rem;
+    padding: 3vh;
+    background-size: 100%;
+    background-position: 0%;
+    filter:saturate(0);
+}
+.radioAreaLabel::after {
+    content: '';
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,255,1) 100%);
+    height: 100%;
+    width: 100%;
+    display: block; /* ::after defaults to inline */
+    opacity: .7;
+  }
+.radioAreaLabel:active {
+    border: 5px grey inset;
+}
+
+.radioArea {
+    position: fixed;
+    opacity: 0; 
+    pointer-events: none;
+}
+
+.radioArea:checked ~ label {
+    filter: saturate(1);
+}
+
 #skillsWrap {
-    box-sizing: border-box; 
-    padding: 10px; 
-    text-align: justify; 
-    display: block; 
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: justify;
+    display: block;
     font-size: 24px;
-    font-weight:lighter ;
+    font-weight: lighter;
 }
 
 #canvasLogWrap {
@@ -555,8 +793,8 @@ progress[value]::-webkit-progress-bar {
 }
 
 #myCanvas {
-    aspect-ratio: 4 / 3; 
-    width: 100%; 
+    aspect-ratio: 4 / 3;
+    width: 100%;
 }
 
 .logBox {
@@ -580,48 +818,76 @@ progress[value]::-webkit-progress-bar {
 .logBox::-webkit-scrollbar {
     width: 5px;
 }
-.bannerButton{
+
+.bannerButton {
     border: 2px solid black;
     font-family: 'Pickle Pushing';
     font-size: 1em;
     background-color: whitesmoke;
 }
-.slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    background: goldenrod; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-  }
-  
-  .slider:hover {
-    opacity: 1; 
-  }
+.classButton {
+    border: 2px solid black;
+    font-family: 'Pickle Pushing';
+    font-size: 1em;
+    background-color: whitesmoke;
+}
+.diaryButton {
+    border: 2px solid black;
+    font-family: 'Pickle Pushing';
+    font-size: revert;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+}
 
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+.slider {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    background: goldenrod;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 0.7;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
     appearance: none;
     height: 1em;
     width: 10%;
-    background: #000000; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
-  .slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #000000; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
+    background: #000000;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #000000;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
 
 .dotted {
-    background-image: radial-gradient(at 50% 50%, rgb(200, 200, 200) 20%, transparent 20%),
-        radial-gradient(at 0% 0%, rgb(200, 200, 200) 10%, transparent 10%),
-        radial-gradient(at 100% 0%, rgb(200, 200, 200) 10%, transparent 10%),
-        radial-gradient(at 100% 100%, rgb(200, 200, 200) 10%, transparent 10%),
-        radial-gradient(at 0% 100%, rgb(200, 200, 200) 10%, transparent 10%);
-    background-color: rgb(177, 177, 177);
+    background-image: radial-gradient(at 50% 50%, rgb(0, 0, 0) 20%, transparent 20%),
+        radial-gradient(at 0% 0%, rgb(0, 0, 0) 10%, transparent 10%),
+        radial-gradient(at 100% 0%, rgb(0, 0, 0) 10%, transparent 10%),
+        radial-gradient(at 100% 100%, rgb(0, 0, 0) 10%, transparent 10%),
+        radial-gradient(at 0% 100%, rgb(0, 0, 0) 10%, transparent 10%);
+    background-color: rgb(18, 18, 18);
     /* background-position: 0 0, 50px 50px; */
     background-size: 6px 6px;
 }
@@ -635,9 +901,22 @@ progress[value]::-webkit-progress-bar {
 /* Tooltip text */
 .tooltip .tooltiptext {
     visibility: hidden;
-    position: relative;
-    bottom: -200%;
-    right: -400px;
+    position: absolute;
+    top: 110%;
+    right: 20%;
+    width: 20vw;
+    background-color: black;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+}
+.tooltip .skilltooltiptext {
+    visibility: hidden;
+    position: fixed;
+    top: 6vh;
+    left: calc(25% - 200px);
     width: 400px;
     background-color: black;
     color: #fff;
@@ -645,48 +924,61 @@ progress[value]::-webkit-progress-bar {
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
+    z-index: 1;;
 }
 
-@media (max-width:1200px) {
-    body{
+.tooltip:hover .skilltooltiptext {
+    visibility: visible;
+    z-index: 1;;
+}
+
+@media (max-width:1000px) {
+    body {
         max-width: 100vw;
     }
 
     header {
         width: 100vw;
         height: 10%;
-        background: linear-gradient(180deg,rgb(24, 24, 24), 85%, rgb(0, 0, 0));
+        background: linear-gradient(180deg, rgb(24, 24, 24), 85%, rgb(0, 0, 0));
     }
 
     main {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: minmax(min-content,max-content) 1fr;
-        row-gap: 1vh;
-        padding: 1vmin;
+        grid-template-rows: auto 1fr;
+        row-gap: 1vw;
+        padding: 0.5vw;
+        position: sticky;
+        height: 196vh;
+        top: 1vh;
     }
+    #grid1{
+        grid-auto-columns: 98vw;
+    }
+
 
     #canvasLogWrap {
         position: static;
         top: 10vh;
-        height:98vw;
-        grid-row: 1; 
+        height: min-content;
+        grid-row: 1;
         grid-column: 1;
-        background-color: black;
-        grid-template-rows: min-content minmax(5em,auto);
+        grid-template-rows: min-content 10rem;
     }
 
     #gridMain {
         grid-row: 2;
         grid-column: 1;
+        height: 100%;
+        width: 98vw;
+        overflow-y:hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
     }
 }

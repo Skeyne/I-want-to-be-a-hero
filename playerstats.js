@@ -1,69 +1,67 @@
+const version = '0.02';
 const cleanPlayerStats = {
     experience: 0,
     experienceToNext: 10,
     money: 0,
     reputation: 0,
-    class: "Human",
+    class: "human",
     level: 0,
     passivePointsSpent: 0,
     strength: 0,
     toughness: 0,
     mind: 0,
     agility: 0,
+    attributeSoftcaps: [100,100,100,100],
     healthRegen: 0.005,
     restRate: 0.1,
     lastSave: 0,
     muted: false,
-    musicVolume: 0.2,
+    musicVolume: 0.05,
     unlockedSkills: {},
+    unlockedAbilities: {"punch":1},
+    abilitySlots : 3,
+    equippedAbilities: ["walk","punch",null,null],
     effectMultipliers: {},
     storyProgress: 0,
     currentStoryQuestProgress: [0],
     currentTrainingAttribute: "strength",
     trainingAreaLevels: {},
+    abilityCooldowns: {},
+    currentArea: 0,
 }
 
 var playerStats = {};
 reset();
-
+function getTotalPassivePoints(){
+    let decades = Math.floor(playerStats.level/10);
+    return ((decades+1)/2 * decades * 10) + (playerStats.level - decades*10)*(decades+1);
+}
 function getEffectiveValue(property) {
     if (!playerStats.hasOwnProperty(property)) {
         console.log("Accessing invalid property");
         return 0;
     }
-    if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return playerStats[property]; }
+    let baseValue = formulas.softcappedAttribute(attributeIdToIndex[property]);
+    if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
     else {
-        return (playerStats[property]
+        return (baseValue
             + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
             * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
             * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
     }
 
 }
-
 function recalculateMultipliers() {
     playerStats.effectMultipliers = {};
 
 }
-
-function arraySum(array) {
-    return array.reduce((accumulator, value) => {
-        return accumulator + value;
-    }, 0);
-}
-function arrayMult(array) {
-    return array.reduce((accumulator, value) => {
-        return accumulator * value;
-    }, 1);
-}
-
-
 function addPlayerExp(amount) {
     playerStats.experience += amount;
     if (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
-        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level)
+        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+        checkAbilityRequirements();
     }
     checkLevelQuest();
 }
@@ -79,6 +77,7 @@ function save() {
     playerStats.lastSave = Date.now();
     localStorage.setItem("heroSave", JSON.stringify(playerStats));
     localStorage.setItem("heroLastSaved", playerStats.lastSave);
+    localStorage.setItem("version", playerStats.lastSave);
 }
 setInterval(save, 30000);
 function load(file = null) {
@@ -88,6 +87,7 @@ function load(file = null) {
         Object.keys(loadgame).forEach(property => {
             playerStats[property] = loadgame[property];
         });
+        if(playerStats.class = 'Human') playerStats.class = 'human';
     } else {
         console.log("No savefile found");
     }
