@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R33JEXMNXN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-R33JEXMNXN');
+    </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,15 +21,7 @@
     <title>I Want To Be A Hero</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R33JEXMNXN"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
 
-    gtag('config', 'G-R33JEXMNXN');
-</script>
 
 <body>
     <header>
@@ -122,7 +123,8 @@
                                 onclick="changeTrainingAttribute(attribute.agility)"></button>
                         </div>
                         <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session:
-                            <span id="trainingReward"></span></div>
+                            <span id="trainingReward"></span>
+                        </div>
                         <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" style="width:inherit;" value="100" max="1000"></progress>
                         </div>
