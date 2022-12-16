@@ -2,14 +2,14 @@ const storyQuests = [
     {
         title: `The Beginning I`,
         text: `You've had enough. Every year crime is up and yet the city council does nothing about it.
-        The corruption runs deep. It's time for change.`,
+        The corruption runs deep. It's time for change. <br><br> (Change menus by scrolling on this area or arrow keys after clicking inside it.)`,
         requirementType: `defeat`,
         requirementTarget: [`criminal`],
         requirementAmount: [1],
     },
     {
         title: `The Beginning II`,
-        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.</br>(Arrow keys or scroll down over this area).`,
+        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.<br><br>(Arrow keys or scroll down to 'Training').`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`],
         requirementAmount: [1, 1]
@@ -26,7 +26,7 @@ const storyQuests = [
         text: `I should work on my skills so I can take down criminals more effectively. (Skills menu below)`,
         requirementType: `level`,
         requirementTarget: [`level`],
-        requirementAmount: [5],
+        requirementAmount: [3],
     },
     {
         title: `The Beginning V`,
@@ -37,37 +37,71 @@ const storyQuests = [
     },
     {
         title: `Streetfights I`,
-        text: `Moving up to a tougher crowd. (Go to Streets in Areas menu)`,
+        text: `I need to learn some new moves to take out the more dangerous criminals. (See details of unlocked moves in the 'Abilities' menu and equip them in the 'Status' menu slots.)`,
+        requirementType: `level`,
+        requirementTarget: [`level`],
+        requirementAmount: [5],
+    },
+    {
+        title: `Streetfights II`,
+        text: `Moving up to a tougher crowd. (Streets in Areas menu)`,
         requirementType: `defeat`,
         requirementTarget: [`thug`],
         requirementAmount: [1],
     },
     {
-        title: `Streetfights II`,
+        title: `Streetfights III`,
         text: `That guy had a freakin' crowbar. Back to the training board.`,
         requirementType: `training`,
-        requirementTarget: [`strength`, `toughness`, `agility`],
-        requirementAmount: [7, 7, 7],
+        requirementTarget: [`strength`, `toughness`, 'mind',`agility`],
+        requirementAmount: [7, 7,7,7],
     },
+    
     {
-        title: `Streetfights III`,
-        text: `The whole gang.`,
+        title: `Streetfights IV`,
+        text: `Time to tkae out the whole gang.`,
         requirementType: `defeat`,
         requirementTarget: [`thug`],
-        requirementAmount: [10],
+        requirementAmount: [30],
     },
     {
         title: `Vigilante I`,
-        text: `You heard news that a maximum security prisoner escaped and is wreaking havoc on the bridge. This is it, a real chance to be a hero. You better be ready for this.`,
+        text: `You heard news of a loud bang coming from the maximum security prison. You should probaby check it out. As you get to the bridge you see dozens of prisoners running from the direction of the prison. Stop them!`,
+        requirementType: `defeat`,
+        requirementTarget: [`prisoner`],
+        requirementAmount: [20],
+    },
+    {
+        title: `Vigilante II`,
+        text: `After taking down some of the escaped prisoners you finally get near. Now you can see green fumes streaming from somewhere in the compoud. As you enter the courtyard a very large prisoner blocks your way.`,
         requirementType: `defeat`,
         requirementTarget: [`prisoner9`],
+        requirementAmount: [1],
+    },
+    {
+        title: `Vigilante III`,
+        text: `Finally taking down the oversized brute you follow the fumes to some exhaust chimneys and a hatch that leads underground.
+             The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself in some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex. Soon you spot more escaped prisoners, but they look strange.`,
+        requirementType: `defeat`,
+        requirementTarget: [`infectedPrisoner`],
+        requirementAmount: [30],
+    },
+    {
+        title: `Vigilante IV`,
+        text: `Finally you find a doorway that leads into a room. You seem to be in a lab. You see vats, some broken, with a similarly coloured green liquid splashed around them. Some, with- people? - still inside. In your shocked state you barely dodge out of the way as a massive blade swings from the side. From the shadows a massive disfigured prisoner appears. Did he cause all of this?`,
+        requirementType: `defeat`,
+        requirementTarget: [`experiment999`],
         requirementAmount: [1],
     },
 
 ];
 const endOfStoryQuest = {
     title: `The End So Far`,
-    text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. Can you beat Prisoner 9 twice in a row?`,
+    text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. As a reward, you can preview the Esper class below (WARNING: this is experimental content, you should make a backup, changing class resets your level and attributes)
+    <br>
+    <br>
+    <button class="classButton" style="float:left; margin-left:15%" onclick="changeClass('human')">Human</button>
+    <button class="classButton" style="float:right;margin-right:15%"" onclick="changeClass('esper')">Esper</button>`,
     requirementType: `none`,
     requirementTarget: [1],
     requirementAmount: [1],
@@ -130,6 +164,7 @@ function updateStoryQuest() {
     if (completed) {
         playerStats.storyProgress += 1;
         playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
+        checkAreaUnlocks();
         updateDiaryEntries();
     }
     let textBox = document.getElementById("storyText");
@@ -197,7 +232,7 @@ function updateDiaryEntries(){
     let container = document.getElementById("diaryEntries");
     container.innerHTML = "";
     for (let index = 0; index < playerStats.storyProgress; index++) {
-        let quest = storyQuests[index];
+        let quest = getStoryQuest(index);
         let b = document.createElement("button");
         b.setAttribute("onclick",`updateDiaryText(${index})`);
         b.setAttribute("class","diaryButton");

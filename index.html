@@ -12,6 +12,15 @@
     <title>I Want To Be A Hero</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R33JEXMNXN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R33JEXMNXN');
+</script>
 
 <body>
     <header>
@@ -45,6 +54,7 @@
         </div>
 
     </header>
+
     <main>
         <section id="canvasLogWrap">
             <div id="canvasWrap">
@@ -101,7 +111,7 @@
                         </div>
                         <div class="pickle subHeader">Attributes:</div>
                         <div id="statsGrid"
-                            style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
+                            style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em; margin-top:3em;  ">
                             <div class="statDisplay pickle">
                                 Strength: <span class="strengthText" id="strengthText">0</span>
                             </div>
@@ -160,19 +170,20 @@
                         <button class="pickle" id="trainingUpgradeButton" onclick="upgradeTrainingArea()"
                             onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span
                                 id="trainingUpgradeCost"></span></button>
+                        <div class="subHeader pickle">Base attributes from training</div>
                         <div id="statsGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
                             <div id="strengthStatText" class="statDisplay pickle">
-                                Strength: <span class="strengthText" id="strengthText">0</span>
+                                Strength: <span class="strengthText" id="strengthSoftcapText">0</span>
                             </div>
                             <div id="toughhnessStatText" class="statDisplay pickle">
-                                Toughness: <span class="toughnessText" id="toughnessText">0</span>
+                                Toughness: <span class="toughnessText" id="toughnessSoftcapText">0</span>
                             </div>
                             <div id="mindStatText" class="statDisplay pickle">
-                                Mind: <span class="mindText" id="mindText">0</span>
+                                Mind: <span class="mindText" id="mindSoftcapText">0</span>
                             </div>
                             <div id="agilityStatText" class="statDisplay pickle">
-                                Agility: <span class="agilityText" id="agilityText">0</span>
+                                Agility: <span class="agilityText" id="agilitySoftcapText">0</span>
                             </div>
                         </div>
                     </div>

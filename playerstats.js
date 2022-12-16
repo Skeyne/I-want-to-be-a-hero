@@ -85,6 +85,7 @@ function load(file = null) {
         Object.keys(loadgame).forEach(property => {
             playerStats[property] = loadgame[property];
         });
+        if(playerStats.class = 'Human') playerStats.class = 'human';
     } else {
         console.log("No savefile found");
     }

@@ -92,9 +92,11 @@ main {
 .gridSkills {
     display: grid;
     width: 100%;
+    height: 84vh;
     aspect-ratio: 1/1;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
     justify-items: center;
     justify-content: space-around;
     align-items: center;
@@ -631,6 +633,7 @@ progress[value]::-webkit-progress-bar {
     text-align: center;
     font-size: 1.4rem;
     margin: 0 20% 0;
+    margin-bottom: 5vh;
 }
 
 #trainingUpgradeButton:active {
@@ -732,9 +735,9 @@ progress[value]::-webkit-progress-bar {
     border: 5px grey outset;
     text-align: center;
     font-size: 1.6rem;
-    padding: 1rem;
-    /* background-color: blue; */
-    background-size: contain;
+    padding: 3vh;
+    background-size: 100%;
+    background-position: 0%;
     filter:saturate(0);
 }
 .radioAreaLabel::after {
@@ -822,6 +825,12 @@ progress[value]::-webkit-progress-bar {
     font-size: 1em;
     background-color: whitesmoke;
 }
+.classButton {
+    border: 2px solid black;
+    font-family: 'Pickle Pushing';
+    font-size: 1em;
+    background-color: whitesmoke;
+}
 .diaryButton {
     border: 2px solid black;
     font-family: 'Pickle Pushing';
@@ -903,9 +912,27 @@ progress[value]::-webkit-progress-bar {
     padding: 5px 0;
     border-radius: 6px;
 }
+.tooltip .skilltooltiptext {
+    visibility: hidden;
+    position: fixed;
+    top: 6vh;
+    left: calc(25% - 200px);
+    width: 400px;
+    background-color: black;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+}
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
+    visibility: visible;
+    z-index: 1;;
+}
+
+.tooltip:hover .skilltooltiptext {
     visibility: visible;
     z-index: 1;;
 }

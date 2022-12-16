@@ -222,11 +222,11 @@ skillLibrary = {
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "mind",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.02,
             },
-            maxLevel: 5,
-            cost: [1,2,2,2,3],
+            maxLevel: 50,
+            cost: Array(10).fill(1).concat(Array(10).fill(5),Array(20).fill(5),Array(10).fill(50))
         },
         'es_1': {
             id: 'es_1',
@@ -237,24 +237,25 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 2,
+                effectMagnitude: 1.5,
             },
             maxLevel: 3,
-            cost: [10,100,1000],
+            cost: [1,10,100],
         },
         'es_2': {
             id: 'es_2',
-            name: 'Inhuman strength',
-            iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            name: 'Psionic acceleration',
+            iconName: 'shadowB',
+            desc: 'A quick mind needs a quick body',
             effect: {
                 type: 0, // attribute boost
-                effectTarget: "strength",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectTarget: "agility",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.01,
             },
-            maxLevel: 5,
-            cost: [1,2,2,2,3],
+            maxLevel: 100,
+            cost: Array(10).fill(1).concat(Array(10).fill(2),Array(10).fill(3),Array(10).fill(4),Array(10).fill(5),Array(10).fill(6)
+            ,Array(10).fill(7),Array(10).fill(8),Array(10).fill(9),Array(10).fill(10))
         },
     },
     "mutant": {
@@ -358,7 +359,7 @@ playerMoves = {
         damageRange: [0.9, 1.1],
         time: 3000,
         cooldownTime: 0,
-        range: [10,10],
+        range: [5,5],
     },
     'kick': {
         type: 0,
@@ -371,7 +372,7 @@ playerMoves = {
         damageRange: [1, 1.2],
         time: 4000,
         cooldownTime: 5000,
-        range: [10,10],
+        range: [5,5],
     },
     'jab': {
         type: 0,
@@ -384,7 +385,7 @@ playerMoves = {
         damageRange: [.95, 1.05],
         time: 1000,
         cooldownTime: 0,
-        range: [10,10],
+        range: [5,5],
     },
     'haymaker': {
         type: 0,
@@ -397,7 +398,7 @@ playerMoves = {
         damageRange: [1, 1.5],
         time: 7000,
         cooldownTime: 10000,
-        range: [10,10],
+        range: [5,5],
     },
     'crowbar': {
         type: 0,
@@ -410,7 +411,7 @@ playerMoves = {
         damageRange: [1, 2],
         time: 4000,
         cooldownTime: 15000,
-        range: [10,10],
+        range: [6,6],
     },
     'throwingKnife': {
         type: 0,
@@ -423,7 +424,7 @@ playerMoves = {
         damageRange: [0.8, 1],
         time: 2000,
         cooldownTime: 4000,
-        range: [10,60],
+        range: [0,60],
     },
     'firecrackers': {
         type: 0,
@@ -449,7 +450,7 @@ playerMoves = {
         damageRange: [0.9, 1.1],
         time: 3000, 
         cooldownTime: 0,
-        range: [10,10],
+        range: [6,6],
     },
     'telekineticProjectile': {
         type: 0,
@@ -468,13 +469,13 @@ playerMoves = {
         type: 0,
         category:'melee',
         name: "Psionic Pulse",
-        description: "Emit a short-range pulse that damages nearby enemies.",
+        description: "Emit a short-range pulse that damages and knocks back nearby enemies.",
         iconName: "psionicPulse",
         damage: 1,
         damageRatios: [0, 1, 3, 0],
         damageRange: [1, 1.2],
         effects: {
-            'knockback': 10,
+            'knockback': 20,
         },
         time: 3000, 
         cooldownTime: 10000,
@@ -508,7 +509,6 @@ abilityUnlocks = {
     'esper': {
         0: ['spiritFist'],
         10: ['telekineticProjectile','psionicPulse'],
-        20: ['spiritFist'],
     },
     'ninja': {
         0: ['punch'],
@@ -546,6 +546,12 @@ function checkAbilityRequirements() {
         if (playerStats.level >= levelRequirement) {
             abilities.forEach(ability => {
                 playerStats.unlockedAbilities[ability] = 1;
+            });
+        } else {
+
+            abilities.forEach(ability => {
+                delete playerStats.unlockedAbilities[ability];
+                //console.log("Deleting ",ability)
             });
         }
     }
@@ -630,7 +636,7 @@ function populatePassiveTree(){
         b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
         passiveTreeGrid.appendChild(b);
         let t = document.createElement("div");
-        t.setAttribute("class", "tooltiptext pickle");
+        t.setAttribute("class", "skilltooltiptext pickle");
         t.innerHTML = generatePassiveTooltip(skill);
         b.appendChild(t);
         let l = document.createElement("div");
@@ -653,6 +659,7 @@ function populateAbilitySlots() {
         noOption.innerHTML = "None";
         noOption.value = null;
         element.appendChild(noOption);
+        //console.log(playerStats.unlockedAbilities);
         Object.keys(playerStats.unlockedAbilities).forEach(ability => {
             let option = document.createElement("option");
             option.innerHTML = playerMoves[ability].name;
@@ -861,7 +868,7 @@ function updateButton(skillId) {
     } else {
         l.innerHTML = 0;
     }
-    let t = passiveButtonDict[skillId].querySelector('.tooltiptext');
+    let t = passiveButtonDict[skillId].querySelector('.skilltooltiptext');
     t.innerHTML = generatePassiveTooltip(skillLibrary[playerStats.class][skillId]);
 }
 
@@ -877,6 +884,7 @@ function resetSkills() {
 }
 
 function changeClass(className){
+    if(className == playerStats.class) return;
     resetSkills();
     playerStats.class = className;
     populatePassiveTree();
@@ -895,4 +903,17 @@ function changeClass(className){
         }
     }
     populateAbilitySlots();
+    if(className != 'human'){
+        playerStats.attributeSoftcaps = [10000,10000,10000,10000];
+        playerStats.strength = 10;
+        playerStats.toughness = 10;
+        playerStats.mind = 10;
+        playerStats.agility = 10;
+    } else {
+        playerStats.attributeSoftcaps = [100,100,100,100];
+        playerStats.strength = 1;
+        playerStats.toughness = 1;
+        playerStats.mind = 1;
+        playerStats.agility = 1;
+    }
 }

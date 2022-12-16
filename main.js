@@ -75,7 +75,7 @@ class CombatEntity {
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000 * this.actionSpeed;
-            
+
         } else {
             this.think();
         }
@@ -161,13 +161,13 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
-                    if(this.nextMove.hasOwnProperty("effects")){
-                        Object.keys(this.nextMove.effects).forEach(effect =>{
+                    if (this.nextMove.hasOwnProperty("effects")) {
+                        Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
                                 case "knockback":
                                     target.distance += this.nextMove.effects[effect];
                                     break;
-                            
+
                                 default:
                                     console.error("ERROR UNKOWN SKILL EFFECT");
                                     break;
@@ -408,6 +408,7 @@ class Encounter {
 class Area {
     constructor(data) {
         this.name = data.name;
+        this.storyUnlock = data.storyUnlock;
         this.background = data.background;
         this.backgroundImage = new Image();
         this.backgroundImage.src = this.background;
@@ -427,40 +428,48 @@ class Area {
     }
 }
 
-const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"], patrolTime: 5000 }),
-new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"], patrolTime: 7000 }),
-new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner"], patrolTime: 10000 }),
-new Area({ name: "Prison Courtyard", background: "prisonCourtyardBackground.png", enemies: ["prisoner9"], patrolTime: 10000 }),
-new Area({ name: "Prison Underground", background: "bulkheadBackground.png", enemies: ["infectedPrisoner"], patrolTime: 10000 }),
-new Area({ name: "Underground Lab", background: "scifilabBackground.png", enemies: ["experiment999"], patrolTime: 10000 }),
-new Area({ name: "The Void", background: "voidBackground.png", enemies: ["prisoner999"], patrolTime: 10000 })];
+const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"], patrolTime: 5000, storyUnlock:0}),
+new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"], patrolTime: 7000, storyUnlock:6 }),
+new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner"], patrolTime: 10000, storyUnlock:9 }),
+new Area({ name: "Prison Courtyard", background: "prisonCourtyardBackground.png", enemies: ["prisoner9"], patrolTime: 10000, storyUnlock:10 }),
+new Area({ name: "Prison Underground", background: "bulkheadBackground.png", enemies: ["infectedPrisoner"], patrolTime: 10000, storyUnlock:11}),
+new Area({ name: "Underground Lab", background: "scifilabBackground.png", enemies: ["experiment999"], patrolTime: 10000 , storyUnlock:12}),
+new Area({ name: "The Void", background: "voidBackground.png", enemies: ["prisoner999"], patrolTime: 10000 , storyUnlock:13})];
 
-areaSelect = document.getElementById("selectArea");
-for (let index = 0; index < areas.length; index++) {
-    let area = areas[index];
-    let d =  document.createElement('div');
-    d.setAttribute("class","radioWrap");
-    areaSelect.append(d);
-    let radioSelect =  document.createElement('input');
-    radioSelect.setAttribute('type', 'radio');
-    radioSelect.setAttribute('name', 'selectArea');
-    radioSelect.setAttribute("id",`${area.name}`);
-    radioSelect.setAttribute("value",index);
-    radioSelect.setAttribute("class","radioArea");
-    radioSelect.setAttribute("onChange","changeArea(this.value)");
-    if(index == playerStats.currentArea) radioSelect.setAttribute("checked","checked");
-    d.append(radioSelect);
-    l = document.createElement('label');
-    l.setAttribute("class","radioAreaLabel");
-    l.setAttribute("for",`${area.name}`);
-    l.style.backgroundImage = `url(${area.background})`;
-    l.innerHTML = area.name;
-    dGradient = document.createElement('div');
-    dGradient.setAttribute("class","radioAreaGradient");
-    d.append(dGradient);
-    d.append(l);
+let areaSelect = document.getElementById("selectArea");
+checkAreaUnlocks();
+function checkAreaUnlocks(){
+    areaSelect.innerHTML = "";
+    for (let index = 0; index < areas.length; index++) {
+        let area = areas[index];
+        if(area.storyUnlock > playerStats.storyProgress){
+            break;
+        }
+        let d = document.createElement('div');
+        d.setAttribute("class", "radioWrap");
+        areaSelect.append(d);
+        let radioSelect = document.createElement('input');
+        radioSelect.setAttribute('type', 'radio');
+        radioSelect.setAttribute('name', 'selectArea');
+        radioSelect.setAttribute("id", `${area.name}`);
+        radioSelect.setAttribute("value", index);
+        radioSelect.setAttribute("class", "radioArea");
+        radioSelect.setAttribute("onChange", "changeArea(this.value)");
+        if (index == playerStats.currentArea) radioSelect.setAttribute("checked", "checked");
+        d.append(radioSelect);
+        l = document.createElement('label');
+        l.setAttribute("class", "radioAreaLabel");
+        l.setAttribute("for", `${area.name}`);
+        l.style.backgroundImage = `url(${area.background})`;
+        l.innerHTML = area.name;
+        dGradient = document.createElement('div');
+        dGradient.setAttribute("class", "radioAreaGradient");
+        d.append(dGradient);
+        d.append(l);
+        //console.log("Area unlock requirement: ",area.storyUnlock, "Story:",getStoryQuest(playerStats.storyProgress).title)
+    }
 }
-console.log(document.querySelector('input[name="selectArea"]:checked').value);
+//console.log(document.querySelector('input[name="selectArea"]:checked').value);
 currentArea = areas[playerStats.currentArea];
 areaSelect.value = playerStats.currentArea;
 
@@ -508,17 +517,17 @@ function renderLoop() {
             ctxBuffer.textAlign = 'left';
             break;
         case "InPatrol":
-            environmentDistance -= logicTickTime/1000 * 10;
+            environmentDistance -= logicTickTime / 1000 * 10;
             drawBackground();
             drawPlayer();
             drawCharacterPortrait(ctxBuffer, player, 'l');
             ctxBuffer.fillStyle = "black";
-            ctxBuffer.fillRect(0, cBuffer.height/2 - 40, cBuffer.width, 100);
+            ctxBuffer.fillRect(0, cBuffer.height / 2 - 40, cBuffer.width, 100);
             ctxBuffer.font = `50px Pickle Pushing`;
             ctxBuffer.fillStyle = "white";
             ctxBuffer.textAlign = 'center';
-            
-            ctxBuffer.fillText((currentArea.patrolTime - currentArea.patrolCounter > 500) ? "Patrolling...":"FIGHT!", cBuffer.width / 2, cBuffer.height / 2 + 30);
+
+            ctxBuffer.fillText((currentArea.patrolTime - currentArea.patrolCounter > 500) ? "Patrolling..." : "FIGHT!", cBuffer.width / 2, cBuffer.height / 2 + 30);
             ctxBuffer.textAlign = 'left';
             break;
         default:
@@ -555,7 +564,18 @@ function renderLoop() {
     document.getElementById("moneyText").innerHTML = format(playerStats.money);
     document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
     Object.values(attribute).forEach(attributeName => {
-        document.getElementById(attributeName + "Text").innerHTML = format(getEffectiveValue(attributeName));
+        let baseAttributeValue = playerStats[attributeName];
+        let effectiveValue = format(getEffectiveValue(attributeName))
+        let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]));
+        let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]];
+        let softCapText = (baseAttributeValue > softCap)?`EFFECTIVE BASE: ${softCappedValue}`:`${softCappedValue}`;
+        if (baseAttributeValue > softCap) {
+            softCapText += `<br>(RAW: ${format(baseAttributeValue)})`
+            softCapText += `<br>[SOFTCAP: ${softCap}]`;
+            effectiveValue = effectiveValue + "(!)";
+        }
+        document.getElementById(attributeName + "Text").innerHTML = effectiveValue;
+        document.getElementById(attributeName + "SoftcapText").innerHTML = softCapText;
     });
 }
 function logicLoop() {
@@ -570,6 +590,7 @@ function logicLoop() {
                     gameState = "InPatrol";
                     player.target = null;
                     player.nextMove = null;
+                    currentArea.patrolCounter = 0;
                     logConsole("Starting patrol.")
                     break;
                 case 2:
