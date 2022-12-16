@@ -734,7 +734,7 @@ progress[value]::-webkit-progress-bar {
     height: min-content;
     border: 5px grey outset;
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 2rem;
     padding: 3vh;
     background-size: 100%;
     background-position: 0%;
