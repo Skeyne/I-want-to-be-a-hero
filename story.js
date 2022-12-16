@@ -80,7 +80,7 @@ const storyQuests = [
     },
     {
         title: `Vigilante III`,
-        text: `Finally taking down the oversized brute you follow the fumes to some exhaust chimneys and a hatch that leads underground.
+        text: `Finally taking down the oversized brute, you follow the fumes to some exhaust chimneys and a hatch that leads underground.
              The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself in some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex. Soon you spot more escaped prisoners, but they look strange.`,
         requirementType: `defeat`,
         requirementTarget: [`infectedPrisoner`],
