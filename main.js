@@ -651,7 +651,10 @@ function drawCharacterPortrait(context, character, side) {
 function changeArea(index) {
     playerStats.currentArea = index;
     currentArea = areas[playerStats.currentArea];
-    gameState = "InPatrol";
+    currentArea.patrolCounter = 0;
+    if(gameState != "InRest"){
+        gameState = "InPatrol";
+    }
     player.target = null;
     player.nextMove = null;
 }
