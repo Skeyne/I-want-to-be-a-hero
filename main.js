@@ -405,70 +405,8 @@ class Encounter {
     }
 }
 
-class Area {
-    constructor(data) {
-        this.name = data.name;
-        this.storyUnlock = data.storyUnlock;
-        this.background = data.background;
-        this.backgroundImage = new Image();
-        this.backgroundImage.src = this.background;
-        this.enemies = data.enemies;
-        //this.patrolDifficulty = data.patrolDifficulty;
-        this.patrolTime = data.patrolTime;
-        this.patrolCounter = 0;
-    }
-    tick() {
-        this.patrolCounter += logicTickTime * player.actionSpeed;
-        if (this.patrolCounter >= this.patrolTime) {
-            this.patrolCounter = 0;
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-}
 
-const areas = [new Area({ name: "Alley", background: "alleyBackground.png", enemies: ["criminal"], patrolTime: 5000, storyUnlock:0}),
-new Area({ name: "Streets", background: "cyberpunk-street.png", enemies: ["thug"], patrolTime: 7000, storyUnlock:6 }),
-new Area({ name: "Bridge", background: "bridgeAreaBackground-1.png", enemies: ["prisoner"], patrolTime: 10000, storyUnlock:9 }),
-new Area({ name: "Prison Courtyard", background: "prisonCourtyardBackground.png", enemies: ["prisoner9"], patrolTime: 10000, storyUnlock:10 }),
-new Area({ name: "Prison Underground", background: "bulkheadBackground.png", enemies: ["infectedPrisoner"], patrolTime: 10000, storyUnlock:11}),
-new Area({ name: "Underground Lab", background: "scifilabBackground.png", enemies: ["experiment999"], patrolTime: 10000 , storyUnlock:12}),
-new Area({ name: "The Void", background: "voidBackground.png", enemies: ["prisoner999"], patrolTime: 10000 , storyUnlock:13})];
 
-let areaSelect = document.getElementById("selectArea");
-checkAreaUnlocks();
-function checkAreaUnlocks(){
-    areaSelect.innerHTML = "";
-    for (let index = 0; index < areas.length; index++) {
-        let area = areas[index];
-        if(area.storyUnlock > playerStats.storyProgress){
-            break;
-        }
-        let d = document.createElement('div');
-        d.setAttribute("class", "radioWrap");
-        areaSelect.append(d);
-        let radioSelect = document.createElement('input');
-        radioSelect.setAttribute('type', 'radio');
-        radioSelect.setAttribute('name', 'selectArea');
-        radioSelect.setAttribute("id", `${area.name}`);
-        radioSelect.setAttribute("value", index);
-        radioSelect.setAttribute("class", "radioArea");
-        radioSelect.setAttribute("onChange", "changeArea(this.value)");
-        if (index == playerStats.currentArea) radioSelect.setAttribute("checked", "checked");
-        d.append(radioSelect);
-        l = document.createElement('label');
-        l.setAttribute("class", "radioAreaLabel");
-        l.setAttribute("for", `${area.name}`);
-        l.style.backgroundImage = `url(${area.background})`;
-        l.innerHTML = area.name;
-        dGradient = document.createElement('div');
-        dGradient.setAttribute("class", "radioAreaGradient");
-        d.append(dGradient);
-        d.append(l);
-        //console.log("Area unlock requirement: ",area.storyUnlock, "Story:",getStoryQuest(playerStats.storyProgress).title)
-    }
-}
 //console.log(document.querySelector('input[name="selectArea"]:checked').value);
 currentArea = areas[playerStats.currentArea];
 areaSelect.value = playerStats.currentArea;

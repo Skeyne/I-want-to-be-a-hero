@@ -125,7 +125,7 @@ enemyData.prisoner9 = {
     healthRegen: 0.005,
     expReward: 50,
     moneyReward: 0.1,
-    reputationReward: 10,
+    reputationReward: 1,
     spriteFile: "prisoner9.png",
     portraitFile: "prisoner9Portrait.png",
     moves: ['punch','smash','walk'],
@@ -156,17 +156,17 @@ enemyData.experiment999 = {
     portraitFile: "thugPortrait.png",
     moves: ['walk','punch','mutantSlash','vomit'],
 };
-enemyData.prisoner999 = {
-    id:"prisoner999",
-    name: "Prisoner 999",
-    maxHealth: 1000,
-    attributes: [500,200,10,50],
+enemyData.experiment9999 = {
+    id:"experiment9999",
+    name: "Expriment #9999",
+    maxHealth: 10000,
+    attributes: [5000,2000,100,500],
     healthRegen: 0.005,
-    expReward: 25,
-    moneyReward: 0.2,
-    reputationReward: 10,
-    spriteFile: "prisoner9.png",
+    expReward: 2500,
+    moneyReward: 200,
+    reputationReward: 1,
+    spriteFile: "experiment999.png",
     portraitFile: "prisoner9Portrait.png",
-    moves: ['punch','smash','walk'],
+    moves: ['walk','punch','smash','mutantSlash','vomit'],
 };
 

@@ -1,3 +1,4 @@
+const version = '0.02';
 const cleanPlayerStats = {
     experience: 0,
     experienceToNext: 10,
@@ -76,6 +77,7 @@ function save() {
     playerStats.lastSave = Date.now();
     localStorage.setItem("heroSave", JSON.stringify(playerStats));
     localStorage.setItem("heroLastSaved", playerStats.lastSave);
+    localStorage.setItem("version", playerStats.lastSave);
 }
 setInterval(save, 30000);
 function load(file = null) {

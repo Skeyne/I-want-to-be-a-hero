@@ -99,6 +99,7 @@ const endOfStoryQuest = {
     title: `The End So Far`,
     text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. As a reward, you can preview the Esper class below (WARNING: this is experimental content, you should make a backup, changing class resets your level and attributes)
     <br>
+    There's also a final area 'The Void' with an exceptionally unfair enemy if you fancy your odds at beating him.
     <br>
     <button class="classButton" style="float:left; margin-left:15%" onclick="changeClass('human')">Human</button>
     <button class="classButton" style="float:right;margin-right:15%"" onclick="changeClass('esper')">Esper</button>`,
@@ -111,7 +112,39 @@ const endOfStoryQuest = {
 updateStoryQuest();
 updateDiaryEntries();
 
-
+var areaSelect = document.getElementById("selectArea");
+checkAreaUnlocks();
+function checkAreaUnlocks(){
+    areaSelect.innerHTML = "";
+    for (let index = 0; index < areas.length; index++) {
+        let area = areas[index];
+        if(area.storyUnlock > playerStats.storyProgress){
+            break;
+        }
+        let d = document.createElement('div');
+        d.setAttribute("class", "radioWrap");
+        areaSelect.append(d);
+        let radioSelect = document.createElement('input');
+        radioSelect.setAttribute('type', 'radio');
+        radioSelect.setAttribute('name', 'selectArea');
+        radioSelect.setAttribute("id", `${area.name}`);
+        radioSelect.setAttribute("value", index);
+        radioSelect.setAttribute("class", "radioArea");
+        radioSelect.setAttribute("onChange", "changeArea(this.value)");
+        if (index == playerStats.currentArea) radioSelect.setAttribute("checked", "checked");
+        d.append(radioSelect);
+        l = document.createElement('label');
+        l.setAttribute("class", "radioAreaLabel");
+        l.setAttribute("for", `${area.name}`);
+        l.style.backgroundImage = `url(${area.background})`;
+        l.innerHTML = area.name;
+        dGradient = document.createElement('div');
+        dGradient.setAttribute("class", "radioAreaGradient");
+        d.append(dGradient);
+        d.append(l);
+        //console.log("Area unlock requirement: ",area.storyUnlock, "Story:",getStoryQuest(playerStats.storyProgress).title)
+    }
+}
 function resetStoryline() {
     playerStats.storyProgress = 0;
     playerStats.currentStoryQuestProgress = [0];
