@@ -19,7 +19,7 @@ const storyQuests = [
         text: `Time to fight crime`,
         requirementType: `defeat`,
         requirementTarget: [`criminal`],
-        requirementAmount: [10],
+        requirementAmount: [5],
     },
     {
         title: `The Beginning IV`,
@@ -33,28 +33,28 @@ const storyQuests = [
         text: `Time to clean the streets.`,
         requirementType: `defeat`,
         requirementTarget: [`criminal`],
-        requirementAmount: [30],
+        requirementAmount: [15],
     },
     {
         title: `Streetfights I`,
-        text: `I need to learn some new moves to take out the more dangerous criminals. (See details of unlocked moves in the 'Abilities' menu and equip them in the 'Status' menu slots.)`,
-        requirementType: `level`,
-        requirementTarget: [`level`],
-        requirementAmount: [5],
-    },
-    {
-        title: `Streetfights II`,
         text: `Moving up to a tougher crowd. (Streets in Areas menu)`,
         requirementType: `defeat`,
         requirementTarget: [`thug`],
         requirementAmount: [1],
     },
     {
+        title: `Streetfights II`,
+        text: `I need to learn some new moves to take out the more dangerous criminals. (See details of unlocked moves in the 'Abilities' menu and equip them in the 'Status' menu slots.)`,
+        requirementType: `level`,
+        requirementTarget: [`level`],
+        requirementAmount: [5],
+    },
+    {
         title: `Streetfights III`,
         text: `That guy had a freakin' crowbar. Back to the training board.`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`, 'mind',`agility`],
-        requirementAmount: [7, 7,7,7],
+        requirementAmount: [7,7,7,7],
     },
     
     {

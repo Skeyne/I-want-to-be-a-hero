@@ -71,7 +71,7 @@ class CombatEntity {
             this.onDeath();
             return false;
         } else {
-            this.health = Math.min(this.health + this.maxHealth * this.data.healthRegen * logicTickTime / 1000, this.maxHealth);
+            this.health = Math.min(this.health + this.maxHealth * this.healthRegeneration * logicTickTime / 1000, this.maxHealth);
         }
         if (this.nextMove != null) {
             this.initiative += 1000 * logicTickTime / 1000 * this.actionSpeed;
@@ -116,6 +116,10 @@ class Player extends CombatEntity {
         this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
+        this.healthRegeneration = getSecondaryAttribute("healthRegeneration");
+        this.criticalChance = getSecondaryAttribute("criticalChance");
+        this.overwhelm = getSecondaryAttribute("overwhelm");
+        this.takedown = getSecondaryAttribute("takedown");
         this.cooldownReduction = formulas.cooldownReduction(getEffectiveValue("mind"));
         this.moveIntention = 1;
         this.nextMoveKey = null;
@@ -155,12 +159,15 @@ class Player extends CombatEntity {
                         break;
                 }
                 if (inRange) {
-                    let d = this.nextMove.damage
+                    let isCrit = (Math.random() < this.criticalChance);
+                    let d1 = this.nextMove.damage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
                         + this.nextMove.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
-                    d = d * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
+                    d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
+                    let d2 = (isCrit ? 1.5 : 1) * d1;
+                    let d3 = d2 * (1 + target.health/target.maxHealth * this.overwhelm) * (1 + (1 - target.health/target.maxHealth) * this.takedown);
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
@@ -174,8 +181,8 @@ class Player extends CombatEntity {
                             }
                         });
                     }
-                    let dr = target.takeDamage(d);
-                    logConsole(`Hero hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d)}) damage.`);
+                    let dr = target.takeDamage(d3);
+                    logConsole(`Hero ${isCrit? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
                 } else {
 
                 }
@@ -275,6 +282,7 @@ class Enemy extends CombatEntity {
         this.health = this.maxHealth
         this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
         this.actionSpeed = formulas.actionSpeed(enemyData.attributes[3]);
+        this.healthRegeneration = enemyData.healthRegen;
         this.distance = distance;
         this.name = enemyData.name;
         this.image = new Image(32, 32);

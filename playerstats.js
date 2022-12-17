@@ -1,7 +1,9 @@
-const version = '0.02';
+const version = '0.02a';
+var isOutdated = false;
+document.getElementById('versionText').innerHTML ='v'+version;
 const cleanPlayerStats = {
     experience: 0,
-    experienceToNext: 10,
+    experienceToNext: baseExperienceCost,
     money: 0,
     reputation: 0,
     class: "human",
@@ -11,16 +13,19 @@ const cleanPlayerStats = {
     toughness: 0,
     mind: 0,
     agility: 0,
-    attributeSoftcaps: [100,100,100,100],
-    healthRegen: 0.005,
+    attributeSoftcaps: [100, 100, 100, 100],
+    healthRegeneration: 0,
+    criticalChance: 0,
+    overwhelm: 0,
+    takedown: 0,
     restRate: 0.1,
     lastSave: 0,
     muted: false,
     musicVolume: 0.05,
     unlockedSkills: {},
-    unlockedAbilities: {"punch":1},
-    abilitySlots : 3,
-    equippedAbilities: ["walk","punch",null,null],
+    unlockedAbilities: { "punch": 1 },
+    abilitySlots: 3,
+    equippedAbilities: ["walk", "punch", null, null],
     effectMultipliers: {},
     storyProgress: 0,
     currentStoryQuestProgress: [0],
@@ -32,9 +37,9 @@ const cleanPlayerStats = {
 
 var playerStats = {};
 reset();
-function getTotalPassivePoints(){
-    let decades = Math.floor(playerStats.level/10);
-    return ((decades+1)/2 * decades * 10) + (playerStats.level - decades*10)*(decades+1);
+function getTotalPassivePoints() {
+    let decades = Math.floor(playerStats.level / 10);
+    return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1);
 }
 function getEffectiveValue(property) {
     if (!playerStats.hasOwnProperty(property)) {
@@ -49,18 +54,35 @@ function getEffectiveValue(property) {
             * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
             * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
     }
-
 }
+function getSecondaryAttribute(property) {
+    if (!playerStats.hasOwnProperty(property)) {
+        console.log("Accessing invalid property");
+        return 0;
+    }
+    let baseValue = playerStats[property];
+    if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
+    return (baseValue
+        + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
+        * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
+        * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
+}
+
 function recalculateMultipliers() {
     playerStats.effectMultipliers = {};
 
+}
+function playerSetLevel(value) {
+    playerStats.level = value - 1;
+    playerStats.experience = playerStats.experienceToNext + 1;
+    addPlayerExp(0);
 }
 function addPlayerExp(amount) {
     playerStats.experience += amount;
     if (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
-        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
         checkAbilityRequirements();
     }
     checkLevelQuest();
@@ -77,17 +99,18 @@ function save() {
     playerStats.lastSave = Date.now();
     localStorage.setItem("heroSave", JSON.stringify(playerStats));
     localStorage.setItem("heroLastSaved", playerStats.lastSave);
-    localStorage.setItem("version", playerStats.lastSave);
+    localStorage.setItem("version", version);
 }
 setInterval(save, 30000);
 function load(file = null) {
     //reset()
-    if(file != null){loadgame = file;} else {loadgame = JSON.parse(localStorage.getItem("heroSave"));}
+    if (file != null) { loadgame = file; } else { loadgame = JSON.parse(localStorage.getItem("heroSave")); }
     if (loadgame != null) {
         Object.keys(loadgame).forEach(property => {
             playerStats[property] = loadgame[property];
         });
-        if(playerStats.class = 'Human') playerStats.class = 'human';
+        if (playerStats.class == 'Human') { playerStats.class = 'human' };
+        if (localStorage.getItem("version") != version){ playerStats.healthRegeneration = 0; isOutdated = true;}
     } else {
         console.log("No savefile found");
     }
@@ -139,7 +162,7 @@ function importGame() {
         alert("Invalid input.")
     }
 }
-function reset(){
+function reset() {
     playerStats = JSON.parse(JSON.stringify(cleanPlayerStats));
 }
 function resetSave() {
@@ -152,7 +175,7 @@ function hardReset() {
     let confirmation1 = confirm('WARNGING!\nThis will completely reset your save file!');
     if (confirmation1) {
         let confirmation2 = confirm('Are you really sure?');
-        if (confirmation2) { resetSave(); } else {return;}
+        if (confirmation2) { resetSave(); } else { return; }
     } else {
         return;
     }

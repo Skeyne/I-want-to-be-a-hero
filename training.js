@@ -1,5 +1,5 @@
 var trainingAreaData = {
-    0: { name: "Park", base: 0.1, timeToComplete: 30, costMultiplier: 1},
+    0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1},
 }
 Object.values(trainingAreaData).forEach(element => {
     if(!playerStats.trainingAreaLevels.hasOwnProperty(element.name)){

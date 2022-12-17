@@ -11,8 +11,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1,
             },
-            maxLevel: 99,
-            cost: Array(99).fill(1),
+            maxLevel: 10,
+            cost: Array(10).fill(1),
         },
         'h_1': {
             id: 'h_1',
@@ -27,6 +27,7 @@ skillLibrary = {
             },
             maxLevel: 3,
             cost: [2, 2, 2],
+            requires: { 'h_0': 3, }
         },
         'h_2': {
             id: 'h_2',
@@ -41,6 +42,22 @@ skillLibrary = {
             },
             maxLevel: 1,
             cost: [5],
+            requires: { 'h_1': 3, }
+        },
+        'h_1_4': {
+            id: 'h_1_4',
+            name: 'Heavy Hitter',
+            iconName: 'calisthenics',
+            desc: 'All that training has made you swole. That first hit really packs a punch',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "overwhelm",
+                effectType: "additiveFlat",
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 1,
+            cost: [5],
+            requires: { 'h_2': 1, },
         },
         'h_3': {
             id: 'h_3',
@@ -53,8 +70,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additive
                 effectMagnitude: 1,
             },
-            maxLevel: 99,
-            cost: Array(99).fill(1),
+            maxLevel: 10,
+            cost: Array(10).fill(1),
         },
         'h_4': {
             id: 'h_4',
@@ -69,6 +86,7 @@ skillLibrary = {
             },
             maxLevel: 2,
             cost: [2, 2, 2],
+            requires: { 'h_3': 3, },
         },
         'h_5': {
             id: 'h_5',
@@ -83,6 +101,22 @@ skillLibrary = {
             },
             maxLevel: 1,
             cost: [5],
+            requires: { 'h_4': 2, },
+        },
+        'h_2_4': {
+            id: 'h_2_4',
+            name: 'Built To Last',
+            iconName: 'milerun',
+            desc: 'With all the beatings you\'ve taken and lived through, it takes a lot to bring you down.',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "healthRegeneration",
+                effectType: "additiveFlat",
+                effectMagnitude: 0.01,
+            },
+            maxLevel: 1,
+            cost: [5],
+            requires: { 'h_5': 1, },
         },
         'h_6': {
             id: 'h_6',
@@ -95,8 +129,9 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 1,
             },
-            maxLevel: 99,
-            cost: Array(99).fill(1),
+            maxLevel: 10,
+            cost: Array(10).fill(1),
+            
         },
         'h_7': {
             id: 'h_7',
@@ -111,6 +146,7 @@ skillLibrary = {
             },
             maxLevel: 5,
             cost: [1, 1, 1, 1, 1],
+            requires: { 'h_6': 3, },
         },
         'h_8': {
             id: 'h_8',
@@ -125,6 +161,22 @@ skillLibrary = {
             },
             maxLevel: 1,
             cost: [5],
+            requires: { 'h_7': 3, },
+        },
+        'h_3_4': {
+            id: 'h_3_4',
+            name: 'Opportunity Seeker',
+            iconName: 'shadowB',
+            desc: 'Being faster than your foe gives you the opportunity to hit them in a vital spot.',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "criticalChance",
+                effectType: "additiveFlat",
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 1,
+            cost: [5],
+            requires: { 'h_8': 1, },
         },
         'h_9': {
             id: 'h_9',
@@ -137,8 +189,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 1,
             },
-            maxLevel: 99,
-            cost: Array(99).fill(1),
+            maxLevel: 10,
+            cost: Array(10).fill(1),
         },
         'h_10': {
             id: 'h_10',
@@ -153,6 +205,7 @@ skillLibrary = {
             },
             maxLevel: 1,
             cost: [3],
+            requires: { 'h_9': 3, },
         },
         'h_11': {
             id: 'h_11',
@@ -166,7 +219,23 @@ skillLibrary = {
                 effectMagnitude: 1.15,
             },
             maxLevel: 2,
-            cost: [3,3],
+            cost: [3, 3],
+            requires: { 'h_10': 1, },
+        },
+        'h_4_4': {
+            id: 'h_4_4',
+            name: 'Skilled Combatant',
+            iconName: 'studying',
+            desc: 'Your strategic mind allows you to setup your foe\'s swift defeat.',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "takedown",
+                effectType: "additiveFlat",
+                effectMagnitude: 0.20,
+            },
+            maxLevel: 1,
+            cost: [5],
+            requires: { 'h_11': 2, },
         },
     },
     "superhuman": {
@@ -182,7 +251,7 @@ skillLibrary = {
                 effectMagnitude: 10,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [1, 2, 2, 2, 3],
         },
         'sh_1': {
             id: 'sh_1',
@@ -196,7 +265,7 @@ skillLibrary = {
                 effectMagnitude: 10,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [1, 2, 2, 2, 3],
         },
         'sh_2': {
             id: 'sh_2',
@@ -210,7 +279,7 @@ skillLibrary = {
                 effectMagnitude: 10,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [1, 2, 2, 2, 3],
         },
     },
     "esper": {
@@ -226,7 +295,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             },
             maxLevel: 50,
-            cost: Array(10).fill(1).concat(Array(10).fill(5),Array(20).fill(5),Array(10).fill(50))
+            cost: Array(10).fill(1).concat(Array(10).fill(5), Array(20).fill(5), Array(10).fill(50))
         },
         'es_1': {
             id: 'es_1',
@@ -240,7 +309,7 @@ skillLibrary = {
                 effectMagnitude: 1.5,
             },
             maxLevel: 3,
-            cost: [1,10,100],
+            cost: [1, 10, 100],
         },
         'es_2': {
             id: 'es_2',
@@ -254,53 +323,53 @@ skillLibrary = {
                 effectMagnitude: 0.01,
             },
             maxLevel: 100,
-            cost: Array(10).fill(1).concat(Array(10).fill(2),Array(10).fill(3),Array(10).fill(4),Array(10).fill(5),Array(10).fill(6)
-            ,Array(10).fill(7),Array(10).fill(8),Array(10).fill(9),Array(10).fill(10))
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5), Array(10).fill(6)
+                , Array(10).fill(7), Array(10).fill(8), Array(10).fill(9), Array(10).fill(10))
         },
     },
     "mutant": {
         'mu_0': {
             id: 'mu_0',
-            name: 'Inhuman strength',
+            name: 'Mutant Healing Factor',
             iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            desc: 'Your cells are brimming with activity, wounds that take days to heal close in minutes',
             effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
+                type: 1, // attribute boost
+                effectTarget: "healthRegeneration",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectMagnitude: 0.01,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [5, 10, 20, 40, 80],
         },
         'mu_1': {
             id: 'mu_1',
-            name: 'Inhuman strength',
+            name: 'Crit chance',
             iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            desc: 'Increases critical strike chance',
             effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
+                type: 1, // attribute boost
+                effectTarget: "criticalChance",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectMagnitude: 0.1,
             },
-            maxLevel: 5,
-            cost: [1,2,2,2,3],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
         },
         'mu_2': {
             id: 'mu_2',
-            name: 'Inhuman strength',
+            name: 'Overwhelm',
             iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            desc: 'Increases overwhelm',
             effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
+                type: 1, // attribute boost
+                effectTarget: "overwhelm",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectMagnitude: 0.1,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
-        },
+            cost: Array(5).fill(1),
+        }
     },
     "cyborg": {
         'cy_0': {
@@ -315,7 +384,7 @@ skillLibrary = {
                 effectMagnitude: 10,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [1, 2, 2, 2, 3],
         },
         'cy_1': {
             id: 'cy_1',
@@ -329,7 +398,7 @@ skillLibrary = {
                 effectMagnitude: 10,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [1, 2, 2, 2, 3],
         },
         'cy_2': {
             id: 'cy_2',
@@ -343,14 +412,14 @@ skillLibrary = {
                 effectMagnitude: 10,
             },
             maxLevel: 5,
-            cost: [1,2,2,2,3],
+            cost: [1, 2, 2, 2, 3],
         },
     },
 }
 playerMoves = {
     'punch': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Punch",
         description: "A simple punch, everyone knows how to do it.",
         iconName: "punch",
@@ -359,11 +428,11 @@ playerMoves = {
         damageRange: [0.9, 1.1],
         time: 3000,
         cooldownTime: 0,
-        range: [5,5],
+        range: [5, 5],
     },
     'kick': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Kick",
         description: "Leverage your lower body strength to knock those criminals on their asses",
         iconName: "kick",
@@ -372,11 +441,11 @@ playerMoves = {
         damageRange: [1, 1.2],
         time: 4000,
         cooldownTime: 5000,
-        range: [5,5],
+        range: [5, 5],
     },
     'jab': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Jab",
         description: "Faster than a punch but weaker, good to knockout small fry and get out of the way.",
         iconName: "jab",
@@ -385,11 +454,11 @@ playerMoves = {
         damageRange: [.95, 1.05],
         time: 1000,
         cooldownTime: 0,
-        range: [5,5],
+        range: [5, 5],
     },
     'haymaker': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Haymaker",
         description: "Prepare to deliver a massive blow to your foe. Slow.",
         iconName: "smash",
@@ -398,11 +467,11 @@ playerMoves = {
         damageRange: [1, 1.5],
         time: 7000,
         cooldownTime: 10000,
-        range: [5,5],
+        range: [5, 5],
     },
     'crowbar': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Crowbar",
         description: "This does not seem fair?",
         iconName: "crowbar",
@@ -411,11 +480,11 @@ playerMoves = {
         damageRange: [1, 2],
         time: 4000,
         cooldownTime: 15000,
-        range: [6,6],
+        range: [6, 6],
     },
     'throwingKnife': {
         type: 0,
-        category:'ranged',
+        category: 'ranged',
         name: "Throwing Knife",
         description: "It's funnier in the circus",
         iconName: "throwingKnife",
@@ -424,50 +493,50 @@ playerMoves = {
         damageRange: [0.8, 1],
         time: 2000,
         cooldownTime: 4000,
-        range: [0,60],
+        range: [0, 60],
     },
     'firecrackers': {
         type: 0,
-        category:'ranged',
+        category: 'ranged',
         name: "Firecackers",
         description: "You're more likely to blow off your own fingers than theirs.",
         iconName: "firecrackers",
         damage: 1,
         damageRatios: [0, 0, 1.2, .2],
         damageRange: [0.5, 3],
-        time: 3000, 
+        time: 3000,
         cooldownTime: 9000,
-        range: [0,30],
+        range: [0, 30],
     },
     'spiritFist': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Spirit Fist",
         description: "Empower your fist with psionic energy for an enhanced strike.",
         iconName: "spiritFist",
         damage: 1,
         damageRatios: [.2, 0, 1, .2],
         damageRange: [0.9, 1.1],
-        time: 3000, 
+        time: 3000,
         cooldownTime: 0,
-        range: [6,6],
+        range: [6, 6],
     },
     'telekineticProjectile': {
         type: 0,
-        category:'ranged',
+        category: 'ranged',
         name: "Telekinetic Projectile",
         description: "Use your psionic powers to thrust nearby matter towards your enemy.",
         iconName: "telekineticProjectile",
         damage: 1,
         damageRatios: [0, 0, 2, 0],
         damageRange: [0.8, 1.1],
-        time: 3000, 
+        time: 3000,
         cooldownTime: 5000,
-        range: [20,60],
+        range: [20, 60],
     },
     'psionicPulse': {
         type: 0,
-        category:'melee',
+        category: 'melee',
         name: "Psionic Pulse",
         description: "Emit a short-range pulse that damages and knocks back nearby enemies.",
         iconName: "psionicPulse",
@@ -477,13 +546,13 @@ playerMoves = {
         effects: {
             'knockback': 20,
         },
-        time: 3000, 
+        time: 3000,
         cooldownTime: 10000,
-        range: [20,20],
+        range: [20, 20],
     },
     'walk': {
         type: 1,
-        category:'movement',
+        category: 'movement',
         name: "move",
         description: "1. 2. 1. 2.",
         iconName: "move",
@@ -497,8 +566,8 @@ abilityUnlocks = {
     'human': {
         0: ['punch'],
         5: ['kick', 'jab'],
-        10: ['haymaker','firecrackers'],
-        15: ['crowbar','throwingKnife'],
+        10: ['haymaker', 'firecrackers'],
+        15: ['crowbar', 'throwingKnife'],
     },
     'superhuman': {
         0: ['punch'],
@@ -508,7 +577,7 @@ abilityUnlocks = {
     },
     'esper': {
         0: ['spiritFist'],
-        10: ['telekineticProjectile','psionicPulse'],
+        10: ['telekineticProjectile', 'psionicPulse'],
     },
     'ninja': {
         0: ['punch'],
@@ -518,13 +587,13 @@ abilityUnlocks = {
     },
 }
 let previewRowHeader = document.createElement("div");
-previewRowHeader.setAttribute("id","previewRowHeader");
+previewRowHeader.setAttribute("id", "previewRowHeader");
 let previewRowBody = document.createElement("div");
-previewRowBody.setAttribute("id","previewRowBody");
+previewRowBody.setAttribute("id", "previewRowBody");
 let loadoutContainer = document.getElementById("abilityLoadoutContainer");
 let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
 abilityRequirementsGrid.append(previewRowHeader);
-abilityRequirementsGrid.append(previewRowBody); 
+abilityRequirementsGrid.append(previewRowBody);
 let slots = [];
 for (let index = 0; index < playerStats.abilitySlots; index++) {
     let slot = document.createElement("select");
@@ -535,13 +604,15 @@ for (let index = 0; index < playerStats.abilitySlots; index++) {
     slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
     loadoutContainer.appendChild(slot);
 }
+
 checkAbilityRequirements();
 
 populateAbilityRequirements();
 UpdateAbilityPreview();
 populateAbilitySlots();
+
 function checkAbilityRequirements() {
-    if(!abilityUnlocks.hasOwnProperty(playerStats.class)){console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS "+ playerStats.class); return}
+    if (!abilityUnlocks.hasOwnProperty(playerStats.class)) { console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS " + playerStats.class); return }
     for (const [levelRequirement, abilities] of Object.entries(abilityUnlocks[playerStats.class])) {
         if (playerStats.level >= levelRequirement) {
             abilities.forEach(ability => {
@@ -560,8 +631,8 @@ function checkAbilityRequirements() {
 }
 
 function populateAbilityRequirements() {
-    if(!abilityUnlocks.hasOwnProperty(playerStats.class)){console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS "+ playerStats.class); return}
-    if(abilityRequirementsGrid.childElementCount > 2){
+    if (!abilityUnlocks.hasOwnProperty(playerStats.class)) { console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS " + playerStats.class); return }
+    if (abilityRequirementsGrid.childElementCount > 2) {
         while (abilityRequirementsGrid.childElementCount > 2) {
             abilityRequirementsGrid.removeChild(abilityRequirementsGrid.lastChild);
             //console.log("Removing ",abilityRequirementsGrid.lastChild);
@@ -572,12 +643,12 @@ function populateAbilityRequirements() {
         let abilities = abilityUnlocks[playerStats.class][levels[index]]
         let label = document.createElement("div");
         label.setAttribute("class", "pickle abilityPickContainerLabel");
-        label.style.gridRow = index+1;
+        label.style.gridRow = index + 1;
         label.innerHTML = "Level " + levels[index];
         abilityRequirementsGrid.append(label);
         let c = document.createElement("div");
         c.setAttribute("class", "abilityPickContainer");
-        c.style.gridRow = index+1;
+        c.style.gridRow = index + 1;
         abilityRequirementsGrid.append(c);
         for (let abilityN = 0; abilityN < abilities.length; abilityN++) {
             const ability = abilities[abilityN];
@@ -593,10 +664,10 @@ function populateAbilityRequirements() {
     }
 }
 
-function UpdateAbilityPreview(){
-    if(!abilityUnlocks.hasOwnProperty(playerStats.class)){console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS "+ playerStats.class); return}
+function UpdateAbilityPreview() {
+    if (!abilityUnlocks.hasOwnProperty(playerStats.class)) { console.error("ERROR: ABILITY UNLOCKS NOT DEFINED FOR CLASS " + playerStats.class); return }
     let levels = Object.keys(abilityUnlocks[playerStats.class]);
-    if(playerStats.level >= levels[levels.length - 1]){
+    if (playerStats.level >= levels[levels.length - 1]) {
         previewRowHeader.style.display = 'none';
         previewRowBody.style.display = 'none';
     } else {
@@ -605,26 +676,27 @@ function UpdateAbilityPreview(){
     }
     let previewIndex = 0;
     for (let index = 0; index < levels.length; index++) {
-        if(playerStats.level >= levels[index]){
+        if (playerStats.level >= levels[index]) {
             previewIndex = index;
         } else {
             break;
         }
     }
-    previewRowHeader.style.gridRow = `${previewIndex+2}/${previewIndex+3}`;
+    previewRowHeader.style.gridRow = `${previewIndex + 2}/${previewIndex + 3}`;
     previewRowHeader.style.gridColumn = "1/-1";
-    previewRowBody.style.gridRow = `${previewIndex+3}/${Math.max(previewIndex+3,levels.length+1)}`;
+    previewRowBody.style.gridRow = `${previewIndex + 3}/${Math.max(previewIndex + 3, levels.length + 1)}`;
     previewRowBody.style.gridColumn = `1/-1`;
 }
 
 let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 populatePassiveTree();
-function populatePassiveTree(){
+if(isOutdated){resetSkills();}
+function populatePassiveTree() {
     let i = 0;
     passiveTreeGrid.innerHTML = "";
     passiveButtonDict = {};
-    if(!skillLibrary.hasOwnProperty(playerStats.class)) {console.error("ERROR: CLASS PASSIVE TREE DOES NOT EXIST"); return;}
+    if (!skillLibrary.hasOwnProperty(playerStats.class)) { console.error("ERROR: CLASS PASSIVE TREE DOES NOT EXIST"); return; }
     Object.values(skillLibrary[playerStats.class]).forEach(skill => {
         let b = document.createElement("button");
         passiveButtonDict[skill.id] = b;
@@ -708,27 +780,61 @@ function changeAbilitySlot(slotN, internal = false) {
 }
 function generatePassiveTooltip(skill) {
     let numberDisplay = "";
-    switch (skill.effect.effectType) {
-        case "additiveFlat":
-            numberDisplay = "+" + skill.effect.effectMagnitude;
+    let effectText = "";
+    let requirementsText = "";
+    if(skill.hasOwnProperty("requires")){
+        requirementsText = "Requires:<br>"
+        for (const [key, value] of Object.entries(skill.requires)) {
+            requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`
+        }
+    }
+    switch (skill.effect.type) {
+        case 0:
+            effectText = `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span>`;
+            switch (skill.effect.effectType) {
+                case "additiveFlat":
+                    numberDisplay = "+" + skill.effect.effectMagnitude;
+                    break;
+                case "additivePercent":
+                    numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
+                    break;
+                case "multPercent":
+                    numberDisplay = "x" + skill.effect.effectMagnitude;
+                    break;
+                default:
+                    console.log("Undefined effect type");
+                    break;
+            }
             break;
-        case "additivePercent":
-            numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
-            break;
-        case "multPercent":
-            numberDisplay = "x" + skill.effect.effectMagnitude;
+        case 1:
+            effectText = `<span>${skill.effect.effectTarget}</span>`;
+            switch (skill.effect.effectType) {
+                case "additiveFlat":
+                    numberDisplay = "+" + skill.effect.effectMagnitude;
+                    break;
+                case "additivePercent":
+                    numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
+                    break;
+                case "multPercent":
+                    numberDisplay = "x" + skill.effect.effectMagnitude;
+                    break;
+                default:
+                    console.log("Undefined effect type");
+                    break;
+            }
             break;
         default:
-            console.log("Undefined effect type")
             break;
     }
+
     let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
     let costString = "";
     if (isNaN(cost)) { costString = "MAXED!" } else { costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points" };
-    return `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br />" +
-        skill.desc + "<br />" +
-        `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span> ${numberDisplay}` + "<br />" +
-        "Cost: " + costString;
+    return `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br><br>" +
+        skill.desc + "<br /><br>" +
+        `${effectText} ${numberDisplay}` + "<br><br>" +
+        "Cost: " + costString + "<br><br>"
+        + requirementsText;
 }
 function generateAbilityRequirementTooltip(ability) {
     const abilityData = playerMoves[ability];
@@ -749,9 +855,9 @@ function generateAbilityRequirementTooltip(ability) {
         //stringDisplay += `Damage: ${format(d*abilityData.damageRange[0])} - ${format(d*abilityData.damageRange[1])}<br />`
         stringDisplay += `Damage range: x${abilityData.damageRange[0]} - ${abilityData.damageRange[1]}<br />`
     }
-    
+
     stringDisplay += `Use time: ${format(abilityData.time / 1000)}s<br />`
-    if(abilityData.range[1] != abilityData.range[0]){
+    if (abilityData.range[1] != abilityData.range[0]) {
         stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br />`
     } else {
         stringDisplay += `Range: ${abilityData.range[0]}<br />`
@@ -771,7 +877,7 @@ function getPlayerPassiveLevel(skillId) {
 }
 
 
-
+//Passive skills
 function addSkill(skillId) {
     if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
         playerStats.unlockedSkills[skillId] = 1;
@@ -821,16 +927,37 @@ function setSkill(skillId, level) {
 
 function addEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
-        playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+    switch (skill.effect.type) {
+        //Passive attribute modifiers
+        case 0:
+            if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
+                playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+            }
+            if (skill.effect.effectType == 'multPercent') {
+                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+                    Math.pow(skill.effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
+            } else {
+                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+                    skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+            }
+            break;
+        //Secondary attribute modifiers -> regeneration, critical etc.
+        case 1:
+            if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
+                playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+            }
+            if (skill.effect.effectType == 'multPercent') {
+                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+                    Math.pow(skill.effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
+            } else {
+                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+                    skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+            }
+            break;
+        default:
+            break;
     }
-    if(skill.effect.effectType == 'multPercent'){
-        playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-            Math.pow(skill.effect.effectMagnitude,playerStats.unlockedSkills[skillId]);
-    } else {
-        playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-            skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
-    }
+
 }
 function removeEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
@@ -846,6 +973,15 @@ function removeEffect(skillId) {
 
 function checkSkillPurchase(skillId) {
     let cost = 0;
+    let skill = skillLibrary[playerStats.class][skillId];
+    if (skill.hasOwnProperty('requires')) {
+        for (const [key, value] of Object.entries(skill.requires)) {
+            if (playerStats.unlockedSkills[key] < value || playerStats.unlockedSkills[key] == undefined) {
+                logConsole(`Requirements are not met!`);
+                return false;
+            }
+        }
+    }
 
     if (playerStats.unlockedSkills.hasOwnProperty(skillId)) {
         let skill = skillLibrary[playerStats.class][skillId];
@@ -883,34 +1019,34 @@ function resetSkills() {
     }
 }
 
-function changeClass(className){
-    if(className == playerStats.class) return;
+function changeClass(className) {
+    if (className == playerStats.class) return;
     resetSkills();
     playerStats.class = className;
     populatePassiveTree();
     playerStats.level = 0;
     playerStats.experience = 0;
     addPlayerExp(0);
-    playerStats.experienceToNext = (baseExperienceCost + baseLinearExperieneCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+    playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
     playerStats.unlockedAbilities = {};
     populateAbilityRequirements();
     checkAbilityRequirements();
     for (let index = 0; index < slots.length; index++) {
-        if (index == 0){
-            playerStats.equippedAbilities[index+1] = abilityUnlocks[playerStats.class][0][0];
+        if (index == 0) {
+            playerStats.equippedAbilities[index + 1] = abilityUnlocks[playerStats.class][0][0];
         } else {
-            playerStats.equippedAbilities[index+1] = null;
+            playerStats.equippedAbilities[index + 1] = null;
         }
     }
     populateAbilitySlots();
-    if(className != 'human'){
-        playerStats.attributeSoftcaps = [10000,10000,10000,10000];
+    if (className != 'human') {
+        playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
         playerStats.strength = 10;
         playerStats.toughness = 10;
         playerStats.mind = 10;
         playerStats.agility = 10;
     } else {
-        playerStats.attributeSoftcaps = [100,100,100,100];
+        playerStats.attributeSoftcaps = [100, 100, 100, 100];
         playerStats.strength = 1;
         playerStats.toughness = 1;
         playerStats.mind = 1;

@@ -1,5 +1,5 @@
-const baseExperienceCost = 10;
-const baseLinearExperieneCost = 5;
+const baseExperienceCost = 5;
+const baseLinearExperienceCost = 5;
 const baseExperienceCostExponent = 1.07;
 const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;

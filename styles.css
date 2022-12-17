@@ -64,13 +64,13 @@ main {
 .pickle {
     font-family: 'Pickle Pushing', sans-serif;
     padding-left: 6px;
-    font-size: 20px;
+    font-size: 2vmin;
 }
 
 .oxanium {
     font-family: Oxanium, 'Pickle Pushing', sans-serif;
     padding-left: 6px;
-    font-size: 20px;
+    font-size: 2vmin;
 }
 
 .center {
@@ -94,7 +94,7 @@ main {
     width: 100%;
     height: 84vh;
     aspect-ratio: 1/1;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-auto-rows: 1fr;
     justify-items: center;
@@ -149,7 +149,6 @@ main {
     text-align: justify;
     display: block;
     font-family: Oxanium, 'Pickle Pushing', sans-serif;
-    font-size: 24px;
     font-weight: lighter;
 }
 
@@ -266,7 +265,7 @@ main {
 }
 .blockHeader {
     height:5%;
-    font-size: 32px;
+    font-size: 3.5vh;
     color: black;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
@@ -361,6 +360,7 @@ section:first-child div.blockHeader::before {
 }
 #diaryContainer{
     height: 50%;
+    width: 100%;
     display:grid;
     grid-template-rows: min-content 1fr;
 }
@@ -538,7 +538,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .statDisplay {
-    font-size: 1.5em;
+    font-size: 2.5vmin;
     text-transform: uppercase;
     text-align: left;
     padding-left: 6px;

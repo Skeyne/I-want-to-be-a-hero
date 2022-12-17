@@ -49,7 +49,7 @@
             <button class="bannerButton" onclick="load()">Load Game</button>
             <button class="bannerButton" onclick="exportGame()">Export</button>
             <button class="bannerButton" onclick="importGame()">Import</button>
-            <span class="pickle" style="float:right">v0.02 Alpha</span>
+            <span class="pickle" id="versionText" style="float:right">v0.02 Alpha</span>
             <button class="bannerButton" style="float:right" onclick="hardReset()">HARD RESET</button>
         </section>
 
@@ -77,8 +77,7 @@
             <div id="grid1">
                 <section class="infoBox" id="storyBox">
                     <div class="blockHeader pickle" style="display: block">STORY</div>
-                    <div class="blockBody dotted oxanium"
-                        style="padding: 10px; text-align: justify; display: block;font-size: 24px;">
+                    <div class="blockBody dotted oxanium" style="padding: 10px; text-align: justify;">
                         <div id="storyText" style="height:50%;"></div>
                         <div id="diaryContainer">
                             <div class="subHeader">Diary</div>
@@ -122,7 +121,7 @@
                         </div>
                         <div class="pickle subHeader">Attributes:</div>
                         <div id="statsGrid"
-                            style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em; margin-top:3em;  ">
+                            style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em;margin: 1vh 1vw 1vh 1vw;">
                             <div class="statDisplay pickle">
                                 Strength: <span class="strengthText" id="strengthText">0</span>
                             </div>
@@ -229,7 +228,7 @@
                 </section>
                 <section class="infoBox" id="helpBox">
                     <div class="blockHeader pickle" style="display: block">HELP</div>
-                    <div class="blockBody dotted" id="helpBody">
+                    <div class="blockBody dotted pickle" id="helpBody">
                         Your hero automatically uses his skills in combat.
                         <br \>
                         <br \><span class="pickle strengthText">STR</span>is the main component of damage in physical
@@ -252,7 +251,13 @@
                         <br \>
                         <br \>Attributes can be increased by training.
                         <br \>
-                        <br \>Get passive skills to further boost your attributes (they apply after softcaps!).
+                        <br \>Critical strike: chance to deal 50% more damage.
+                        <br \>
+                        <br \>Health regeneration: health regeneration per second in combat.
+                        <br \>
+                        <br \>Overwhelm: increases damage based on enemy current hp (higher hp = more damage).
+                        <br \>
+                        <br \>Takedown: increases damage based on enemy current hp (lower hp = more damage).
                     </div>
                 </section>
             </div>
