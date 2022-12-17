@@ -88,7 +88,17 @@ main {
     grid-auto-columns: 49vw;
     column-gap: 10vw;
 }
-
+#statsGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 1vh;
+    column-gap: 1vw;
+    margin: 1vh 1vw 1vh 1vw;
+}
+#resourceGrid{
+    margin: 1vh 1vw 1vh 1vw;
+}
 .gridSkills {
     display: grid;
     width: 100%;
@@ -212,7 +222,7 @@ main {
 }
 .barText {
     width: inherit;
-    font-size: 20px;
+    font-size: 2vh;
     color: black;
     box-sizing: border-box;
     padding: 5px 5px;
@@ -222,11 +232,6 @@ main {
     right: 0px;
     left: 0px;
 }
-
-#playerInitiativeText {
-    padding: 1px 5px;
-}
-
 .leftAlign {
     text-align: left;
 }
@@ -259,6 +264,8 @@ main {
     background-color: black;
     color: transparent;
     image-rendering: pixelated;
+    height: 8vh;
+    width: 8vh;
 }
 .abilitySlot option{
     color: whitesmoke;
@@ -329,7 +336,7 @@ section:first-child div.blockHeader::before {
 #abilityLoadoutContainer{
     border: 5px outset rgb(53, 53, 53);
     background: rgb(255 255 255 / 9%);
-    padding: 1em;
+    padding: 1vmin;
 }
 .evenFlex {
     display: flex;
@@ -385,7 +392,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #playerExperienceBar {
-    height: 30px;
+    height: 3vh;
     width: 100%;
     background-color: #eee;
     border-radius: 2px;
@@ -423,7 +430,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #playerHealthBar {
-    height: 30px;
+    height: 3vh;
     width: 100%;
     background-color: #eee;
     border-radius: 2px;
@@ -460,7 +467,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #playerInitiativeBar {
-    height: 22px;
+    height: 3vh;
     width: 100%;
     background-color: #eee;
     border-radius: 2px;
@@ -534,7 +541,7 @@ progress[value]::-webkit-progress-bar {
 #nextMove {
     text-align: center;
     margin-bottom: 1%;
-    padding: 25px;
+    padding: 2vh;
 }
 
 .statDisplay {

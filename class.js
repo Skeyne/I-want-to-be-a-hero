@@ -598,8 +598,6 @@ let slots = [];
 for (let index = 0; index < playerStats.abilitySlots; index++) {
     let slot = document.createElement("select");
     slot.setAttribute("class", "abilitySlot pickle");
-    slot.style.height = "4rem";
-    slot.style.width = "4rem";
     slots.push(slot);
     slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
     loadoutContainer.appendChild(slot);
