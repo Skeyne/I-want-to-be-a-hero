@@ -23,6 +23,7 @@ for (let index = 0; index < tabNames.length; index++){
 }
 changeTab(0);
 function changeTab(index){
+    if(index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left:index * leftWindow.clientWidth, behaviour: 'smooth', });
     document.getElementById(`${tabNames[activeTab]}TabButton`).setAttribute("class","sidebarButton pickle");
     document.getElementById(`${tabNames[index]}TabButton`).setAttribute("class","sidebarButton sidebarButtonActive pickle");
@@ -56,8 +57,8 @@ leftWindow.addEventListener("mouseover", function (event) {
 
 window.addEventListener("wheel", function (e) {
     if (!isMouseHover) return;
-    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + leftWindow.clientWidth, behaviour: 'smooth', });
-    else leftWindow.scroll({ left: leftWindow.scrollLeft - leftWindow.clientWidth, behaviour: 'smooth', });
+    if (e.deltaY > 0) changeTab(activeTab+1);
+    else changeTab(activeTab-1);;
 });
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
