@@ -8,6 +8,27 @@ cBuffer.height = 600;
 var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
+var leftWindow = document.getElementById("tabScrollWrapper");
+var tabNames = ['story','status','training','areas','abilities','skills','info'];
+var sidebar = document.getElementById('sidebar');
+let activeTab = 0;
+for (let index = 0; index < tabNames.length; index++){
+    const tabName = tabNames[index]
+    let b = document.createElement('button');
+    b.setAttribute("class","sidebarButton pickle");
+    b.setAttribute("id",`${tabName}TabButton`);
+    b.setAttribute("onclick",`changeTab(${index})`);
+    b.innerHTML = tabName;
+    sidebar.append(b);
+}
+changeTab(0);
+function changeTab(index){
+    leftWindow.scrollTo({ left:index * leftWindow.clientWidth, behaviour: 'smooth', });
+    document.getElementById(`${tabNames[activeTab]}TabButton`).setAttribute("class","sidebarButton pickle");
+    document.getElementById(`${tabNames[index]}TabButton`).setAttribute("class","sidebarButton sidebarButtonActive pickle");
+    activeTab = index;
+
+}
 var log = document.getElementById("logBox");
 var pageY = 0;
 function disableScroll() {
@@ -20,7 +41,7 @@ function disableScroll() {
 function enableScroll() {
     window.onscroll = function () { };
 }
-var leftWindow = document.getElementById("gridMain");
+
 let isMouseHover = false
 leftWindow.addEventListener("mouseleave", function (event) {
     pageY = 0;
@@ -35,8 +56,8 @@ leftWindow.addEventListener("mouseover", function (event) {
 
 window.addEventListener("wheel", function (e) {
     if (!isMouseHover) return;
-    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + leftWindow.clientWidth, behavious: 'smooth', });
-    else leftWindow.scroll({ left: leftWindow.scrollLeft - leftWindow.clientWidth, behavious: 'smooth', });
+    if (e.deltaY > 0) leftWindow.scroll({ left: leftWindow.scrollLeft + leftWindow.clientWidth, behaviour: 'smooth', });
+    else leftWindow.scroll({ left: leftWindow.scrollLeft - leftWindow.clientWidth, behaviour: 'smooth', });
 });
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";

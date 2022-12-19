@@ -67,14 +67,15 @@
     </header>
 
     <main>
+        <section id="sidebar" class = "blockPanel"></section>
         <section id="canvasLogWrap">
             <div id="canvasWrap">
                 <canvas id="myCanvas"></canvas>
             </div>
             <div id="logBox" class="logBox"></div>
         </section>
-        <div id="gridMain">
-            <div id="grid1">
+        <div id="tabScrollWrapper">
+            <div id="tabScrollGrid">
                 <section class="infoBox" id="storyBox">
                     <div class="blockHeader pickle" style="display: block">STORY</div>
                     <div class="blockBody dotted oxanium" style="padding: 10px; text-align: justify;">
@@ -89,7 +90,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="infoBox" id="combatBox">
+                <section class="infoBox" id="statusBox">
                     <div class="blockHeader pickle">STATUS</div>
                     <div class="blockBody dotted">
                         <div id="barWrap">
@@ -114,10 +115,11 @@
                         <div class="pickle subHeader">Resources:</div>
                         <div id="resourceGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr;">
-                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;"> Money: <span class="moneyText" style="font-size: 2.5vmin;"
-                                    id="moneyText">0</span></div>
-                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;"> Reputation: <span style="font-size: 2.5vmin;"
-                                    class="reputationText" id="reputationText">0</span></div>
+                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;"> Money: <span
+                                    class="moneyText" style="font-size: 2.5vmin;" id="moneyText">0</span></div>
+                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;"> Reputation: <span
+                                    style="font-size: 2.5vmin;" class="reputationText" id="reputationText">0</span>
+                            </div>
                         </div>
                         <div class="pickle subHeader">Attributes:</div>
                         <div id="statsGrid">

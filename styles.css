@@ -40,25 +40,28 @@ header input {
 
 main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 10% 1fr 1fr;
     grid-template-rows: 1fr;
     column-gap: 1vw;
     padding: 1vh 0.5vw 1vh 0.5vw;
     height: 98vh;
 }
 
-#gridMain {
+#tabScrollWrapper {
     grid-row: 1;
-    grid-column: 1;
+    grid-column: 2;
     height: 100%;
-    width: 49vw;
+    width: 100%vw;
     overflow-x: scroll;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 }
 
-#gridMain::-webkit-scrollbar {
+#tabScrollWrapper::-webkit-scrollbar {
     display: none;
+}
+#sidebar{
+    grid-column: 1;
 }
 
 .pickle {
@@ -81,12 +84,11 @@ main {
     font-size: 1.4rem;
 }
 
-#grid1 {
+#tabScrollGrid {
     display: grid;
     grid-template-rows: 98vh;
     grid-auto-rows: 98vh;
-    grid-auto-columns: 49vw;
-    column-gap: 10vw;
+    grid-auto-columns: 100%;
 }
 #statsGrid{
     display: grid;
@@ -127,7 +129,7 @@ main {
     grid-row: 1;
 }
 
-#combatBox {
+#statusBox {
     grid-row: 1;
 }
 
@@ -269,6 +271,33 @@ main {
 }
 .abilitySlot option{
     color: whitesmoke;
+}
+.sidebarButton {
+    height:min-content;
+    width: 100%;
+    font-size: 1.6vw;
+    color: black;
+    background-color: rgb(234, 177, 34);
+    box-sizing: border-box;
+    border: 5px outset goldenrod;
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0;
+}
+.sidebarButton:active {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    box-sizing: border-box;
+    border: 5px outset rgb(45, 45, 45);
+
+}
+.sidebarButtonActive {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    box-sizing: border-box;
+    border: 5px outset rgb(45, 45, 45);
+
 }
 .blockHeader {
     height:5%;
@@ -782,7 +811,7 @@ progress[value]::-webkit-progress-bar {
     display: grid;
     grid-template-rows: min-content auto;
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 3;
     row-gap: 1vh;
     position: sticky;
     top: 1vh;
@@ -965,7 +994,7 @@ progress[value]::-webkit-progress-bar {
         height: 196vh;
         top: 1vh;
     }
-    #grid1{
+    #tabScrollGrid{
         grid-auto-columns: 98vw;
     }
 
@@ -979,11 +1008,11 @@ progress[value]::-webkit-progress-bar {
         grid-template-rows: min-content 10rem;
     }
 
-    #gridMain {
+    #tabScrollWrapper {
         grid-row: 2;
         grid-column: 1;
         height: 100%;
-        width: 98vw;
+        width: 100%;
         overflow-y:hidden;
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
