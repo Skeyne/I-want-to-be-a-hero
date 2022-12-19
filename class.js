@@ -131,7 +131,7 @@ skillLibrary = {
             },
             maxLevel: 10,
             cost: Array(10).fill(1),
-            
+
         },
         'h_7': {
             id: 'h_7',
@@ -239,52 +239,54 @@ skillLibrary = {
         },
     },
     "superhuman": {
-        'sh_0': {
-            id: 'sh_0',
+        'sh_0_0': {
+            id: 'sh_0_0',
             name: 'Inhuman strength',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve ever been before',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "strength",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.02,
             },
-            maxLevel: 5,
-            cost: [1, 2, 2, 2, 3],
+            maxLevel: 50,
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(20).fill(3), Array(4).fill(5)),
         },
-        'sh_1': {
-            id: 'sh_1',
-            name: 'Inhuman strength',
+        'sh_0_1': {
+            id: 'sh_0_1',
+            name: 'Matter Over Mind',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve every been before',
             effect: {
                 type: 0, // attribute boost
                 effectTarget: "strength",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.5,
             },
-            maxLevel: 5,
-            cost: [1, 2, 2, 2, 3],
+            maxLevel: 3,
+            cost: [1, 10, 100],
+            requires: { 'sh_0_0': 10 }
         },
-        'sh_2': {
-            id: 'sh_2',
-            name: 'Inhuman strength',
+        'sh_0_2': {
+            id: 'sh_0_2',
+            name: 'Overwhelming strength',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve every been before',
             effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
+                type: 1, // attribute boost
+                effectTarget: "overwhelm",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectMagnitude: 0.5,
             },
-            maxLevel: 5,
-            cost: [1, 2, 2, 2, 3],
+            maxLevel: 1,
+            cost: [10],
+            requires: { 'sh_0_1': 2 }
         },
     },
     "esper": {
-        'es_0': {
-            id: 'es_0',
+        'es_0_0': {
+            id: 'es_0_0',
             name: 'Superior Intellect',
             iconName: 'studying',
             desc: 'Everything seems so simple',
@@ -295,10 +297,10 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             },
             maxLevel: 50,
-            cost: Array(10).fill(1).concat(Array(10).fill(5), Array(20).fill(5), Array(10).fill(50))
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(20).fill(3), Array(4).fill(5)),
         },
-        'es_1': {
-            id: 'es_1',
+        'es_0_1': {
+            id: 'es_0_1',
             name: 'Master of the Mind',
             iconName: 'studying',
             desc: 'Nothing in this world is infinite except for your intellect.',
@@ -310,9 +312,25 @@ skillLibrary = {
             },
             maxLevel: 3,
             cost: [1, 10, 100],
+            requires: { 'es_0_0': 10 }
         },
-        'es_2': {
-            id: 'es_2',
+        'es_0_2': {
+            id: 'es_0_2',
+            name: 'Divergence',
+            iconName: 'studying',
+            desc: 'As your foes get weaker you get stronger',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "takedown",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.5,
+            },
+            maxLevel: 1,
+            cost: [10],
+            requires: { 'es_0_1': 2 }
+        },
+        'es_1_0': {
+            id: 'es_1_0',
             name: 'Psionic acceleration',
             iconName: 'shadowB',
             desc: 'A quick mind needs a quick body',
@@ -320,7 +338,7 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.01,
+                effectMagnitude: 0.02,
             },
             maxLevel: 100,
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5), Array(10).fill(6)
@@ -415,6 +433,81 @@ skillLibrary = {
             cost: [1, 2, 2, 2, 3],
         },
     },
+    "ninja": {
+        'ni_0_0': {
+            id: 'ni_0_0',
+            name: 'Unnatural Speed',
+            iconName: 'shadowB',
+            desc: 'The whole world seems one muscle twitch away.',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.02,
+            },
+            maxLevel: 50,
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(20).fill(3), Array(4).fill(5)),
+        },
+        'ni_0_1': {
+            id: 'ni_0_1',
+            name: 'Feline Agility',
+            iconName: 'studying',
+            desc: 'The faster you go the faster you get.',
+            effect: {
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.5,
+            },
+            maxLevel: 3,
+            cost: [1, 10, 100],
+            requires: { 'ni_0_0': 10 }
+        },
+        'ni_0_2': {
+            id: 'ni_0_2',
+            name: 'Prenatural Reflexes',
+            iconName: 'shadowB',
+            desc: 'Your body moves out of danger before you even know it',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "dodgeChance",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 1,
+            cost: [10],
+            requires: { 'ni_0_1': 2 }
+        },
+        'ni_1_0': {
+            id: 'ni_1_0',
+            name: 'Deadly',
+            iconName: 'shadowB',
+            desc: 'PLACEHOLDER',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "criticalChance",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.02,
+            },
+            maxLevel: 100,
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5), Array(10).fill(6)
+                , Array(10).fill(7), Array(10).fill(8), Array(10).fill(9), Array(10).fill(10))
+        },
+        'ni_2_0': {
+            id: 'ni_2_0',
+            name: 'Agility Training Boost',
+            iconName: 'shadowB',
+            desc: 'PLACEHOLDER',
+            effect: {
+                type: 2, // training boost
+                effectTarget: "agilityTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 5,
+            cost: [5, 10, 20, 40, 80],
+        },
+    },
 }
 playerMoves = {
     'punch': {
@@ -429,6 +522,33 @@ playerMoves = {
         time: 3000,
         cooldownTime: 0,
         range: [5, 5],
+    },
+    //NINJA
+    'katana': {
+        type: 0,
+        category: 'melee',
+        name: "Katana",
+        description: "A ninja's weapon (?).",
+        iconName: "throwingKnife",
+        damage: 1,
+        damageRatios: [.2, 0, 0, 1],
+        damageRange: [0.8, 1.2],
+        time: 2000,
+        cooldownTime: 0,
+        range: [5, 5],
+    },
+    'shadowStrike': {
+        type: 0,
+        category: 'melee',
+        name: "Shadow Strike",
+        description: "Instantly appear near you enemy and strike them before reappearing at your position.",
+        iconName: "jab",
+        damage: 1,
+        damageRatios: [0, 0, 0.3, 3],
+        damageRange: [1, 1.2],
+        time: 2000,
+        cooldownTime: 10000,
+        range: [50, 50],
     },
     'kick': {
         type: 0,
@@ -550,6 +670,22 @@ playerMoves = {
         cooldownTime: 10000,
         range: [20, 20],
     },
+    'titanicSwing': {
+        type: 0,
+        category: 'melee',
+        name: "Titanic Swing",
+        description: "NOT YET IMPLEMENTED.",
+        iconName: "smash",
+        damage: 1,
+        damageRatios: [6, 0, 0, 0],
+        damageRange: [1, 1.2],
+        effects: {
+            'knockback': 20,
+        },
+        time: 5000,
+        cooldownTime: 20000,
+        range: [10, 10],
+    },
     'walk': {
         type: 1,
         category: 'movement',
@@ -571,6 +707,7 @@ abilityUnlocks = {
     },
     'superhuman': {
         0: ['punch'],
+        10: ['titanicSwing']
     },
     'mutant': {
         0: ['punch'],
@@ -580,7 +717,8 @@ abilityUnlocks = {
         10: ['telekineticProjectile', 'psionicPulse'],
     },
     'ninja': {
-        0: ['punch'],
+        0: ['punch', 'katana'],
+        10: ['shadowStrike']
     },
     'cyborg': {
         0: ['punch'],
@@ -689,7 +827,7 @@ function UpdateAbilityPreview() {
 let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 populatePassiveTree();
-if(isOutdated){resetSkills();}
+if (isOutdated) { resetSkills(); }
 function populatePassiveTree() {
     let i = 0;
     passiveTreeGrid.innerHTML = "";
@@ -780,9 +918,10 @@ function generatePassiveTooltip(skill) {
     let numberDisplay = "";
     let effectText = "";
     let requirementsText = "";
-    if(skill.hasOwnProperty("requires")){
+    if (skill.hasOwnProperty("requires")) {
         requirementsText = "Requires:<br>"
         for (const [key, value] of Object.entries(skill.requires)) {
+            console.log(key)
             requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`
         }
     }
@@ -806,6 +945,24 @@ function generatePassiveTooltip(skill) {
             break;
         case 1:
             effectText = `<span>${skill.effect.effectTarget}</span>`;
+            switch (skill.effect.effectType) {
+                case "additiveFlat":
+                    numberDisplay = "+" + skill.effect.effectMagnitude;
+                    break;
+                case "additivePercent":
+                    numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
+                    break;
+                case "multPercent":
+                    numberDisplay = "x" + skill.effect.effectMagnitude;
+                    break;
+                default:
+                    console.log("Undefined effect type");
+                    break;
+            }
+            break;
+        case 2:
+            let attribute = skill.effect.effectTarget.substr(0,skill.effect.effectTarget.length-8);
+            effectText = `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
             switch (skill.effect.effectType) {
                 case "additiveFlat":
                     numberDisplay = "+" + skill.effect.effectMagnitude;
@@ -952,7 +1109,20 @@ function addEffect(skillId) {
                     skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
             }
             break;
+        case 2:
+            if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
+                playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+            }
+            if (skill.effect.effectType == 'multPercent') {
+                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+                    Math.pow(skill.effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
+            } else {
+                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
+                    skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+            }
+            break;
         default:
+            console.error("UNKOWN SKILL EFFECT TYPE");
             break;
     }
 

@@ -14,10 +14,12 @@ const cleanPlayerStats = {
     mind: 0,
     agility: 0,
     attributeSoftcaps: [100, 100, 100, 100],
+    attributeTrainingModifier: [1, 1, 1, 1],
     healthRegeneration: 0,
     criticalChance: 0,
     overwhelm: 0,
     takedown: 0,
+    dodgeChance: 0,
     restRate: 0.1,
     lastSave: 0,
     muted: false,
@@ -61,6 +63,15 @@ function getSecondaryAttribute(property) {
         return 0;
     }
     let baseValue = playerStats[property];
+    if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
+    return (baseValue
+        + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
+        * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
+        * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
+}
+function getTrainingModifier(attributeName) {
+    let baseValue = playerStats.attributeTrainingModifier[attributeIdToIndex[attributeName]];
+    let property = attributeName + "Training";
     if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
     return (baseValue
         + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))

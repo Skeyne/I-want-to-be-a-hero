@@ -159,7 +159,7 @@ enemyData.experiment999 = {
 enemyData.experiment9999 = {
     id:"experiment9999",
     name: "Expriment #9999",
-    maxHealth: 10000,
+    maxHealth: 5000,
     attributes: [5000,2000,100,500],
     healthRegen: 0.005,
     expReward: 2500,

@@ -54,7 +54,7 @@ const storyQuests = [
         text: `That guy had a freakin' crowbar. Back to the training board.`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`, 'mind',`agility`],
-        requirementAmount: [7,7,7,7],
+        requirementAmount: [5,5,5,5],
     },
     
     {

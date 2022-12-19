@@ -120,6 +120,7 @@ class Player extends CombatEntity {
         this.criticalChance = getSecondaryAttribute("criticalChance");
         this.overwhelm = getSecondaryAttribute("overwhelm");
         this.takedown = getSecondaryAttribute("takedown");
+        this.dodgeChance = getSecondaryAttribute("dodgeChance");
         this.cooldownReduction = formulas.cooldownReduction(getEffectiveValue("mind"));
         this.moveIntention = 1;
         this.nextMoveKey = null;
@@ -267,6 +268,15 @@ class Player extends CombatEntity {
     }
     rest() {
         this.health = Math.min(this.health + this.maxHealth * this.data.restRate * logicTickTime / 1000, this.maxHealth);
+    }
+    takeDamage(amount) {
+        let d = amount * this.damageReduction;
+        if(this.dodgeChance > Math.random()){
+            logConsole(`${this.name} dodged ${format(amount)} damage!`)
+            return 0;
+        }
+        this.health -= d;
+        return d;
     }
 }
 class Enemy extends CombatEntity {

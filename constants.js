@@ -5,7 +5,7 @@ const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
 const COOLDOWN_BASE = 0.04;
 const PLAYER_BASE_HEALTH = 5;
-const HEALTH_GROWTH_EXPONENT = 1.12;
+const HEALTH_GROWTH_EXPONENT = 0.65;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
 const TRAINING_COST_GROWTH_BASE = 1.55;
 const PLAYER_CLASSES = ["human","superhuman","mutant","ninja","esper","cyborg"];
@@ -58,7 +58,8 @@ formulas.damageReduction = function (value) {
     return Math.pow(1 - DAMAGE_REDUCTION_BASE, Math.log10(1 + value));
 }
 formulas.maxHealth = function (value) {
-    return Math.pow(value, HEALTH_GROWTH_EXPONENT);
+    if(value < 100) return 5*Math.pow(value, HEALTH_GROWTH_EXPONENT);
+    return 10*Math.pow(value, HEALTH_GROWTH_EXPONENT);
 }
 formulas.softcappedAttribute = function (index){
     let baseValue = playerStats[attributeIndexToId[index]];

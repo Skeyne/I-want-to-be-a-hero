@@ -29,7 +29,7 @@ class TrainingArea {
         }
     }
     reward() {
-        let reward = this.base * Math.pow(TRAINING_REWARD_GROWTH_BASE,playerStats.trainingAreaLevels[this.name]);
+        let reward = this.Reward * getTrainingModifier(this.attribute);
         playerStats[this.attribute] += reward;
         checkTrainingQuest();
         updateTrainingCanBuy();
