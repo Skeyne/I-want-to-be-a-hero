@@ -344,6 +344,20 @@ skillLibrary = {
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5), Array(10).fill(6)
                 , Array(10).fill(7), Array(10).fill(8), Array(10).fill(9), Array(10).fill(10))
         },
+        'es_2_0': {
+            id: 'es_2_0',
+            name: 'Mind Training Boost',
+            iconName: 'studying',
+            desc: 'PLACEHOLDER',
+            effect: {
+                type: 2, // training boost
+                effectTarget: "mindTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 5,
+            cost: [5, 10, 20, 40, 80],
+        },
     },
     "mutant": {
         'mu_0': {
