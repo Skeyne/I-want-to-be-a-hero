@@ -9,24 +9,24 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story','status','training','areas','abilities','skills','info'];
+var tabNames = ['story', 'status', 'training', 'areas', 'abilities', 'skills', 'info'];
 var sidebar = document.getElementById('sidebar');
 let activeTab = 0;
-for (let index = 0; index < tabNames.length; index++){
+for (let index = 0; index < tabNames.length; index++) {
     const tabName = tabNames[index]
     let b = document.createElement('button');
-    b.setAttribute("class","sidebarButton pickle");
-    b.setAttribute("id",`${tabName}TabButton`);
-    b.setAttribute("onclick",`changeTab(${index})`);
+    b.setAttribute("class", "sidebarButton pickle");
+    b.setAttribute("id", `${tabName}TabButton`);
+    b.setAttribute("onclick", `changeTab(${index})`);
     b.innerHTML = tabName;
     sidebar.append(b);
 }
 changeTab(0);
-function changeTab(index){
-    if(index < 0 || index >= tabNames.length) return;
-    leftWindow.scrollTo({ left:index * leftWindow.clientWidth, behaviour: 'smooth', });
-    document.getElementById(`${tabNames[activeTab]}TabButton`).setAttribute("class","sidebarButton pickle");
-    document.getElementById(`${tabNames[index]}TabButton`).setAttribute("class","sidebarButton sidebarButtonActive pickle");
+function changeTab(index) {
+    if (index < 0 || index >= tabNames.length) return;
+    leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
+    document.getElementById(`${tabNames[activeTab]}TabButton`).setAttribute("class", "sidebarButton pickle");
+    document.getElementById(`${tabNames[index]}TabButton`).setAttribute("class", "sidebarButton sidebarButtonActive pickle");
     activeTab = index;
 
 }
@@ -57,8 +57,8 @@ leftWindow.addEventListener("mouseover", function (event) {
 
 window.addEventListener("wheel", function (e) {
     if (!isMouseHover) return;
-    if (e.deltaY > 0) changeTab(activeTab+1);
-    else changeTab(activeTab-1);;
+    if (e.deltaY > 0) changeTab(activeTab + 1);
+    else changeTab(activeTab - 1);;
 });
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
@@ -83,14 +83,17 @@ class CombatEntity {
     takeDamage(amount) {
         let d = amount * this.damageReduction;
         this.health -= d;
-        return d;
+        let died = (this.health <= 0);
+        if (died) {
+            this.onDeath();
+        }
+        return { died, d };
     }
     onDeath() {
         return;
     }
     tick() {
         if (this.health <= 0) {
-            this.onDeath();
             return false;
         } else {
             this.health = Math.min(this.health + this.maxHealth * this.healthRegeneration * logicTickTime / 1000, this.maxHealth);
@@ -190,24 +193,44 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
-                    let d3 = d2 * (1 + target.health/target.maxHealth * this.overwhelm) * (1 + (1 - target.health/target.maxHealth) * this.takedown);
+                    let d3 = d2 * (1 + target.health / target.maxHealth * this.overwhelm) * (1 + (1 - target.health / target.maxHealth) * this.takedown);
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
                                 case "knockback":
                                     target.distance += this.nextMove.effects[effect];
                                     break;
-
+                                case "aoe":
+                                    encounter.enemyArray.forEach(enemy=>{
+                                        if(enemy == null) return;
+                                        if(enemy == target) return;
+                                        let originDistance;
+                                        switch (this.nextMove.category) {
+                                            case "melee":
+                                                originDistance = this.distance;
+                                                break;
+                                            case "ranged":
+                                                originDistance = target.distance;
+                                                break;
+                                            default:
+                                                console.error("SKILL CATEGORY NOT COMPATIBLE WITH AOE");
+                                                break;
+                                        }
+                                        if(Math.abs(originDistance-enemy.distance)<=this.nextMove.effects[effect])
+                                        {let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
+                                        logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
+                                        }
+                                    })
+                                    break;
                                 default:
                                     console.error("ERROR UNKOWN SKILL EFFECT");
                                     break;
                             }
                         });
                     }
-                    let dr = target.takeDamage(d3);
-                    logConsole(`Hero ${isCrit? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
-                } else {
-
+                    let { died: killingBlow, d: dr } = target.takeDamage(d3);
+                    logConsole(`Hero ${isCrit ? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
+                    if (killingBlow) this.target = null;
                 }
                 break;
             case 1:
@@ -230,8 +253,32 @@ class Player extends CombatEntity {
     }
     think() {
         if (this.target == null) {
-            document.getElementById("playerMoveText").innerHTML = "No target";
-            return;
+            switch (gameState) {
+                case "InCombat":
+                    let closest = -1;
+                    let distance = Infinity;
+                    for (let index = 0; index < encounter.enemyArray.length; index++) {
+                        const enemy = encounter.enemyArray[index];
+                        if (enemy == null || enemy.health <= 0) { continue }
+                        else {
+                            if (enemy.distance < distance) {
+                                distance = enemy.distance;
+                                closest = index;
+                            }
+                        }
+                    }
+                    if (closest != -1) { this.target = encounter.enemyArray[closest];}
+                    else {
+                        document.getElementById("playerMoveText").innerHTML = "No target (IN COMBAT)";
+                        return;
+                    }
+                    break;
+                default:
+                    document.getElementById("playerMoveText").innerHTML = "No target";
+                    return;
+                    break;
+            }
+
         }
         let dist = this.target.distance;
         if (dist > 5) this.moveIntention = 1; else this.moveIntention = -1;
@@ -293,7 +340,7 @@ class Player extends CombatEntity {
     }
     takeDamage(amount) {
         let d = amount * this.damageReduction;
-        if(this.dodgeChance > Math.random()){
+        if (this.dodgeChance > Math.random()) {
             logConsole(`${this.name} dodged ${format(amount)} damage!`)
             return 0;
         }
@@ -302,7 +349,7 @@ class Player extends CombatEntity {
     }
 }
 class Enemy extends CombatEntity {
-    constructor(enemyData, distance) {
+    constructor(enemyData, distance, drawIndex = 0) {
         super();
         this.data = enemyData;
         this.abilityCooldowns = {};
@@ -310,6 +357,7 @@ class Enemy extends CombatEntity {
             this.abilityCooldowns[ability] = 0;
         });
         this.name = enemyData.name;
+        this.drawIndex = drawIndex;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
         this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
@@ -395,7 +443,7 @@ class Enemy extends CombatEntity {
     }
     draw(context) {
         let canvasX = scaleDistance(this.distance);
-        let canvasY = cBuffer.height - 40;
+        let canvasY = cBuffer.height - 40 - (this.drawIndex) * 10;
 
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
@@ -410,16 +458,20 @@ class Enemy extends CombatEntity {
     }
 }
 class Encounter {
-    constructor(area, enemyNum) {
+    constructor(area) {
         this.enemyArray = [];
-        this.enemiesToSpawn = enemyNum;
+        this.enemiesToSpawn = area.getEnemies();
         let lastHealth = player.health
         this.area = area;
         player = new Player(playerStats);
         if (lastHealth > 0) { player.health = lastHealth; }
-        for (let index = 0; index < this.enemiesToSpawn; index++) {
-            let picked = Math.floor(Math.random() * this.area.enemies.length);
-            this.enemyArray.push(new Enemy(enemyData[this.area.enemies[picked]], Math.round(5 * Math.random()) * 10 + 50));
+        for (let index = 0; index < this.enemiesToSpawn.length; index++) {
+            //let picked = Math.floor(Math.random() * this.area.enemies.length);
+            let picked = this.enemiesToSpawn[index];
+            let drawIndex = mod(index, 2) == 0 ? Math.floor(index / 2) : -Math.floor(index + 1 / 2);
+            //let newEnemy = new Enemy(enemyData[this.area.enemies[picked]], Math.round(5 * Math.random()) * 10 + 50, drawIndex = drawIndex);
+            let newEnemy = new Enemy(enemyData[picked], Math.round(5 * Math.random()) * 10 + 50, drawIndex = drawIndex);
+            this.enemyArray.push(newEnemy);
             this.enemyArray[index].setTarget(player);
         }
         player.setTarget(this.enemyArray[0]);
@@ -546,7 +598,7 @@ function renderLoop() {
         let effectiveValue = format(getEffectiveValue(attributeName))
         let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]));
         let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]];
-        let softCapText = (baseAttributeValue > softCap)?`EFFECTIVE BASE: ${softCappedValue}`:`${softCappedValue}`;
+        let softCapText = (baseAttributeValue > softCap) ? `EFFECTIVE BASE: ${softCappedValue}` : `${softCappedValue}`;
         if (baseAttributeValue > softCap) {
             softCapText += `<br>(RAW: ${format(baseAttributeValue)})`
             softCapText += `<br>[SOFTCAP: ${softCap}]`;
@@ -594,7 +646,7 @@ function logicLoop() {
                     player.tick();
                     break;
                 case 1:
-                    encounter = new Encounter(currentArea, 1);
+                    encounter = new Encounter(currentArea, currentArea.enemyNum);
                     gameState = "InCombat";
                     logConsole("Entering combat.")
                     break;
@@ -692,7 +744,7 @@ function changeArea(index) {
     playerStats.currentArea = index;
     currentArea = areas[playerStats.currentArea];
     currentArea.patrolCounter = 0;
-    if(gameState != "InRest"){
+    if (gameState != "InRest") {
         gameState = "InPatrol";
     }
     player.target = null;
