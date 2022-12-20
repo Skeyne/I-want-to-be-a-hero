@@ -251,7 +251,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             },
             maxLevel: 50,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(20).fill(3), Array(4).fill(5)),
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4),Array(10).fill(5)),
         },
         'sh_0_1': {
             id: 'sh_0_1',
@@ -283,6 +283,20 @@ skillLibrary = {
             cost: [10],
             requires: { 'sh_0_1': 2 }
         },
+        'sh_2_0': {
+            id: 'sh_2_0',
+            name: 'Strength Training Boost',
+            iconName: 'calisthenics',
+            desc: 'PLACEHOLDER',
+            effect: {
+                type: 2, // training boost
+                effectTarget: "strengthTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.2,
+            },
+            maxLevel: 5,
+            cost: [5, 10, 20, 40, 80],
+        },
     },
     "esper": {
         'es_0_0': {
@@ -297,7 +311,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             },
             maxLevel: 50,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(20).fill(3), Array(4).fill(5)),
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4),Array(10).fill(5)),
         },
         'es_0_1': {
             id: 'es_0_1',
@@ -460,7 +474,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             },
             maxLevel: 50,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(20).fill(3), Array(4).fill(5)),
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4),Array(10).fill(5)),
         },
         'ni_0_1': {
             id: 'ni_0_1',
@@ -537,33 +551,7 @@ playerMoves = {
         cooldownTime: 0,
         range: [5, 5],
     },
-    //NINJA
-    'katana': {
-        type: 0,
-        category: 'melee',
-        name: "Katana",
-        description: "A ninja's weapon (?).",
-        iconName: "throwingKnife",
-        damage: 1,
-        damageRatios: [.2, 0, 0, 1],
-        damageRange: [0.8, 1.2],
-        time: 2000,
-        cooldownTime: 0,
-        range: [5, 5],
-    },
-    'shadowStrike': {
-        type: 0,
-        category: 'melee',
-        name: "Shadow Strike",
-        description: "Instantly appear near you enemy and strike them before reappearing at your position.",
-        iconName: "jab",
-        damage: 1,
-        damageRatios: [0, 0, 0.3, 3],
-        damageRange: [1, 1.2],
-        time: 2000,
-        cooldownTime: 10000,
-        range: [50, 50],
-    },
+
     'kick': {
         type: 0,
         category: 'melee',
@@ -645,6 +633,7 @@ playerMoves = {
         cooldownTime: 9000,
         range: [0, 30],
     },
+    //Esper
     'spiritFist': {
         type: 0,
         category: 'melee',
@@ -665,11 +654,11 @@ playerMoves = {
         description: "Use your psionic powers to thrust nearby matter towards your enemy.",
         iconName: "telekineticProjectile",
         damage: 1,
-        damageRatios: [0, 0, 2, 0],
+        damageRatios: [0, 0, 1.8, 0],
         damageRange: [0.8, 1.1],
         time: 3000,
         cooldownTime: 5000,
-        range: [20, 60],
+        range: [0, 60],
     },
     'psionicPulse': {
         type: 0,
@@ -682,21 +671,64 @@ playerMoves = {
         damageRange: [1, 1.2],
         effects: {
             'knockback': 20,
-            'aoe':20,
+            'aoe': 20,
         },
         time: 3000,
         cooldownTime: 10000,
         range: [20, 20],
     },
+    'psionicBarrier': {
+        type: 2,
+        category: 'ranged',
+        name: "Psionic Barrier",
+        description: "Form a temporary barrier to block attacks.",
+        iconName: "placeholder",
+        damage: 0,
+        damageRatios: [0, 0, 0.1, 0],
+        damageRange: [1, 1],
+        effects: {
+            'shield': 0,
+        },
+        time: 3000,
+        cooldownTime: 12000,
+        range: [0,0],
+    },
+    //Superhuman
+    'simplePunch': {
+        type: 0,
+        category: 'melee',
+        name: "Simple Punch",
+        description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one punch 10,000 times.",
+        iconName: "punch",
+        damage: 1,
+        damageRatios: [1.5, 0, 0, 0],
+        damageRange: [0.8, 1.2],
+        time: 3000,
+        cooldownTime: 0,
+        range: [5, 5],
+    },
+    'multipleSimplePunches': {
+        type: 0,
+        category: 'melee',
+        name: "Multiple Simple Punches",
+        description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one 10,000 punches, 10,000 times.",
+        iconName: "punch",
+        damage: 1,
+        damageRatios: [.6, 0, 0, .5],
+        damageRange: [0.8, 1.2],
+        time: 1000,
+        cooldownTime: 1000,
+        range: [5, 5],
+    },
     'titanicSwing': {
         type: 0,
         category: 'melee',
         name: "Titanic Swing",
-        description: "NOT YET IMPLEMENTED.",
+        description: "Wind up to deliver the greatest blow your body allows",
         iconName: "smash",
         damage: 1,
-        damageRatios: [6, 0, 0, 0],
-        damageRange: [1, 1.2],
+        damageRatios: [5, 1, 0, 0],
+        damageRange: [1, 1.5],
         effects: {
             'knockback': 20,
         },
@@ -704,16 +736,114 @@ playerMoves = {
         cooldownTime: 20000,
         range: [10, 10],
     },
+    'airCannon': {
+        type: 0,
+        category: 'ranged',
+        name: "Air Cannon",
+        description: "You punch the air so hard that a shockwave is launched towards the enemy",
+        iconName: "jab",
+        damage: 1,
+        damageRatios: [1, 0, 0, 0],
+        damageRange: [1, 1],
+        effects: {
+            'aoe': 5,
+            'knockback': 5
+        },
+        time: 3000,
+        cooldownTime: 5000,
+        range: [5, 50],
+    },
+    'secondWind': {
+        type: 2,
+        category: 'ranged',
+        name: "Second Wind",
+        description: "Take a few breaths and let your supernatural constitution catch up.",
+        iconName: "placeholder",
+        damage: 0,
+        damageRatios: [0.1, 1, 0, 0],
+        damageRange: [1, 1],
+        effects: {
+            'heal': 0,
+        },
+        time: 3000,
+        cooldownTime: 12000,
+        range: [0,0],
+    },
+    //NINJA
+    'katana': {
+        type: 0,
+        category: 'melee',
+        name: "Katana",
+        description: "A ninja's weapon (?).",
+        iconName: "throwingKnife",
+        damage: 1,
+        damageRatios: [.2, 0, 0, 1],
+        damageRange: [0.8, 1.2],
+        time: 2000,
+        cooldownTime: 0,
+        range: [5, 5],
+    },
+    'shadowStrike': {
+        type: 0,
+        category: 'melee',
+        name: "Shadow Strike",
+        description: "Instantly appear near you enemy and strike them before reappearing at your position.",
+        iconName: "jab",
+        damage: 1,
+        damageRatios: [0, 0, 0.3, 3],
+        damageRange: [1, 1.2],
+        time: 2000,
+        cooldownTime: 10000,
+        range: [50, 50],
+    },
+    'shuriken': {
+        type: 0,
+        category: 'ranged',
+        name: "Shuriken",
+        description: "Launch a number of shuriken at your foes.",
+        iconName: "throwingKnife",
+        damage: 1,
+        damageRatios: [0, 0, 0.1, .3],
+        damageRange: [1, 1.1],
+        effects: {
+            'aoe': 5,
+        },
+        time: 500,
+        cooldownTime: 500,
+        range: [10, 50],
+    },
+    'flashStep': {
+        type: 1,
+        category: 'movement',
+        name: "Flash Step",
+        description: "PLACHOLDER",
+        iconName: "move",
+        damage: 0,
+        time: 500,
+        cooldownTime: 5000,
+        range: [20,20],
+    },
     'walk': {
         type: 1,
         category: 'movement',
-        name: "move",
+        name: "Move",
         description: "1. 2. 1. 2.",
         iconName: "move",
         damage: 0,
         time: 1000,
         cooldownTime: 0,
-        range: 5,
+        range: [5,5],
+    },
+    'wait': {
+        type: 1,
+        category: 'movement',
+        name: "Wait",
+        description: "Got nothing to do.",
+        iconName: "placeholder",
+        damage: 0,
+        time: 1000,
+        cooldownTime: 0,
+        range: [0,0],
     }
 }
 abilityUnlocks = {
@@ -724,8 +854,9 @@ abilityUnlocks = {
         15: ['crowbar', 'throwingKnife'],
     },
     'superhuman': {
-        0: ['punch'],
-        10: ['titanicSwing']
+        0: ['simplePunch'],
+        10: ['titanicSwing', 'multipleSimplePunches'],
+        25: ['airCannon','secondWind'],
     },
     'mutant': {
         0: ['punch'],
@@ -733,10 +864,12 @@ abilityUnlocks = {
     'esper': {
         0: ['spiritFist'],
         10: ['telekineticProjectile', 'psionicPulse'],
+        25: ['psionicBarrier']
     },
     'ninja': {
-        0: ['punch', 'katana'],
-        10: ['shadowStrike']
+        0: ['katana'],
+        10: ['shadowStrike','shuriken'],
+        25:['flashStep']
     },
     'cyborg': {
         0: ['punch'],
@@ -881,6 +1014,7 @@ function populateAbilitySlots() {
     for (let slotN = 0; slotN < slots.length; slotN++) {
         const element = slots[slotN];
         element.innerHTML = "";
+        element.style.backgroundImage = "none";
         let noOption = document.createElement("option");
         noOption.innerHTML = "None";
         noOption.value = null;
@@ -979,7 +1113,7 @@ function generatePassiveTooltip(skill) {
             }
             break;
         case 2:
-            let attribute = skill.effect.effectTarget.substr(0,skill.effect.effectTarget.length-8);
+            let attribute = skill.effect.effectTarget.substr(0, skill.effect.effectTarget.length - 8);
             effectText = `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
             switch (skill.effect.effectType) {
                 case "additiveFlat":
@@ -1014,21 +1148,41 @@ function generateAbilityRequirementTooltip(ability) {
     let stringDisplay = "";
     stringDisplay += abilityData.name + "<br />";
     stringDisplay += abilityData.description + "<br />";
-    if (abilityData.type == 0) {
+    switch (abilityData.type) {
+        case 0:
+            stringDisplay += "Ratios:" + "<br />";
+            for (let attributeRatio = 0; attributeRatio < abilityData.damageRatios.length; attributeRatio++) {
+                let ratio = abilityData.damageRatios[attributeRatio] * 100;
+                if (ratio == 0) continue;
+                let attributeId = attributeIndexToId[attributeRatio];
+                stringDisplay += `${ratio}% <span class="${attributeId}Text">${attributeDisplayShort[attributeId]}</span><br />`;
+            }
+            stringDisplay += `Damage range: x${abilityData.damageRange[0]} - ${abilityData.damageRange[1]}<br />`
+            if(abilityData.hasOwnProperty("effects")){
+                stringDisplay += "Effects:<br>"
+                Object.keys(abilityData.effects).forEach(effect => {
+                    stringDisplay +=  `${effect}: ${abilityData.effects[effect]}<br>`;
+                })
+            }
+            break;
+    case 2:
         stringDisplay += "Ratios:" + "<br />";
         for (let attributeRatio = 0; attributeRatio < abilityData.damageRatios.length; attributeRatio++) {
             let ratio = abilityData.damageRatios[attributeRatio] * 100;
             if (ratio == 0) continue;
             let attributeId = attributeIndexToId[attributeRatio];
-            let attributeName = attributeDisplayNames[attributeRatio];
             stringDisplay += `${ratio}% <span class="${attributeId}Text">${attributeDisplayShort[attributeId]}</span><br />`;
         }
-        //let d = getMoveBasePower(abilityData);
-        //For dynamic tooltips later
-        //stringDisplay += `Damage: ${format(d*abilityData.damageRange[0])} - ${format(d*abilityData.damageRange[1])}<br />`
-        stringDisplay += `Damage range: x${abilityData.damageRange[0]} - ${abilityData.damageRange[1]}<br />`
+        if(abilityData.hasOwnProperty("effects")){
+            stringDisplay += "Effects:<br>"
+            Object.keys(abilityData.effects).forEach(effect => {
+                stringDisplay +=  `${effect}<br>`;
+            })
+        }
+        break;
+        default:
+            break;
     }
-
     stringDisplay += `Use time: ${format(abilityData.time / 1000)}s<br />`
     if (abilityData.range[1] != abilityData.range[0]) {
         stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br />`
@@ -1205,15 +1359,17 @@ function resetSkills() {
     }
 }
 
-function changeClass(className) {
+function changeClass(className, keepLevel = false) {
     if (className == playerStats.class) return;
     resetSkills();
     playerStats.class = className;
     populatePassiveTree();
-    playerStats.level = 0;
-    playerStats.experience = 0;
-    addPlayerExp(0);
-    playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+    if (!keepLevel) {
+        playerStats.level = 0;
+        playerStats.experience = 0;
+        addPlayerExp(0);
+        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+    }
     playerStats.unlockedAbilities = {};
     populateAbilityRequirements();
     checkAbilityRequirements();

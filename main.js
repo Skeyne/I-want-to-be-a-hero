@@ -135,8 +135,9 @@ class Player extends CombatEntity {
         this.name = "Hero";
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
+        this.shield = 0;
         this.image = new Image(32, 32);
-        this.image.src = "joe.png";
+        this.image.src = PLAYER_SPRITES[playerStats.class];
         this.portraitImage = new Image();
         this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
@@ -201,9 +202,9 @@ class Player extends CombatEntity {
                                     target.distance += this.nextMove.effects[effect];
                                     break;
                                 case "aoe":
-                                    encounter.enemyArray.forEach(enemy=>{
-                                        if(enemy == null) return;
-                                        if(enemy == target) return;
+                                    encounter.enemyArray.forEach(enemy => {
+                                        if (enemy == null) return;
+                                        if (enemy == target) return;
                                         let originDistance;
                                         switch (this.nextMove.category) {
                                             case "melee":
@@ -216,9 +217,9 @@ class Player extends CombatEntity {
                                                 console.error("SKILL CATEGORY NOT COMPATIBLE WITH AOE");
                                                 break;
                                         }
-                                        if(Math.abs(originDistance-enemy.distance)<=this.nextMove.effects[effect])
-                                        {let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
-                                        logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
+                                        if (Math.abs(originDistance - enemy.distance) <= this.nextMove.effects[effect]) {
+                                            let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
+                                            logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
                                         }
                                     })
                                     break;
@@ -234,8 +235,8 @@ class Player extends CombatEntity {
                 }
                 break;
             case 1:
-                let deltaMinus = Math.min(100 - dist, this.nextMove.range);
-                let deltaPlus = Math.min(dist - 5, this.nextMove.range);
+                let deltaMinus = Math.min(100 - dist, this.nextMove.range[0]);
+                let deltaPlus = Math.min(dist - 5, this.nextMove.range[0]);
                 if (this.moveIntention > 0) {
                     this.target.distance -= deltaPlus;
                     environmentDistance -= deltaPlus;
@@ -244,7 +245,35 @@ class Player extends CombatEntity {
                     environmentDistance += deltaMinus;
                 }
                 break;
-
+            case 2:
+                if (this.nextMove.hasOwnProperty("effects")) {
+                    Object.keys(this.nextMove.effects).forEach(effect => {
+                        let amount;
+                        switch (effect) {
+                            case "heal":
+                               amount = this.nextMove.damage
+                                + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
+                                this.health = Math.min(this.health+amount,this.maxHealth);
+                                logConsole(`Hero healed for ${format(amount)}`);
+                                break;
+                            case "shield":
+                                amount = this.nextMove.damage
+                                + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
+                                if(amount > this.shield) this.shield = amount;
+                                break;
+                            default:
+                                console.error(`ERROR UNKOWN SKILL EFFECT : ${effect}`);
+                                break;
+                        }
+                    });
+                }
+                break;
             default:
                 logConsole("ERROR: Not a valid move type");
                 break;
@@ -267,7 +296,7 @@ class Player extends CombatEntity {
                             }
                         }
                     }
-                    if (closest != -1) { this.target = encounter.enemyArray[closest];}
+                    if (closest != -1) { this.target = encounter.enemyArray[closest]; }
                     else {
                         document.getElementById("playerMoveText").innerHTML = "No target (IN COMBAT)";
                         return;
@@ -303,7 +332,31 @@ class Player extends CombatEntity {
                 }
             }
             if (ability.type == 1) {
-                weights[index] = (dist <= 5 ? 0 : 10);
+                weights[index] = (dist <= 5 ? 0 : ability.range[0]/dist);
+            }
+            if (ability.type == 2) {
+                if (ability.hasOwnProperty("effects")){
+                    if(ability.effects.hasOwnProperty('heal')){
+                        let amount = ability.damage
+                                + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
+                        if(this.maxHealth - this.health > amount){
+                            weights[index] = 100;
+                        }
+                    }
+                    if(ability.effects.hasOwnProperty('shield')){
+                        let amount = ability.damage
+                                + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
+                        if(this.shield <= 0){
+                            weights[index] = 100;
+                        }
+                    }
+                }
             }
         }
         const max = Math.max(...weights);
@@ -322,6 +375,7 @@ class Player extends CombatEntity {
             pick = Math.floor(Math.random() * indexes.length);
         }
         let moveKey = this.equippedAbilities[indexes[pick]];
+        if (moveKey == undefined) moveKey = 'wait';
         this.nextMove = playerMoves[moveKey];
         this.nextMoveKey = moveKey;
         this.nextMoveInitiative = this.nextMove.time;
@@ -344,6 +398,15 @@ class Player extends CombatEntity {
             logConsole(`${this.name} dodged ${format(amount)} damage!`)
             return 0;
         }
+        if(this.shield > 0){
+            if(d >= this.shield){
+                d -= this.shield;
+                this.shield = 0;
+            } else {
+                this.shield -= d;
+                d = 0;
+            }
+        }
         this.health -= d;
         return d;
     }
@@ -360,6 +423,7 @@ class Enemy extends CombatEntity {
         this.drawIndex = drawIndex;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
+        this.shield = 0;
         this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
         this.actionSpeed = formulas.actionSpeed(enemyData.attributes[3]);
         this.healthRegeneration = enemyData.healthRegen;
@@ -701,13 +765,27 @@ function drawCharacterPortrait(context, character, side) {
     let grdHealth = context.createLinearGradient(hanchor.x + mirror * 2, 0, hanchor.x + mirror * (196), 0);
     grdHealth.addColorStop(0, "rgb(21, 153, 41)");
     grdHealth.addColorStop(1, "rgb(0, 255, 38)");
-    let grdHealth2 = context.createLinearGradient(0, hanchor.y + 2, 0, hanchor.y + 14);
-    grdHealth2.addColorStop(0, "rgba(255, 255, 255, .25)");
-    grdHealth2.addColorStop(1, "rgba(0, 0, 0, .25)");
+    let grdShield = context.createLinearGradient(hanchor.x + mirror * 2, 0, hanchor.x + mirror * (196), 0);
+    grdShield.addColorStop(0, "rgb(21, 41, 153)");
+    grdShield.addColorStop(1, "rgb(0, 38, 255)");
+    let grdShading = context.createLinearGradient(0, hanchor.y + 2, 0, hanchor.y + 14);
+    grdShading.addColorStop(0, "rgba(255, 255, 255, .25)");
+    grdShading.addColorStop(1, "rgba(0, 0, 0, .25)");
+    let healthPct;
+    let shieldPct;
+    if(character.health+character.shield > character.maxHealth){
+        healthPct = character.health/(character.health+character.shield);
+        shieldPct = character.shield/(character.health+character.shield);
+    } else {
+        healthPct = character.health/character.maxHealth;
+        shieldPct = character.shield/character.maxHealth;
+    }
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, (character.health / character.maxHealth)), 12);
-    context.fillStyle = grdHealth2;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, (character.health / character.maxHealth)), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,healthPct), 12);
+    context.fillStyle = grdShield;
+    context.fillRect(hanchor.x + (2+196*Math.max(0,healthPct )) * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, shieldPct), 12);
+    context.fillStyle = grdShading;
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,healthPct+shieldPct), 12);
     hanchor.y += 12;
     //Action bar
     context.fillStyle = "grey";

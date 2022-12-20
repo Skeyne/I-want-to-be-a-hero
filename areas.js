@@ -41,10 +41,10 @@ class Area {
             let numberPicked = 0;
             for (const key of Object.keys(weights)) {
                 sumWeights -= weights[key];
-                console.log(key);
+                //console.log(key);
                 if(sumWeights < 0){numberPicked = key;break;}
             }
-            console.log("Enemies to spawn: ",numberPicked);
+            //console.log("Enemies to spawn: ",numberPicked);
             for (let index = 0; index < numberPicked; index++) {
                 arr.push(enemyKey);  
             }
@@ -65,40 +65,40 @@ class Area {
 const areas = [
     new Area({
         name: "Alley", background: "alleyBackground.png",
-        enemies: ["criminal"], enemyNum: 10,
-        patrolTime: 3000, storyUnlock: 0,
+        enemies: ["criminal"], enemyNum: 10, storyUnlock: 0,
+        patrolTime: 3000, 
     }),
     new Area({
         name: "Streets", background: "cyberpunk-street.png",
         enemies: ["thug"], enemyNum: 2, storyUnlock: 5,
-        patrolTime: 3000, storyUnlock: 0,
+        patrolTime: 3000,
         encounters: [{weight:100,enemies:{"thug":{1:2,2:1,3:1}}}]
     }),
     new Area({
         name: "Bridge", background: "bridgeAreaBackground-1.png",
         enemies: ["prisoner"], enemyNum: 2, storyUnlock: 9,
-        patrolTime: 5000, storyUnlock: 0,
+        patrolTime: 5000,
         encounters: [{weight:100,enemies:{"prisoner":{1:3,2:2,3:1}}}]
     }),
     new Area({
         name: "Prison Courtyard", background: "prisonCourtyardBackground.png",
         enemies: ["prisoner9"], enemyNum: 2, storyUnlock: 10,
-        patrolTime: 6000, storyUnlock: 0,
+        patrolTime: 6000, 
         
     }),
     new Area({
         name: "Prison Underground", background: "bulkheadBackground.png",
         enemies: ["infectedPrisoner"], enemyNum: 2, storyUnlock: 11,
-        patrolTime: 7000, storyUnlock: 0,
+        patrolTime: 7000,
         encounters: [{weight:100,enemies:{"infectedPrisoner":{1:5,2:1}}}]
     }),
     new Area({
         name: "Underground Lab", background: "scifilabBackground.png",
         enemies: ["experiment999"], enemyNum: 2, storyUnlock: 12,
-        patrolTime: 6000, storyUnlock: 0,
+        patrolTime: 6000,
     }),
     new Area({
         name: "The Void", background: "voidBackground.png",
         enemies: ["experiment9999"], enemyNum: 2, storyUnlock: 13,
-        patrolTime: 10000, storyUnlock: 0,
+        patrolTime: 10000,
     })];

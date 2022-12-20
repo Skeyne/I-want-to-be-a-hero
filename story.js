@@ -101,8 +101,10 @@ const endOfStoryQuest = {
     <br>
     There's also a final area 'The Void' with an exceptionally unfair enemy if you fancy your odds at beating him.
     <br>
-    <button class="classButton" style="float:left; margin-left:15%" onclick="changeClass('human')">Human</button>
-    <button class="classButton" style="float:right;margin-right:15%"" onclick="changeClass('esper')">Esper</button>`,
+    <button class="classButton" style="float:left; margin:5%" onclick="changeClass('human')">Human</button>
+    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('esper')">Esper</button>
+    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('superhuman')">Superhuman</button>
+    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('ninja')">Ninja</button>`,
     requirementType: `none`,
     requirementTarget: [1],
     requirementAmount: [1],
@@ -113,6 +115,7 @@ updateStoryQuest();
 updateDiaryEntries();
 
 var areaSelect = document.getElementById("selectArea");
+console.log(playerStats.storyProgress);
 checkAreaUnlocks();
 function checkAreaUnlocks(){
     areaSelect.innerHTML = "";
