@@ -136,6 +136,7 @@ class Player extends CombatEntity {
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.shield = 0;
+        this.flatReduction = 0;
         this.image = new Image(32, 32);
         this.image.src = PLAYER_SPRITES[playerStats.class];
         this.portraitImage = new Image();
@@ -187,6 +188,18 @@ class Player extends CombatEntity {
                 }
                 if (inRange) {
                     let isCrit = (Math.random() < this.criticalChance);
+                    let moveTakedown = this.takedown;
+                    if (this.nextMove.hasOwnProperty("effects")) {
+                        Object.keys(this.nextMove.effects).forEach(effect => {
+                            switch (effect) {
+                                case "takedown":
+                                    moveTakedown += this.nextMove.effects[effect];
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    }
                     let d1 = this.nextMove.damage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
@@ -195,11 +208,17 @@ class Player extends CombatEntity {
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
                     let d3 = d2 * (1 + target.health / target.maxHealth * this.overwhelm) * (1 + (1 - target.health / target.maxHealth) * this.takedown);
+
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
+                                case "takedown":
+                                    break;
                                 case "knockback":
                                     target.distance += this.nextMove.effects[effect];
+                                    break;
+                                case "pull":
+                                    target.distance = Math.max(5, target.distance - this.nextMove.effects[effect]);
                                     break;
                                 case "aoe":
                                     encounter.enemyArray.forEach(enemy => {
@@ -223,12 +242,14 @@ class Player extends CombatEntity {
                                         }
                                     })
                                     break;
+
                                 default:
                                     console.error("ERROR UNKOWN SKILL EFFECT");
                                     break;
                             }
                         });
                     }
+
                     let { died: killingBlow, d: dr } = target.takeDamage(d3);
                     logConsole(`Hero ${isCrit ? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
                     if (killingBlow) this.target = null;
@@ -251,21 +272,21 @@ class Player extends CombatEntity {
                         let amount;
                         switch (effect) {
                             case "heal":
-                               amount = this.nextMove.damage
-                                + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
-                                this.health = Math.min(this.health+amount,this.maxHealth);
+                                amount = this.nextMove.damage
+                                    + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                                this.health = Math.min(this.health + amount, this.maxHealth);
                                 logConsole(`Hero healed for ${format(amount)}`);
                                 break;
                             case "shield":
                                 amount = this.nextMove.damage
-                                + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
-                                if(amount > this.shield) this.shield = amount;
+                                    + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                                if (amount > this.shield) this.shield = amount;
                                 break;
                             default:
                                 console.error(`ERROR UNKOWN SKILL EFFECT : ${effect}`);
@@ -312,7 +333,6 @@ class Player extends CombatEntity {
         let dist = this.target.distance;
         if (dist > 5) this.moveIntention = 1; else this.moveIntention = -1;
         let weights = [this.equippedAbilities.length];
-        let i = 0;
         for (let index = 0; index < this.equippedAbilities.length; index++) {
             let k = this.equippedAbilities[index];
             let ability = playerMoves[k];
@@ -330,29 +350,34 @@ class Player extends CombatEntity {
                         console.log("UNKOWN ABILITY CATEGORY")
                         break;
                 }
+                if (ability.hasOwnProperty("effects")) {
+                    if (ability.effects.hasOwnProperty('pull')) {
+                        if (this.target.distance > 5) { weights[index] *= 10; }
+                    }
+                }
             }
             if (ability.type == 1) {
-                weights[index] = (dist <= 5 ? 0 : ability.range[0]/dist);
+                weights[index] = (dist <= 5 ? 0 : ability.range[0] / dist);
             }
             if (ability.type == 2) {
-                if (ability.hasOwnProperty("effects")){
-                    if(ability.effects.hasOwnProperty('heal')){
+                if (ability.hasOwnProperty("effects")) {
+                    if (ability.effects.hasOwnProperty('heal')) {
                         let amount = ability.damage
-                                + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
-                        if(this.maxHealth - this.health > amount){
+                            + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        if (this.maxHealth - this.health > amount) {
                             weights[index] = 100;
                         }
                     }
-                    if(ability.effects.hasOwnProperty('shield')){
+                    if (ability.effects.hasOwnProperty('shield')) {
                         let amount = ability.damage
-                                + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1,HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1,HEALTH_GROWTH_EXPONENT) - 1);
-                        if(this.shield <= 0){
+                            + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        if (this.shield <= 0) {
                             weights[index] = 100;
                         }
                     }
@@ -393,13 +418,13 @@ class Player extends CombatEntity {
         this.health = Math.min(this.health + this.maxHealth * this.data.restRate * logicTickTime / 1000, this.maxHealth);
     }
     takeDamage(amount) {
-        let d = amount * this.damageReduction;
+        let d = Math.max(0, amount * this.damageReduction - this.flatReduction);
         if (this.dodgeChance > Math.random()) {
             logConsole(`${this.name} dodged ${format(amount)} damage!`)
             return 0;
         }
-        if(this.shield > 0){
-            if(d >= this.shield){
+        if (this.shield > 0) {
+            if (d >= this.shield) {
                 d -= this.shield;
                 this.shield = 0;
             } else {
@@ -773,19 +798,19 @@ function drawCharacterPortrait(context, character, side) {
     grdShading.addColorStop(1, "rgba(0, 0, 0, .25)");
     let healthPct;
     let shieldPct;
-    if(character.health+character.shield > character.maxHealth){
-        healthPct = character.health/(character.health+character.shield);
-        shieldPct = character.shield/(character.health+character.shield);
+    if (character.health + character.shield > character.maxHealth) {
+        healthPct = character.health / (character.health + character.shield);
+        shieldPct = character.shield / (character.health + character.shield);
     } else {
-        healthPct = character.health/character.maxHealth;
-        shieldPct = character.shield/character.maxHealth;
+        healthPct = character.health / character.maxHealth;
+        shieldPct = character.shield / character.maxHealth;
     }
     context.fillStyle = grdHealth;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,healthPct), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, healthPct), 12);
     context.fillStyle = grdShield;
-    context.fillRect(hanchor.x + (2+196*Math.max(0,healthPct )) * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, shieldPct), 12);
+    context.fillRect(hanchor.x + (2 + 196 * Math.max(0, healthPct)) * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, shieldPct), 12);
     context.fillStyle = grdShading;
-    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0,healthPct+shieldPct), 12);
+    context.fillRect(hanchor.x + 2 * mirror, hanchor.y + 2, mirror * 196 * Math.max(0, healthPct + shieldPct), 12);
     hanchor.y += 12;
     //Action bar
     context.fillStyle = "grey";

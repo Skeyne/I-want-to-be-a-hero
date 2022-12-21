@@ -9,7 +9,7 @@ const HEALTH_GROWTH_EXPONENT = 0.65;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
 const TRAINING_COST_GROWTH_BASE = 1.55;
 const PLAYER_CLASSES = ["human","superhuman","mutant","ninja","esper","cyborg"];
-const PLAYER_SPRITES ={'human':'joe.png','superhuman':'superHumanSprite1.png','esper':'esperSprite1.png','ninja':'ninjaSprite1.png','cyborg':'joe.png','mutant':'joe.png'}
+const PLAYER_SPRITES ={'human':'joe.png','superhuman':'superHumanSprite1.png','esper':'esperSprite1.png','ninja':'ninjaSprite1.png','cyborg':'joe.png','mutant':'mutantSprite1.png'}
 const attributeIndexToId = {
     0: "strength",
     1: "toughness",

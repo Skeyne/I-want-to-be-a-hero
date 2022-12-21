@@ -101,4 +101,10 @@ const areas = [
         name: "The Void", background: "voidBackground.png",
         enemies: ["experiment9999"], enemyNum: 2, storyUnlock: 13,
         patrolTime: 10000,
-    })];
+    }),
+    new Area({
+        name: "Streets 2", background: "cyberpunk-street.png",
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 13,
+        patrolTime: 7000,
+        encounters: [{weight:100,enemies:{"thug2":{1:2,2:1,3:1},"thug3":{1:1,2:1},}}]
+    }),];

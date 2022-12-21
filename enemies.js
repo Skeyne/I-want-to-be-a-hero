@@ -65,6 +65,17 @@ var abilityLibrary = {
         cooldownTime: 12000,
         range: 15,
     },
+    'handgun': {
+        type: 0,
+        name: "Handgun",
+        iconName: "throwingKnife",
+        baseDamage: 1,
+        damageRatios: [0, 0, 1, 1],
+        damageRange: [1, 1.2],
+        time: 5000,
+        cooldownTime: 0,
+        range: 50,
+    },
     'walk': {
         type: 1,
         name: "Move",
@@ -104,6 +115,7 @@ enemyData.thug = {
     portraitFile: "thugPortrait.png",
     moves: ['punch','walk','crowbar'],
 };
+
 enemyData.prisoner = {
     id:"prisoner",
     name: "Prisoner",
@@ -155,6 +167,32 @@ enemyData.experiment999 = {
     spriteFile: "experiment999.png",
     portraitFile: "thugPortrait.png",
     moves: ['walk','punch','mutantSlash','vomit'],
+};
+enemyData.thug2 = {
+    id:"thug2",
+    name: "Hardened Thug",
+    maxHealth: 300,
+    attributes: [400,200,25,150],
+    healthRegen: 0,
+    expReward: 100,
+    moneyReward: 3,
+    reputationReward: 1,
+    spriteFile: "thug.png",
+    portraitFile: "thugPortrait.png",
+    moves: ['punch','walk','crowbar'],
+};
+enemyData.thug3 = {
+    id:"thug3",
+    name: "Armed Thug",
+    maxHealth: 150,
+    attributes: [25,50,200,300],
+    healthRegen: 0,
+    expReward: 100,
+    moneyReward: 3,
+    reputationReward: 1,
+    spriteFile: "thug.png",
+    portraitFile: "thugPortrait.png",
+    moves: ['handgun','walk'],
 };
 enemyData.experiment9999 = {
     id:"experiment9999",
