@@ -466,7 +466,7 @@ skillLibrary = {
     "ninja": {
         'ni_0_0': {
             id: 'ni_0_0',
-            name: 'Unnatural Speed',
+            name: 'Feline Agility',
             iconName: 'shadowB',
             desc: 'The whole world seems one muscle twitch away.',
             effect: {
@@ -480,7 +480,7 @@ skillLibrary = {
         },
         'ni_0_1': {
             id: 'ni_0_1',
-            name: 'Feline Agility',
+            name: 'Unnatural Speed',
             iconName: 'studying',
             desc: 'The faster you go the faster you get.',
             effect: {
@@ -839,7 +839,7 @@ playerMoves = {
         category: 'melee',
         name: "Katana",
         description: "A ninja's weapon (?).",
-        iconName: "throwingKnife",
+        iconName: "katana",
         damage: 1,
         damageRatios: [.2, 0, 0, 1],
         damageRange: [0.8, 1.2],
@@ -865,7 +865,7 @@ playerMoves = {
         category: 'ranged',
         name: "Shuriken",
         description: "Launch a number of shuriken at your foes.",
-        iconName: "throwingKnife",
+        iconName: "shuriken",
         damage: 1,
         damageRatios: [0, 0, 0.1, .3],
         damageRange: [1, 1.1],
@@ -874,7 +874,7 @@ playerMoves = {
         },
         time: 500,
         cooldownTime: 500,
-        range: [10, 50],
+        range: [10, 60],
     },
     'flashStep': {
         type: 1,

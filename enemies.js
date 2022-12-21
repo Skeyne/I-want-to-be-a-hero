@@ -190,7 +190,7 @@ enemyData.thug3 = {
     expReward: 100,
     moneyReward: 3,
     reputationReward: 1,
-    spriteFile: "thug.png",
+    spriteFile: "armedThug.png",
     portraitFile: "thugPortrait.png",
     moves: ['handgun','walk'],
 };

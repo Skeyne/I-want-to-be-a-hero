@@ -504,14 +504,19 @@ class Enemy extends CombatEntity {
             let k = this.data.moves[index];
             let ability = abilityLibrary[k];
             if (this.abilityCooldowns[k] > 0) { weights[index] = -1; continue; }
+            // if (ability.type == 0) {
+            //     weights[index] = (ability.range >= dist ? 100 : 0);
+            // }
+            // if (ability.type == 1) {
+            //     weights[index] = (dist > 5 ? 100 : 0);
+            // }
             if (ability.type == 0) {
-                weights[index] = (ability.range >= dist ? 100 : 0);
+                weights[index] = (ability.range >= dist ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
             }
             if (ability.type == 1) {
-                weights[index] = (dist > 5 ? 100 : 0);
+                weights[index] = (dist <= 5 ? 0 : ability.range / dist);
             }
         }
-        //console.log(weights);
         const max = Math.max(...weights);
         const indexes = [];
         for (let index = 0; index < weights.length; index++) {
