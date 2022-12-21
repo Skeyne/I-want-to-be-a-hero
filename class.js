@@ -716,14 +716,14 @@ playerMoves = {
         description: "Morph your arm out into a tentacle and pull your foe closer",
         iconName: "tentaclePull",
         damage: 1,
-        damageRatios: [.2, .5, 0, 0],
+        damageRatios: [.1, .3, 0, 0],
         damageRange: [1, 1],
         effects: {
-            'pull': 50
+            'pull': 30
         },
         time: 1500,
         cooldownTime: 5000,
-        range: [50, 50],
+        range: [60, 60],
     },
     'corrosiveBurst': {
         type: 0,
