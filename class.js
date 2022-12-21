@@ -924,8 +924,8 @@ abilityUnlocks = {
     },
     'mutant': {
         0: ['bulkFist'],
-        10:['corrosiveBurst','tentaclePull'],
-        25:['engulf']
+        10: ['corrosiveBurst', 'tentaclePull'],
+        25: ['engulf']
     },
     'esper': {
         0: ['spiritFist'],
@@ -949,17 +949,20 @@ let loadoutContainer = document.getElementById("abilityLoadoutContainer");
 let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid");
 abilityRequirementsGrid.append(previewRowHeader);
 abilityRequirementsGrid.append(previewRowBody);
+//version fixing stuff
+if (playerStats.class != 'human') { playerStats.abilitySlots = 4 } else { playerStats.abilitySlots = 3 };
 let slots = [];
 RebuildSlots();
-function RebuildSlots(){
-for (let index = 0; index < playerStats.abilitySlots; index++) {
-    loadoutContainer.innerHTML ="";
-    let slot = document.createElement("select");
-    slot.setAttribute("class", "abilitySlot pickle");
-    slots.push(slot);
-    slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
-    loadoutContainer.appendChild(slot);
-}
+function RebuildSlots() {
+    loadoutContainer.innerHTML = "";
+    for (let index = 0; index < playerStats.abilitySlots; index++) {
+
+        let slot = document.createElement("select");
+        slot.setAttribute("class", "abilitySlot pickle");
+        slots.push(slot);
+        slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
+        loadoutContainer.appendChild(slot);
+    }
 }
 
 checkAbilityRequirements();
@@ -1431,7 +1434,7 @@ function resetSkills() {
 
 function changeClass(className, keep = false) {
     if (className == playerStats.class) return;
-    if (className != 'human'){playerStats.abilitySlots = 4} else {playerStats.abilitySlots = 3};
+    if (className != 'human') { playerStats.abilitySlots = 4 } else { playerStats.abilitySlots = 3 };
     resetSkills();
     playerStats.class = className;
     populatePassiveTree();

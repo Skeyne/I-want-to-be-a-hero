@@ -40,8 +40,6 @@ const cleanPlayerStats = {
 var playerStats = {};
 reset();
 load();
-//version fixing stuff
-if (className != 'human'){playerStats.abilitySlots = 4} else {playerStats.abilitySlots = 3};
 setInterval(save, 30000);
 function getTotalPassivePoints() {
     let decades = Math.floor(playerStats.level / 10);
