@@ -68,7 +68,7 @@ var abilityLibrary = {
     'handgun': {
         type: 0,
         name: "Handgun",
-        iconName: "throwingKnife",
+        iconName: "handgun",
         baseDamage: 1,
         damageRatios: [0, 0, 1, 1],
         damageRange: [1, 1.2],
