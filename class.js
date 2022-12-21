@@ -955,6 +955,7 @@ let slots = [];
 RebuildSlots();
 function RebuildSlots() {
     loadoutContainer.innerHTML = "";
+    slots = [];
     for (let index = 0; index < playerStats.abilitySlots; index++) {
 
         let slot = document.createElement("select");
