@@ -39,6 +39,10 @@ const cleanPlayerStats = {
 
 var playerStats = {};
 reset();
+load();
+//version fixing stuff
+if (className != 'human'){playerStats.abilitySlots = 4} else {playerStats.abilitySlots = 3};
+setInterval(save, 30000);
 function getTotalPassivePoints() {
     let decades = Math.floor(playerStats.level / 10);
     return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1);
@@ -78,7 +82,6 @@ function getTrainingModifier(attributeName) {
         * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
         * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
 }
-
 function recalculateMultipliers() {
     playerStats.effectMultipliers = {};
 
@@ -104,7 +107,6 @@ function addPlayerMoney(amount) {
 function addPlayerReputation(amount) {
     playerStats.reputation += amount;
 }
-load();
 function save() {
     console.log("Saving data...")
     playerStats.lastSave = Date.now();
@@ -112,7 +114,6 @@ function save() {
     localStorage.setItem("heroLastSaved", playerStats.lastSave);
     localStorage.setItem("version", version);
 }
-setInterval(save, 30000);
 function load(file = null) {
     //reset()
     if (file != null) { loadgame = file; } else { loadgame = JSON.parse(localStorage.getItem("heroSave")); }
@@ -126,7 +127,6 @@ function load(file = null) {
         console.log("No savefile found");
     }
 }
-
 function loadGame(loadgame) {
     let shouldCheckVersion = false; //check if we need to implement a fix for version differences
     let oldVersion = loadgame.lastMajorChangeVersion; //save old version since we'll be overwriting as part of the load process, but we don't want to execute the fix until after loading
@@ -152,7 +152,6 @@ function loadGame(loadgame) {
         }
     }
 }
-
 function exportGame() {
     save()
     navigator.clipboard.writeText(btoa(JSON.stringify(playerStats))).then(function () {
@@ -161,7 +160,6 @@ function exportGame() {
         alert("Error copying to clipboard, try again...")
     });
 }
-
 function importGame() {
     let loadgame = JSON.parse(atob(prompt("Input your save here:")))
     if (loadgame && loadgame != null && loadgame != "") {
@@ -181,7 +179,6 @@ function resetSave() {
     save();
     location.reload();
 }
-
 function hardReset() {
     let confirmation1 = confirm('WARNGING!\nThis will completely reset your save file!');
     if (confirmation1) {

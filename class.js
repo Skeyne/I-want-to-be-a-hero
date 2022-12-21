@@ -714,7 +714,7 @@ playerMoves = {
         category: 'melee',
         name: "Tentacle Pull",
         description: "Morph your arm out into a tentacle and pull your foe closer",
-        iconName: "airCannon",
+        iconName: "tentaclePull",
         damage: 1,
         damageRatios: [.2, .5, 0, 0],
         damageRange: [1, 1],
@@ -950,12 +950,16 @@ let abilityRequirementsGrid = document.getElementById("abilityRequirementsGrid")
 abilityRequirementsGrid.append(previewRowHeader);
 abilityRequirementsGrid.append(previewRowBody);
 let slots = [];
+RebuildSlots();
+function RebuildSlots(){
 for (let index = 0; index < playerStats.abilitySlots; index++) {
+    loadoutContainer.innerHTML ="";
     let slot = document.createElement("select");
     slot.setAttribute("class", "abilitySlot pickle");
     slots.push(slot);
     slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
     loadoutContainer.appendChild(slot);
+}
 }
 
 checkAbilityRequirements();
@@ -1427,6 +1431,7 @@ function resetSkills() {
 
 function changeClass(className, keep = false) {
     if (className == playerStats.class) return;
+    if (className != 'human'){playerStats.abilitySlots = 4} else {playerStats.abilitySlots = 3};
     resetSkills();
     playerStats.class = className;
     populatePassiveTree();
@@ -1446,6 +1451,7 @@ function changeClass(className, keep = false) {
             playerStats.equippedAbilities[index + 1] = null;
         }
     }
+    RebuildSlots();
     populateAbilitySlots();
     if (!keep) {
 
