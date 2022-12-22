@@ -33,6 +33,7 @@ const cleanPlayerStats = {
     currentStoryQuestProgress: [0],
     currentTrainingAttribute: "strength",
     trainingAreaLevels: {},
+    activityLevels: {},
     abilityCooldowns: {},
     currentArea: 0,
 }

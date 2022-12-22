@@ -1,11 +1,62 @@
 var trainingAreaData = {
-    0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1},
+    0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1 },
+}
+var activityData = {
+    "runPark": { id:"runPark" ,name: "Run laps at the park", attributeRatios:[0,0.01,0,0],
+    timeToComplete: 10, cost: 0, expBase: 100, expPower:10},
 }
 Object.values(trainingAreaData).forEach(element => {
-    if(!playerStats.trainingAreaLevels.hasOwnProperty(element.name)){
+    if (!playerStats.trainingAreaLevels.hasOwnProperty(element.name)) {
         playerStats.trainingAreaLevels[element.name] = 0;
     }
 });
+Object.keys(activityData).forEach(id => {
+    if (!playerStats.activityLevels.hasOwnProperty(id)) {
+        playerStats.activityLevels[id] = {level:0, exp:0};
+    }
+});
+class Activity {
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.attributeRatios = data.attributeRatios;
+        this.timeToComplete = 1000 * data.timeToComplete;
+        this.cost = data.cost;
+        this.expBase = data.expBase;
+        this.expPower = data.expPower;
+        this.progress = 0;
+        this.costPaid = false;
+    }
+    get ExpToNext() {
+        return this.expBase * Math.pow(this.expPower, REPLACE_THIS);
+    }
+    get RewardPerPlayerLevel() {
+        return this.attributeRatios.map(x => x * (playerStats.activityLevels[this.id].level + 1));
+    }
+    tick() {
+        if(this.costPaid == false){if(!this.payCost) return;}
+        this.progress += logicTickTime;
+        if (this.progress >= this.timeToComplete) {
+            this.progress -= this.timeToComplete;
+            this.reward();
+            this.payCost();
+        }
+    }
+    reward() {
+        let rewards = this.RewardPerPlayerLevel;
+        for (let index = 0; index < this.attributeRatios.length; index++) {
+            let attribute = attributeIndexToId[index];
+            let reward = rewards[index] * (playerStats.level + 1) * getTrainingModifier(attribute);
+            playerStats[attribute] += reward;
+        }
+        checkTrainingQuest();
+    }
+    payCost() {
+        if (playerStats.money < this.cost){ this.costPaid = false; return false;}
+        playerStats.money -= this.cost;  this.costPaid = true; return true;
+    }
+
+}
 class TrainingArea {
     constructor(data) {
         this.name = data.name;
@@ -15,11 +66,11 @@ class TrainingArea {
         this.timeToComplete = 1000 * data.timeToComplete;
         this.progress = 0;
     }
-    get Cost(){
+    get Cost() {
         return this.base * this.costMultiplier * Math.pow(TRAINING_COST_GROWTH_BASE, playerStats.trainingAreaLevels[this.name]);
     }
-    get Reward(){
-        return this.base * Math.pow(TRAINING_REWARD_GROWTH_BASE,playerStats.trainingAreaLevels[this.name]);
+    get Reward() {
+        return this.base * Math.pow(TRAINING_REWARD_GROWTH_BASE, playerStats.trainingAreaLevels[this.name]);
     }
     tick() {
         this.progress += logicTickTime;
@@ -36,19 +87,19 @@ class TrainingArea {
     }
 
 }
-var currentTrainingArea = new TrainingArea(trainingAreaData[0]);
-changeTrainingAttribute(playerStats.currentTrainingAttribute);
-updateTrainingText();
-updateTrainingCanBuy();
+var currentTrainingArea = new Activity(activityData['runPark']);
+//changeTrainingAttribute(playerStats.currentTrainingAttribute);
+//updateTrainingText();
+//updateTrainingCanBuy();
 function changeTrainingAttribute(attribute) {
     playerStats.currentTrainingAttribute = attribute;
     currentTrainingArea.attribute = attribute;
     currentTrainingArea.progress = 0;
     document.getElementById("currentTrainingAttribute").innerHTML = attribute;
-    document.getElementById("trainingBarOverviewIcon").className = attribute+"Text";
+    document.getElementById("trainingBarOverviewIcon").className = attribute + "Text";
 }
-function upgradeTrainingArea(){
-    if(playerStats.money >= currentTrainingArea.Cost){
+function upgradeTrainingArea() {
+    if (playerStats.money >= currentTrainingArea.Cost) {
         playerStats.money -= currentTrainingArea.Cost;
         playerStats.trainingAreaLevels[currentTrainingArea.name] += 1;
         updateTrainingText();
@@ -56,19 +107,18 @@ function upgradeTrainingArea(){
 
     }
 }
-
-function updateTrainingText(){
-    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost)+'$';
+function updateTrainingText() {
+    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward);
 }
 
-function updateTrainingNextText(){
-    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost)+'$';
+function updateTrainingNextText() {
+    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward) +
-             " -> " + format(currentTrainingArea.Reward*TRAINING_REWARD_GROWTH_BASE);
+        " -> " + format(currentTrainingArea.Reward * TRAINING_REWARD_GROWTH_BASE);
 }
-function updateTrainingCanBuy(){
-    if(playerStats.money >= currentTrainingArea.Cost){
+function updateTrainingCanBuy() {
+    if (playerStats.money >= currentTrainingArea.Cost) {
         document.getElementById("trainingCanUpgradeText").innerHTML = "Upgrade available!";
     } else {
         document.getElementById("trainingCanUpgradeText").innerHTML = "";
