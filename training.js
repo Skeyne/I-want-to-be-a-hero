@@ -210,7 +210,8 @@ var currentTrainingArea;
 if (activities.hasOwnProperty(playerStats.currentActivity)){
     currentTrainingArea = activities[playerStats.currentActivity];
 }else{
-    currentTrainingAre= activities['activity_0_0'];
+    currentTrainingArea= activities['activity_0_0'];
+    playerStats.currentActivity = currentTrainingArea
 }
 currentTrainingArea.onSelect();
 //changeTrainingAttribute(playerStats.currentTrainingAttribute);
