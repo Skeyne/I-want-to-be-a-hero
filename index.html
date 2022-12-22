@@ -155,49 +155,6 @@
                 <section class="infoBox" id="trainingBox">
                     <div class="blockHeader pickle">TRAINING</div>
                     <div id="trainingAreaDisplay" class="blockBody dotted">
-                        <div id="trainingAreaName" class="statDisplay pickle"></div>
-                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
-                            <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
-                                value="100" max="1000"></progress>
-                        </div>
-                        <div id = "activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 1fr 1fr;grid-auto-rows: min-content;
-                        height: 50%">
-                            <div class="oxanium dotted" style="border:5px white inset">
-                                <div>Running laps at the park</div>
-                                <span>RANK:F</span><progress class="testProgressBar"
-                                    style="height: 5px;width: -webkit-fill-available;" value="100"
-                                    max="1000"></progress>
-                                <div>Attributes:</div>
-                                <div>
-                                    <!-- <span class="strengthText"></span> -->
-                                    <span class="toughnessText">0.1x</span>
-                                    <!-- <span class="mindText"></span>
-                                    <span class="agilityText"></span> -->
-                                    Cost per: 0$
-                                </div>
-                                <progress style="width: -webkit-fill-available;height: 10px;" value="700"
-                                    max="1000"></progress>
-                            </div>
-
-
-                            <div class="oxanium dotted" style="border:5px white inset">
-                                <div>Workout at the gym</div>
-                                <span>RANK:F</span><progress class="testProgressBar"
-                                    style="height: 5px;width: -webkit-fill-available;" value="200"
-                                    max="1000"></progress>
-                                <div>Attributes:</div>
-                                <div>
-                                    <span class="strengthText">2.0x</span>
-                                    <!-- <span class="toughnessText">0.1x</span> -->
-                                    <!-- <span class="mindText"></span>
-                                    <span class="agilityText"></span> -->
-                                    Cost per: 5.00$
-                                </div>
-                                <progress style="width: -webkit-fill-available;height: 10px;" value="700"
-                                    max="1000"></progress>
-                            </div>
-                        </div>
-
                         <div class="subHeader pickle">Base attributes from training</div>
                         <div id="statsGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
@@ -214,6 +171,17 @@
                                 Agility: <span class="agilityText" id="agilitySoftcapText">0</span>
                             </div>
                         </div>
+                        <div id="trainingAreaName" class="statDisplay pickle" style="text-overflow:ellipsis;white-space: nowrap; overflow: hidden;"></div>
+                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
+                            <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
+                                value="100" max="1000"></progress>
+                        </div>
+                        <div id = "activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 1fr 1fr;grid-auto-rows: min-content;
+                        height: 50%;gap:1%;overflow-y: scroll">
+                            
+                        </div>
+
+                        
                     </div>
                 </section>
                 <section class="infoBox" id="areasBox">
