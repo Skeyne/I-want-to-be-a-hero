@@ -363,7 +363,7 @@ section:first-child div.blockHeader::before {
     position: relative;
 }
 .activityBlock{
-    border: 0.5vmin inset white;
+    border: 0.5vmin inset grey;
     box-sizing: border-box;
 }
 #abilityLoadoutContainer{

@@ -121,7 +121,12 @@ class Activity {
             attributeText.append(s);
         }
     }
-
+    onSelect(){
+        this.element.style.borderColor = 'goldenrod';
+    }
+    onDeselect(){
+        this.element.style.borderColor = "";
+    }
 }
 class TrainingArea {
     constructor(data) {
@@ -152,6 +157,7 @@ class TrainingArea {
         updateTrainingCanBuy();
     }
 
+
 }
 var activities = {}
 Object.values(trainingAreaData).forEach(element => {
@@ -180,7 +186,7 @@ Object.keys(activityData).forEach(id => {
     let rankProgress = document.createElement("progress");
     rankProgress.setAttribute("class", "rankProgressBar");
     rankProgress.max = activity.expToNext;
-    rankProgress.value = 0;
+    rankProgress.value = playerStats.activityLevels[id].exp;
     let attributeText = document.createElement("div");
     for (let index = 0; index < activity.attributeRatios.length; index++) {
         const ratio = activity.attributeRatios[index];
@@ -206,6 +212,7 @@ if (activities.hasOwnProperty(playerStats.currentActivity)){
 }else{
     currentTrainingAre= activities['activity_0_0'];
 }
+currentTrainingArea.onSelect();
 //changeTrainingAttribute(playerStats.currentTrainingAttribute);
 //updateTrainingText();
 //updateTrainingCanBuy();
@@ -217,8 +224,10 @@ function changeTrainingAttribute(attribute) {
     document.getElementById("trainingBarOverviewIcon").className = attribute + "Text";
 }
 function changeActivity(id) {
+    currentTrainingArea.onDeselect();
     playerStats.currentActivity = id;
     currentTrainingArea = activities[id];
+    currentTrainingArea.onSelect();
 }
 function upgradeTrainingArea() {
     if (playerStats.money >= currentTrainingArea.Cost) {
