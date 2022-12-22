@@ -1,4 +1,4 @@
-const version = '0.02d';
+const version = '0.02e';
 var isOutdated = false;
 document.getElementById('versionText').innerHTML ='v'+version;
 const cleanPlayerStats = {
@@ -33,6 +33,7 @@ const cleanPlayerStats = {
     currentStoryQuestProgress: [0],
     currentTrainingAttribute: "strength",
     trainingAreaLevels: {},
+    activityLevels: {},
     abilityCooldowns: {},
     currentArea: 0,
 }

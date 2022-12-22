@@ -67,7 +67,7 @@
     </header>
 
     <main>
-        <section id="sidebar" class = "blockPanel"></section>
+        <section id="sidebar" class="blockPanel"></section>
         <section id="canvasLogWrap">
             <div id="canvasWrap">
                 <canvas id="myCanvas"></canvas>
@@ -155,32 +155,6 @@
                 <section class="infoBox" id="trainingBox">
                     <div class="blockHeader pickle">TRAINING</div>
                     <div id="trainingAreaDisplay" class="blockBody dotted">
-                        <div id="trainingAreaName" class="statDisplay pickle"></div>
-                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
-                            <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
-                                value="100" max="1000"></progress>
-                        </div>
-                        <div class="statDisplay pickle"
-                            style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
-                            Currently training: <span id="currentTrainingAttribute"></span></div>
-                        <div id="trainingButtonWrap">
-                            <button class="attributeButton strengthText"
-                                onclick="changeTrainingAttribute(attribute.strength)"></button>
-                            <button class="attributeButton toughnessText"
-                                onclick="changeTrainingAttribute(attribute.toughness)"></button>
-                            <button class="attributeButton   mindText"
-                                onclick="changeTrainingAttribute(attribute.mind)"></button>
-                            <button class="attributeButton agilityText"
-                                onclick="changeTrainingAttribute(attribute.agility)"></button>
-                        </div>
-                        <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session:
-                            <span id="trainingReward"></span>
-                        </div>
-                        <div class="pickle center biggerText">Attributes per session: <span id="trainingReward"></span>
-                        </div>
-                        <button class="pickle" id="trainingUpgradeButton" onclick="upgradeTrainingArea()"
-                            onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span
-                                id="trainingUpgradeCost"></span></button>
                         <div class="subHeader pickle">Base attributes from training</div>
                         <div id="statsGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">
@@ -197,6 +171,17 @@
                                 Agility: <span class="agilityText" id="agilitySoftcapText">0</span>
                             </div>
                         </div>
+                        <div id="trainingAreaName" class="statDisplay pickle" style="text-overflow:ellipsis;white-space: nowrap; overflow: hidden;"></div>
+                        <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
+                            <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
+                                value="100" max="1000"></progress>
+                        </div>
+                        <div id = "activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 1fr 1fr;grid-auto-rows: min-content;
+                        height: 50%;gap:1%;overflow-y: scroll">
+                            
+                        </div>
+
+                        
                     </div>
                 </section>
                 <section class="infoBox" id="areasBox">

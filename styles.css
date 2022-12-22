@@ -362,6 +362,10 @@ section:first-child div.blockHeader::before {
     box-sizing: border-box;
     position: relative;
 }
+.activityBlock{
+    border: 0.5vmin inset grey;
+    box-sizing: border-box;
+}
 #abilityLoadoutContainer{
     border: 5px outset rgb(53, 53, 53);
     background: rgb(255 255 255 / 9%);
@@ -373,7 +377,16 @@ section:first-child div.blockHeader::before {
     justify-content: space-evenly;
     align-items: center;
 }
-
+#activityGrid{
+    overflow-y: scroll;
+}
+#activityGrid::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0);
+    border-radius: 5px;
+}
+#activityGrid::-webkit-scrollbar {
+    width: 1vw;
+}
 #diaryEntries{
     width: 100%;
     display: grid;
@@ -416,7 +429,6 @@ progress[value]::-webkit-progress-bar {
     background-color: #eee;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-    border-radius: 2px;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
 
@@ -530,7 +542,26 @@ progress[value]::-webkit-progress-bar {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
-
+.activityProgressBar,
+.activityProgressBar[value]::-webkit-progress-bar {
+    height: 10px;
+    width: -webkit-fill-available;
+    background: rgb(255, 255, 255);
+    margin-bottom: 0px
+}
+.activityProgressBar::-webkit-progress-value {
+    background: rgb(128, 73, 0);
+}
+.rankProgressBar,
+.rankProgressBar[value]::-webkit-progress-bar {
+    height: 5px;
+    width: -webkit-fill-available;
+    background: rgb(255, 255, 255);
+    margin-bottom: 0px
+}
+.rankProgressBar::-webkit-progress-value {
+    background: purple;
+}
 .trainingProgressBar,
 .trainingProgressBar[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);
