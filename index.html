@@ -67,7 +67,7 @@
     </header>
 
     <main>
-        <section id="sidebar" class = "blockPanel"></section>
+        <section id="sidebar" class="blockPanel"></section>
         <section id="canvasLogWrap">
             <div id="canvasWrap">
                 <canvas id="myCanvas"></canvas>
@@ -160,27 +160,44 @@
                             <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
                                 value="100" max="1000"></progress>
                         </div>
-                        <div class="statDisplay pickle"
-                            style="text-transform:capitalize ; font-size: 16px; font-weight: normal;">
-                            Currently training: <span id="currentTrainingAttribute"></span></div>
-                        <div id="trainingButtonWrap">
-                            <button class="attributeButton strengthText"
-                                onclick="changeTrainingAttribute(attribute.strength)"></button>
-                            <button class="attributeButton toughnessText"
-                                onclick="changeTrainingAttribute(attribute.toughness)"></button>
-                            <button class="attributeButton   mindText"
-                                onclick="changeTrainingAttribute(attribute.mind)"></button>
-                            <button class="attributeButton agilityText"
-                                onclick="changeTrainingAttribute(attribute.agility)"></button>
+                        <div id = "activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 1fr 1fr;grid-auto-rows: min-content;
+                        height: 50%">
+                            <div class="oxanium dotted" style="border:5px white inset">
+                                <div>Running laps at the park</div>
+                                <span>RANK:F</span><progress class="testProgressBar"
+                                    style="height: 5px;width: -webkit-fill-available;" value="100"
+                                    max="1000"></progress>
+                                <div>Attributes:</div>
+                                <div>
+                                    <!-- <span class="strengthText"></span> -->
+                                    <span class="toughnessText">0.1x</span>
+                                    <!-- <span class="mindText"></span>
+                                    <span class="agilityText"></span> -->
+                                    Cost per: 0$
+                                </div>
+                                <progress style="width: -webkit-fill-available;height: 10px;" value="700"
+                                    max="1000"></progress>
+                            </div>
+
+
+                            <div class="oxanium dotted" style="border:5px white inset">
+                                <div>Workout at the gym</div>
+                                <span>RANK:F</span><progress class="testProgressBar"
+                                    style="height: 5px;width: -webkit-fill-available;" value="200"
+                                    max="1000"></progress>
+                                <div>Attributes:</div>
+                                <div>
+                                    <span class="strengthText">2.0x</span>
+                                    <!-- <span class="toughnessText">0.1x</span> -->
+                                    <!-- <span class="mindText"></span>
+                                    <span class="agilityText"></span> -->
+                                    Cost per: 5.00$
+                                </div>
+                                <progress style="width: -webkit-fill-available;height: 10px;" value="700"
+                                    max="1000"></progress>
+                            </div>
                         </div>
-                        <div class="pickle" style="margin:5px;margin-top:1em;margin-bottom:1em">Attributes per session:
-                            <span id="trainingReward"></span>
-                        </div>
-                        <div class="pickle center biggerText">Attributes per session: <span id="trainingReward"></span>
-                        </div>
-                        <button class="pickle" id="trainingUpgradeButton" onclick="upgradeTrainingArea()"
-                            onmouseenter="updateTrainingNextText()" onmouseleave="updateTrainingText()">Upgrade: <span
-                                id="trainingUpgradeCost"></span></button>
+
                         <div class="subHeader pickle">Base attributes from training</div>
                         <div id="statsGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr 1fr; gap:1em; margin:1em;  ">

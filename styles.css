@@ -530,7 +530,16 @@ progress[value]::-webkit-progress-bar {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
-
+.rankProgressBar,
+.rankProgressBar[value]::-webkit-progress-bar {
+    height: 5px;
+    width: -webkit-fill-available;
+    background: rgb(255, 255, 255);
+    margin-bottom: 0px
+}
+.rankProgressBar::-webkit-progress-value {
+    background: purple;
+}
 .trainingProgressBar,
 .trainingProgressBar[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);

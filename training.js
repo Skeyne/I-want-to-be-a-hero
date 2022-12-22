@@ -1,3 +1,4 @@
+const activityLevelToRank = ['G','F','E','D','C','B','A','S','SS','SSS',];
 var trainingAreaData = {
     0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1 },
 }
@@ -87,6 +88,37 @@ class TrainingArea {
     }
 
 }
+var activityGrid = document.getElementById("activityGrid");
+Object.keys(activityData).forEach(id => {
+    const activity = activityData[id];
+    let d = document.createElement("div");
+    d.setAttribute("class","oxanium dotted");
+    let title = document.createElement("div");
+    title.innerHTML = activity.name;
+    let rankText = document.createElement("span");
+    rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}`;
+    let rankProgress = document.createElement("progress");
+    rankProgress.setAttribute("class","rankProgressBar");
+    rankProgress.max = 100;
+    rankProgress.value = 50;
+    let attributeText = document.createElement("div");
+    for (let index = 0; index < activity.attributeRatios.length; index++) {
+        const ratio = activity.attributeRatios[index];
+        if(ratio == 0) continue;
+        let s = document.createElement("span");
+        s.setAttribute("class",`${attributeIndexToId[index]}Text`);
+        s.innerHTML = `${format(ratio)}x`
+        attributeText.append(s);
+    }
+    let costText = document.createElement("span");
+    costText.innerHTML = `Cost: ${activity.cost}`;
+    let activityProgress = document.createElement("progress");
+    activityProgress.setAttribute("class","rankProgressBar");
+    activityProgress.max = 100;
+    activityProgress.value = 50;
+    d.append(title,rankText,rankProgress,attributeText,costText,activityProgress);
+    activityGrid.append(d);
+});
 var currentTrainingArea = new Activity(activityData['runPark']);
 //changeTrainingAttribute(playerStats.currentTrainingAttribute);
 //updateTrainingText();
@@ -104,7 +136,6 @@ function upgradeTrainingArea() {
         playerStats.trainingAreaLevels[currentTrainingArea.name] += 1;
         updateTrainingText();
         updateTrainingCanBuy();
-
     }
 }
 function updateTrainingText() {
