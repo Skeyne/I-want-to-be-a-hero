@@ -1459,10 +1459,10 @@ function changeClass(className, keep = false) {
     populateAbilitySlots();
     if (!keep) {
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
-            playerStats.strength = 0.1*formulas.softcappedAttribute(0);
-            playerStats.toughness = 0.1*formulas.softcappedAttribute(1);
-            playerStats.mind = 0.1*formulas.softcappedAttribute(2);
-            playerStats.agility = 0.1*formulas.softcappedAttribute(3);
+            playerStats.strength = 0.01*formulas.softcappedAttribute(0);
+            playerStats.toughness = 0.01*formulas.softcappedAttribute(1);
+            playerStats.mind = 0.01*formulas.softcappedAttribute(2);
+            playerStats.agility = 0.01*formulas.softcappedAttribute(3);
         
     }
     if (className != 'human') {
