@@ -34,6 +34,7 @@
 
 
 <body>
+    <div id="splashScreen" class = "splashScreen"><div class="pickle splashTitle splashFadeIn">I WANT TO BE A HERO</div></div>
     <header>
         <!-- FPS setting to be revised -->
         <!-- <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
@@ -57,7 +58,7 @@
             <source src="cyberpunk-street.mp3" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
-        <h1 class="title pickle">
+        <h1 class="title pickle" style="display: none;">
             I WANT TO BE A HERO
         </h1>
         <div style="width:100%">
@@ -214,9 +215,15 @@
                 </section>
                 <section class="infoBox" id="helpBox">
                     <div class="blockHeader pickle" style="display: block">HELP</div>
-                    <div class="blockBody dotted pickle" id="helpBody">
-                        Your hero automatically uses his skills in combat.
+                    <div class="blockBody dotted pickle verticalScroll  " id="helpBody" style="overflow-y:scroll">
+                        <div class="subHeader">Combat</div>
+                        Your hero automatically uses his abilities in combat. Combat is action gauge based, once it fills the prepared ability is used.
+                        You can also set which abilities to use once you unlock more by clicking on the slots on the status tab.
+                        Finding criminals takes some time (patrolling, affected by agility) after which you'll enter an encounter.
+                        If you are defeated in combat you'll take some downtime to recover (10 seconds).
                         <br \>
+                        <div class="subHeader">Attributes</div>
+                        
                         <br \><span class="pickle strengthText">STR</span>is the main component of damage in physical
                         moves.
                         <br \><span class="pickle toughnessText">TGH</span>increases your health and damage
@@ -224,7 +231,19 @@
                         <br \><span class="pickle mindText">MND</span>reduces your ability cooldowns.
                         <br \><span class="pickle agilityText">AGI</span>increases your action speed (affects patrol).
                         <br \>
-                        <br \>Your first move is Punch. Punch's damage ratio is 80% <span
+                        <br \>Attributes can be increased by training.
+                        <div class="subHeader">Training</div>
+                        Training is done through activities. Each completion gives PlayerLevel*AttributeRatio attributes.
+                        The starting activities are free but more rewarding activities that you unlock as you progress cost money to perform.
+                        <br \>
+                        As you complete the same activity, it gains experience and can rank up. Ranking up increases the reward multiplier.
+                        Ranking up needs more exeprience every time, but later ranks are successively more rewarding.
+                        <br \>
+                        New activities may not even be worth it until you gain some experience in doing them.
+                        <br \>
+                        The more of the activity's respective stat you have the more experience you earn doing it.
+                        <div class="subHeader">Abilities</div>
+                        <br \>Your first ability is Punch. Punch's damage ratio is 80% <span
                             class="pickle strengthText">STR</span> 20% <span class="pickle agilityText">AGI</span>,
                         which is to say that,
                         that
@@ -234,8 +253,13 @@
                         where the second part is evaluated and then summed from every contributing attribute.
                         <br \>
                         <br \> The damage ratio of abilities can be found by hovering them on the "Abilities" tab.
+                        <br \> Abilities also have a damage range, which modifies the final damage, a use time and a cooldown.
+                        Cooldowns only start AFTER the abiltiy is used. Some ranged skills have a minimum range, the screen is 100 units wide.
+                        
+                        <div class="subHeader">Additional mechanics</div>
+                        <br \>Heal: heal for an amount.
                         <br \>
-                        <br \>Attributes can be increased by training.
+                        <br \>Shield: gives temporary health points. Lost at the end of an encounter. Does not stack, stronger shields overwrite.
                         <br \>
                         <br \>Critical strike: chance to deal 50% more damage.
                         <br \>

@@ -8,35 +8,35 @@ var activityData = {
         attributeRatios: [0.01, 0, 0, 0],
         //[[0.01, 0, 0, 0], [0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0],
         //[0.01, 0, 0, 0], [0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0]],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 10
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_0_1": {
         id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.01, 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 10
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_0_2": {
         id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.01],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 10
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_0_3": {
         id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.01, 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 10
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_1_0": {
         id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.05, 0, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 10, expPower: 10
+        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
     },
     "activity_1_1": {
         id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.05, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 10, expPower: 10
+        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
     },
     "activity_1_2": {
         id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.05],
-        timeToComplete: 15, cost: 5, expBase: 10, expPower: 10
+        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
     },
     "activity_1_3": {
         id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.05, 0],
-        timeToComplete: 15, cost: 5, expBase: 10, expPower: 10
+        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
     },
 }
 
@@ -79,7 +79,7 @@ class Activity {
                 let attribute = attributeIndexToId[index];
                 let reward = rewards[index] * (playerStats.level + 1) * getTrainingModifier(attribute);
                 if((rewards[index] > 0)){
-                    expReward += Math.log10(playerStats[attribute]+1);
+                    expReward += Math.log10(playerStats[attribute]+1) * this.timeToComplete/10000;
                 }
                 playerStats[attribute] += reward;
             }

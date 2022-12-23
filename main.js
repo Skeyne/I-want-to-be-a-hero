@@ -42,24 +42,27 @@ function disableScroll() {
 function enableScroll() {
     window.onscroll = function () { };
 }
-
-let isMouseHover = false
-leftWindow.addEventListener("mouseleave", function (event) {
-    pageY = 0;
-    isMouseHover = false
-    enableScroll();
-}, false);
-leftWindow.addEventListener("mouseover", function (event) {
-    if (pageY == 0) pageY = window.pageYOffset;
-    isMouseHover = true
-    disableScroll();
-}, false);
-
-window.addEventListener("wheel", function (e) {
-    if (!isMouseHover) return;
-    if (e.deltaY > 0) changeTab(activeTab + 1);
-    else changeTab(activeTab - 1);;
+document.addEventListener('DOMContentLoaded', (e)=>{
+    setTimeout(()=>{document.getElementById("splashScreen").className += ' splashScreenFadeOut'},1000)
+    setTimeout(()=>{document.getElementById("splashScreen").style.display = 'none'},2000)
 });
+// let isMouseHover = false
+// leftWindow.addEventListener("mouseleave", function (event) {
+//     pageY = 0;
+//     isMouseHover = false
+//     enableScroll();
+// }, false);
+// leftWindow.addEventListener("mouseover", function (event) {
+//     if (pageY == 0) pageY = window.pageYOffset;
+//     isMouseHover = true
+//     disableScroll();
+// }, false);
+
+// window.addEventListener("wheel", function (e) {
+//     if (!isMouseHover) return;
+//     if (e.deltaY > 0) changeTab(activeTab + 1);
+//     else changeTab(activeTab - 1);;
+// });
 function logConsole(text) {
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
@@ -471,7 +474,7 @@ class Enemy extends CombatEntity {
         }
         switch (this.nextMove.type) {
             case 0:
-                if (this.distance <= this.nextMove.range) {
+                if (this.distance <= this.nextMove.range[0]) {
                     let d = this.nextMove.baseDamage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
@@ -479,12 +482,10 @@ class Enemy extends CombatEntity {
                         + this.nextMove.damageRatios[3] * (Math.sqrt(this.data.attributes[3] + 1) - 1);
                     let dr = target.takeDamage(d);
                     logConsole(`${this.name} hit ${this.target.name} with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
-                } else {
-
                 }
                 break;
             case 1:
-                this.distance -= Math.min(this.distance - 5, this.nextMove.range);
+                this.distance -= Math.min(this.distance - 5, this.nextMove.range[0]);
                 //logConsole(`${this.name} used ${this.nextMove.name}`)
                 break;
             default:
@@ -504,17 +505,45 @@ class Enemy extends CombatEntity {
             let k = this.data.moves[index];
             let ability = abilityLibrary[k];
             if (this.abilityCooldowns[k] > 0) { weights[index] = -1; continue; }
-            // if (ability.type == 0) {
-            //     weights[index] = (ability.range >= dist ? 100 : 0);
-            // }
-            // if (ability.type == 1) {
-            //     weights[index] = (dist > 5 ? 100 : 0);
-            // }
             if (ability.type == 0) {
-                weights[index] = (ability.range >= dist ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                switch (ability.category) {
+                    case 'melee':
+                        weights[index] = (ability.range[0] >= dist ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                        break;
+                    case 'ranged':
+                        weights[index] = ((ability.range[1] >= dist && ability.range[0] <= dist) ? arraySum(ability.damageRatios) / ability.time * 100000 : 0);
+                        break;
+                    default:
+                        console.log("UNKOWN ABILITY CATEGORY")
+                        break;
+                }
             }
             if (ability.type == 1) {
-                weights[index] = (dist <= 5 ? 0 : ability.range / dist);
+                weights[index] = (dist <= 5 ? 0 : ability.range[0] / dist);
+            }
+            if (ability.type == 2) {
+                if (ability.hasOwnProperty("effects")) {
+                    if (ability.effects.hasOwnProperty('heal')) {
+                        let amount = ability.damage
+                            + ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        if (this.maxHealth - this.health > amount) {
+                            weights[index] = 100;
+                        }
+                    }
+                    if (ability.effects.hasOwnProperty('shield')) {
+                        let amount = ability.damage
+                        + ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                        + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                        + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                        + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        if (this.shield <= 0) {
+                            weights[index] = 100;
+                        }
+                    }
+                }
             }
         }
         const max = Math.max(...weights);
@@ -530,9 +559,10 @@ class Enemy extends CombatEntity {
         } else {
             pick = Math.floor(Math.random() * indexes.length);
         }
-        let moveKey = Object.keys(this.data.moves)[indexes[pick]];
-        this.nextMoveKey = this.data.moves[moveKey];
-        this.nextMove = abilityLibrary[this.data.moves[moveKey]];
+        let moveKey = this.data.moves[indexes[pick]];
+        if (moveKey == undefined){ moveKey = 'wait';}
+        this.nextMoveKey = moveKey;
+        this.nextMove = abilityLibrary[this.nextMoveKey];
         this.nextMoveInitiative = this.nextMove.time;
     }
     draw(context) {
@@ -678,7 +708,7 @@ function renderLoop() {
     document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed) + "s";
     document.getElementById("playerInitiativeBar").max = player.nextMoveInitiative;
     document.getElementById("playerInitiativeBar").value = player.initiative;
-    document.getElementById("trainingAreaName").innerHTML = "Training at: " + currentTrainingArea.name;
+    document.getElementById("trainingAreaName").innerHTML = "Current: " + currentTrainingArea.name;
     document.getElementById("trainingProgressBar").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBar").value = currentTrainingArea.progress;
     document.getElementById("trainingProgressBarOverview").max = currentTrainingArea.timeToComplete;
