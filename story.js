@@ -80,7 +80,7 @@ const storyQuests = [
     },
     {
         title: `Vigilante III`,
-        text: `Finally taking down the oversized brute, you follow the fumes to some exhaust chimneys and a hatch that leads underground.
+        text: `After taking down the oversized brute, you follow the fumes to some exhaust chimneys and a hatch that leads underground.
              The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself in some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex. Soon you spot more escaped prisoners, but they look strange.`,
         requirementType: `defeat`,
         requirementTarget: [`infectedPrisoner`],
@@ -93,25 +93,63 @@ const storyQuests = [
         requirementTarget: [`experiment999`],
         requirementAmount: [1],
     },
+    {
+        title: `Vigilante V`,
+        text: `You wake up on the floor of the lab. You remember fighting the monstrosity, and as you ducked under another blade swing it smashed
+         a vat next to you, and the liquid inside poured over you. You remember screaming in pain and not much else. Looking around,
+          the monstrosity seems to be gone. You feel weak, like all the training you've done the past months has been sapped from you.
+          But you also feel something else, new potential, like you fell off a tower, and when you look up, the tower is even higher.`,
+        requirementType: `class`,
+        requirementTarget: [`Pick your class:
+        <button class="classButton" style="margin:2%" onclick="changeClass('superhuman')">Superhuman</button>
+        <button class="classButton" style="margin:2%" onclick="changeClass('mutant')">Mutant</button>
+        <button class="classButton" style="margin:2%" onclick="changeClass('esper')">Esper</button>
+        <button class="classButton" style="margin:2%" onclick="changeClass('ninja')">Ninja</button>`],
+        requirementAmount: [1],
+    },
+    {
+        title: `A New Beginning I`,
+        text: `Escaping the prison before the police shows up, you return to your routine. You are weak but as you get into fight after fight you notice that your body is changing, faster, stronger than it should be.
+        And soon you start to notice even greater changes. What the hell were they doing in that lab, and where did that monster go? You need to start recovering your strength for next time he shows up.`,
+        requirementType: `level`,
+        requirementTarget: [`level`],
+        requirementAmount: [20],
+    },
+    {
+        title: `A New Beginning II`,
+        text: `Ever since the prison incident, crime in the city has continued to grow. There are reports of bizarre accidents and unusual individuals. In the meanwhile, the mafia has continued to expand in your neighbourhood. You think that with these new powers you can put up a fight.`,
+        requirementType: `defeat`,
+        requirementTarget: [`thug2`,`thug3`],
+        requirementAmount: [30,10],
+    },
+    {
+        title: `A New Beginning III`,
+        text: `You keep beating up these thugs but there is a mastermind organizing them, if he doesn't go down this won't stop. If I keep taking down his henchmen closeer to his territory he'll show up`,
+        requirementType: `defeat`,
+        requirementTarget: [`thug4`,`thug5`,'don'],
+        requirementAmount: [50,20,1],
+    },
+    {
+        title: `A New Beginning IV`,
+        text: `Ever since you defeated The Don mafia activity around your area has simmered down, but the strange incidents around the city continue. One day while walking the streets you her a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYON!". This must be him. This time I won't lose.`,
+        requirementType: `defeat`,
+        requirementTarget: [`crabman`],
+        requirementAmount: [1],
+    },
 
 ];
 const endOfStoryQuest = {
     title: `The End So Far`,
-    text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. As a reward, you can preview the Esper class below (WARNING: this is experimental content, you should make a backup, changing class resets your level and attributes)
+    text: `You did it. This is the end of the content so far.<br><br>Congratulations!<br><br> Feel free to keep on playing. <br>
+    There's also a final area 'The Depths' with an exceptionally unfair encounter if you fancy grinding more.
     <br>
-    There's also a final area 'The Void' with an exceptionally unfair enemy if you fancy your odds at beating him.
-    <br>
-    <button class="classButton" style="float:left; margin:5%" onclick="changeClass('human')">Human</button>
-    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('superhuman')">Superhuman</button>
-    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('mutant')">Mutant</button>
-    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('esper')">Esper</button>
-    <button class="classButton" style="float:left;margin:5%" onclick="changeClass('ninja')">Ninja</button>`,
+    `,
     requirementType: `none`,
     requirementTarget: [1],
     requirementAmount: [1],
 };
 
-
+if(isOutdated){if(playerStats.storyProgress >=13)playerStats.storyProgress = 13;updateStoryQuest();}
 updateStoryQuest();
 updateDiaryEntries();
 
@@ -159,6 +197,15 @@ function getStoryQuest(index) {
     if (index < storyQuests.length) { return storyQuests[index] }
     else { return endOfStoryQuest }
 }
+function checkClassQuest() {
+    let quest = getStoryQuest(playerStats.storyProgress);
+    if (quest.requirementType != 'class') return false;
+    if (playerStats.class == 'human') return false;
+    for (let index = 0; index < quest.requirementTarget.length; index++) {
+        playerStats.currentStoryQuestProgress[index] += 1;
+    }
+    updateStoryQuest();
+}
 function checkTrainingQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
     if (quest.requirementType != 'training') return false;
@@ -191,6 +238,8 @@ function checkLevelQuest() {
 function updateStoryQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
     let completed = true;
+    if(playerStats.currentStoryQuestProgress.length != quest.requirementTarget.length)
+    {playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);}
     for (let index = 0; index < quest.requirementTarget.length; index++) {
         if (playerStats.currentStoryQuestProgress[index] >= quest.requirementAmount[index]) {
             continue;
@@ -200,7 +249,9 @@ function updateStoryQuest() {
     }
     if (completed) {
         playerStats.storyProgress += 1;
+        console.log(getStoryQuest(playerStats.storyProgress).length);
         playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
+        console.log(playerStats.currentStoryQuestProgress);
         checkAreaUnlocks();
         updateDiaryEntries();
     }
@@ -229,6 +280,9 @@ function storyQuestText(progress, diary=false) {
         case 'level':
             requirementsString = `Get to level ${format(playerStats.level)}/${quest.requirementAmount[0]}`;
             break;
+        case 'class':
+            requirementsString = quest.requirementTarget[0];
+            break;
         case 'none':
             requirementsString = "";
             break;
@@ -254,6 +308,9 @@ function storyRequirementsText(progress) {
             break;
         case 'level':
             requirementsString = `Get to level ${format(playerStats.level)}/${quest.requirementAmount[0]}`;
+            break;
+        case 'class':
+            requirementsString = quest.requirementTarget[0];
             break;
         case 'none':
             requirementsString = "Congratulations! You reached the end of current content.";

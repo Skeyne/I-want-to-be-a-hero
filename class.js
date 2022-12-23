@@ -1434,8 +1434,8 @@ function resetSkills() {
 }
 
 function changeClass(className, keep = false) {
-    if (className == playerStats.class) return;
-    if (className != 'human') { playerStats.abilitySlots = 4 } else { playerStats.abilitySlots = 3 };
+    //if (className == playerStats.class) return;
+    if (className != 'human') { playerStats.abilitySlots = 4; player.health = -1;} else { playerStats.abilitySlots = 3 };
     resetSkills();
     playerStats.class = className;
     populatePassiveTree();
@@ -1458,19 +1458,21 @@ function changeClass(className, keep = false) {
     RebuildSlots();
     populateAbilitySlots();
     if (!keep) {
-
-        if (className != 'human') {
-            playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
-            playerStats.strength = 10;
-            playerStats.toughness = 10;
-            playerStats.mind = 10;
-            playerStats.agility = 10;
-        } else {
-            playerStats.attributeSoftcaps = [100, 100, 100, 100];
-            playerStats.strength = 1;
-            playerStats.toughness = 1;
-            playerStats.mind = 1;
-            playerStats.agility = 1;
-        }
+        playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
+            playerStats.strength = 0.1*formulas.softcappedAttribute(0);
+            playerStats.toughness = 0.1*formulas.softcappedAttribute(1);
+            playerStats.mind = 0.1*formulas.softcappedAttribute(2);
+            playerStats.agility = 0.1*formulas.softcappedAttribute(3);
+        
     }
+    if (className != 'human') {
+        playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
+    } else {
+        playerStats.attributeSoftcaps = [100, 100, 100, 100];
+        playerStats.strength = 1;
+        playerStats.toughness = 1;
+        playerStats.mind = 1;
+        playerStats.agility = 1;
+    }
+    checkClassQuest()
 }

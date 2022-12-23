@@ -24,19 +24,19 @@ var activityData = {
     },
     "activity_1_0": {
         id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.05, 0, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_1": {
         id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.05, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_2": {
         id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.05],
-        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_3": {
         id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.05, 0],
-        timeToComplete: 15, cost: 5, expBase: 1000, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
 }
 
@@ -61,7 +61,7 @@ class Activity {
         return this.attributeRatios.map(x => x *(playerStats.activityLevels[this.id].level + 1));
     }
     tick() {
-        if (this.costPaid == false) { if (!this.payCost) return; }
+        if (this.costPaid == false) { if (!this.payCost()) return; }
         this.progress += logicTickTime;
         if (this.progress >= this.timeToComplete) {
             this.progress -= this.timeToComplete;
@@ -83,9 +83,6 @@ class Activity {
                 }
                 playerStats[attribute] += reward;
             }
-            
-            
-            
         }
         playerStats.activityLevels[this.id].exp += expReward;
         if (playerStats.activityLevels[this.id].exp >= this.expToNext) {
@@ -94,6 +91,7 @@ class Activity {
             this.expToNext = this.ExpToNext;
             this.updateRank();
         }
+        this.updateRankProgress();
         checkTrainingQuest();
     }
     payCost() {
@@ -104,6 +102,11 @@ class Activity {
         let bars = this.element.getElementsByTagName("progress");
         bars[0].value = playerStats.activityLevels[this.id].exp;
         bars[1].value = this.progress;
+    }
+    updateRankProgress(){
+        let rankText = this.element.getElementsByTagName("span")[0];
+        rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[this.id].level]}
+        (${format(100*playerStats.activityLevels[this.id].exp/this.expToNext)}%)`;
     }
     updateRank(){
         let rankText = this.element.getElementsByTagName("span")[0];
@@ -123,6 +126,20 @@ class Activity {
     }
     onSelect(){
         this.element.style.borderColor = 'goldenrod';
+        let iconWrapper = document.getElementById("trainingBarOverviewIcon");
+        iconWrapper.innerHTML = "";
+        for (let index = 0; index < this.attributeRatios.length; index++) {
+            const ratio = this.attributeRatios[index];
+            if (ratio != 0){
+                let icon = document.createElement("span");
+                icon.innerHTML = (ratio > 0 ? ' +': ' -');
+                icon.className = attributeIndexToId[index] + "Text";
+                icon.style.color = 'white';
+                iconWrapper.append(icon);
+            }
+            
+        }
+       
     }
     onDeselect(){
         this.element.style.borderColor = "";
@@ -182,7 +199,8 @@ Object.keys(activityData).forEach(id => {
     title.style.whiteSpace ='nowrap';
     title.innerHTML = activity.name;
     let rankText = document.createElement("span");
-    rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}`;
+    rankText.innerHTML =  `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}
+    (${format(100*playerStats.activityLevels[id].exp/activity.expToNext)}%)`;
     let rankProgress = document.createElement("progress");
     rankProgress.setAttribute("class", "rankProgressBar");
     rankProgress.max = activity.expToNext;

@@ -210,7 +210,7 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
-                    let d3 = d2 * (1 + target.health / target.maxHealth * this.overwhelm) * (1 + (1 - target.health / target.maxHealth) * this.takedown);
+                    let d3 = d2 * (1 + target.health / target.maxHealth * this.overwhelm) * (1 + (1 - target.health / target.maxHealth) * moveTakedown);
 
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
@@ -457,7 +457,7 @@ class Enemy extends CombatEntity {
         this.healthRegeneration = enemyData.healthRegen;
         this.distance = distance;
         this.name = enemyData.name;
-        this.image = new Image(32, 32);
+        this.image = new Image();
         this.image.src = enemyData.spriteFile;
         this.portraitImage = new Image(32, 32);
         this.portraitImage.src = enemyData.portraitFile;
@@ -474,7 +474,20 @@ class Enemy extends CombatEntity {
         }
         switch (this.nextMove.type) {
             case 0:
-                if (this.distance <= this.nextMove.range[0]) {
+                let inRange = false;
+                let dist = this.distance;
+                switch (this.nextMove.category) {
+                    case 'melee':
+                        inRange = (this.nextMove.range[0] >= dist);
+                        break;
+                    case 'ranged':
+                        inRange = (this.nextMove.range[1] >= dist && this.nextMove.range[0] <= dist);
+                        break;
+                    default:
+                        console.log("UNKOWN ABILITY CATEGORY")
+                        break;
+                }
+                if (inRange) {
                     let d = this.nextMove.baseDamage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
@@ -569,7 +582,7 @@ class Enemy extends CombatEntity {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 40 - (this.drawIndex) * 10;
 
-        context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
+        context.drawImage(this.image, canvasX - this.image.width*2, canvasY - this.image.height*4, this.image.width*4, this.image.height*4);
         drawInfoBars(context, this, canvasX, canvasY);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
