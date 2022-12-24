@@ -68,7 +68,7 @@ var abilityLibrary = {
         damageRange: [0.9, 1.1],
         time: 3000,
         cooldownTime: 7000,
-        range: [10,10],
+        range: [0,10],
     },
     'mutantSlash': {
         type: 0,

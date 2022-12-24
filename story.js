@@ -124,7 +124,7 @@ const storyQuests = [
     },
     {
         title: `A New Beginning III`,
-        text: `You keep beating up these thugs but there is a mastermind organizing them, if he doesn't go down this won't stop. If I keep taking down his henchmen closeer to his territory he'll show up`,
+        text: `You keep beating up these thugs but there is a mastermind organizing them, if he doesn't go down this won't stop. If I keep taking down his henchmen closer to his territory he'll show up`,
         requirementType: `defeat`,
         requirementTarget: [`thug4`,`thug5`,'don'],
         requirementAmount: [50,20,1],
