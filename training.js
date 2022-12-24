@@ -38,6 +38,22 @@ var activityData = {
         id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.05, 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
+    "activity_2_0": {
+        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, 0, 0, -0.1],
+        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+    },
+    "activity_2_1": {
+        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [0.05, 0.15, -0.05,0],
+        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+    },
+    "activity_2_2": {
+        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.2, 0.35],
+        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+    },
+    "activity_2_3": {
+        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [-0.05, -0.05, 0.4, -0.05],
+        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+    },
 }
 
 class Activity {
@@ -81,7 +97,7 @@ class Activity {
                 if((rewards[index] > 0)){
                     expReward += Math.log10(playerStats[attribute]+1) * this.timeToComplete/10000;
                 }
-                playerStats[attribute] += reward;
+                playerStats[attribute] = Math.max(0,playerStats[attribute]);
             }
         }
         playerStats.activityLevels[this.id].exp += expReward;
