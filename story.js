@@ -59,7 +59,7 @@ const storyQuests = [
     
     {
         title: `Streetfights IV`,
-        text: `Time to tkae out the whole gang.`,
+        text: `Time to take out the whole gang.`,
         requirementType: `defeat`,
         requirementTarget: [`thug`],
         requirementAmount: [30],

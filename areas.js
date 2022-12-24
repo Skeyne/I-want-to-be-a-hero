@@ -99,24 +99,24 @@ const areas = [
     }),
     new Area({
         name: "Streets II", background: "cyberpunk-street.png",
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 14,
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 15,
         patrolTime: 7000,
         encounters: [{weight:100,enemies:{"thug2":{1:3,2:2,3:1},"thug3":{2:1,2:1},}}]
     }),
     new Area({
         name: "Streets III", background: "cyberpunk-street.png",
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 15,
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
         patrolTime: 7000,
-        encounters: [{weight:100,enemies:{"thug4":{1:2,2:1,3:1},"thug5":{1:1,2:1},}},
-        {weight:500,enemies:{"thug4":{3:1,},"thug5":{2:1},"don":{1:1,},}}]
+        encounters: [{weight:900,enemies:{"thug4":{1:2,2:1,3:1},"thug5":{1:1,2:1},}},
+        {weight:100,enemies:{"thug4":{3:1,},"thug5":{2:1},"don":{1:1,},}}]
     }),
     new Area({
         name: "Riverside", background: "bridgeAreaBackground-1.png",
-        enemies: ["crabman"], enemyNum: 1, storyUnlock: 16,
+        enemies: ["crabman"], enemyNum: 1, storyUnlock: 17,
         patrolTime: 7000,
     }),
     new Area({
         name: "The Depths", background: "voidBackground.png",
-        enemies: ["crabman"], enemyNum: 3, storyUnlock: 17,
+        enemies: ["crabman"], enemyNum: 3, storyUnlock: 18,
         patrolTime: 10000,
     }),];
