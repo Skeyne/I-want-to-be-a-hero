@@ -380,7 +380,7 @@ class Player extends CombatEntity {
                             + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                             + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                             + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
-                        if (this.shield <= 0) {
+                        if (this.shield <= 0.2*amount) {
                             weights[index] = 100;
                         }
                     }

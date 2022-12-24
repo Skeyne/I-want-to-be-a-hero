@@ -304,9 +304,9 @@ enemyData.experiment9999 = {
 enemyData.crabman = {
     id:"crabman",
     name: "The Crabman",
-    maxHealth: 30000,
-    attributes: [2500000,200000,100,30000],
-    healthRegen: 0.005,
+    maxHealth: 15000,
+    attributes: [25000,20000,100,3000],
+    healthRegen: 0.0025,
     expReward: 25000,
     moneyReward: 2000,
     reputationReward: 1,

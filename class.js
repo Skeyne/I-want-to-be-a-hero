@@ -686,13 +686,13 @@ playerMoves = {
         description: "Form a temporary barrier to block attacks.",
         iconName: "placeholder",
         damage: 0,
-        damageRatios: [0, 0, 0.2, 0],
+        damageRatios: [0, 0, 0.6, 0],
         damageRange: [1, 1],
         effects: {
             'shield': 0,
         },
         time: 1000,
-        cooldownTime: 15000,
+        cooldownTime: 20000,
         range: [0, 0],
     },
     //Mutant

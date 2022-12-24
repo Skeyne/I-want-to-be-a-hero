@@ -93,7 +93,7 @@ class Activity {
         for (let index = 0; index < this.attributeRatios.length; index++) {
             if(rewards[index] != 0){
                 let attribute = attributeIndexToId[index];
-                let reward = rewards[index] * (playerStats.level + 1) * getTrainingModifier(attribute);
+                let reward = rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1: getTrainingModifier(attribute));
                 if((rewards[index] > 0)){
                     expReward += Math.log10(playerStats[attribute]+1) * this.timeToComplete/10000;
                 }
