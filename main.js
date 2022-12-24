@@ -313,7 +313,12 @@ class Player extends CombatEntity {
                 break;
         }
         if (repeat) {
-            return false;
+            if(target.health <= 0){
+                return true;
+            } else {
+
+                return false;
+            }
         } else {
             playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
             return true;
