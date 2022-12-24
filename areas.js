@@ -117,6 +117,6 @@ const areas = [
     }),
     new Area({
         name: "The Depths", background: "voidBackground.png",
-        enemies: ["crabman"], enemyNum: 3, storyUnlock: 18,
+        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 18,
         patrolTime: 10000,
     }),];

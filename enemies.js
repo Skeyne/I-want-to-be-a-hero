@@ -314,4 +314,17 @@ enemyData.crabman = {
     portraitFile: "prisoner9Portrait.png",
     moves: ['walk','punch','smash','mutantSlash','vomit'],
 };
+enemyData.ultracrabman = {
+    id:"ultracrabman",
+    name: "The Ultra Crabman",
+    maxHealth: 50000,
+    attributes: [250000,200000,1000,30000],
+    healthRegen: 0.005,
+    expReward: 25000,
+    moneyReward: 2000,
+    reputationReward: 1,
+    spriteFile: "crabman.png",
+    portraitFile: "prisoner9Portrait.png",
+    moves: ['walk','punch','smash','mutantSlash','vomit'],
+};
 
