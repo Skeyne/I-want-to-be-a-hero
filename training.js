@@ -97,7 +97,7 @@ class Activity {
                 if((rewards[index] > 0)){
                     expReward += Math.log10(playerStats[attribute]+1) * this.timeToComplete/10000;
                 }
-                playerStats[attribute] = Math.max(0,playerStats[attribute]);
+                playerStats[attribute] = Math.max(0,playerStats[attribute]+reward);
             }
         }
         playerStats.activityLevels[this.id].exp += expReward;
