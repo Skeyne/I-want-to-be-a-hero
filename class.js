@@ -1147,8 +1147,7 @@ function generatePassiveTooltip(skill) {
     if (skill.hasOwnProperty("requires")) {
         requirementsText = "Requires:<br>"
         for (const [key, value] of Object.entries(skill.requires)) {
-            console.log(key)
-            requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`
+            requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`;
         }
     }
     switch (skill.effect.type) {

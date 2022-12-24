@@ -154,7 +154,6 @@ updateStoryQuest();
 updateDiaryEntries();
 
 var areaSelect = document.getElementById("selectArea");
-console.log(playerStats.storyProgress);
 checkAreaUnlocks();
 function checkAreaUnlocks(){
     areaSelect.innerHTML = "";

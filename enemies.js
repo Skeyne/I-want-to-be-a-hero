@@ -247,7 +247,7 @@ enemyData.thug3 = {
     reputationReward: 1,
     spriteFile: "armedThug.png",
     portraitFile: "thugPortrait.png",
-    moves: ['handgun','walk'],
+    moves: ['punch','handgun','walk'],
 };
 enemyData.thug4 = {
     id:"thug4",
@@ -260,7 +260,7 @@ enemyData.thug4 = {
     reputationReward: 1,
     spriteFile: "thug.png",
     portraitFile: "thugPortrait.png",
-    moves: ['handgun','walk'],
+    moves: ['punch','handgun','walk'],
 };
 enemyData.thug5 = {
     id:"thug5",
