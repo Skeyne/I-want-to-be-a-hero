@@ -778,10 +778,13 @@ playerMoves = {
         description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one 10,000 punches, 10,000 times.",
         iconName: "multipleSimplePunches",
         damage: 1,
-        damageRatios: [.6, 0, 0, .5],
+        damageRatios: [.3, 0, 0, .3],
         damageRange: [0.8, 1.2],
-        time: 1000,
-        cooldownTime: 1000,
+        effects: {
+            'repeat': 0.5,
+        },
+        time: 500,
+        cooldownTime: 2000,
         range: [5, 5],
     },
     'titanicSwing': {
@@ -871,6 +874,7 @@ playerMoves = {
         damageRange: [1, 1.1],
         effects: {
             'aoe': 5,
+            'repeat': 0.5,
         },
         time: 500,
         cooldownTime: 500,

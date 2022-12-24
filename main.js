@@ -42,9 +42,9 @@ function disableScroll() {
 function enableScroll() {
     window.onscroll = function () { };
 }
-document.addEventListener('DOMContentLoaded', (e)=>{
-    setTimeout(()=>{document.getElementById("splashScreen").className += ' splashScreenFadeOut'},1000)
-    setTimeout(()=>{document.getElementById("splashScreen").style.display = 'none'},2000)
+document.addEventListener('DOMContentLoaded', (e) => {
+    setTimeout(() => { document.getElementById("splashScreen").className += ' splashScreenFadeOut' }, 1000)
+    setTimeout(() => { document.getElementById("splashScreen").style.display = 'none' }, 2000)
 });
 // let isMouseHover = false
 // leftWindow.addEventListener("mouseleave", function (event) {
@@ -64,6 +64,8 @@ document.addEventListener('DOMContentLoaded', (e)=>{
 //     else changeTab(activeTab - 1);;
 // });
 function logConsole(text) {
+    let lines = log.innerHTML.split(/<br>/);
+    if(lines.length>100){log.innerHTML = lines.slice(30).join('<br>');}
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
 }
@@ -110,8 +112,7 @@ class CombatEntity {
         this.tickCooldowns();
         if (this.initiative >= this.nextMoveInitiative) {
             this.initiative -= this.nextMoveInitiative;
-            this.act(this.target);
-            this.think();
+            if (this.act(this.target)) { this.think() };
         }
         return true;
     }
@@ -175,9 +176,11 @@ class Player extends CombatEntity {
             return;
         }
         let dist = target.distance;
+        let repeat = false;
         switch (this.nextMove.type) {
             case 0:
                 let inRange = false;
+
                 switch (this.nextMove.category) {
                     case 'melee':
                         inRange = (this.nextMove.range[0] >= dist);
@@ -198,6 +201,11 @@ class Player extends CombatEntity {
                                 case "takedown":
                                     moveTakedown += this.nextMove.effects[effect];
                                     break;
+                                case "repeat":
+                                    if (Math.random() < this.nextMove.effects[effect]){
+                                        repeat = true;
+                                    }
+                                    break;
                                 default:
                                     break;
                             }
@@ -215,6 +223,8 @@ class Player extends CombatEntity {
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
+                                case "repeat":
+                                    break;
                                 case "takedown":
                                     break;
                                 case "knockback":
@@ -302,7 +312,12 @@ class Player extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
-        playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
+        if (repeat) {
+            return false;
+        } else {
+            playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
+            return true;
+        }
     }
     think() {
         if (this.target == null) {
@@ -380,7 +395,7 @@ class Player extends CombatEntity {
                             + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                             + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                             + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
-                        if (this.shield <= 0.2*amount) {
+                        if (this.shield <= 0.2 * amount) {
                             weights[index] = 100;
                         }
                     }
@@ -506,6 +521,7 @@ class Enemy extends CombatEntity {
                 break;
         }
         this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime;
+        return true;
     }
     think() {
         if (this.target == null) {
@@ -548,10 +564,10 @@ class Enemy extends CombatEntity {
                     }
                     if (ability.effects.hasOwnProperty('shield')) {
                         let amount = ability.damage
-                        + ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                        + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                        + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                        + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                            + ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
                         if (this.shield <= 0) {
                             weights[index] = 100;
                         }
@@ -573,7 +589,7 @@ class Enemy extends CombatEntity {
             pick = Math.floor(Math.random() * indexes.length);
         }
         let moveKey = this.data.moves[indexes[pick]];
-        if (moveKey == undefined){ moveKey = 'wait';}
+        if (moveKey == undefined) { moveKey = 'wait'; }
         this.nextMoveKey = moveKey;
         this.nextMove = abilityLibrary[this.nextMoveKey];
         this.nextMoveInitiative = this.nextMove.time;
@@ -582,7 +598,7 @@ class Enemy extends CombatEntity {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 40 - (this.drawIndex) * 10;
 
-        context.drawImage(this.image, canvasX - this.image.width*2, canvasY - this.image.height*4, this.image.width*4, this.image.height*4);
+        context.drawImage(this.image, canvasX - this.image.width * 2, canvasY - this.image.height * 4, this.image.width * 4, this.image.height * 4);
         drawInfoBars(context, this, canvasX, canvasY);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
