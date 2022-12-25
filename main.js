@@ -690,10 +690,11 @@ var player = new Player(playerStats);
 var bgImage = new Image();
 var gameState = "InPatrol";
 var engagementRangeInput = document.getElementById("engagementDistanceInput");
+engagementRangeInput.addEventListener("keydown", e => e.preventDefault());
 engagementRangeInput.value = playerStats.engagementRange;
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange(){
-    playerStats.engagementRange = Number(engagementRangeInput.value);
+    playerStats.engagementRange =  Math.ceil(Number(engagementRangeInput.value)/5)*5;
 }
 
 //const worker = new Worker('./worker.js');
