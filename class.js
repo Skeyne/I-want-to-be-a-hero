@@ -695,6 +695,24 @@ playerMoves = {
         cooldownTime: 20000,
         range: [0, 0],
     },
+    'repulsionWave': {
+        type: 0,
+        category: 'melee',
+        name: "Repulsion Wave",
+        description: "Emit reality-altering waves to give you some space",
+        iconName: "placeholder",
+        damage: 0,
+        damageRatios: [0, .1, .2, 0],
+        damageRange: [1, 1],
+        effects: {
+            'knockback': 10,
+            'aoe': 20,
+            'repeat': 0.75,
+        },
+        time: 500,
+        cooldownTime: 5000,
+        range: [20, 20],
+    },
     //Mutant
     'bulkFist': {
         type: 0,
@@ -891,6 +909,22 @@ playerMoves = {
         cooldownTime: 5000,
         range: [20, 20],
     },
+    'bladeStorm': {
+        type: 0,
+        category: 'melee',
+        name: "Blade Storm",
+        description: "Unleash a flurry of slashes in a surge of energy.",
+        iconName: "bladeStorm",
+        damage: 0,
+        damageRatios: [0.1, 0, 0, 0.15],
+        damageRange: [0.5, 1.5],
+        effects: {
+            'repeat': 0.9,
+        },
+        time: 100,
+        cooldownTime: 10000,
+        range: [5, 5],
+    },
     'walk': {
         type: 1,
         category: 'movement',
@@ -934,12 +968,12 @@ abilityUnlocks = {
     'esper': {
         0: ['spiritFist'],
         10: ['telekineticProjectile', 'psionicPulse'],
-        25: ['psionicBarrier']
+        25: ['psionicBarrier','repulsionWave']
     },
     'ninja': {
         0: ['katana'],
         10: ['shadowStrike', 'shuriken'],
-        25: ['flashStep']
+        25: ['flashStep','bladeStorm'],
     },
     'cyborg': {
         0: ['punch'],
