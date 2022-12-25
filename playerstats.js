@@ -1,5 +1,6 @@
 const version = '0.03a';
 var isOutdated = false;
+var lastVersion;
 document.getElementById('versionText').innerHTML ='v'+version;
 const cleanPlayerStats = {
     experience: 0,
@@ -123,7 +124,7 @@ function load(file = null) {
             playerStats[property] = loadgame[property];
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
-        if (localStorage.getItem("version") != version){ isOutdated = true}
+        if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
     } else {
         console.log("No savefile found");
     }

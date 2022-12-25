@@ -149,7 +149,10 @@ const endOfStoryQuest = {
     requirementAmount: [1],
 };
 
-if(isOutdated){if(playerStats.storyProgress >=13)playerStats.storyProgress = 13;updateStoryQuest();}
+if(isOutdated){if(lastVersion.substr(0,4) == '0.02'){
+
+    if(playerStats.storyProgress >=13)playerStats.storyProgress = 13;updateStoryQuest();}
+}
 updateStoryQuest();
 updateDiaryEntries();
 
