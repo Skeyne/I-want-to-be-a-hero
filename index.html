@@ -110,8 +110,10 @@
                         </div>
                         <div class="statDisplay pickle blockPanel" id="nextMove">Next move: <span
                                 id="playerMoveText">0</span></div>
-                        <div class="statDisplay pickle" style="display: none;">
-                            Max health: <span id="playerMaxHealthDisplay">0</span>
+                        <div class ="pickle blockPanel">
+                            <label for="quantity">Engagement distance:</label>
+                            <input class="pickle" style="background: whitesmoke;" type="number" onchange="changeEngagementRange()"
+                            id="engagementDistanceInput" name="quantity" min="5" max="70" step="5">
                         </div>
                         <div class="pickle subHeader">Resources:</div>
                         <div id="resourceGrid"

@@ -689,7 +689,12 @@ var player = new Player(playerStats);
 //var encounter = new Encounter(currentArea, 1);
 var bgImage = new Image();
 var gameState = "InPatrol";
+var engagementRangeInput = document.getElementById("engagementDistanceInput");
+engagementRangeInput.value = playerStats.engagementRange;
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
+function changeEngagementRange(){
+    playerStats.engagementRange = Number(engagementRangeInput.value);
+}
 
 //const worker = new Worker('./worker.js');
 const worker = new Worker(URL.createObjectURL(new Blob(["(" + worker_function.toString() + ")()"], { type: 'text/javascript' })));
@@ -760,7 +765,6 @@ function renderLoop() {
     document.getElementById("playerExperienceBar").value = playerStats.experience;
     document.getElementById("playerHealthText").innerHTML = format(player.health) + "/" + format(player.maxHealth);
     document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience) + "/" + format(playerStats.experienceToNext);
-    document.getElementById("playerMaxHealthDisplay").innerHTML = format(player.maxHealth);
     document.getElementById("playerHealthBar").max = player.maxHealth;
     document.getElementById("playerHealthBar").value = player.health;
     document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed) + "s";
