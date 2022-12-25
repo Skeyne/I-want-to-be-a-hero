@@ -279,7 +279,7 @@ class Player extends CombatEntity {
                     //this.target.distance -= deltaPlus;
                     environmentDistance -= deltaPlus;
                 } else {
-                    encounter.enemyArray.forEach((enemy) => {if(enemy != null)enemy.distance -= deltaPlus;})
+                    encounter.enemyArray.forEach((enemy) => {if(enemy != null)enemy.distance += deltaPlus;})
                     //this.target.distance += deltaMinus;
                     environmentDistance += deltaMinus;
                 }
