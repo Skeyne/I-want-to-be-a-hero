@@ -15,6 +15,7 @@ const cleanPlayerStats = {
     agility: 0,
     attributeSoftcaps: [100, 100, 100, 100],
     attributeTrainingModifier: [1, 1, 1, 1],
+    flatReduction: 0,
     healthRegeneration: 0,
     criticalChance: 0,
     overwhelm: 0,
@@ -36,6 +37,7 @@ const cleanPlayerStats = {
     activityLevels: {},
     abilityCooldowns: {},
     currentArea: 0,
+    engagementRange: 5,
 }
 
 var playerStats = {};
@@ -70,7 +72,7 @@ function getSecondaryAttribute(property) {
     return (baseValue
         + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
         * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
-        * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))
+        * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent));
 }
 function getTrainingModifier(attributeName) {
     let baseValue = playerStats.attributeTrainingModifier[attributeIdToIndex[attributeName]];

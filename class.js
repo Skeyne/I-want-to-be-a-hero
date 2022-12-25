@@ -418,6 +418,21 @@ skillLibrary = {
             cost: [10, 100, 1000],
             requires: { 'mu_0_1': 1 }
         },
+        'mu_1_0': {
+            id: 'mu_1_0',
+            name: 'Mutation: Scales',
+            iconName: 'milerun',
+            desc: 'Your turn the outside of your skin into a scaled mesh, reducing the damage of every impact',
+            effect: {
+                type: 1, // attribute boost
+                effectTarget: "flatReductionHealth",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.002,
+            },
+            maxLevel: 3,
+            cost: [10, 100, 1000],
+            requires: { 'mu_0_1': 1 }
+        },
     },
     "cyborg": {
         'cy_0': {
@@ -502,26 +517,25 @@ skillLibrary = {
                 type: 1, // attribute boost
                 effectTarget: "dodgeChance",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.2,
+                effectMagnitude: 0.05,
             },
-            maxLevel: 1,
-            cost: [10],
+            maxLevel: 4,
+            cost: [5,20,40,80],
             requires: { 'ni_0_1': 1 }
         },
         'ni_1_0': {
             id: 'ni_1_0',
             name: 'Deadly',
             iconName: 'shadowB',
-            desc: 'PLACEHOLDER',
+            desc: 'Increases your critical chance (crits deal 50% more damage by default).',
             effect: {
-                type: 1, // attribute boost
+                type: 1, // secondary attribute boost
                 effectTarget: "criticalChance",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.02,
+                effectMagnitude: 0.005,
             },
-            maxLevel: 100,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5), Array(10).fill(6)
-                , Array(10).fill(7), Array(10).fill(8), Array(10).fill(9), Array(10).fill(10))
+            maxLevel: 20,
+            cost: Array(10).fill(5).concat(Array(10).fill(10)),
         },
         'ni_2_0': {
             id: 'ni_2_0',
@@ -721,7 +735,7 @@ playerMoves = {
         description: "Enlarge your fist to deliver a solid blow.",
         iconName: "bulkFist",
         damage: 1,
-        damageRatios: [.5, .8, 0, 0],
+        damageRatios: [.5, 1, 0, 0],
         damageRange: [1, 1.1],
         time: 4000,
         cooldownTime: 0,
@@ -750,7 +764,7 @@ playerMoves = {
         description: "Your skin explodes, covering nearby foes in acid.",
         iconName: "corrosiveBurst",
         damage: 1,
-        damageRatios: [0, 1.5, 0.5, 0],
+        damageRatios: [0, 1.6, 0.6, 0],
         damageRange: [0.8, 1.2],
         effects: {
             'aoe': 10
@@ -845,10 +859,11 @@ playerMoves = {
         description: "Take a few breaths and let your supernatural constitution catch up.",
         iconName: "secondWind",
         damage: 0,
-        damageRatios: [0.1, 1, 0, 0],
+        damageRatios: [0.06, .6, 0, 0],
         damageRange: [1, 1],
         effects: {
             'heal': 0,
+            'hope': 1,
         },
         time: 1000,
         cooldownTime: 14000,
@@ -862,8 +877,8 @@ playerMoves = {
         description: "A ninja's weapon (?).",
         iconName: "katana",
         damage: 1,
-        damageRatios: [.2, 0, 0, 1],
-        damageRange: [0.8, 1.2],
+        damageRatios: [.2, 0, 0, .75],
+        damageRange: [0.8, 1.1],
         time: 2000,
         cooldownTime: 0,
         range: [5, 5],
@@ -888,26 +903,37 @@ playerMoves = {
         description: "Launch a number of shuriken at your foes.",
         iconName: "shuriken",
         damage: 1,
-        damageRatios: [0, 0, 0.1, .3],
+        damageRatios: [0, 0, 0.05, .15],
         damageRange: [1, 1.1],
         effects: {
             'aoe': 5,
-            'repeat': 0.5,
+            'repeat': 0.75,
         },
         time: 500,
-        cooldownTime: 500,
+        cooldownTime: 2000,
         range: [10, 60],
     },
     'flashStep': {
         type: 1,
         category: 'movement',
         name: "Flash Step",
-        description: "PLACHOLDER",
+        description: "Use the secret techniques to rapidly travel a greater distance.",
         iconName: "move",
         damage: 0,
         time: 500,
         cooldownTime: 5000,
-        range: [20, 20],
+        range: [20, 0],
+    },
+    'diversion': {
+        type: 1,
+        category: 'movement',
+        name: "Diversion",
+        description: "Drop a smoke cloud and use the opportunity to reappear a distance away",
+        iconName: "placeholder",
+        damage: 0,
+        time: 1000,
+        cooldownTime: 15000,
+        range: [0, 30],
     },
     'bladeStorm': {
         type: 0,
@@ -934,14 +960,14 @@ playerMoves = {
         damage: 0,
         time: 1000,
         cooldownTime: 0,
-        range: [5, 5],
+        range: [5, 0],
     },
     'wait': {
         type: 1,
         category: 'movement',
         name: "Wait",
         description: "Got nothing to do.",
-        iconName: "placeholder",
+        iconName: "wait",
         damage: 0,
         time: 1000,
         cooldownTime: 0,
@@ -973,7 +999,7 @@ abilityUnlocks = {
     'ninja': {
         0: ['katana'],
         10: ['shadowStrike', 'shuriken'],
-        25: ['flashStep','bladeStorm'],
+        25: ['flashStep','bladeStorm','diversion'],
     },
     'cyborg': {
         0: ['punch'],
@@ -1210,7 +1236,7 @@ function generatePassiveTooltip(skill) {
             effectText = `<span>${skill.effect.effectTarget}</span>`;
             switch (skill.effect.effectType) {
                 case "additiveFlat":
-                    numberDisplay = "+" + skill.effect.effectMagnitude;
+                    numberDisplay = "+" + format(skill.effect.effectMagnitude*100) + "%";
                     break;
                 case "additivePercent":
                     numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
@@ -1257,8 +1283,8 @@ function generatePassiveTooltip(skill) {
 function generateAbilityRequirementTooltip(ability) {
     const abilityData = playerMoves[ability];
     let stringDisplay = "";
-    stringDisplay += abilityData.name + "<br />";
-    stringDisplay += abilityData.description + "<br />";
+    stringDisplay += abilityData.name + "<br>";
+    stringDisplay += abilityData.description + "<br>";
     switch (abilityData.type) {
         case 0:
             stringDisplay += "Ratios:" + "<br />";
@@ -1294,11 +1320,21 @@ function generateAbilityRequirementTooltip(ability) {
         default:
             break;
     }
-    stringDisplay += `Use time: ${format(abilityData.time / 1000)}s<br />`
-    if (abilityData.range[1] != abilityData.range[0]) {
-        stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br />`
-    } else {
-        stringDisplay += `Range: ${abilityData.range[0]}<br />`
+    stringDisplay += `Use time: ${format(abilityData.time / 1000)}s<br>`
+    switch (abilityData.type) {
+        case 1:
+            stringDisplay += `Range:<br>`;
+            if(abilityData.range[0]>0) stringDisplay += `Advance:${abilityData.range[0]}<br>`;
+            if(abilityData.range[1]>0)stringDisplay += `Retreat:${abilityData.range[1]}<br>`;
+            break;
+    
+        default:
+            if (abilityData.range[1] != abilityData.range[0]) {
+                stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br>`
+            } else {
+                stringDisplay += `Range: ${abilityData.range[0]}<br>`
+            }
+            break;
     }
     if (abilityData.cooldownTime > 0) {
         stringDisplay += `Cooldown: ${abilityData.cooldownTime / 1000}s<br />`

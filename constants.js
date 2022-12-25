@@ -58,6 +58,15 @@ formulas.actionSpeed = function (value) {
 formulas.damageReduction = function (value) {
     return Math.pow(1 - DAMAGE_REDUCTION_BASE, Math.log10(1 + value));
 }
+formulas.flatReduction = function(entity){
+    let baseValue = playerStats.flatReduction;
+    if (playerStats.effectMultipliers.hasOwnProperty("flatReductionHealth")) {
+        baseValue += entity.maxHealth * (arraySum(Object.values(playerStats.effectMultipliers["flatReductionHealth"].additiveFlat))
+            * (1 + arraySum(Object.values(playerStats.effectMultipliers["flatReductionHealth"].additivePercent)))
+            * arrayMult(Object.values(playerStats.effectMultipliers["flatReductionHealth"].multPercent)));
+    }
+    return baseValue;
+}
 formulas.maxHealth = function (value) {
     if(value < 100) return 5*Math.pow(value, HEALTH_GROWTH_EXPONENT);
     return 10*Math.pow(value, HEALTH_GROWTH_EXPONENT);

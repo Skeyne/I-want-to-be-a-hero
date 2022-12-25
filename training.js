@@ -150,7 +150,7 @@ class Activity {
                 let icon = document.createElement("span");
                 icon.innerHTML = (ratio > 0 ? ' +': ' -');
                 icon.className = attributeIndexToId[index] + "Text";
-                icon.style.color = 'white';
+                icon.style.color = (ratio > 0 ? 'green': 'red');
                 iconWrapper.append(icon);
             }
             
