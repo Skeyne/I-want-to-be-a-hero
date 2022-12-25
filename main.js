@@ -417,7 +417,7 @@ class Player extends CombatEntity {
         }
 
         const max = Math.max(...weights);
-        console.log("Weights:",weights," Max:",max)
+        //console.log("Weights:",weights," Max:",max)
         let indexes = [];
         let moveKey;
         if (max > 0) {
