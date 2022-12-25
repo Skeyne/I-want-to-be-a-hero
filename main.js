@@ -250,6 +250,9 @@ class Player extends CombatEntity {
                                                 break;
                                         }
                                         if (Math.abs(originDistance - enemy.distance) <= this.nextMove.effects[effect]) {
+                                            if (this.nextMove.effects.hasOwnProperty("aoe")){
+                                                enemy.distance += this.nextMove.effects[effect];
+                                            }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
                                             logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
                                         }
@@ -272,10 +275,12 @@ class Player extends CombatEntity {
                 let deltaMinus = Math.min(100 - dist, this.nextMove.range[0]);
                 let deltaPlus = Math.min(dist - 5, this.nextMove.range[0]);
                 if (this.moveIntention > 0) {
-                    this.target.distance -= deltaPlus;
+                    encounter.enemyArray.forEach((enemy) => {if(enemy != null)enemy.distance -= deltaPlus;})
+                    //this.target.distance -= deltaPlus;
                     environmentDistance -= deltaPlus;
                 } else {
-                    this.target.distance += deltaMinus;
+                    encounter.enemyArray.forEach((enemy) => {if(enemy != null)enemy.distance -= deltaPlus;})
+                    //this.target.distance += deltaMinus;
                     environmentDistance += deltaMinus;
                 }
                 break;
@@ -313,12 +318,12 @@ class Player extends CombatEntity {
                 break;
         }
         if (repeat) {
-            if(target.health <= 0){
+            if(target.health <= 0 || target == null){
                 return true;
             } else {
-
                 return false;
             }
+            
         } else {
             playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
             return true;
