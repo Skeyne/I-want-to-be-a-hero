@@ -388,7 +388,7 @@ class Player extends CombatEntity {
             }
             if (ability.type == 1) {
                 let delta = dist - playerStats.engagementRange;
-                weights[index] = delta * this.moveIntention * (this.moveIntention > 0 ? ability.range[0] : ability.range[1]);
+                weights[index] = delta * this.moveIntention * (this.moveIntention > 0 ? ability.range[0]/100 : ability.range[1]);
             }
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
@@ -417,7 +417,7 @@ class Player extends CombatEntity {
         }
 
         const max = Math.max(...weights);
-        //console.log("Weights:",weights," Max:",max)
+        console.log("Weights:",weights," Max:",max)
         let indexes = [];
         let moveKey;
         if (max > 0) {

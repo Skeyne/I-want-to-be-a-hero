@@ -273,7 +273,7 @@ enemyData.thug5 = {
     reputationReward: 1,
     spriteFile: "rifleThug.png",
     portraitFile: "thugPortrait.png",
-    moves: ['rifle','walk'],
+    moves: ['punch','rifle','walk'],
 };
 enemyData.don = {
     id:"don",
