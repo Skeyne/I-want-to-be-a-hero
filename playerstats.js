@@ -1,4 +1,4 @@
-const version = '0.03';
+const version = '0.03a';
 var isOutdated = false;
 document.getElementById('versionText').innerHTML ='v'+version;
 const cleanPlayerStats = {
