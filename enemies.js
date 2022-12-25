@@ -80,7 +80,7 @@ var abilityLibrary = {
         damageRange: [1, 1.5],
         time: 4000,
         cooldownTime: 12000,
-        range: [15,15],
+        range: [10,10],
     },
     'handgun': {
         type: 0,
@@ -304,7 +304,7 @@ enemyData.experiment9999 = {
 enemyData.crabman = {
     id:"crabman",
     name: "The Crabman",
-    maxHealth: 15000,
+    maxHealth: 10000,
     attributes: [25000,20000,100,3000],
     healthRegen: 0.0025,
     expReward: 25000,
