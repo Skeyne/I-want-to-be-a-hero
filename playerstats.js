@@ -39,8 +39,8 @@ const cleanPlayerStats = {
     abilityCooldowns: {},
     currentArea: 0,
     engagementRange: 5,
+    restToPercentage: 1,
 }
-
 var playerStats = {};
 reset();
 load();

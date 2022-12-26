@@ -80,7 +80,7 @@
                 <section class="infoBox" id="storyBox">
                     <div class="blockHeader pickle" style="display: block">STORY</div>
                     <div class="blockBody dotted oxanium" style="padding: 10px; text-align: justify;">
-                        <div id="storyText" class="verticalScroll" style="height:47%;"></div>
+                        <div id="storyText" class="verticalScroll" style="height:50%;"></div>
                         <div id="diaryContainer">
                             <div class="subHeader">Diary</div>
                             <div id="diaryGrid">
@@ -114,6 +114,9 @@
                             <label for="quantity">Engagement distance:</label>
                             <input class="pickle" style="background: whitesmoke;" type="number" onchange="changeEngagementRange()"
                             id="engagementDistanceInput" name="quantity" min="5" max="70" step="5">
+                            <label for="quantity">Rest until HP:</label>
+                            <input class="pickle" style="background: whitesmoke;" type="number" onchange="changeRestPercentage()"
+                            id="restPercentageInput" name="quantity" min="0" max="100" step="5">%
                         </div>
                         <div class="pickle subHeader">Resources:</div>
                         <div id="resourceGrid"
@@ -210,8 +213,10 @@
                         <div>Points available: <span id="passivePointsText"></span></div>
                         <button class="bannerButton" style="position: absolute;top:0;right:0;"
                             onclick="resetSkills()">Reset</button>
-                        <!-- <div class="tooltip"> Tooltip text<span class = "tooltiptext">TEST</span></div> -->
+                        <div class="subHeader">Trees</div>
+                        <div class = "blockPanel">
                         <div class="gridSkills" id="passiveTreeGrid"></div>
+                        </div>
                     </div>
                 </section>
                 <section class="infoBox" id="helpBox">

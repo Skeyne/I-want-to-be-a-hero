@@ -104,7 +104,7 @@ main {
 .gridSkills {
     display: grid;
     width: 100%;
-    height: 84vh;
+    height: 80vh;
     aspect-ratio: 1/1;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -421,8 +421,8 @@ section:first-child div.blockHeader::before {
 #diaryContainer{
     height: 50%;
     width: 100%;
-    display:grid;
-    grid-template-rows: min-content 1fr;
+    display: grid;
+    grid-template-rows: min-content minmax(0,1fr);
 }
 #diaryGrid{
     height: 100%;
@@ -719,8 +719,8 @@ progress[value]::-webkit-progress-bar {
 }
 
 .passiveSkillButton {
-    width: 6em;
-    height: 6em;
+    width: 5em;
+    height: 5em;
     border: 5px grey outset;
     position: relative;
     padding: 0;

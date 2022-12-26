@@ -450,7 +450,19 @@ class Player extends CombatEntity {
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     rest() {
-        this.health = Math.min(this.health + this.maxHealth * this.data.restRate * logicTickTime / 1000, this.maxHealth);
+        let restRate = 0;
+        switch (gameState) {
+            case 'InRest':
+                restRate = this.data.restRate/2;
+                break;
+            case 'InDead':
+                restRate = this.data.restRate;
+                break;
+            default:
+                console.error('UNRECOGNIZED GAME STATE FOR rest()');
+                break;
+        }
+        this.health = Math.min(this.health + this.maxHealth * restRate * logicTickTime / 1000, this.maxHealth);
     }
     takeDamage(amount) {
         let d = Math.max(0, amount * this.damageReduction - this.flatReduction);
@@ -692,9 +704,15 @@ var gameState = "InPatrol";
 var engagementRangeInput = document.getElementById("engagementDistanceInput");
 engagementRangeInput.addEventListener("keydown", e => e.preventDefault());
 engagementRangeInput.value = playerStats.engagementRange;
+var restPercentageInput = document.getElementById("restPercentageInput");
+restPercentageInput.addEventListener("keydown", e => e.preventDefault());
+restPercentageInput.value = playerStats.engagementRange;
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange(){
     playerStats.engagementRange =  Math.ceil(Number(engagementRangeInput.value)/5)*5;
+}
+function changeRestPercentage(){
+    playerStats.restToPercentage =  Math.ceil(Number(restPercentageInput.value)/5)*5*0.01;
 }
 
 //const worker = new Worker('./worker.js');
@@ -724,6 +742,20 @@ function renderLoop() {
             }
             break;
         case "InRest":
+            drawBackground();
+            drawPlayer();
+            drawCharacterPortrait(ctxBuffer, player, 'l');
+            ctxBuffer.fillStyle = "black";
+            ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
+            ctxBuffer.font = `80px Pickle Pushing`;
+            ctxBuffer.fillStyle = "white";
+            ctxBuffer.textAlign = 'center';
+            ctxBuffer.fillText("Resting...", cBuffer.width / 2, cBuffer.height / 2);
+            ctxBuffer.font = `24px Pickle Pushing`;
+            ctxBuffer.fillText("Just... give me a second...", cBuffer.width / 2, cBuffer.height / 2 + 50);
+            ctxBuffer.textAlign = 'left';
+            break;
+        case "InDead":
             ctxBuffer.fillStyle = "black";
             ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
             ctxBuffer.font = `80px Pickle Pushing`;
@@ -804,15 +836,20 @@ function logicLoop() {
                     break;
                 case 1:
                     logConsole("Encounter finished.")
-                    gameState = "InPatrol";
                     player.target = null;
                     player.nextMove = null;
                     currentArea.patrolCounter = 0;
-                    logConsole("Starting patrol.")
+                    if(player.health/player.maxHealth < playerStats.restToPercentage){
+                        gameState = "InRest";
+                        logConsole("Resting...")
+                    } else {
+                        gameState = "InPatrol";
+                        logConsole("Starting patrol.")
+                    }
                     break;
                 case 2:
                     logConsole("Player defeated, resting.")
-                    gameState = "InRest";
+                    gameState = "InDead";
                     player = new Player(playerStats);
                     player.health = 0;
                     break;
@@ -821,6 +858,13 @@ function logicLoop() {
             }
             break;
         case "InRest":
+            player.rest();
+            if (player.health >= player.maxHealth*playerStats.restToPercentage) {
+                gameState = "InPatrol";
+                logConsole("Starting patrol.")
+            }
+            break;
+        case "InDead":
             player.rest();
             if (player.health == player.maxHealth) {
                 gameState = "InPatrol";
@@ -945,7 +989,7 @@ function changeArea(index) {
     playerStats.currentArea = index;
     currentArea = areas[playerStats.currentArea];
     currentArea.patrolCounter = 0;
-    if (gameState != "InRest") {
+    if (gameState != "InDead") {
         gameState = "InPatrol";
     }
     player.target = null;
