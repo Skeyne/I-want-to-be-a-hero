@@ -1,6 +1,7 @@
 const baseExperienceCost = 5;
-const baseLinearExperienceCost = 5;
-const baseExperienceCostExponent = 1.07;
+const baseLinearExperienceCost = 1;
+const baseExperienceCostExponent = 5;
+const experienceLevelExponent = 1.25;
 const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
 const COOLDOWN_BASE = 0.04;
@@ -8,8 +9,8 @@ const PLAYER_BASE_HEALTH = 5;
 const HEALTH_GROWTH_EXPONENT = 0.65;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
 const TRAINING_COST_GROWTH_BASE = 1.55;
-const PLAYER_CLASSES = ["human","superhuman","mutant","ninja","esper","cyborg"];
-const PLAYER_SPRITES ={'human':'joe.png','superhuman':'superHumanSprite1.png','esper':'esperSprite1.png','ninja':'ninjaSprite1.png','cyborg':'joe.png','mutant':'mutantSprite1.png'}
+const PLAYER_CLASSES = ["human", "superhuman", "mutant", "ninja", "esper", "cyborg"];
+const PLAYER_SPRITES = { 'human': 'joe.png', 'superhuman': 'superHumanSprite1.png', 'esper': 'esperSprite1.png', 'ninja': 'ninjaSprite1.png', 'cyborg': 'joe.png', 'mutant': 'mutantSprite1.png' }
 const attributeIndexToId = {
     0: "strength",
     1: "toughness",
@@ -48,7 +49,9 @@ const attribute = {
     agility: "agility",
 }
 var formulas = {};
-
+formulas.playerExp = function (value) {
+    return (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, Math.floor(Math.log10(Math.max(1, playerStats.level)))) * Math.pow(Math.max(1, playerStats.level), baseExperienceCostExponent);
+}
 formulas.cooldownReduction = function (value) {
     return Math.pow(1 - COOLDOWN_BASE, Math.max(0, Math.log10(1 + value)));
 }
@@ -58,7 +61,7 @@ formulas.actionSpeed = function (value) {
 formulas.damageReduction = function (value) {
     return Math.pow(1 - DAMAGE_REDUCTION_BASE, Math.log10(1 + value));
 }
-formulas.flatReduction = function(entity){
+formulas.flatReduction = function (entity) {
     let baseValue = playerStats.flatReduction;
     if (playerStats.effectMultipliers.hasOwnProperty("flatReductionHealth")) {
         baseValue += entity.maxHealth * (arraySum(Object.values(playerStats.effectMultipliers["flatReductionHealth"].additiveFlat))
@@ -68,18 +71,18 @@ formulas.flatReduction = function(entity){
     return baseValue;
 }
 formulas.maxHealth = function (value) {
-    if(value < 100) return 5*Math.pow(value, HEALTH_GROWTH_EXPONENT);
-    return 10*Math.pow(value, HEALTH_GROWTH_EXPONENT);
+    if (value < 100) return 5 * Math.pow(value, HEALTH_GROWTH_EXPONENT);
+    return 10 * Math.pow(value, HEALTH_GROWTH_EXPONENT);
 }
-formulas.softcappedAttribute = function (index){
+formulas.softcappedAttribute = function (index) {
     let baseValue = playerStats[attributeIndexToId[index]];
-    
+
     let softCap = playerStats.attributeSoftcaps[index];
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;
-    let softCapFactor = Math.max(1,1+Math.log10(baseValue/softCap));
+    let softCapFactor = Math.max(1, 1 + Math.log10(baseValue / softCap));
     //if(index == 2) console.log("Base: ",baseValue," Softcap factor: ",softCapFactor," Softcapped: ",Math.min(baseValue,softCap) * softCapFactor);
-    return Math.min(baseValue,softCap) * softCapFactor;
+    return Math.min(baseValue, softCap) * softCapFactor;
 }
 
 function format(number) {

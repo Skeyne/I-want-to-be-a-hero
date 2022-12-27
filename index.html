@@ -47,7 +47,6 @@
             <input type="range" min="1" max="100" value="20" class="slider" id="volumeSlider"
                 onchange="setVolume(this.value)">
             <button class="bannerButton" onclick="save()">Save Game</button>
-            <button class="bannerButton" onclick="load()">Load Game</button>
             <button class="bannerButton" onclick="exportGame()">Export</button>
             <button class="bannerButton" onclick="importGame()">Import</button>
             <span class="pickle" id="versionText" style="float:right">v0.02 Alpha</span>
@@ -214,8 +213,9 @@
                         <button class="bannerButton" style="position: absolute;top:0;right:0;"
                             onclick="resetSkills()">Reset</button>
                         <div class="subHeader">Trees</div>
-                        <div class = "blockPanel">
-                        <div class="gridSkills" id="passiveTreeGrid"></div>
+                        <div id="subClassTabContainer"></div>
+                        <div id="passiveTreeContainer"class = "blockPanel verticalScroll" style="height: 76vh;">
+                            <!-- <div class="gridSkills" id="passiveTreeGrid"></div> -->
                         </div>
                     </div>
                 </section>

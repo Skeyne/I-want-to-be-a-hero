@@ -1,4 +1,4 @@
-const version = '0.03a';
+const version = '0.03b';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML ='v'+version;
@@ -9,7 +9,7 @@ const cleanPlayerStats = {
     reputation: 0,
     class: "human",
     level: 0,
-    passivePointsSpent: 0,
+    passivePointsSpent: Array(3).fill(0),
     strength: 0,
     toughness: 0,
     mind: 0,
@@ -18,6 +18,8 @@ const cleanPlayerStats = {
     attributeTrainingModifier: [1, 1, 1, 1],
     flatReduction: 0,
     healthRegeneration: 0,
+    cooldownReduction:0,
+    actionSpeed:1,
     criticalChance: 0,
     overwhelm: 0,
     takedown: 0,
@@ -48,6 +50,9 @@ setInterval(save, 30000);
 function getTotalPassivePoints() {
     let decades = Math.floor(playerStats.level / 10);
     return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1);
+}
+function getAvailablePassivePoints() {
+    return arraySum(playerStats.passivePointsSpent);
 }
 function getEffectiveValue(property) {
     if (!playerStats.hasOwnProperty(property)) {
@@ -99,6 +104,7 @@ function addPlayerExp(amount) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+        playerStats.experienceToNext = formulas.playerExp(playerStats.level);
         checkAbilityRequirements();
     }
     checkLevelQuest();
@@ -125,6 +131,7 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
+        if(isOutdated){playerStats.passivePointsSpent = Array(3).fill(0)}
     } else {
         console.log("No savefile found");
     }

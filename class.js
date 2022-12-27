@@ -1,556 +1,725 @@
+const classTreeNames = {
+    'human':['Aspiring Hero'],
+    'superhuman': ['Might', 'Titan', 'Spirit'],
+    'mutant': ['Biologic', 'Abomination', 'Bestial'],
+    'esper': ['Psionic', 'Matter', 'Spiritual'],
+    'ninja': ['Bladelore', 'Ninjutsu', 'Shadowcraft'],
+}
+classTrees = {
+    'human': 1,
+    'superhuman': 3,
+    'mutant': 3,
+    'esper': 3,
+    'ninja': 3,
+}
 skillLibrary = {
     "human": {
+        //#region 0
+        //#endregion
         'h_0': {
             id: 'h_0',
+            sub: 0,
             name: 'Calisthenics',
             iconName: 'calisthenics',
             desc: 'Increase your Strength through the power of home workouts',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1,
-            },
+            }],
             maxLevel: 10,
             cost: Array(10).fill(1),
         },
         'h_1': {
             id: 'h_1',
+            sub: 0,
             name: '"Borrowed Dumbells"',
             iconName: 'calisthenics',
             desc: 'They weren\'t using them anyways.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additivePercent",
                 effectMagnitude: 0.05,
-            },
+            }],
             maxLevel: 3,
             cost: [2, 2, 2],
             requires: { 'h_0': 3, }
         },
         'h_2': {
             id: 'h_2',
+            sub: 0,
             name: '"Big Boy Pills"',
             iconName: 'calisthenics',
             desc: 'It\'s just like hard candy.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "multPercent",
                 effectMagnitude: 1.2,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_1': 3, }
         },
         'h_1_4': {
             id: 'h_1_4',
+            sub: 0,
             name: 'Heavy Hitter',
             iconName: 'calisthenics',
             desc: 'All that training has made you swole. That first hit really packs a punch',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "overwhelm",
                 effectType: "additiveFlat",
                 effectMagnitude: 0.2,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_2': 1, },
         },
         'h_3': {
             id: 'h_3',
+            sub: 0,
             name: 'Five Mile Run',
             iconName: 'milerun',
             desc: 'Coach said this would toughen you up.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additiveFlat", //additive
                 effectMagnitude: 1,
-            },
+            }],
             maxLevel: 10,
             cost: Array(10).fill(1),
         },
         'h_4': {
             id: 'h_4',
+            sub: 0,
             name: 'Construction Job',
             iconName: 'milerun',
             desc: 'And a cold one after work.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additivePercent", //additive
                 effectMagnitude: 0.1,
-            },
+            }],
             maxLevel: 2,
             cost: [2, 2, 2],
             requires: { 'h_3': 3, },
         },
         'h_5': {
             id: 'h_5',
+            sub: 0,
             name: '8200 Postcode Night Run',
             iconName: 'milerun',
             desc: 'Hey this area doesn\'t look so b-',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "multPercent", //additive
                 effectMagnitude: 1.2,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_4': 2, },
         },
         'h_2_4': {
             id: 'h_2_4',
+            sub: 0,
             name: 'Built To Last',
             iconName: 'milerun',
             desc: 'With all the beatings you\'ve taken and lived through, it takes a lot to bring you down.',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "healthRegeneration",
                 effectType: "additiveFlat",
                 effectMagnitude: 0.01,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_5': 1, },
         },
         'h_6': {
             id: 'h_6',
+            sub:0,
             name: 'Dodge the swing',
             iconName: 'shadowB',
             desc: 'We used to do this as kids.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 1,
-            },
+            }],
             maxLevel: 10,
             cost: Array(10).fill(1),
 
         },
         'h_7': {
             id: 'h_7',
+            sub:0,
             name: 'Shadow boxing',
             iconName: 'shadowB',
             desc: 'Shadows to keep you light.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 0.05,
-            },
+            }],
             maxLevel: 5,
             cost: [1, 1, 1, 1, 1],
             requires: { 'h_6': 3, },
         },
         'h_8': {
             id: 'h_8',
+            sub:0,
             name: 'Acquire J\'s',
             iconName: 'shadowB',
             desc: 'Jays on my feet.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "multPercent", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 1.3,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_7': 3, },
         },
         'h_3_4': {
             id: 'h_3_4',
+            sub:0,
             name: 'Opportunity Seeker',
             iconName: 'shadowB',
             desc: 'Being faster than your foe gives you the opportunity to hit them in a vital spot.',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "criticalChance",
                 effectType: "additiveFlat",
                 effectMagnitude: 0.2,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_8': 1, },
         },
         'h_9': {
             id: 'h_9',
+            sub:0,
             name: 'Read algebra book',
             iconName: 'studying',
             desc: 'Actually learn it. Don\'t memorize it.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 1,
-            },
+            }],
             maxLevel: 10,
             cost: Array(10).fill(1),
         },
         'h_10': {
             id: 'h_10',
+            sub:0,
             name: 'Attend debate club',
             iconName: 'studying',
             desc: 'Let\'s say, hypothetically....',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 0.2,
-            },
+            }],
             maxLevel: 1,
             cost: [3],
             requires: { 'h_9': 3, },
         },
         'h_11': {
             id: 'h_11',
+            sub:0,
             name: 'Win at street chess',
             iconName: 'studying',
             desc: 'Check it, mate, I won.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "multPercent", //additiveDlat, additivePercent, multPercent
                 effectMagnitude: 1.15,
-            },
+            }],
             maxLevel: 2,
             cost: [3, 3],
             requires: { 'h_10': 1, },
         },
         'h_4_4': {
             id: 'h_4_4',
+            sub:0,
             name: 'Skilled Combatant',
             iconName: 'studying',
             desc: 'Your strategic mind allows you to setup your foe\'s swift defeat.',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "takedown",
                 effectType: "additiveFlat",
                 effectMagnitude: 0.20,
-            },
+            }],
             maxLevel: 1,
             cost: [5],
             requires: { 'h_11': 2, },
         },
+        //#endregion
     },
     "superhuman": {
+        //#region 0
         'sh_0_0': {
             id: 'sh_0_0',
+            sub: 0,
+            position: { row: 1, column: 3 },
             name: 'Inhuman strength',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve ever been before',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.02,
-            },
+            }],
             maxLevel: 50,
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
         },
         'sh_0_1': {
             id: 'sh_0_1',
+            sub: 0,
+            position: { row: 2, column: 3 },
             name: 'Matter Over Mind',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve every been before',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1.25,
-            },
+            }],
             maxLevel: 3,
             cost: [10, 100, 1000],
             requires: { 'sh_0_0': 10 }
         },
         'sh_0_2': {
             id: 'sh_0_2',
+            sub: 0,
+            position: { row: 3, column: 3 },
             name: 'Overwhelming strength',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve every been before',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "overwhelm",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.5,
-            },
+            }],
             maxLevel: 1,
             cost: [10],
             requires: { 'sh_0_1': 1 }
         },
+        //#endregion
+        //#region 1
+        //#endregion
+        //#region 2
         'sh_2_0': {
             id: 'sh_2_0',
+            sub: 2,
+            position: { row: 1, column: 3 },
             name: 'Strength Training Boost',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
-            effect: {
+            effect: [{
                 type: 2, // training boost
                 effectTarget: "strengthTraining",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.2,
-            },
+            }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
         },
+        //#endregion
+
+
     },
     "esper": {
+        //#region 0
         'es_0_0': {
             id: 'es_0_0',
-            name: 'Superior Intellect',
+            sub: 0,
+            position: { row: 1, column: 3 },
+            name: 'Reflective Mind',
             iconName: 'studying',
-            desc: 'Everything seems so simple',
-            effect: {
+            desc: 'More than ever you\'re drawn inwards, to your own thoughts.',
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "mind",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.02,
-            },
-            maxLevel: 50,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
+            }],
+            maxLevel: 5,
+            cost: Array(5).fill(1),
         },
         'es_0_1': {
             id: 'es_0_1',
+            sub: 0,
+            position: { row: 2, column: 3 },
+            name: 'Psionic Talent',
+            iconName: 'studying',
+            desc: 'You start being able to hear whispers of thoughts and feel minds and the fields they generate',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "mind",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.005,
+            }],
+            maxLevel: 50,
+            cost: Array(25).fill(1).concat(Array(25).fill(2)),
+        },
+
+        'es_0_2': {
+            id: 'es_0_2',
+            sub: 0,
+            position: { row: 3, column: 3 },
             name: 'Master of the Mind',
             iconName: 'studying',
             desc: 'Nothing in this world is infinite except for your intellect.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.25,
-            },
-            maxLevel: 3,
-            cost: [10, 100, 1000],
-            requires: { 'es_0_0': 10 }
+                effectMagnitude: 1.1,
+            }],
+            maxLevel: 5,
+            cost: [10, 100, 1000,10000,100000],
+            requires: { 'es_0_1': 10 }
         },
-        'es_0_2': {
-            id: 'es_0_2',
+        'es_0_3': {
+            id: 'es_0_3',
+            sub: 0,
+            position: { row: 10, column: 1 },
             name: 'Divergence',
             iconName: 'studying',
             desc: 'As your foes get weaker you get stronger',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "takedown",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.5,
-            },
-            maxLevel: 1,
-            cost: [10],
+                effectMagnitude: 0.1,
+            }],
+            maxLevel: 3,
+            cost: [5,20,80],
             requires: { 'es_0_1': 1 }
         },
+
+        //#endregion
+        //#region 1
         'es_1_0': {
             id: 'es_1_0',
-            name: 'Psionic acceleration',
-            iconName: 'shadowB',
-            desc: 'A quick mind needs a quick body',
-            effect: {
-                type: 0, // attribute boost
-                effectTarget: "agility",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.02,
-            },
-            maxLevel: 100,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5), Array(10).fill(6)
-                , Array(10).fill(7), Array(10).fill(8), Array(10).fill(9), Array(10).fill(10))
+            sub: 1,
+            position: { row: 1, column: 3 },
+            name: 'Practice controlling energy',
+            iconName: 'studying',
+            desc: 'You discover that you can alter the flow of energies in the world, but a swift mind is needed to counteract any imbalances.',
+            effect: [{type: 0, effectTarget: "agility",effectType: "additiveFlat", effectMagnitude: 1,},
+                     {type: 0, effectTarget: "mind",effectType: "additiveFlat", effectMagnitude: 1,}],
+            maxLevel: 10,
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3))
         },
+        'es_1_2': {
+            id: 'es_1_2',
+            sub: 1,
+            position: { row: 2, column: 2 },
+            name: 'Energy Alteration: Celerity',
+            iconName: 'studying',
+            desc: 'Alter the energy around you to speed up your movements',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "actionSpeed",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.02,
+            }],
+            maxLevel: 3,
+            cost: [5,20,80],
+            requires: { 'es_1_0': 1 },
+        },
+        'es_1_3': {
+            id: 'es_1_3',
+            sub: 1,
+            position: { row: 2, column: 4 },
+            name:  'Energy Alteration: Alacrity',
+            iconName: 'studying',
+            desc: 'Alter the energy around you to alter the passing of time',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "cooldownReduction",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.015,
+            }],
+            maxLevel: 3,
+            cost: [5,20,80],
+            requires: { 'es_1_0': 1 },
+        },
+        'es_1_4': {
+            id: 'es_1_4',
+            sub: 1,
+            position: { row: 3, column: 3 },
+            name: 'Uncontrolled Creation',
+            iconName: 'studying',
+            desc: 'Sometimes the energy you create is more volatile than you expect',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "criticalChance",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.05,
+            }],
+            maxLevel: 3,
+            cost: [5,20,80],
+            requires: { 'es_1_0': 1 },
+        },
+        //#endregion
+        //#region 2
         'es_2_0': {
             id: 'es_2_0',
-            name: 'Mind Training Boost',
+            sub: 2,
+            position: { row: 2, column: 1 },
+            name: 'Spirit Sight',
             iconName: 'studying',
-            desc: 'PLACEHOLDER',
-            effect: {
+            desc: 'You start to see spirits, and they sometimes help you.',
+            effect: [{
                 type: 2, // training boost
                 effectTarget: "mindTraining",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.2,
-            },
+                effectMagnitude: 0.02,
+            }],
             maxLevel: 5,
-            cost: [5, 10, 20, 40, 80],
+            cost: [2,2,2,2,2],
+            
         },
+        'es_2_1': {
+            id: 'es_2_1',
+            sub: 2,
+            position: { row: 1, column: 4 },
+            name: 'Friendly Possession',
+            iconName: 'studying',
+            desc: 'You learn that by gathering spirits in your body they can help protect it.',
+            effect: [{
+                type: 0, // training boost
+                effectTarget: "toughness",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.01,
+            }],
+            maxLevel: 5,
+            cost: [2,2,2,2,2],
+            requires: {'es_2_0':1},
+        },
+        //#endregion
     },
     "mutant": {
+        //#region 0
         'mu_0_0': {
             id: 'mu_0_0',
+            sub: 0,
+            position: { row: 1, column: 3 },
             name: 'Rapid Evolution',
             iconName: 'milerun',
             desc: 'Your constitution rapidly adapts to any new challenge',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.02,
-            },
+            }],
             maxLevel: 50,
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
         },
         'mu_0_1': {
             id: 'mu_0_1',
+            sub: 0,
+            position: { row: 2, column: 3 },
             name: 'Synthetic Body',
             iconName: 'milerun',
             desc: 'Your body doesnt break or tear, it just deforms and reforms.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1.25,
-            },
+            }],
             maxLevel: 3,
             cost: [10, 100, 1000],
             requires: { 'mu_0_0': 10 }
         },
         'mu_0_2': {
             id: 'mu_0_2',
+            sub: 0,
+            position: { row: 3, column: 3 },
             name: 'Mutant Healing Factor',
             iconName: 'milerun',
             desc: 'Your cells are brimming with activity, wounds that take days to heal close in minutes',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "healthRegeneration",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.0015,
-            },
+            }],
             maxLevel: 3,
             cost: [10, 100, 1000],
             requires: { 'mu_0_1': 1 }
         },
+        //#endregion
+        //#region 1
         'mu_1_0': {
             id: 'mu_1_0',
+            sub: 1,
+            position: { row: 1, column: 3 },
+            name: 'Unimplemented',
+            iconName: 'milerun',
+            desc: 'This is just for testing. Have some free toughness',
+            effect:[ {
+                type: 0, // attribute boost
+                effectTarget: "toughness",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            }],
+            maxLevel: 1,
+            cost: [1],
+        },
+        //#endregion
+        //#region 2
+        'mu_2_0': {
+            id: 'mu_2_0',
+            sub: 2,
+            position: { row: 1, column: 3 },
+            name: 'Unimplemented',
+            iconName: 'milerun',
+            desc: 'This is just for testing. Have some free toughness',
+            effect:[ {
+                type: 0, // attribute boost
+                effectTarget: "toughness",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 10,
+            }],
+            maxLevel: 1,
+            cost: [1],
+        },
+        'mu_2_1': {
+            id: 'mu_2_1',
+            sub: 2,
+            position: { row: 2, column: 3 },
             name: 'Mutation: Scales',
             iconName: 'milerun',
             desc: 'Your turn the outside of your skin into a scaled mesh, reducing the damage of every impact',
-            effect: {
+            effect:[ {
                 type: 1, // attribute boost
                 effectTarget: "flatReductionHealth",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.002,
-            },
+            }],
             maxLevel: 3,
             cost: [10, 100, 1000],
-            requires: { 'mu_0_1': 1 }
+            requires: { 'mu_2_0': 1 }
         },
-    },
-    "cyborg": {
-        'cy_0': {
-            id: 'cy_0',
-            name: 'Inhuman strength',
-            iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
-            effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
-            },
-            maxLevel: 5,
-            cost: [1, 2, 2, 2, 3],
-        },
-        'cy_1': {
-            id: 'cy_1',
-            name: 'Inhuman strength',
-            iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
-            effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
-            },
-            maxLevel: 5,
-            cost: [1, 2, 2, 2, 3],
-        },
-        'cy_2': {
-            id: 'cy_2',
-            name: 'Inhuman strength',
-            iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
-            effect: {
-                type: 0, // attribute boost
-                effectTarget: "strength",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
-            },
-            maxLevel: 5,
-            cost: [1, 2, 2, 2, 3],
-        },
+        
+        //#endregion
+
+
     },
     "ninja": {
+        //#region 0
         'ni_0_0': {
             id: 'ni_0_0',
+            sub: 0,
+            position: { row: 1, column: 3 },
             name: 'Feline Agility',
             iconName: 'shadowB',
             desc: 'The whole world seems one muscle twitch away.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.02,
-            },
+            }],
             maxLevel: 50,
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
         },
         'ni_0_1': {
             id: 'ni_0_1',
+            sub: 0,
             name: 'Unnatural Speed',
-            iconName: 'studying',
+            position: { row: 2, column: 3 },
+            iconName: 'shadowB',
             desc: 'The faster you go the faster you get.',
-            effect: {
+            effect: [{
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1.25,
-            },
+            }],
             maxLevel: 3,
             cost: [10, 100, 1000],
             requires: { 'ni_0_0': 10 }
         },
         'ni_0_2': {
             id: 'ni_0_2',
+            sub: 0,
+            position: { row: 3, column: 3 },
             name: 'Prenatural Reflexes',
             iconName: 'shadowB',
             desc: 'Your body moves out of danger before you even know it',
-            effect: {
+            effect: [{
                 type: 1, // attribute boost
                 effectTarget: "dodgeChance",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.05,
-            },
+            }],
             maxLevel: 4,
-            cost: [5,20,40,80],
+            cost: [5, 20, 40, 80],
             requires: { 'ni_0_1': 1 }
         },
+        //#endregion
+        //#region 1
         'ni_1_0': {
             id: 'ni_1_0',
+            sub: 1,
+            position: { row: 1, column: 3 },
             name: 'Deadly',
             iconName: 'shadowB',
             desc: 'Increases your critical chance (crits deal 50% more damage by default).',
-            effect: {
+            effect: [{
                 type: 1, // secondary attribute boost
                 effectTarget: "criticalChance",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.005,
-            },
-            maxLevel: 20,
+                effectMagnitude: 0.01,
+            }],
+            maxLevel: 10,
             cost: Array(10).fill(5).concat(Array(10).fill(10)),
         },
         'ni_2_0': {
             id: 'ni_2_0',
+            sub: 1,
+            position: { row: 2, column: 3 },
             name: 'Agility Training Boost',
             iconName: 'shadowB',
             desc: 'PLACEHOLDER',
-            effect: {
+            effect: [{
                 type: 2, // training boost
                 effectTarget: "agilityTraining",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.2,
-            },
+            }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
         },
+        //#endregion
+        //#region 2
+
+        //#endregion
     },
 }
 playerMoves = {
@@ -994,12 +1163,12 @@ abilityUnlocks = {
     'esper': {
         0: ['spiritFist'],
         10: ['telekineticProjectile', 'psionicPulse'],
-        25: ['psionicBarrier','repulsionWave']
+        25: ['psionicBarrier', 'repulsionWave']
     },
     'ninja': {
         0: ['katana'],
         10: ['shadowStrike', 'shuriken'],
-        25: ['flashStep','bladeStorm','diversion'],
+        25: ['flashStep', 'bladeStorm', 'diversion'],
     },
     'cyborg': {
         0: ['punch'],
@@ -1017,6 +1186,40 @@ abilityRequirementsGrid.append(previewRowBody);
 if (playerStats.class != 'human') { playerStats.abilitySlots = 4 } else { playerStats.abilitySlots = 3 };
 let slots = [];
 RebuildSlots();
+function generateSubclassTabs() {
+    let container = document.getElementById("subClassTabContainer");
+    container.innerHTML = "";
+    let treeContainer = document.getElementById("passiveTreeContainer");
+    treeContainer.innerHTML = "";
+    for (let index = 0; index < classTrees[playerStats.class]; index++) {
+        let b = document.createElement("button");
+        b.className = "pickle subclassTabButton";
+        b.innerHTML = classTreeNames[playerStats.class][index];
+        b.style.width = 100 / classTrees[playerStats.class] + '%';
+        b.onclick = () => { changeSubclassTab(index) };
+        container.append(b);
+        let d = document.createElement("div");
+        d.className = "gridSkills";
+        d.style.display = 'none';
+        treeContainer.append(d);
+    }
+}
+function changeSubclassTab(tab) {
+    let buttonContainer = document.getElementById("subClassTabContainer");
+    let treeContainer = document.getElementById("passiveTreeContainer");
+    let tabs = treeContainer.children;
+    for (let index = 0; index < classTrees[playerStats.class]; index++) {
+        if (index == tab) {
+            tabs[index].style.display = '';
+            buttonContainer.children[index].className = "pickle subclassTabButtonActive";
+        } else {
+            tabs[index].style.display = 'none';
+            buttonContainer.children[index].className = "pickle subclassTabButton";
+        }
+    }
+}
+generateSubclassTabs();
+changeSubclassTab(0);
 function RebuildSlots() {
     loadoutContainer.innerHTML = "";
     slots = [];
@@ -1118,20 +1321,55 @@ let passiveButtonDict = {};
 populatePassiveTree();
 if (isOutdated) { resetSkills(); }
 function populatePassiveTree() {
-    let i = 0;
-    passiveTreeGrid.innerHTML = "";
+    let treeContainer = document.getElementById("passiveTreeContainer");
+    let tabs = treeContainer.children;
+    for (let index = 0; index < tabs.length; index++) {
+        tabs[index].innerHTML = "";
+    }
     passiveButtonDict = {};
     if (!skillLibrary.hasOwnProperty(playerStats.class)) { console.error("ERROR: CLASS PASSIVE TREE DOES NOT EXIST"); return; }
     Object.values(skillLibrary[playerStats.class]).forEach(skill => {
+        let subclass = skill.sub;
         let b = document.createElement("button");
         passiveButtonDict[skill.id] = b;
-        b.style.gridRow = i;
-        b.style.gridColumn = i;
+
         b.style.background = "url(" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
         b.style.backgroundSize = "contain";
         b.setAttribute("class", "passiveSkillButton tooltip");
         b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
-        passiveTreeGrid.appendChild(b);
+        tabs[subclass].appendChild(b);
+        if (skill.hasOwnProperty('position')) {
+            b.style.gridRow = skill.position.row;
+            b.style.gridColumn = skill.position.column;
+        
+        if (skill.hasOwnProperty('requires')) {
+            Object.keys(skill.requires).forEach((id) =>
+            {
+                let reqSkill = skillLibrary[playerStats.class][id];
+                if(!reqSkill.hasOwnProperty('position')){return;}
+                let link = document.createElement("div");
+                link.setAttribute("class","passiveSkillLink");
+                tabs[subclass].appendChild(link);
+                let area = [0,0,0,0];
+                area[0] = Math.min(skill.position.row,reqSkill.position.row);
+                area[2] = Math.max(skill.position.row,reqSkill.position.row);
+                area[1] = Math.min(skill.position.column,reqSkill.position.column);
+                area[3] = Math.max(skill.position.column,reqSkill.position.column);
+                let length = Math.sqrt(Math.pow((area[3]-area[1]),2)+Math.pow((area[2]-area[0]),2));
+                let width = area[3]-area[1];
+                let height = area[2]-area[0];
+                //link.innerHTML = `Width:${area[3]-area[1]}Height:${area[2]-area[0]} Length:${length}`;
+                length = (length)/(length+1)*(Math.max((width+1)/(height+1),1));
+                let angle = Math.atan2(skill.position.column-reqSkill.position.column,reqSkill.position.row-skill.position.row);
+                //console.log(angle);
+                area[2] += 1;
+                area[3] += 1;
+                link.style.gridArea = area.join("/");
+                link.style.rotate = `${angle}rad`
+                link.style.height = `${100*length}%`;
+            })
+        }
+    }
         let t = document.createElement("div");
         t.setAttribute("class", "skilltooltiptext oxanium");
         t.innerHTML = generatePassiveTooltip(skill);
@@ -1214,69 +1452,76 @@ function generatePassiveTooltip(skill) {
             requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`;
         }
     }
-    switch (skill.effect.type) {
-        case 0:
-            effectText = `<span class="${skill.effect.effectTarget}Text">${attributeDisplayNames[skill.effect.effectTarget]}</span>`;
-            switch (skill.effect.effectType) {
-                case "additiveFlat":
-                    numberDisplay = "+" + skill.effect.effectMagnitude;
-                    break;
-                case "additivePercent":
-                    numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
-                    break;
-                case "multPercent":
-                    numberDisplay = "x" + skill.effect.effectMagnitude;
-                    break;
-                default:
-                    console.log("Undefined effect type");
-                    break;
-            }
-            break;
-        case 1:
-            effectText = `<span>${skill.effect.effectTarget}</span>`;
-            switch (skill.effect.effectType) {
-                case "additiveFlat":
-                    numberDisplay = "+" + format(skill.effect.effectMagnitude*100) + "%";
-                    break;
-                case "additivePercent":
-                    numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
-                    break;
-                case "multPercent":
-                    numberDisplay = "x" + skill.effect.effectMagnitude;
-                    break;
-                default:
-                    console.log("Undefined effect type");
-                    break;
-            }
-            break;
-        case 2:
-            let attribute = skill.effect.effectTarget.substr(0, skill.effect.effectTarget.length - 8);
-            effectText = `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
-            switch (skill.effect.effectType) {
-                case "additiveFlat":
-                    numberDisplay = "+" + skill.effect.effectMagnitude;
-                    break;
-                case "additivePercent":
-                    numberDisplay = "+" + skill.effect.effectMagnitude * 100 + "%";
-                    break;
-                case "multPercent":
-                    numberDisplay = "x" + skill.effect.effectMagnitude;
-                    break;
-                default:
-                    console.log("Undefined effect type");
-                    break;
-            }
-            break;
-        default:
-            break;
+    for (let index = 0; index < skill.effect.length; index++) {
+        let effect = skill.effect[index];
+        numberDisplay = "";
+        switch (effect.type) {
+            case 0:
+                effectText += `<span class="${effect.effectTarget}Text">${attributeDisplayNames[effect.effectTarget]}</span>`;
+                switch (effect.effectType) {
+                    case "additiveFlat":
+                        numberDisplay = "+" + effect.effectMagnitude;
+                        break;
+                    case "additivePercent":
+                        numberDisplay = "+" + effect.effectMagnitude * 100 + "%";
+                        break;
+                    case "multPercent":
+                        numberDisplay = "x" + effect.effectMagnitude;
+                        break;
+                    default:
+                        console.log("Undefined effect type");
+                        break;
+                }
+                break;
+            case 1:
+                effectText = `<span>${effect.effectTarget}</span>`;
+                switch (effect.effectType) {
+                    case "additiveFlat":
+                        numberDisplay = "+" + format(effect.effectMagnitude * 100) + "%";
+                        break;
+                    case "additivePercent":
+                        numberDisplay = "+" + effect.effectMagnitude * 100 + "%";
+                        break;
+                    case "multPercent":
+                        numberDisplay = "x" + effect.effectMagnitude;
+                        break;
+                    default:
+                        console.log("Undefined effect type");
+                        break;
+                }
+                break;
+            case 2:
+                let attribute = effect.effectTarget.substr(0, effect.effectTarget.length - 8);
+                effectText = `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
+                switch (effect.effectType) {
+                    case "additiveFlat":
+                        numberDisplay = "+" + effect.effectMagnitude;
+                        break;
+                    case "additivePercent":
+                        numberDisplay = "+" + effect.effectMagnitude * 100 + "%";
+                        break;
+                    case "multPercent":
+                        numberDisplay = "x" + effect.effectMagnitude;
+                        break;
+                    default:
+                        console.log("Undefined effect type");
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        effectText+= `${numberDisplay}` + "<br><br>";
+        
     }
+    
 
     let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
     let costString = "";
     if (isNaN(cost)) { costString = "MAXED!" } else { costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points" };
     return `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br><br>" +
         skill.desc + "<br /><br>" +
-        `${effectText} ${numberDisplay}` + "<br><br>" +
+        `${effectText}` +
         "Cost: " + costString + "<br><br>"
         + requirementsText;
 }
@@ -1324,10 +1569,10 @@ function generateAbilityRequirementTooltip(ability) {
     switch (abilityData.type) {
         case 1:
             stringDisplay += `Range:<br>`;
-            if(abilityData.range[0]>0) stringDisplay += `Advance:${abilityData.range[0]}<br>`;
-            if(abilityData.range[1]>0)stringDisplay += `Retreat:${abilityData.range[1]}<br>`;
+            if (abilityData.range[0] > 0) stringDisplay += `Advance:${abilityData.range[0]}<br>`;
+            if (abilityData.range[1] > 0) stringDisplay += `Retreat:${abilityData.range[1]}<br>`;
             break;
-    
+
         default:
             if (abilityData.range[1] != abilityData.range[0]) {
                 stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br>`
@@ -1401,49 +1646,54 @@ function setSkill(skillId, level) {
 
 function addEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    switch (skill.effect.type) {
-        //Passive attribute modifiers
-        case 0:
-            if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
-                playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
-            }
-            if (skill.effect.effectType == 'multPercent') {
-                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-                    Math.pow(skill.effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
-            } else {
-                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-                    skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
-            }
-            break;
-        //Secondary attribute modifiers -> regeneration, critical etc.
-        case 1:
-            if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
-                playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
-            }
-            if (skill.effect.effectType == 'multPercent') {
-                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-                    Math.pow(skill.effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
-            } else {
-                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-                    skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
-            }
-            break;
-        case 2:
-            if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
-                playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
-            }
-            if (skill.effect.effectType == 'multPercent') {
-                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-                    Math.pow(skill.effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
-            } else {
-                playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id] =
-                    skill.effect.effectMagnitude * playerStats.unlockedSkills[skillId];
-            }
-            break;
-        default:
-            console.error("UNKOWN SKILL EFFECT TYPE");
-            break;
+    
+    for (let index = 0; index < skill.effect.length; index++) {
+        let effect = skill.effect[index];
+        switch (effect.type) {
+            //Passive attribute modifiers
+            case 0:
+                if (!playerStats.effectMultipliers.hasOwnProperty(effect.effectTarget)) {
+                    playerStats.effectMultipliers[effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+                }
+                if (effect.effectType == 'multPercent') {
+                    playerStats.effectMultipliers[effect.effectTarget][effect.effectType][skill.id] =
+                        Math.pow(effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
+                } else {
+                    playerStats.effectMultipliers[effect.effectTarget][effect.effectType][skill.id] =
+                        effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+                }
+                break;
+            //Secondary attribute modifiers -> regeneration, critical etc.
+            case 1:
+                if (!playerStats.effectMultipliers.hasOwnProperty(effect.effectTarget)) {
+                    playerStats.effectMultipliers[effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+                }
+                if (effect.effectType == 'multPercent') {
+                    playerStats.effectMultipliers[effect.effectTarget][effect.effectType][skill.id] =
+                        Math.pow(effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
+                } else {
+                    playerStats.effectMultipliers[effect.effectTarget][effect.effectType][skill.id] =
+                        effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+                }
+                break;
+            case 2:
+                if (!playerStats.effectMultipliers.hasOwnProperty(effect.effectTarget)) {
+                    playerStats.effectMultipliers[effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+                }
+                if (effect.effectType == 'multPercent') {
+                    playerStats.effectMultipliers[effect.effectTarget][effect.effectType][skill.id] =
+                        Math.pow(effect.effectMagnitude, playerStats.unlockedSkills[skillId]);
+                } else {
+                    playerStats.effectMultipliers[effect.effectTarget][effect.effectType][skill.id] =
+                        effect.effectMagnitude * playerStats.unlockedSkills[skillId];
+                }
+                break;
+            default:
+                console.error("UNKOWN SKILL EFFECT TYPE");
+                break;
+        }
     }
+    
 
 }
 function removeEffect(skillId) {
@@ -1451,11 +1701,13 @@ function removeEffect(skillId) {
     if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
         playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
     }
-    if (playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType].hasOwnProperty(skill.id)) {
-        delete playerStats.effectMultipliers[skill.effect.effectTarget][skill.effect.effectType][skill.id];
+    for (let index = 0; index < skill.effect.length; index++) {
+    if (playerStats.effectMultipliers[skill.effect[index].effectTarget][skill.effect[index].effectType].hasOwnProperty(skill.id)) {
+        delete playerStats.effectMultipliers[skill.effect[index].effectTarget][skill.effect[index].effectType][skill.id];
     } else {
         console.log("::ERROR:: Attempting to delete non-existing effect (id:" + skillId + ")");
     }
+}
 }
 
 function checkSkillPurchase(skillId) {
@@ -1477,8 +1729,8 @@ function checkSkillPurchase(skillId) {
     } else {
         cost = skillLibrary[playerStats.class][skillId].cost[0];
     }
-    if (cost <= (getTotalPassivePoints() - playerStats.passivePointsSpent)) {
-        playerStats.passivePointsSpent += cost;
+    if (cost <= (getTotalPassivePoints() - getAvailablePassivePoints())) {
+        playerStats.passivePointsSpent[skill.sub] += cost;
         addSkill(skillId);
     }
     updateButton(skillId);
@@ -1500,7 +1752,7 @@ function resetSkills() {
     old.forEach(skillId => {
         removeSkill(skillId);
     });
-    playerStats.passivePointsSpent = 0;
+    playerStats.passivePointsSpent = Array(3).fill(0);
     for (const [key, value] of Object.entries(passiveButtonDict)) {
         updateButton(key);
     }
@@ -1508,10 +1760,12 @@ function resetSkills() {
 
 function changeClass(className, keep = false) {
     //if (className == playerStats.class) return;
-    if (className != 'human') { playerStats.abilitySlots = 4; player.health = -1;} else { playerStats.abilitySlots = 3 };
+    if (className != 'human') { playerStats.abilitySlots = 4; player.health = -1; } else { playerStats.abilitySlots = 3 };
     resetSkills();
     playerStats.class = className;
+    generateSubclassTabs();
     populatePassiveTree();
+    changeSubclassTab(0);
     if (!keep) {
         playerStats.level = 0;
         playerStats.experience = 0;
@@ -1532,11 +1786,11 @@ function changeClass(className, keep = false) {
     populateAbilitySlots();
     if (!keep) {
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
-            playerStats.strength = 0.01*formulas.softcappedAttribute(0);
-            playerStats.toughness = 0.01*formulas.softcappedAttribute(1);
-            playerStats.mind = 0.01*formulas.softcappedAttribute(2);
-            playerStats.agility = 0.01*formulas.softcappedAttribute(3);
-        
+        playerStats.strength = 0.01 * formulas.softcappedAttribute(0);
+        playerStats.toughness = 0.01 * formulas.softcappedAttribute(1);
+        playerStats.mind = 0.01 * formulas.softcappedAttribute(2);
+        playerStats.agility = 0.01 * formulas.softcappedAttribute(3);
+
     }
     if (className != 'human') {
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];

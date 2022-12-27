@@ -104,16 +104,40 @@ main {
 .gridSkills {
     display: grid;
     width: 100%;
-    height: 80vh;
-    aspect-ratio: 1/1;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-auto-rows: 1fr;
+    height: auto;
+    grid-template-rows: 7vw;
+    grid-template-columns: repeat(5,7vw);
+    grid-auto-rows: 7vw;
     justify-items: center;
     justify-content: space-around;
     align-items: center;
-    row-gap: 5px;
-    column-gap: 5px;
+    row-gap: 1vw;
+    column-gap: 0.4vw;
+}
+.passiveSkillLink{
+    position: relative;
+    height: 100%;
+    width: 0.6vw;
+    background: rgb(218, 218, 218);
+    border: 0.3vw solid black;
+    z-index: 0;
+}
+.subclassTabButton {
+    height: 4vh;
+    border: 2px solid black;
+    background: whitesmoke;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    text-align: center;
+}
+.subclassTabButtonActive {
+    height: 4vh;
+    border: 2px solid black;
+    color:whitesmoke;
+    background: rgb(0, 0, 0);
+    box-sizing: border-box;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .infoBox {
@@ -386,6 +410,17 @@ section:first-child div.blockHeader::before {
     border:1px solid rgb(75, 75, 75);
 }
 .verticalScroll::-webkit-scrollbar {
+    width: 1vw;
+}
+.horizontalScroll{
+    overflow-x: scroll;
+}
+.horizontalScroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg,rgb(0, 0, 0),rgb(75, 75, 75));
+    border-radius: 5px;
+    border:1px solid rgb(75, 75, 75);
+}
+.horizontalScroll::-webkit-scrollbar {
     width: 1vw;
 }
 #activityGrid{
@@ -725,6 +760,7 @@ progress[value]::-webkit-progress-bar {
     position: relative;
     padding: 0;
     image-rendering: pixelated;
+    z-index: 1;
 }
 
 .passiveSkillButton:active {

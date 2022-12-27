@@ -147,6 +147,7 @@ class Player extends CombatEntity {
         this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
+        this.actionSpeed *= getSecondaryAttribute("actionSpeed");
         this.healthRegeneration = getSecondaryAttribute("healthRegeneration");
         this.criticalChance = getSecondaryAttribute("criticalChance");
         this.overwhelm = getSecondaryAttribute("overwhelm");
@@ -706,7 +707,7 @@ engagementRangeInput.addEventListener("keydown", e => e.preventDefault());
 engagementRangeInput.value = playerStats.engagementRange;
 var restPercentageInput = document.getElementById("restPercentageInput");
 restPercentageInput.addEventListener("keydown", e => e.preventDefault());
-restPercentageInput.value = playerStats.engagementRange;
+restPercentageInput.value = playerStats.restToPercentage * 100;
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange(){
     playerStats.engagementRange =  Math.ceil(Number(engagementRangeInput.value)/5)*5;
@@ -746,7 +747,7 @@ function renderLoop() {
             drawPlayer();
             drawCharacterPortrait(ctxBuffer, player, 'l');
             ctxBuffer.fillStyle = "black";
-            ctxBuffer.fillRect(0, 0, cBuffer.width, cBuffer.height);
+            ctxBuffer.fillRect(0, cBuffer.height / 2 - 80, cBuffer.width, 140);
             ctxBuffer.font = `80px Pickle Pushing`;
             ctxBuffer.fillStyle = "white";
             ctxBuffer.textAlign = 'center';
@@ -809,7 +810,7 @@ function renderLoop() {
     document.getElementById("trainingProgressBarOverview").max = currentTrainingArea.timeToComplete;
     document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
-    document.getElementById("passivePointsText").innerHTML = getTotalPassivePoints() - playerStats.passivePointsSpent;
+    document.getElementById("passivePointsText").innerHTML = getTotalPassivePoints() - getAvailablePassivePoints();
     document.getElementById("moneyText").innerHTML = format(playerStats.money);
     document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
     Object.values(attribute).forEach(attributeName => {
