@@ -50,7 +50,7 @@ const attribute = {
 }
 var formulas = {};
 formulas.playerExp = function (value) {
-    return (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, Math.floor(Math.log10(Math.max(1, playerStats.level)))) * Math.pow(Math.max(1, playerStats.level), baseExperienceCostExponent);
+    return (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, Math.floor(Math.log10(Math.max(1, playerStats.level)))) * Math.pow(Math.max(1, playerStats.level), experienceLevelExponent);
 }
 formulas.cooldownReduction = function (value) {
     return Math.pow(1 - COOLDOWN_BASE, Math.max(0, Math.log10(1 + value)));
