@@ -131,7 +131,7 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
-        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+        playerStats.experienceToNext = formulas.playerExp(playerStats.level);
         if(isOutdated){playerStats.passivePointsSpent = Array(3).fill(0)}
     } else {
         console.log("No savefile found");
