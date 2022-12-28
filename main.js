@@ -194,11 +194,19 @@ class Player extends CombatEntity {
                         break;
                 }
                 if (inRange) {
-                    let isCrit = (Math.random() < this.criticalChance);
+
                     let moveTakedown = this.takedown;
+                    let moveCritChance = this.criticalChance;
+                    let moveLifesteal = 0;
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
+                                case "lifesteal":
+                                    moveLifesteal += this.nextMove.effects[effect];
+                                    break;
+                                case "criticalChance":
+                                    moveCritChance += this.nextMove.effects[effect];
+                                    break;
                                 case "takedown":
                                     moveTakedown += this.nextMove.effects[effect];
                                     break;
@@ -212,6 +220,7 @@ class Player extends CombatEntity {
                             }
                         });
                     }
+                    let isCrit = (Math.random() < this.criticalChance);
                     let d1 = this.nextMove.damage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
@@ -261,7 +270,6 @@ class Player extends CombatEntity {
                                     break;
 
                                 default:
-                                    console.error("ERROR UNKOWN SKILL EFFECT");
                                     break;
                             }
                         });
@@ -269,6 +277,7 @@ class Player extends CombatEntity {
 
                     let { died: killingBlow, d: dr } = target.takeDamage(d3);
                     logConsole(`Hero ${isCrit ? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
+                    if(moveLifesteal > 0){this.health = Math.min(this.health + dr*moveLifesteal, this.maxHealth);logConsole(`Hero healed for ${dr*moveLifesteal}`);}
                     if (killingBlow) this.target = null;
                 }
                 break;
@@ -389,7 +398,7 @@ class Player extends CombatEntity {
             }
             if (ability.type == 1) {
                 let delta = dist - playerStats.engagementRange;
-                weights[index] = delta * this.moveIntention * (this.moveIntention > 0 ? ability.range[0]/100 : ability.range[1]);
+                weights[index] = delta * this.moveIntention * (this.moveIntention > 0 ? ability.range[0] / 100 : ability.range[1]);
             }
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
@@ -454,7 +463,7 @@ class Player extends CombatEntity {
         let restRate = 0;
         switch (gameState) {
             case 'InRest':
-                restRate = this.data.restRate/2;
+                restRate = this.data.restRate / 2;
                 break;
             case 'InDead':
                 restRate = this.data.restRate;
@@ -709,11 +718,11 @@ var restPercentageInput = document.getElementById("restPercentageInput");
 restPercentageInput.addEventListener("keydown", e => e.preventDefault());
 restPercentageInput.value = playerStats.restToPercentage * 100;
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
-function changeEngagementRange(){
-    playerStats.engagementRange =  Math.ceil(Number(engagementRangeInput.value)/5)*5;
+function changeEngagementRange() {
+    playerStats.engagementRange = Math.ceil(Number(engagementRangeInput.value) / 5) * 5;
 }
-function changeRestPercentage(){
-    playerStats.restToPercentage =  Math.ceil(Number(restPercentageInput.value)/5)*5*0.01;
+function changeRestPercentage() {
+    playerStats.restToPercentage = Math.ceil(Number(restPercentageInput.value) / 5) * 5 * 0.01;
 }
 
 //const worker = new Worker('./worker.js');
@@ -840,7 +849,7 @@ function logicLoop() {
                     player.target = null;
                     player.nextMove = null;
                     currentArea.patrolCounter = 0;
-                    if(player.health/player.maxHealth < playerStats.restToPercentage){
+                    if (player.health / player.maxHealth < playerStats.restToPercentage) {
                         gameState = "InRest";
                         logConsole("Resting...")
                     } else {
@@ -860,7 +869,7 @@ function logicLoop() {
             break;
         case "InRest":
             player.rest();
-            if (player.health >= player.maxHealth*playerStats.restToPercentage) {
+            if (player.health >= player.maxHealth * playerStats.restToPercentage) {
                 gameState = "InPatrol";
                 logConsole("Starting patrol.")
             }

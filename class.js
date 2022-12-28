@@ -1129,10 +1129,10 @@ playerMoves = {
         name: "Katana",
         description: "A ninja's weapon (?).",
         iconName: "katana",
-        damage: 1,
-        damageRatios: [.2, 0, 0, .75],
+        damage: 0,
+        damageRatios: [.4, 0, 0, .6],
         damageRange: [0.8, 1.1],
-        time: 2000,
+        time: 2500,
         cooldownTime: 0,
         range: [5, 5],
         cost: 1,
@@ -1243,6 +1243,46 @@ playerMoves = {
         },
         time: 100,
         cooldownTime: 10000,
+        range: [5, 5],
+        cost: 5,
+    },
+    'windSlash': {
+        class: 'ninja',
+        type: 0,
+        sub: 0,
+        position: { row: 3, column: 1 },
+        category: 'ranged',
+        name: "Wind Slash",
+        description: "You prepare, and swing your katana so quickly that a blade of wind forms",
+        iconName: "katana",
+        damage: 0,
+        damageRatios: [1.5, 0, 0, 2.5],
+        damageRange: [0.9, 1.4],
+        effects: {
+            criticalChance: 0.1,
+        },
+        time: 4000,
+        cooldownTime: 20000,
+        range: [0, 50],
+        cost: 5,
+    },
+    'drainingPalm': {
+        class: 'ninja',
+        type: 0,
+        sub: 2,
+        position: { row: 1, column: 1 },
+        category: 'melee',
+        name: "Draining Palm",
+        description: "Learning occult techniques, you use shadow powers to drain your enemies' lifeforce",
+        iconName: "katana",
+        damage: 0,
+        damageRatios: [0, 1, 1, 0],
+        damageRange: [1, 1.2],
+        effects: {
+            lifesteal: 0.5,
+        },
+        time: 4000,
+        cooldownTime: 7000,
         range: [5, 5],
         cost: 5,
     },
@@ -1674,7 +1714,22 @@ function generatePassiveTooltip(skill) {
 function generateAbilityRequirementTooltip(ability) {
     const abilityData = playerMoves[ability];
     let stringDisplay = "";
-    stringDisplay += abilityData.name + "<br>";
+    stringDisplay += abilityData.name + " ";
+    switch (abilityData.type) {
+        case 0:
+            stringDisplay += "(Attack)"
+            break;
+        case 1:
+            stringDisplay += "(Movement)"
+            break;
+        case 2:
+            stringDisplay += "(Support)"
+            break;
+
+        default:
+            break;
+    }
+    stringDisplay += "<br>";
     stringDisplay += abilityData.description + "<br>";
     switch (abilityData.type) {
         case 0:
@@ -1938,6 +1993,9 @@ function updateAbilityButton(abilityId) {
 
 function resetSkills() {
     playerStats.unlockedAbilities = { 'punch': 1 }
+    Object.keys(abilityButtonDict).forEach((abilityKey) => {
+        updateAbilityButton(abilityKey);
+    })
     for (let index = 0; index < slots.length; index++) {
         if (index == 0) {
             playerStats.equippedAbilities[index + 1] = 'punch';
