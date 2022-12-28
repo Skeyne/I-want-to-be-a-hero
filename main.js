@@ -277,7 +277,7 @@ class Player extends CombatEntity {
 
                     let { died: killingBlow, d: dr } = target.takeDamage(d3);
                     logConsole(`Hero ${isCrit ? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
-                    if(moveLifesteal > 0){this.health = Math.min(this.health + dr*moveLifesteal, this.maxHealth);logConsole(`Hero healed for ${dr*moveLifesteal}`);}
+                    if(moveLifesteal > 0){this.health = Math.min(this.health + dr*moveLifesteal, this.maxHealth);logConsole(`Hero healed for ${format(dr*moveLifesteal)}`);}
                     if (killingBlow) this.target = null;
                 }
                 break;
@@ -717,6 +717,17 @@ engagementRangeInput.value = playerStats.engagementRange;
 var restPercentageInput = document.getElementById("restPercentageInput");
 restPercentageInput.addEventListener("keydown", e => e.preventDefault());
 restPercentageInput.value = playerStats.restToPercentage * 100;
+var expCount = 0;
+var expCountBuffer = 0;
+function updateExperienceEstimate(){
+    if(expCount == 0){
+        expCount = expCountBuffer;
+    }
+    expCount += (expCountBuffer-expCount)/10;
+    expCountBuffer = 0;
+    document.getElementById("expEstimateText").innerHTML = format(expCount*4);
+}
+window.setInterval(updateExperienceEstimate,15000);
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange() {
     playerStats.engagementRange = Math.ceil(Number(engagementRangeInput.value) / 5) * 5;

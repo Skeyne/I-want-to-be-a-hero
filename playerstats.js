@@ -125,6 +125,7 @@ function playerSetLevel(value) {
 }
 function addPlayerExp(amount) {
     playerStats.experience += amount;
+    expCountBuffer += amount;
     if (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;

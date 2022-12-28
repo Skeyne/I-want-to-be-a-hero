@@ -70,6 +70,18 @@ var abilityLibrary = {
         cooldownTime: 7000,
         range: [0,10],
     },
+    'crabWaterJet': {
+        type: 0,
+        category:'ranged',
+        name: "Water Jet",
+        iconName: "vomit",
+        baseDamage: 0,
+        damageRatios: [0, 5, 0, 0],
+        damageRange: [0.9, 1.1],
+        time: 5000,
+        cooldownTime: 7000,
+        range: [0,50],
+    },
     'mutantSlash': {
         type: 0,
         category:'melee',
