@@ -325,23 +325,116 @@ skillLibrary = {
         },
         //#endregion
         //#region 1
-        //#endregion
-        //#region 2
-        'sh_2_0': {
-            id: 'sh_2_0',
-            sub: 2,
+        'sh_1_0': {
+            id: 'sh_1_0',
+            sub: 1,
             position: { row: 1, column: 3 },
-            name: 'Strength Training Boost',
+            name: 'Giant Training',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
             effect: [{
                 type: 2, // training boost
                 effectTarget: "strengthTraining",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.2,
+                effectMagnitude: 0.1,
+            },
+            {
+                type: 2, // training boost
+                effectTarget: "toughnessTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.1,
             }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
+        },
+        'sh_1_1': {
+            id: 'sh_1_1',
+            sub: 1,
+            position: { row: 1, column: 3 },
+            name: 'Colossal Constitution',
+            iconName: 'calisthenics',
+            desc: 'PLACEHOLDER',
+            effect: [{
+                type: 0,
+                effectTarget: "strength",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.1,
+            },
+            {
+                type: 0,
+                effectTarget: "toughness",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.1,
+            }],
+            maxLevel: 5,
+            cost: [5, 10, 20, 40, 80],
+        },
+        'sh_1_2': {
+            id: 'sh_1_2',
+            sub: 1,
+            position: { row: 2, column: 3 },
+            name: 'Titanic Blows',
+            iconName: 'calisthenics',
+            desc: 'Rather than throw meek punches you put measured time into each strike',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "actionSpeed",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.98,
+            },{
+                type: 1, // attribute boost
+                effectTarget: "powerMultiplier",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.04,
+            }],
+            maxLevel: 3,
+            cost: [4,8,16],
+        },
+        //#endregion
+        //#region 2
+        'sh_2_0': {
+            id: 'sh_2_0',
+            sub: 2,
+            position: { row: 2, column: 3 },
+            name: 'Circular Breathing',
+            iconName: 'calisthenics',
+            desc: 'PLACEHOLDER',
+            effect: [{
+                type: 2, // training boost
+                effectTarget: "strengthTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.1,
+            },
+            {
+                type: 2, // training boost
+                effectTarget: "mindTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.1,
+            }],
+            maxLevel: 5,
+            cost: [5, 10, 20, 40, 80],
+        },'sh_2_1': {
+            id: 'sh_2_1',
+            sub: 2,
+            position: { row: 3, column: 3 },
+            name: 'Body & Soul',
+            iconName: 'calisthenics',
+            desc: 'PLACEHOLDER',
+            effect: [{
+                type: 0, // training boost
+                effectTarget: "strength",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.05,
+            },
+            {
+                type: 0, // training boost
+                effectTarget: "mind",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.05,
+            }],
+            maxLevel: 5,
+            cost: [5, 10, 20, 40, 80],
+            requires: { 'sh_2_0': 10 }
         },
         //#endregion
 
@@ -487,7 +580,7 @@ skillLibrary = {
         'es_2_0': {
             id: 'es_2_0',
             sub: 2,
-            position: { row: 2, column: 1 },
+            position: { row: 1, column: 3 },
             name: 'Spirit Sight',
             iconName: 'studying',
             desc: 'You start to see spirits, and they sometimes help you.',
@@ -504,7 +597,7 @@ skillLibrary = {
         'es_2_1': {
             id: 'es_2_1',
             sub: 2,
-            position: { row: 1, column: 4 },
+            position: { row: 2, column: 4 },
             name: 'Friendly Possession',
             iconName: 'studying',
             desc: 'You learn that by gathering spirits in your body they can help protect it.',
@@ -605,8 +698,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 10,
             }],
-            maxLevel: 1,
-            cost: [1],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
         },
         'mu_2_1': {
             id: 'mu_2_1',
@@ -625,7 +718,23 @@ skillLibrary = {
             cost: [10, 100, 1000],
             requires: { 'mu_2_0': 1 }
         },
-
+        'mu_2_2': {
+            id: 'mu_2_2',
+            sub: 2,
+            position: { row: 2, column: 4 },
+            name: 'Bestial Speed',
+            iconName: 'milerun',
+            desc: 'Mixing animal DNA into yours you enhance your speed.',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "actionSpeed",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.05,
+            }],
+            maxLevel: 1,
+            cost: [10],
+            requires: { 'mu_2_0': 10 }
+        },
         //#endregion
 
 
@@ -902,8 +1011,8 @@ playerMoves = {
     'psionicBarrier': {
         class: 'esper',
         type: 2,
-        sub: 1,
-        position: { row: 1, column: 1 },
+        sub: 0,
+        position: { row: 2, column: 5 },
         category: 'ranged',
         name: "Psionic Barrier",
         description: "Form a temporary barrier to block attacks.",
@@ -1019,6 +1128,43 @@ playerMoves = {
         range: [5, 5],
         cost: 5,
     },
+    'clawStrike': {
+        class: 'mutant',
+        type: 0,
+        sub: 2,
+        position: { row: 1, column: 1 },
+        category: 'melee',
+        name: "Clawstrike",
+        description: "Rapidly grow claws out of your fist for a feral strike.",
+        iconName: "clawStrike",
+        damage: 0,
+        damageRatios: [0, .2, 0, 0.2],
+        damageRange: [.8, 1.2],
+        time: 1500,
+        cooldownTime: 0,
+        range: [5, 5],
+        cost: 1,
+    },
+    'monkeySmash': {
+        class: 'mutant',
+        type: 0,
+        sub: 2,
+        position: { row: 3, column: 5 },
+        category: 'melee',
+        name: "Monkey Smash",
+        description: "With the power of monke strength, smash your target into the ground, briefly stunning him. Deals extra damage to damaged enemies.",
+        iconName: "monkeySmash",
+        damage: 0,
+        damageRatios: [3, 1, 0, 0],
+        damageRange: [0.8, 1],
+        effects: {
+            'stun': 3,
+        },
+        time: 6000,
+        cooldownTime: 12000,
+        range: [5, 5],
+        cost: 5,
+    },
     //Superhuman
     'simplePunch': {
         class: 'superhuman',
@@ -1117,6 +1263,24 @@ playerMoves = {
         time: 1000,
         cooldownTime: 14000,
         range: [0, 0],
+        cost: 5,
+    },
+    'kiBlast': {
+        class: 'superhuman',
+        type: 0,
+        sub: 2,
+        position: { row: 2, column: 5 },
+        category: 'ranged',
+        name: "Ki Blast",
+        description: "Form and discharge a blast of ki from your hand",
+        iconName: "telekineticProjectile",
+        damage: 0,
+        damageRatios: [1, 0, 1, 0],
+        damageRange: [1, 1.1],
+        effects: {},
+        time: 3000,
+        cooldownTime: 5000,
+        range: [0, 20],
         cost: 5,
     },
     //NINJA
@@ -1660,7 +1824,7 @@ function generatePassiveTooltip(skill) {
                 }
                 break;
             case 1:
-                effectText = `<span>${effect.effectTarget}</span>`;
+                effectText += `<span>${effect.effectTarget}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
                         numberDisplay = "+" + format(effect.effectMagnitude * 100) + "%";
@@ -1678,7 +1842,7 @@ function generatePassiveTooltip(skill) {
                 break;
             case 2:
                 let attribute = effect.effectTarget.substr(0, effect.effectTarget.length - 8);
-                effectText = `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
+                effectText += `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
                 switch (effect.effectType) {
                     case "additiveFlat":
                         numberDisplay = "+" + effect.effectMagnitude;

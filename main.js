@@ -75,6 +75,7 @@ class CombatEntity {
         this.health = 0;
         this.distance = 0;
         this.initiative = 0;
+        this.interrupt = 0;
         this.nextMove = null;
         this.nextMoveInitiative = 0;
         this.damageReduction = 0;
@@ -104,7 +105,11 @@ class CombatEntity {
             this.health = Math.min(this.health + this.maxHealth * this.healthRegeneration * logicTickTime / 1000, this.maxHealth);
         }
         if (this.nextMove != null) {
-            this.initiative += 1000 * logicTickTime / 1000 * this.actionSpeed;
+            let tickTime = logicTickTime;
+            if (this.interrupt > 0){this.interrupt -= tickTime};
+            if(this.interrupt <= 0){
+                this.initiative += 1000 * tickTime / 1000 * this.actionSpeed;
+            }
 
         } else {
             this.think();
@@ -148,6 +153,7 @@ class Player extends CombatEntity {
         this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.actionSpeed *= getSecondaryAttribute("actionSpeed");
+        this.powerMultiplier = getSecondaryAttribute("powerMultiplier");
         this.healthRegeneration = getSecondaryAttribute("healthRegeneration");
         this.criticalChance = getSecondaryAttribute("criticalChance");
         this.overwhelm = getSecondaryAttribute("overwhelm");
@@ -198,9 +204,13 @@ class Player extends CombatEntity {
                     let moveTakedown = this.takedown;
                     let moveCritChance = this.criticalChance;
                     let moveLifesteal = 0;
+                    let moveStun = 0;
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
+                                case "stun":
+                                    moveStun+=  this.nextMove.effects[effect];
+                                    break;
                                 case "lifesteal":
                                     moveLifesteal += this.nextMove.effects[effect];
                                     break;
@@ -220,7 +230,7 @@ class Player extends CombatEntity {
                             }
                         });
                     }
-                    let isCrit = (Math.random() < this.criticalChance);
+                    let isCrit = (Math.random() < moveCritChance);
                     let d1 = this.nextMove.damage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
@@ -233,6 +243,8 @@ class Player extends CombatEntity {
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
+                                case "stun":
+                                    target.interrupt += moveStun*1000;
                                 case "repeat":
                                     break;
                                 case "takedown":
@@ -262,6 +274,9 @@ class Player extends CombatEntity {
                                         if (Math.abs(originDistance - enemy.distance) <= this.nextMove.effects[effect]) {
                                             if (this.nextMove.effects.hasOwnProperty("knockback")) {
                                                 enemy.distance += this.nextMove.effects['knockback'];
+                                            }
+                                            if (this.moveStun > 0) {
+                                                enemy.interrupt += this.moveStun*1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
                                             logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);

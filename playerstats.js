@@ -20,6 +20,7 @@ const cleanPlayerStats = {
     healthRegeneration: 0,
     cooldownReduction:0,
     actionSpeed:1,
+    powerMultiplier:1,
     criticalChance: 0,
     overwhelm: 0,
     takedown: 0,
@@ -55,7 +56,7 @@ function save() {
     localStorage.setItem("version", version);
 }
 function load(file = null) {
-    //reset()
+    reset();
     let loadgame;
     if (file != null) { loadgame = file; } else { loadgame = JSON.parse(localStorage.getItem("heroSave")); }
     if (loadgame != null) {

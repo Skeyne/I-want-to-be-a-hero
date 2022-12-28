@@ -2,14 +2,14 @@ const storyQuests = [
     {
         title: `The Beginning I`,
         text: `You've had enough. Every year crime is up and yet the city council does nothing about it.
-        The corruption runs deep. It's time for change. <br><br> (Change menus by scrolling on this area or arrow keys after clicking inside it.)`,
+        The corruption runs deep. It's time for change. <br><br> (Tabs found on the left.)`,
         requirementType: `defeat`,
         requirementTarget: [`criminal`],
         requirementAmount: [1],
     },
     {
         title: `The Beginning II`,
-        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.<br><br>(Arrow keys or scroll down to 'Training').`,
+        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.<br><br>(Activity tab).`,
         requirementType: `training`,
         requirementTarget: [`strength`, `toughness`],
         requirementAmount: [1, 1]

@@ -324,7 +324,7 @@ enemyData.crabman = {
     reputationReward: 1,
     spriteFile: "crabman.png",
     portraitFile: "prisoner9Portrait.png",
-    moves: ['walk','punch','smash','mutantSlash','vomit'],
+    moves: ['walk','punch','smash','mutantSlash','crabWaterJet'],
 };
 enemyData.ultracrabman = {
     id:"ultracrabman",
