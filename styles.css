@@ -280,7 +280,7 @@ main {
     color: transparent;
     image-rendering: pixelated;
     grid-column: 2;
-    height: 100%;
+    height: 90%;
     aspect-ratio: 1 / 1;
     border: 1vmin inset rgb(34, 34, 34);
 }

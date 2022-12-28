@@ -1,4 +1,4 @@
-const version = '0.03b';
+const version = '0.03c';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML ='v'+version;
@@ -24,6 +24,8 @@ const cleanPlayerStats = {
     overwhelm: 0,
     takedown: 0,
     dodgeChance: 0,
+    meleeDamage: 0,
+    rangedDamage:0,
     restRate: 0.1,
     lastSave: 0,
     muted: false,
@@ -45,6 +47,29 @@ const cleanPlayerStats = {
 }
 var playerStats = {};
 reset();
+function save() {
+    console.log("Saving data...")
+    playerStats.lastSave = Date.now();
+    localStorage.setItem("heroSave", JSON.stringify(playerStats));
+    localStorage.setItem("heroLastSaved", playerStats.lastSave);
+    localStorage.setItem("version", version);
+}
+function load(file = null) {
+    //reset()
+    let loadgame;
+    if (file != null) { loadgame = file; } else { loadgame = JSON.parse(localStorage.getItem("heroSave")); }
+    if (loadgame != null) {
+        Object.keys(loadgame).forEach(property => {
+            playerStats[property] = loadgame[property];
+        });
+        if (playerStats.class == 'Human') { playerStats.class = 'human' };
+        if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
+        playerStats.experienceToNext = formulas.playerExp(playerStats.level);
+        if(isOutdated){playerStats.passivePointsSpent = Array(3).fill(0)}
+    } else {
+        console.log("No savefile found");
+    }
+}
 load();
 setInterval(save, 30000);
 function getTotalPassivePoints() {
@@ -105,7 +130,7 @@ function addPlayerExp(amount) {
         playerStats.level += 1;
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
-        checkAbilityRequirements();
+        //checkAbilityRequirements();
     }
     checkLevelQuest();
 }
@@ -114,28 +139,6 @@ function addPlayerMoney(amount) {
 }
 function addPlayerReputation(amount) {
     playerStats.reputation += amount;
-}
-function save() {
-    console.log("Saving data...")
-    playerStats.lastSave = Date.now();
-    localStorage.setItem("heroSave", JSON.stringify(playerStats));
-    localStorage.setItem("heroLastSaved", playerStats.lastSave);
-    localStorage.setItem("version", version);
-}
-function load(file = null) {
-    //reset()
-    if (file != null) { loadgame = file; } else { loadgame = JSON.parse(localStorage.getItem("heroSave")); }
-    if (loadgame != null) {
-        Object.keys(loadgame).forEach(property => {
-            playerStats[property] = loadgame[property];
-        });
-        if (playerStats.class == 'Human') { playerStats.class = 'human' };
-        if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
-        playerStats.experienceToNext = formulas.playerExp(playerStats.level);
-        if(isOutdated){playerStats.passivePointsSpent = Array(3).fill(0)}
-    } else {
-        console.log("No savefile found");
-    }
 }
 function loadGame(loadgame) {
     let shouldCheckVersion = false; //check if we need to implement a fix for version differences
