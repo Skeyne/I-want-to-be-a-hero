@@ -31,7 +31,6 @@ function canAttributePrestige() {
     for (let index = 0; index < 4; index++) {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const softcapped = formulas.softcappedAttribute(index);
-        console.log("Softcap:",softcap," Softcapped:",softcapped);
         if (softcapped >= softcap) {
             can = true;
         } else {

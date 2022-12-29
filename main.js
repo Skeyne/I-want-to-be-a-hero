@@ -856,7 +856,7 @@ function renderLoop() {
         let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]));
         let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]] + playerStats.permanentSoftcaps[attributeIdToIndex[attributeName]];
         let softCapText = (baseAttributeValue > softCap) ? `EFFECTIVE BASE: ${softCappedValue}` : `${softCappedValue}`;
-        if (baseAttributeValue > softCap || true) {
+        if (baseAttributeValue > softCap) {
             softCapText += `<br>(RAW: ${format(baseAttributeValue)})`
             softCapText += `<br>[SOFTCAP: ${format(softCap)}]`;
             effectiveValue = effectiveValue + "(!)";
