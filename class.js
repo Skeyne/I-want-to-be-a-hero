@@ -2074,10 +2074,12 @@ function addEffect(skillId) {
 }
 function removeEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect.effectTarget)) {
-        playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
-    }
+    console.log("ID: ",skillId,"Skill:",skill);
     for (let index = 0; index < skill.effect.length; index++) {
+        if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect[index].effectTarget)) {
+            playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };
+            continue;
+        }
         if (playerStats.effectMultipliers[skill.effect[index].effectTarget][skill.effect[index].effectType].hasOwnProperty(skill.id)) {
             delete playerStats.effectMultipliers[skill.effect[index].effectTarget][skill.effect[index].effectType][skill.id];
         } else {
