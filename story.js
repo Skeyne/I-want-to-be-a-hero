@@ -53,10 +53,10 @@ const storyQuests = [
         title: `Streetfights III`,
         text: `That guy had a freakin' crowbar. Back to the training board.`,
         requirementType: `training`,
-        requirementTarget: [`strength`, `toughness`, 'mind',`agility`],
-        requirementAmount: [5,5,5,5],
+        requirementTarget: [`strength`, `toughness`, 'mind', `agility`],
+        requirementAmount: [5, 5, 5, 5],
     },
-    
+
     {
         title: `Streetfights IV`,
         text: `Time to take out the whole gang.`,
@@ -119,15 +119,15 @@ const storyQuests = [
         title: `A New Beginning II`,
         text: `Ever since the prison incident, crime in the city has continued to grow. There are reports of bizarre accidents and unusual individuals. In the meanwhile, the mafia has continued to expand in your neighbourhood. You think that with these new powers you can put up a fight.`,
         requirementType: `defeat`,
-        requirementTarget: [`thug2`,`thug3`],
-        requirementAmount: [30,10],
+        requirementTarget: [`thug2`, `thug3`],
+        requirementAmount: [30, 10],
     },
     {
         title: `A New Beginning III`,
         text: `You keep beating up these thugs but there is a mastermind organizing them, if he doesn't go down this won't stop. If I keep taking down his henchmen closer to his territory he'll show up`,
         requirementType: `defeat`,
-        requirementTarget: [`thug4`,`thug5`,'don'],
-        requirementAmount: [50,20,1],
+        requirementTarget: [`thug4`, `thug5`, 'don'],
+        requirementAmount: [50, 20, 1],
     },
     {
         title: `A New Beginning IV`,
@@ -149,20 +149,28 @@ const endOfStoryQuest = {
     requirementAmount: [1],
 };
 
-if(isOutdated){if(lastVersion.substr(0,4) == '0.02'){
+if (isOutdated) {
+    if (lastVersion.substr(0, 4) == '0.02') {
 
-    if(playerStats.storyProgress >=13)playerStats.storyProgress = 13;updateStoryQuest();}
+        if (playerStats.storyProgress >= 13) playerStats.storyProgress = 13; updateStoryQuest();
+    }
 }
 updateStoryQuest();
 updateDiaryEntries();
 
 var areaSelect = document.getElementById("selectArea");
 checkAreaUnlocks();
-function checkAreaUnlocks(){
+function checkTabUnlocks() {
+    if (playerStats.storyProgress >= 17) {
+        document.getElementById("prestigeBox").style.visibility = 'visible';
+        document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");
+    }
+}
+function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
     for (let index = 0; index < areas.length; index++) {
         let area = areas[index];
-        if(area.storyUnlock > playerStats.storyProgress){
+        if (area.storyUnlock > playerStats.storyProgress) {
             break;
         }
         let d = document.createElement('div');
@@ -234,14 +242,13 @@ function checkDefeatQuest(enemyId) {
 function checkLevelQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
     if (quest.requirementType != 'level') return false;
-        playerStats.currentStoryQuestProgress[0] = playerStats.level;
+    playerStats.currentStoryQuestProgress[0] = playerStats.level;
     updateStoryQuest();
 }
 function updateStoryQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
     let completed = true;
-    if(playerStats.currentStoryQuestProgress.length != quest.requirementTarget.length)
-    {playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);}
+    if (playerStats.currentStoryQuestProgress.length != quest.requirementTarget.length) { playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0); }
     for (let index = 0; index < quest.requirementTarget.length; index++) {
         if (playerStats.currentStoryQuestProgress[index] >= quest.requirementAmount[index]) {
             continue;
@@ -255,6 +262,7 @@ function updateStoryQuest() {
         playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
         console.log(playerStats.currentStoryQuestProgress);
         checkAreaUnlocks();
+        checkTabUnlocks();
         updateDiaryEntries();
     }
     let textBox = document.getElementById("storyText");
@@ -264,7 +272,7 @@ function updateStoryQuest() {
 
 }
 
-function storyQuestText(progress, diary=false) {
+function storyQuestText(progress, diary = false) {
     let quest = getStoryQuest(progress);
     let requirementsString = "";
     let number = 0;
@@ -292,7 +300,7 @@ function storyQuestText(progress, diary=false) {
             requirementsString = "ERROR: unkown quest requirement";
             break;
     }
-    return `${quest.title}<br /><br />${quest.text}<br /><br />${(diary? "":requirementsString)}`;
+    return `${quest.title}<br /><br />${quest.text}<br /><br />${(diary ? "" : requirementsString)}`;
 }
 function storyRequirementsText(progress) {
     let quest = getStoryQuest(progress);
@@ -324,20 +332,20 @@ function storyRequirementsText(progress) {
     return `${requirementsString}`;
 }
 
-function updateDiaryEntries(){
+function updateDiaryEntries() {
     let container = document.getElementById("diaryEntries");
     container.innerHTML = "";
     for (let index = 0; index < playerStats.storyProgress; index++) {
         let quest = getStoryQuest(index);
         let b = document.createElement("button");
-        b.setAttribute("onclick",`updateDiaryText(${index})`);
-        b.setAttribute("class","diaryButton");
+        b.setAttribute("onclick", `updateDiaryText(${index})`);
+        b.setAttribute("class", "diaryButton");
         b.innerHTML = quest.title;
         container.append(b);
     }
 }
 
-function updateDiaryText(progress){
+function updateDiaryText(progress) {
     let container = document.getElementById("diaryText");
-    container.innerHTML = storyQuestText(progress,diary=true);
+    container.innerHTML = storyQuestText(progress, diary = true);
 }

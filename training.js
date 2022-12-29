@@ -188,6 +188,7 @@ class TrainingArea {
         playerStats[this.attribute] += reward;
         checkTrainingQuest();
         updateTrainingCanBuy();
+        updateAttributePrestigeText(); 
     }
 
 

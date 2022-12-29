@@ -141,6 +141,7 @@ main {
 }
 
 .infoBox {
+    grid-row: 1;
     scroll-snap-align: start;
 }
 
@@ -309,6 +310,7 @@ main {
     text-transform: uppercase;
     padding: 0;
 }
+
 .sidebarButton:active {
     color: rgb(255, 255, 255);
     background-color: rgb(0, 0, 0);
@@ -322,6 +324,24 @@ main {
     box-sizing: border-box;
     border: 5px outset rgb(45, 45, 45);
 
+}
+.sidebarButtonLocked {
+    font-size: 0px;
+    pointer-events: none;
+    height:min-content;
+    width: 100%;
+    color: black;
+    background-color: rgb(52, 52, 52);
+    box-sizing: border-box;
+    border: 5px outset rgb(74, 74, 74);
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0;
+}
+.sidebarButtonLocked::after {
+    content: 'LOCKED';
+    font-size: 1.6vw;
 }
 .blockHeader {
     height:5%;

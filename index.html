@@ -220,6 +220,23 @@
                         </div>
                     </div>
                 </section>
+                <section class="infoBox" id="prestigeBox">
+                    <div class="blockHeader pickle" style="display: block">PRESTIGE</div>
+                    <div class="blockBody dotted pickle verticalScroll">
+                        <div style ="line-height:1.5;" class="oxanium"> You can take the Y you found to unlock more of your power.<br>
+                            This will reset your attributes.<br>
+                            Your attribute softcaps will increase by 10% of their current value plus 50% of the effective value over the current softcap.<br>
+                            Softcaps will only increase for attributes which have reached their current softcap!<br>
+                            You gain 1% of the softcap as permanent attributes when you reset this way. (They cannot be lowered below that value for activities)<br>
+                            
+                        </div>
+                        <div class ="subHeader">Softcaps</div>
+                        <div id="attributePrestigeText" style="text-align: center;padding:3%">
+                            
+                        </div>
+                        <button style = "display:block; margin:auto" class="bannerButton" onclick="attributePrestige()">Take Y</button>
+                    </div>
+                </section>
                 <section class="infoBox" id="helpBox">
                     <div class="blockHeader pickle" style="display: block">HELP</div>
                     <div class="blockBody dotted pickle verticalScroll  " id="helpBody" style="overflow-y:scroll">
@@ -294,6 +311,7 @@
 <script src="playerstats.js"></script>
 <script src="enemies.js "></script>
 <script src="areas.js"></script>
+<script src="prestige.js"></script>
 <script src="story.js"></script>
 <script src="class.js"></script>
 <script src="training.js"></script>

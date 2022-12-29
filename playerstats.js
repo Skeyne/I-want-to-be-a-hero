@@ -1,4 +1,4 @@
-const version = '0.03c';
+const version = '0.03d';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML ='v'+version;
@@ -16,12 +16,14 @@ const cleanPlayerStats = {
     agility: 0,
     attributeSoftcaps: [100, 100, 100, 100],
     attributeTrainingModifier: [1, 1, 1, 1],
+    permanentSoftcaps: [0,0,0,0],
+    permanentAttributes: [0,0,0,0],
     flatReduction: 0,
     healthRegeneration: 0,
     cooldownReduction:0,
     actionSpeed:1,
     powerMultiplier:1,
-    criticalChance: 0,
+    criticalChance: 0,  
     overwhelm: 0,
     takedown: 0,
     dodgeChance: 0,
@@ -176,7 +178,9 @@ function exportGame() {
     });
 }
 function importGame() {
-    let loadgame = JSON.parse(atob(prompt("Input your save here:")))
+    let text = prompt("Input your save here:");
+    if(text == null) return;
+    let loadgame = JSON.parse(atob())
     if (loadgame && loadgame != null && loadgame != "") {
         load(loadgame);
         save();

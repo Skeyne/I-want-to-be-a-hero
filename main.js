@@ -9,7 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'info'];
+var tabNames = ['story', 'status', 'activity', 'areas', 'class','prestige','info'];
 var sidebar = document.getElementById('sidebar');
 let activeTab = 0;
 for (let index = 0; index < tabNames.length; index++) {
@@ -22,6 +22,8 @@ for (let index = 0; index < tabNames.length; index++) {
     sidebar.append(b);
 }
 changeTab(0);
+if(playerStats.storyProgress >= 17){document.getElementById("prestigeBox").style.visibility = 'visible'} else {document.getElementById("prestigeBox").style.visibility = 'hidden'}
+if(playerStats.storyProgress >= 17){document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");} else {document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle");}
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
@@ -852,11 +854,11 @@ function renderLoop() {
         let baseAttributeValue = playerStats[attributeName];
         let effectiveValue = format(getEffectiveValue(attributeName))
         let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]));
-        let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]];
+        let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]] + playerStats.permanentSoftcaps[attributeIdToIndex[attributeName]];
         let softCapText = (baseAttributeValue > softCap) ? `EFFECTIVE BASE: ${softCappedValue}` : `${softCappedValue}`;
-        if (baseAttributeValue > softCap) {
+        if (baseAttributeValue > softCap || true) {
             softCapText += `<br>(RAW: ${format(baseAttributeValue)})`
-            softCapText += `<br>[SOFTCAP: ${softCap}]`;
+            softCapText += `<br>[SOFTCAP: ${format(softCap)}]`;
             effectiveValue = effectiveValue + "(!)";
         }
         document.getElementById(attributeName + "Text").innerHTML = effectiveValue;
