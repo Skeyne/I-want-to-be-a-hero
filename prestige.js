@@ -27,15 +27,17 @@ function attributePrestige() {
     updateAttributePrestigeText();
 }
 function canAttributePrestige() {
+    let can = false;
     for (let index = 0; index < 4; index++) {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const softcapped = formulas.softcappedAttribute(index);
+        console.log("Softcap:",softcap," Softcapped:",softcapped);
         if (softcapped >= softcap) {
-            return true;
+            can = true;
         } else {
-            return false;
         }
     }
+    return can;
 }
 
 function updateAttributePrestigeText(){

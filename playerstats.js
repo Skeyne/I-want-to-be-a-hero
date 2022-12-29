@@ -180,7 +180,7 @@ function exportGame() {
 function importGame() {
     let text = prompt("Input your save here:");
     if(text == null) return;
-    let loadgame = JSON.parse(atob())
+    let loadgame = JSON.parse(atob(text))
     if (loadgame && loadgame != null && loadgame != "") {
         load(loadgame);
         save();
