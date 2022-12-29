@@ -280,7 +280,7 @@ main {
     color: transparent;
     image-rendering: pixelated;
     grid-column: 2;
-    height: 90%;
+    height: 80%;
     aspect-ratio: 1 / 1;
     border: 1vmin inset rgb(34, 34, 34);
 }
@@ -754,9 +754,9 @@ progress[value]::-webkit-progress-bar {
 }
 
 .passiveSkillButton {
-    width: 5em;
-    height: 5em;
-    border: 5px grey outset;
+    width: 61%;
+    height: 61%;
+    border: .3vw grey outset;
     position: relative;
     padding: 0;
     image-rendering: pixelated;
@@ -764,7 +764,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .passiveSkillButton:active {
-    border: 5px grey inset;
+    border: .4vw rgb(73, 73, 73) outset;
 }
 
 .passiveSkillLevel {
@@ -1149,5 +1149,34 @@ progress[value]::-webkit-progress-bar {
         overflow-y:hidden;
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
+    }
+    .passiveSkillButton {
+        width: 80%;
+        height: 80%;
+        border: .4vw grey outset;
+        position: relative;
+        padding: 0;
+        image-rendering: pixelated;
+        z-index: 1;
+    }
+    .gridSkills {
+        display: grid;
+        width: 100%;
+        height: auto;
+        grid-template-rows: 14vw;
+        grid-template-columns: repeat(5,14vw);
+        grid-auto-rows: 14vw;
+        justify-items: center;
+        align-items: center;
+        row-gap: 4vw;
+        column-gap: 4vw;
+    }
+    .passiveSkillLink{
+        position: relative;
+        height: 100%;
+        width: 1.2vw;
+        background: rgb(218, 218, 218);
+        border: 0.3vw solid black;
+        z-index: 0;
     }
 }

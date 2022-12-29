@@ -350,7 +350,7 @@ skillLibrary = {
         'sh_1_1': {
             id: 'sh_1_1',
             sub: 1,
-            position: { row: 1, column: 3 },
+            position: { row: 2, column: 3 },
             name: 'Colossal Constitution',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -367,12 +367,13 @@ skillLibrary = {
                 effectMagnitude: 0.1,
             }],
             maxLevel: 5,
+            requires: { 'sh_1_0': 1 },
             cost: [5, 10, 20, 40, 80],
         },
         'sh_1_2': {
             id: 'sh_1_2',
             sub: 1,
-            position: { row: 2, column: 3 },
+            position: { row: 3, column: 3 },
             name: 'Titanic Blows',
             iconName: 'calisthenics',
             desc: 'Rather than throw meek punches you put measured time into each strike',
@@ -388,6 +389,7 @@ skillLibrary = {
                 effectMagnitude: 1.04,
             }],
             maxLevel: 3,
+            requires: { 'sh_1_1': 1 },
             cost: [4,8,16],
         },
         //#endregion
@@ -395,7 +397,7 @@ skillLibrary = {
         'sh_2_0': {
             id: 'sh_2_0',
             sub: 2,
-            position: { row: 2, column: 3 },
+            position: { row: 1, column: 3 },
             name: 'Circular Breathing',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -416,7 +418,7 @@ skillLibrary = {
         },'sh_2_1': {
             id: 'sh_2_1',
             sub: 2,
-            position: { row: 3, column: 3 },
+            position: { row: 2, column: 3 },
             name: 'Body & Soul',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -434,7 +436,7 @@ skillLibrary = {
             }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
-            requires: { 'sh_2_0': 10 }
+            requires: { 'sh_2_0': 1}
         },
         //#endregion
 
@@ -1273,7 +1275,7 @@ playerMoves = {
         category: 'ranged',
         name: "Ki Blast",
         description: "Form and discharge a blast of ki from your hand",
-        iconName: "telekineticProjectile",
+        iconName: "kiBlast",
         damage: 0,
         damageRatios: [1, 0, 1, 0],
         damageRange: [1, 1.1],
