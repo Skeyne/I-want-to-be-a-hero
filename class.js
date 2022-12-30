@@ -354,7 +354,7 @@ skillLibrary = {
                 effectMagnitude: 0.05,
             }],
             maxLevel: 3,
-            cost: [20],
+            cost: [20,30,40],
             requires: { 'sh_0_2': 1 }
         },
         //#endregion
