@@ -142,6 +142,18 @@ var abilityLibrary = {
         range: [5,5],
 
     },
+    'gutPunch': {
+        type: 0,
+        category:'melee',
+        name: "Gut Punch",
+        iconName: "knuckleDuster",
+        baseDamage: 1,
+        damageRatios: [1.2,0.5,0,0],
+        time: 3000,
+        cooldownTime: 7000,
+        range: [5,5],
+
+    },
     'walk': {
         type: 1,
         category:'movement',
@@ -295,6 +307,32 @@ enemyData.don = {
     healthRegen: 0,
     expReward: 1000,
     moneyReward: 50,
+    reputationReward: 1,
+    spriteFile: "don.png",
+    portraitFile: "thugPortrait.png",
+    moves: ['tommy','knuckleDuster','walk'],
+};
+enemyData.donbodyguard = {
+    id:"donbodyguard",
+    name: "Don's Right Hand",
+    maxHealth: 5000,
+    attributes: [3000,5000,500,2500],
+    healthRegen: 0.005,
+    expReward: 3000,
+    moneyReward: 50,
+    reputationReward: 1,
+    spriteFile: "donbodyguard.png",
+    portraitFile: "prisoner9Portrait.png",
+    moves: ['punch','smash','gutPunch','walk'],
+};
+enemyData.don2 = {
+    id:"don2",
+    name: "The Don",
+    maxHealth: 2000,
+    attributes: [2400,3000,2000,3000],
+    healthRegen: 0,
+    expReward: 3000,
+    moneyReward: 150,
     reputationReward: 1,
     spriteFile: "don.png",
     portraitFile: "thugPortrait.png",

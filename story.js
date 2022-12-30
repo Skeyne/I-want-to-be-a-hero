@@ -131,7 +131,14 @@ const storyQuests = [
     },
     {
         title: `A New Beginning IV`,
-        text: `Ever since you defeated The Don mafia activity around your area has simmered down, but the strange incidents around the city continue. One day while walking the streets you hear a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYONE!". This must be him. This time I won't lose.`,
+        text:`As you start bloodying the Don he retreats into one of the mafia warehouses. Upon entering you see crates filled with vials of liquid that remind you of the prison's underground lab. Then, you notice the hulking figure of the Don's right hand man close the door behind you. Through his body you see glowing lines and a change of skin tone not unlike the prisoner's escaping the lab, although he does not look sickly like them. Before you can think any further he lunges at you as the Don orders 'get 'im boy!'`,
+        requirementType: `defeat`,
+        requirementTarget: [`donbodyguard`, 'don'],
+        requirementAmount: [1, 1],
+    },
+    {
+        title: `A New Beginning V`,
+        text: `Ever since you defeated The Don, mafia activity around your area has simmered down, but the strange incidents around the city continue. One day while walking the streets you hear a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYONE!". This must be him. This time I won't lose.`,
         requirementType: `defeat`,
         requirementTarget: [`crabman`],
         requirementAmount: [1],

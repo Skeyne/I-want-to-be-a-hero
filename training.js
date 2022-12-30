@@ -109,6 +109,7 @@ class Activity {
         }
         this.updateRankProgress();
         checkTrainingQuest();
+        updateAttributePrestigeText(); 
     }
     payCost() {
         if (playerStats.money < this.cost) { this.costPaid = false; return false; }
@@ -160,38 +161,6 @@ class Activity {
     onDeselect(){
         this.element.style.borderColor = "";
     }
-}
-class TrainingArea {
-    constructor(data) {
-        this.name = data.name;
-        this.attribute = playerStats.currentTrainingAttribute;
-        this.base = data.base;
-        this.costMultiplier = data.costMultiplier;
-        this.timeToComplete = 1000 * data.timeToComplete;
-        this.progress = 0;
-    }
-    get Cost() {
-        return this.base * this.costMultiplier * Math.pow(TRAINING_COST_GROWTH_BASE, playerStats.trainingAreaLevels[this.name]);
-    }
-    get Reward() {
-        return this.base * Math.pow(TRAINING_REWARD_GROWTH_BASE, playerStats.trainingAreaLevels[this.name]);
-    }
-    tick() {
-        this.progress += logicTickTime;
-        if (this.progress >= this.timeToComplete) {
-            this.progress -= this.timeToComplete;
-            this.reward();
-        }
-    }
-    reward() {
-        let reward = this.Reward * getTrainingModifier(this.attribute);
-        playerStats[this.attribute] += reward;
-        checkTrainingQuest();
-        updateTrainingCanBuy();
-        updateAttributePrestigeText(); 
-    }
-
-
 }
 var activities = {}
 Object.values(trainingAreaData).forEach(element => {

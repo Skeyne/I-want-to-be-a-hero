@@ -111,12 +111,18 @@ const areas = [
         {weight:100,enemies:{"thug4":{3:1,},"thug5":{2:1},"don":{1:1,},}}]
     }),
     new Area({
+        name: "Mafia Warehouse", background: "bulkheadBackground.png",
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 17,
+        patrolTime: 7000,
+        encounters: [{weight:100,enemies:{"don2":{1:1},"donbodyguard":{1:1}}}]
+    }),
+    new Area({
         name: "Riverside", background: "bridgeAreaBackground-1.png",
-        enemies: ["crabman"], enemyNum: 1, storyUnlock: 17,
+        enemies: ["crabman"], enemyNum: 1, storyUnlock: 18,
         patrolTime: 7000,
     }),
     new Area({
         name: "The Depths", background: "voidBackground.png",
-        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 18,
+        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 19,
         patrolTime: 10000,
     }),];

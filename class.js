@@ -277,6 +277,22 @@ skillLibrary = {
             id: 'sh_0_0',
             sub: 0,
             position: { row: 1, column: 3 },
+            name: 'Raw Musclee',
+            iconName: 'calisthenics',
+            desc: 'Does this invalidate your natty card?',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 2,
+            }],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
+        },
+        'sh_0_1': {
+            id: 'sh_0_1',
+            sub: 0,
+            position: { row: 2, column: 3 },
             name: 'Inhuman strength',
             iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve ever been before',
@@ -288,40 +304,58 @@ skillLibrary = {
             }],
             maxLevel: 50,
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
-        },
-        'sh_0_1': {
-            id: 'sh_0_1',
-            sub: 0,
-            position: { row: 2, column: 3 },
-            name: 'Matter Over Mind',
-            iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "strength",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.25,
-            }],
-            maxLevel: 3,
-            cost: [10, 100, 1000],
             requires: { 'sh_0_0': 10 }
         },
         'sh_0_2': {
             id: 'sh_0_2',
             sub: 0,
             position: { row: 3, column: 3 },
+            name: 'Matter Over Mind',
+            iconName: 'calisthenics',
+            desc: 'Physical strength that breaks through even spirit',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.1,
+            }],
+            maxLevel: 3,
+            cost: [10, 100, 1000],
+            requires: { 'sh_0_1': 10 }
+        },
+        'sh_0_3': {
+            id: 'sh_0_3',
+            sub: 0,
+            position: { row: 4, column: 3 },
             name: 'Overwhelming strength',
             iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve every been before',
+            desc: 'Lesser foes cower at your insurmountable strength',
             effect: [{
                 type: 1, // attribute boost
                 effectTarget: "overwhelm",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.5,
+                effectMagnitude: 0.1,
             }],
-            maxLevel: 1,
-            cost: [10],
-            requires: { 'sh_0_1': 1 }
+            maxLevel: 3,
+            cost: [10,20,40],
+            requires: { 'sh_0_2': 1 }
+        },
+        'sh_0_4': {
+            id: 'sh_0_4',
+            sub: 0,
+            position: { row: 4, column: 4 },
+            name: 'Utmost Might',
+            iconName: 'calisthenics',
+            desc: '',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "damageMultiplier",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.05,
+            }],
+            maxLevel: 3,
+            cost: [20],
+            requires: { 'sh_0_2': 1 }
         },
         //#endregion
         //#region 1
@@ -475,6 +509,7 @@ skillLibrary = {
             }],
             maxLevel: 50,
             cost: Array(25).fill(1).concat(Array(25).fill(2)),
+            requires: { 'es_0_0': 5 }
         },
 
         'es_0_2': {
@@ -549,7 +584,7 @@ skillLibrary = {
             position: { row: 2, column: 4 },
             name: 'Energy Alteration: Alacrity',
             iconName: 'studying',
-            desc: 'Alter the energy around you to alter the passing of time',
+            desc: 'Alter the energy around you to speed up the passing of time',
             effect: [{
                 type: 1, // attribute boost
                 effectTarget: "cooldownReduction",
@@ -917,7 +952,7 @@ playerMoves = {
         damage: 1,
         damageRatios: [2, 0, 0, 0],
         damageRange: [1, 2],
-        time: 4000,
+        time: 3000,
         cooldownTime: 15000,
         range: [6, 6],
         cost: 1,
@@ -2213,10 +2248,10 @@ function changeClass(className, keep = false) {
     populateAbilitySlots();
     if (!keep) {
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
-        playerStats.strength = 0.01 * formulas.softcappedAttribute(0);
-        playerStats.toughness = 0.01 * formulas.softcappedAttribute(1);
-        playerStats.mind = 0.01 * formulas.softcappedAttribute(2);
-        playerStats.agility = 0.01 * formulas.softcappedAttribute(3);
+        playerStats.strength = 0.1 * formulas.softcappedAttribute(0);
+        playerStats.toughness = 0.1 * formulas.softcappedAttribute(1);
+        playerStats.mind = 0.1 * formulas.softcappedAttribute(2);
+        playerStats.agility = 0.1 * formulas.softcappedAttribute(3);
 
     }
     if (className != 'human') {
