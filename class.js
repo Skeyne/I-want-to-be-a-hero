@@ -1125,7 +1125,7 @@ skillLibrary = {
             cost: Array(10).fill(1),
         },
         'ni_2_1': {
-            id: 'ni_1_1',
+            id: 'ni_2_1',
             sub: 2,
             position: { row: 1, column: 5 },
             name: 'Occult Endurance',
