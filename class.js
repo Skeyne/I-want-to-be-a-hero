@@ -795,7 +795,7 @@ skillLibrary = {
                     effectMagnitude: 0.5,
                 }],
             maxLevel: 10,
-            cost: [1],
+            cost: Array(10).fill(1),
         },
         'mu_1_1': {
             id: 'mu_1_1',
