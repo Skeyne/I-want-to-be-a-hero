@@ -2223,7 +2223,7 @@ function generatePassiveTooltip(skill) {
     let effectText = "";
     let requirementsText = "";
     if (skill.hasOwnProperty("requires")) {
-        requirementsText = "Requires:<br>"
+        requirementsText = "Requires skill(s):<br>"
         for (const [key, value] of Object.entries(skill.requires)) {
             requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`;
         }
