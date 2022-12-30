@@ -168,7 +168,7 @@ updateDiaryEntries();
 var areaSelect = document.getElementById("selectArea");
 checkAreaUnlocks();
 function checkTabUnlocks() {
-    if (playerStats.storyProgress >= 17) {
+    if (playerStats.storyProgress >= 18) {
         document.getElementById("prestigeBox").style.visibility = 'visible';
         document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");
     }

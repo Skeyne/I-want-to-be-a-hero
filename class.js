@@ -277,7 +277,7 @@ skillLibrary = {
             id: 'sh_0_0',
             sub: 0,
             position: { row: 1, column: 3 },
-            name: 'Raw Musclee',
+            name: 'Raw Muscle',
             iconName: 'calisthenics',
             desc: 'Does this invalidate your natty card?',
             effect: [{
@@ -337,7 +337,7 @@ skillLibrary = {
                 effectMagnitude: 0.1,
             }],
             maxLevel: 3,
-            cost: [10,20,40],
+            cost: [10, 20, 40],
             requires: { 'sh_0_2': 1 }
         },
         'sh_0_4': {
@@ -363,6 +363,28 @@ skillLibrary = {
             id: 'sh_1_0',
             sub: 1,
             position: { row: 1, column: 3 },
+            name: 'STR+TGH',
+            iconName: 'calisthenics',
+            desc: '',
+            effect: [{
+                type: 0, // training boost
+                effectTarget: "strength",
+                effectType: "additiveFlat",
+                effectMagnitude: 1,
+            },
+            {
+                type: 0, // training boost
+                effectTarget: "toughness",
+                effectType: "additiveFlat",
+                effectMagnitude: 1,
+            }],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
+        },
+        'sh_1_1': {
+            id: 'sh_1_1',
+            sub: 1,
+            position: { row: 2, column: 3 },
             name: 'Giant Training',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -380,11 +402,12 @@ skillLibrary = {
             }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
+            requires: { 'sh_1_0': 10 },
         },
-        'sh_1_1': {
-            id: 'sh_1_1',
+        'sh_1_2': {
+            id: 'sh_1_2',
             sub: 1,
-            position: { row: 2, column: 3 },
+            position: { row: 3, column: 3 },
             name: 'Colossal Constitution',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -401,13 +424,13 @@ skillLibrary = {
                 effectMagnitude: 0.1,
             }],
             maxLevel: 5,
-            requires: { 'sh_1_0': 1 },
+            requires: { 'sh_1_1': 1 },
             cost: [5, 10, 20, 40, 80],
         },
-        'sh_1_2': {
-            id: 'sh_1_2',
+        'sh_1_3': {
+            id: 'sh_1_3',
             sub: 1,
-            position: { row: 3, column: 3 },
+            position: { row: 4, column: 3 },
             name: 'Titanic Blows',
             iconName: 'calisthenics',
             desc: 'Rather than throw meek punches you put measured time into each strike',
@@ -416,15 +439,15 @@ skillLibrary = {
                 effectTarget: "actionSpeed",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.98,
-            },{
+            }, {
                 type: 1, // attribute boost
                 effectTarget: "powerMultiplier",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1.04,
             }],
             maxLevel: 3,
-            requires: { 'sh_1_1': 1 },
-            cost: [4,8,16],
+            requires: { 'sh_1_2': 1 },
+            cost: [4, 8, 16],
         },
         //#endregion
         //#region 2
@@ -432,6 +455,28 @@ skillLibrary = {
             id: 'sh_2_0',
             sub: 2,
             position: { row: 1, column: 3 },
+            name: 'STR+MND',
+            iconName: 'calisthenics',
+            desc: 'PLACEHOLDER',
+            effect: [{
+                type: 0, // training boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additiveFlat, multPercent
+                effectMagnitude: 1,
+            },
+            {
+                type: 0, // training boost
+                effectTarget: "mind",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
+            }],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
+        },
+        'sh_2_1': {
+            id: 'sh_2_1',
+            sub: 2,
+            position: { row: 2, column: 3 },
             name: 'Circular Breathing',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -449,10 +494,12 @@ skillLibrary = {
             }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
-        },'sh_2_1': {
-            id: 'sh_2_1',
+            requires: { 'sh_2_0': 10 }
+        },
+        'sh_2_2': {
+            id: 'sh_2_2',
             sub: 2,
-            position: { row: 2, column: 3 },
+            position: { row: 3, column: 3 },
             name: 'Body & Soul',
             iconName: 'calisthenics',
             desc: 'PLACEHOLDER',
@@ -470,7 +517,24 @@ skillLibrary = {
             }],
             maxLevel: 5,
             cost: [5, 10, 20, 40, 80],
-            requires: { 'sh_2_0': 1}
+            requires: { 'sh_2_1': 1 }
+        },
+        'sh_2_3': {
+            id: 'sh_2_3',
+            sub: 2,
+            position: { row: 3, column: 4 },
+            name: 'Focused Breathing',
+            iconName: 'calisthenics',
+            desc: '',
+            effect: [{
+                type: 1, // training boost
+                effectTarget: "cooldownReduction",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.02,
+            }],
+            maxLevel: 3,
+            cost: [10, 20, 30],
+            requires: { 'sh_2_1': 1 }
         },
         //#endregion
 
@@ -679,7 +743,7 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.25,
+                effectMagnitude: 1.1,
             }],
             maxLevel: 3,
             cost: [10, 100, 1000],
@@ -708,17 +772,60 @@ skillLibrary = {
             id: 'mu_1_0',
             sub: 1,
             position: { row: 1, column: 3 },
-            name: 'Unimplemented',
+            name: 'Cursed cells',
             iconName: 'milerun',
-            desc: 'This is just for testing. Have some free toughness',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "toughness",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
-            }],
-            maxLevel: 1,
+            desc: '',
+            effect: [
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "strength",
+                    effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: 0.5,
+                },
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "toughness",
+                    effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: 1,
+                },
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "mind",
+                    effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: 0.5,
+                }],
+            maxLevel: 10,
             cost: [1],
+        },
+        'mu_1_1': {
+            id: 'mu_1_1',
+            sub: 1,
+            position: { row: 2, column: 3 },
+            name: 'Malignant Multiplication',
+            iconName: 'milerun',
+            desc: 'It is scary how your body grows and distorts even without your control, but it is useful in moments of combat.',
+            effect: [
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "strength",
+                    effectType: "additivePercent",
+                    effectMagnitude: 0.01,
+                },
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "toughness",
+                    effectType: "additivePercent",
+                    effectMagnitude: 0.01,
+                },
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "agility",
+                    effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: -0.01,
+                }],
+            maxLevel: 25,
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(5).fill(3)),
+            requires: { 'mu_1_0': 10 }
         },
         //#endregion
         //#region 2
@@ -726,22 +833,88 @@ skillLibrary = {
             id: 'mu_2_0',
             sub: 2,
             position: { row: 1, column: 3 },
-            name: 'Unimplemented',
+            name: 'Wild Constitution',
             iconName: 'milerun',
-            desc: 'This is just for testing. Have some free toughness',
+            desc: '',
             effect: [{
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 10,
+                effectMagnitude: 0.01,
+            },
+            {
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
             }],
             maxLevel: 10,
-            cost: Array(10).fill(1),
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
         },
         'mu_2_1': {
             id: 'mu_2_1',
             sub: 2,
             position: { row: 2, column: 3 },
+            name: 'Jungle Gym',
+            iconName: 'milerun',
+            desc: '',
+            effect: [
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "strength",
+                    effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: 0.01,
+                },
+                {
+                    type: 0, // attribute boost
+                    effectTarget: "toughness",
+                    effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: 0.01,
+                },
+
+                {
+                    type: 2, // attribute boost
+                    effectTarget: "strengthTraining",
+                    effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                    effectMagnitude: 0.01,
+                }],
+            maxLevel: 25,
+            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(5).fill(3)),
+            requires: { 'mu_2_0': 10 }
+        },
+        'mu_2_2': {
+            id: 'mu_2_2',
+            sub: 2,
+            position: { row: 3, column: 3 },
+            name: 'Proficient Morphing',
+            iconName: 'milerun',
+            desc: 'You become better at quickly changing your DNA on the fly.',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "strength",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.05,
+            },
+            {
+                type: 0, // attribute boost
+                effectTarget: "toughness",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.05,
+            },
+            {
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.05,
+            }],
+            maxLevel: 1,
+            cost: [10],
+            requires: { 'mu_2_1': 10 }
+        },
+        'mu_2_3': {
+            id: 'mu_2_3',
+            sub: 2,
+            position: { row: 2, column: 2 },
             name: 'Mutation: Scales',
             iconName: 'milerun',
             desc: 'Your turn the outside of your skin into a scaled mesh, reducing the damage of every impact',
@@ -753,10 +926,10 @@ skillLibrary = {
             }],
             maxLevel: 3,
             cost: [10, 100, 1000],
-            requires: { 'mu_2_0': 1 }
+            requires: { 'mu_2_1': 10 }
         },
-        'mu_2_2': {
-            id: 'mu_2_2',
+        'mu_2_4': {
+            id: 'mu_2_4',
             sub: 2,
             position: { row: 2, column: 4 },
             name: 'Bestial Speed',
@@ -770,7 +943,24 @@ skillLibrary = {
             }],
             maxLevel: 1,
             cost: [10],
-            requires: { 'mu_2_0': 10 }
+            requires: { 'mu_2_2': 1 }
+        },
+        'mu_2_5': {
+            id: 'mu_2_5',
+            sub: 2,
+            position: { row: 4, column: 4 },
+            name: 'Bestial Fury',
+            iconName: 'milerun',
+            desc: 'Mixing animal DNA into yours to enhance your power.',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "actionSpeed",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.05,
+            }],
+            maxLevel: 1,
+            cost: [10],
+            requires: { 'mu_2_2': 1 }
         },
         //#endregion
 
@@ -782,6 +972,22 @@ skillLibrary = {
             id: 'ni_0_0',
             sub: 0,
             position: { row: 1, column: 3 },
+            name: 'Footwork',
+            iconName: 'shadowB',
+            desc: '',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 2,
+            }],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
+        },
+        'ni_0_1': {
+            id: 'ni_0_1',
+            sub: 0,
+            position: { row: 2, column: 3 },
             name: 'Feline Agility',
             iconName: 'shadowB',
             desc: 'The whole world seems one muscle twitch away.',
@@ -789,32 +995,33 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.02,
+                effectMagnitude: 0.01,
             }],
             maxLevel: 50,
             cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
-        },
-        'ni_0_1': {
-            id: 'ni_0_1',
-            sub: 0,
-            name: 'Unnatural Speed',
-            position: { row: 2, column: 3 },
-            iconName: 'shadowB',
-            desc: 'The faster you go the faster you get.',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "agility",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.25,
-            }],
-            maxLevel: 3,
-            cost: [10, 100, 1000],
             requires: { 'ni_0_0': 10 }
         },
         'ni_0_2': {
             id: 'ni_0_2',
             sub: 0,
+            name: 'Unnatural Speed',
             position: { row: 3, column: 3 },
+            iconName: 'shadowB',
+            desc: 'The faster you go the faster you get.',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "actionSpeed",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.03,
+            }],
+            maxLevel: 3,
+            cost: [10, 100, 1000],
+            requires: { 'ni_0_1': 10 }
+        },
+        'ni_0_3': {
+            id: 'ni_0_3',
+            sub: 0,
+            position: { row: 2, column: 4 },
             name: 'Prenatural Reflexes',
             iconName: 'shadowB',
             desc: 'Your body moves out of danger before you even know it',
@@ -824,8 +1031,8 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.05,
             }],
-            maxLevel: 4,
-            cost: [5, 20, 40, 80],
+            maxLevel: 2,
+            cost: [10, 25],
             requires: { 'ni_0_1': 1 }
         },
         //#endregion
@@ -834,37 +1041,169 @@ skillLibrary = {
             id: 'ni_1_0',
             sub: 1,
             position: { row: 1, column: 3 },
-            name: 'Deadly',
+            name: 'Strict Techniques',
             iconName: 'shadowB',
-            desc: 'Increases your critical chance (crits deal 50% more damage by default).',
+            desc: 'You must learn to execute moves exactly every time.',
             effect: [{
-                type: 1, // secondary attribute boost
-                effectTarget: "criticalChance",
+                type: 0, // secondary attribute boost
+                effectTarget: "agility",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.01,
+                effectMagnitude: 1,
+            },
+            {
+                type: 0, // secondary attribute boost
+                effectTarget: "mind",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
             }],
             maxLevel: 10,
-            cost: Array(10).fill(5).concat(Array(10).fill(10)),
+            cost: Array(10).fill(1),
         },
-        'ni_2_0': {
-            id: 'ni_2_0',
+        'ni_1_1': {
+            id: 'ni_1_1',
             sub: 1,
             position: { row: 2, column: 3 },
-            name: 'Agility Training Boost',
+            name: 'Traditional Technique Scrolls',
             iconName: 'shadowB',
             desc: 'PLACEHOLDER',
             effect: [{
-                type: 2, // training boost
-                effectTarget: "agilityTraining",
+                type: 0, // secondary attribute boost
+                effectTarget: "agility",
                 effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.2,
+                effectMagnitude: 0.01,
+            },
+            {
+                type: 0, // secondary attribute boost
+                effectTarget: "mind",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.01,
             }],
-            maxLevel: 5,
-            cost: [5, 10, 20, 40, 80],
+            maxLevel: 25,
+            cost: Array(10).fill(1).concat(Array(10).fill(2),Array(5).fill(3)),
+            requires: {'ni_1_0':10}
+        },
+        'ni_1_2': {
+            id: 'ni_1_2',
+            sub: 1,
+            position: { row: 3, column: 3 },
+            name: 'Careful Preparation',
+            iconName: 'shadowB',
+            desc: 'PLACEHOLDER',
+            effect: [
+            {
+                type: 0, // secondary attribute boost
+                effectTarget: "mind",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.1,
+            }],
+            maxLevel: 3,
+            cost: [10,100,1000],
+            requires: {'ni_1_1':10}
         },
         //#endregion
         //#region 2
-
+        'ni_2_0': {
+            id: 'ni_2_0',
+            sub: 2,
+            position: { row: 1, column: 3 },
+            name: 'Occult Knowledge',
+            iconName: 'shadowB',
+            desc: 'Ancestors from ages past have started whispering forbidden secrets in your trainings',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "toughness",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
+            },
+            {
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1,
+            }],
+            maxLevel: 10,
+            cost: Array(10).fill(1),
+        },
+        'ni_2_1': {
+            id: 'ni_1_1',
+            sub: 2,
+            position: { row: 1, column: 5 },
+            name: 'Occult Endurance',
+            iconName: 'shadowB',
+            desc: 'Knowing the ways of life and death you can prepare contigencies against the latter.',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "toughness",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.01,
+            },
+            {
+                type: 2, // attribute boost
+                effectTarget: "mindTraining",
+                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.01,
+            }],
+            maxLevel: 25,
+            cost: Array(10).fill(1).concat(Array(10).fill(2),Array(5).fill(3)),
+            requires: {'ni_2_0':10},
+        },
+        'ni_2_2': {
+            id: 'ni_2_2',
+            sub: 2,
+            position: { row: 2, column: 3 },
+            name: 'Shadowglide',
+            iconName: 'shadowB',
+            desc: 'Shadows envelop the air around you, smoothing and speeding your movements',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.01,
+            },],
+            maxLevel: 20,
+            cost: Array(10).fill(2).concat(Array(10).fill(5)),
+            requires: {'ni_2_0':10},
+        },
+        'ni_2_3': {
+            id: 'ni_2_3',
+            sub: 2,
+            position: { row: 3, column: 5 },
+            name: 'Shadowglide: Fleeting Shadows',
+            iconName: 'shadowB',
+            desc: 'The shadows thin but fasten, making your movements lighter and quicker',
+            effect: [{
+                type: 0, // attribute boost
+                effectTarget: "actionSpeed",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.01,
+            },],
+            maxLevel: 20,
+            cost: Array(5).fill(5).concat(Array(5).fill(10),Array(5).fill(20)),
+            requires: {'ni_2_2':12},
+        },
+        'ni_2_4': {
+            id: 'ni_2_4',
+            sub: 2,
+            position: { row: 3, column: 1 },
+            name: 'Shadowglide: Thick Shade',
+            iconName: 'shadowB',
+            desc: 'The shadows thicker and coalesce around you, increasing the strength of your blows, but making your movements heavier',
+            effect: [{
+                type: 1, // attribute boost
+                effectTarget: "damageMultiplier",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 1.04,
+            },
+            {
+                type: 0, // attribute boost
+                effectTarget: "agility",
+                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
+                effectMagnitude: 0.98,
+            }],
+            maxLevel: 5,
+            cost: [10,20,40,80,160],
+            requires: {'ni_2_2':12},
+        },
         //#endregion
     },
 }
@@ -1192,7 +1531,7 @@ playerMoves = {
         position: { row: 3, column: 5 },
         category: 'melee',
         name: "Monkey Smash",
-        description: "With the power of monke strength, smash your target into the ground, briefly stunning him. Deals extra damage to damaged enemies.",
+        description: "With the power of monke strength, smash your foe over the head, stunning him.",
         iconName: "monkeySmash",
         damage: 0,
         damageRatios: [3, 1, 0, 0],
@@ -1203,6 +1542,27 @@ playerMoves = {
         time: 6000,
         cooldownTime: 12000,
         range: [5, 5],
+        cost: 5,
+    },
+    'distortedVisage': {
+        class: 'mutant',
+        type: 0,
+        sub: 1,
+        position: { row: 3, column: 5 },
+        category: 'melee',
+        name: "Distorted Visage",
+        description: "Twist your face into an abominable sight, disgusting nearby enemies to the point of fear.",
+        iconName: "placeholder",
+        damage: 0,
+        damageRatios: [0, 1, 1, 0],
+        damageRange: [0.8, 1],
+        effects: {
+            'stun': 1,
+            'aoe': 10,
+        },
+        time: 2000,
+        cooldownTime: 12000,
+        range: [10, 10],
         cost: 5,
     },
     //Superhuman
@@ -1398,6 +1758,26 @@ playerMoves = {
         time: 500,
         cooldownTime: 2000,
         range: [10, 60],
+        cost: 5,
+    },
+    'ninjaFireBreath': {
+        class: 'ninja',
+        type: 0,
+        sub: 1,
+        position: { row: 2, column: 1 },
+        category: 'melee',
+        name: "Technique: Fire Breath",
+        description: "Perform the ninja signs allowing you to breath a cone of fire at your foes.",
+        iconName: "placeholder",
+        damage: 0,
+        damageRatios: [0, 0, 3, 1],
+        damageRange: [1, 1.1],
+        effects: {
+            'aoe': 20,
+        },
+        time: 4000,
+        cooldownTime: 15000,
+        range: [20,20],
         cost: 5,
     },
     'flashStep': {
@@ -1850,10 +2230,10 @@ function generatePassiveTooltip(skill) {
                 effectText += `<span class="${effect.effectTarget}Text">${attributeDisplayNames[effect.effectTarget]}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = "+" + effect.effectMagnitude;
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude;
                         break;
                     case "additivePercent":
-                        numberDisplay = "+" + effect.effectMagnitude * 100 + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude * 100 + "%";
                         break;
                     case "multPercent":
                         numberDisplay = "x" + effect.effectMagnitude;
@@ -1867,10 +2247,10 @@ function generatePassiveTooltip(skill) {
                 effectText += `<span>${effect.effectTarget}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = "+" + format(effect.effectMagnitude * 100) + "%";
+                        numberDisplay =(effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100) + "%";
                         break;
                     case "additivePercent":
-                        numberDisplay = "+" + effect.effectMagnitude * 100 + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude * 100 + "%";
                         break;
                     case "multPercent":
                         numberDisplay = "x" + effect.effectMagnitude;
@@ -1885,10 +2265,10 @@ function generatePassiveTooltip(skill) {
                 effectText += `<span class="${attribute}Text">${attributeDisplayNames[attribute]}</span> Training Effect`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = "+" + effect.effectMagnitude;
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude;
                         break;
                     case "additivePercent":
-                        numberDisplay = "+" + effect.effectMagnitude * 100 + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude * 100 + "%";
                         break;
                     case "multPercent":
                         numberDisplay = "x" + effect.effectMagnitude;
@@ -1910,7 +2290,7 @@ function generatePassiveTooltip(skill) {
     let costString = "";
     if (isNaN(cost)) { costString = "MAXED!" } else { costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points" };
     return `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br><br>" +
-        skill.desc + "<br /><br>" +
+        (skill.desc == "" ? "": skill.desc + "<br /><br>") +
         `${effectText}` +
         "Cost: " + costString + "<br><br>"
         + requirementsText;
@@ -2112,7 +2492,7 @@ function addEffect(skillId) {
 }
 function removeEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    console.log("ID: ",skillId,"Skill:",skill);
+    console.log("ID: ", skillId, "Skill:", skill);
     for (let index = 0; index < skill.effect.length; index++) {
         if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect[index].effectTarget)) {
             playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };

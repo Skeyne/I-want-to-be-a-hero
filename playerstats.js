@@ -1,4 +1,4 @@
-const version = '0.03d';
+const version = '0.04';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML ='v'+version;

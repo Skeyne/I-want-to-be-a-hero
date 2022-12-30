@@ -22,8 +22,8 @@ for (let index = 0; index < tabNames.length; index++) {
     sidebar.append(b);
 }
 changeTab(0);
-if(playerStats.storyProgress >= 17){document.getElementById("prestigeBox").style.visibility = 'visible'} else {document.getElementById("prestigeBox").style.visibility = 'hidden'}
-if(playerStats.storyProgress >= 17){document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");} else {document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle");}
+if(playerStats.storyProgress >= 18){document.getElementById("prestigeBox").style.visibility = 'visible'} else {document.getElementById("prestigeBox").style.visibility = 'hidden'}
+if(playerStats.storyProgress >= 18){document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");} else {document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle");}
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
@@ -162,6 +162,7 @@ class Player extends CombatEntity {
         this.takedown = getSecondaryAttribute("takedown");
         this.dodgeChance = getSecondaryAttribute("dodgeChance");
         this.cooldownReduction = formulas.cooldownReduction(getEffectiveValue("mind"));
+        this.cooldownReduction /= getSecondaryAttribute("cooldownReduction");
         this.moveIntention = 1;
         this.nextMoveKey = null;
         this.equippedAbilities = [...playerStats.equippedAbilities];
