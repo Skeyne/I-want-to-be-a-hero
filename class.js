@@ -107,7 +107,7 @@ skillLibrary = {
                 effectMagnitude: 0.1,
             }],
             maxLevel: 2,
-            cost: [2, 2, 2],
+            cost: [2, 2],
             requires: { 'h_3': 3, },
         },
         'h_5': {
@@ -866,7 +866,7 @@ playerMoves = {
         time: 4000,
         cooldownTime: 5000,
         range: [5, 5],
-        cost: 2,
+        cost: 1,
     },
     'jab': {
         class: 'human',
@@ -874,16 +874,19 @@ playerMoves = {
         sub: 0,
         position: { row: 2, column: 1 },
         category: 'melee',
-        name: "Jab",
-        description: "Faster than a punch but weaker, good to knockout small fry and get out of the way.",
+        name: "Throat Jab",
+        description: "A fast jab to the throat momentarily stuns your foe.",
         iconName: "jab",
         damage: 1,
-        damageRatios: [.08, 0, 0, .22],
+        damageRatios: [.3, 0, 0, .9],
         damageRange: [.95, 1.05],
+        effects: {
+            'stun': 1,
+        },
         time: 1000,
-        cooldownTime: 0,
+        cooldownTime: 7000,
         range: [5, 5],
-        cost: 0,
+        cost: 1,
     },
     'haymaker': {
         class: 'human',
@@ -900,7 +903,7 @@ playerMoves = {
         time: 7000,
         cooldownTime: 10000,
         range: [5, 5],
-        cost: 2,
+        cost: 1,
     },
     'crowbar': {
         class: 'human',
@@ -917,7 +920,7 @@ playerMoves = {
         time: 4000,
         cooldownTime: 15000,
         range: [6, 6],
-        cost: 2,
+        cost: 1,
     },
     'throwingKnife': {
         class: 'human',
@@ -935,7 +938,7 @@ playerMoves = {
         time: 2000,
         cooldownTime: 4000,
         range: [0, 60],
-        cost: 2,
+        cost: 1,
     },
     'firecrackers': {
         class: 'human',
@@ -952,7 +955,7 @@ playerMoves = {
         time: 3000,
         cooldownTime: 9000,
         range: [0, 30],
-        cost: 2,
+        cost: 1,
     },
     //Esper
     'spiritFist': {
