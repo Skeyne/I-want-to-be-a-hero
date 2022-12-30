@@ -1172,7 +1172,7 @@ skillLibrary = {
             iconName: 'shadowB',
             desc: 'The shadows thin but fasten, making your movements lighter and quicker',
             effect: [{
-                type: 0, // attribute boost
+                type: 1, // attribute boost
                 effectTarget: "actionSpeed",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1.01,
@@ -1732,11 +1732,11 @@ playerMoves = {
         description: "Instantly appear near you enemy and strike them before reappearing at your position.",
         iconName: "jab",
         damage: 1,
-        damageRatios: [0, 0, 0.3, 3],
+        damageRatios: [0, 0, 1, 2],
         damageRange: [1, 1.2],
         time: 2000,
         cooldownTime: 10000,
-        range: [50, 50],
+        range: [30, 30],
         cost: 5,
     },
     'shuriken': {
