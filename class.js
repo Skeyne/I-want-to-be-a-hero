@@ -1201,8 +1201,8 @@ skillLibrary = {
                 effectMagnitude: 1.04,
             },
             {
-                type: 0, // attribute boost
-                effectTarget: "agility",
+                type: 1, // attribute boost
+                effectTarget: "actionSpeed",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.98,
             }],
