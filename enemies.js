@@ -179,8 +179,23 @@ var abilityLibrary = {
         iconName: "knuckleDuster",
         baseDamage: 1,
         damageRatios: [1.2,0.5,0,0],
-        time: 3000,
+        time: 4000,
         cooldownTime: 0,
+        range: [5,5],
+
+    },
+    'chokeHold': {
+        type: 0,
+        category:'melee',
+        name: "Chokehold",
+        iconName: "placeholder",
+        baseDamage: 0,
+        damageRatios: [2,0,0,0],
+        effects: {
+            'stun': 3,
+        },
+        time: 5000,
+        cooldownTime: 20000,
         range: [5,5],
 
     },
@@ -370,7 +385,7 @@ enemyData.don = {
 enemyData.donbodyguard = {
     id:"donbodyguard",
     name: "Don's Right Hand",
-    maxHealth: 5000,
+    maxHealth: 4000,
     attributes: [3000,5000,500,2500],
     healthRegen: 0.005,
     expReward: 3000,
@@ -424,7 +439,7 @@ enemyData.ultracrabman = {
     name: "The Ultra Crabman",
     maxHealth: 50000,
     attributes: [250000,200000,1000,30000],
-    healthRegen: 0.005,
+    healthRegen: 0.0025,
     expReward: 25000,
     moneyReward: 2000,
     reputationReward: 1,
