@@ -9,7 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class','prestige','info'];
+var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'prestige', 'info'];
 var sidebar = document.getElementById('sidebar');
 let activeTab = 0;
 for (let index = 0; index < tabNames.length; index++) {
@@ -22,8 +22,8 @@ for (let index = 0; index < tabNames.length; index++) {
     sidebar.append(b);
 }
 changeTab(0);
-if(playerStats.storyProgress >= 18){document.getElementById("prestigeBox").style.visibility = 'visible'} else {document.getElementById("prestigeBox").style.visibility = 'hidden'}
-if(playerStats.storyProgress >= 18){document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");} else {document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle");}
+if (playerStats.storyProgress >= 18) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
+if (playerStats.storyProgress >= 18) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
@@ -108,8 +108,8 @@ class CombatEntity {
         }
         if (this.nextMove != null) {
             let tickTime = logicTickTime;
-            if (this.interrupt > 0){this.interrupt -= tickTime};
-            if(this.interrupt <= 0){
+            if (this.interrupt > 0) { this.interrupt -= tickTime };
+            if (this.interrupt <= 0) {
                 this.initiative += 1000 * tickTime / 1000 * this.actionSpeed;
             }
 
@@ -212,7 +212,7 @@ class Player extends CombatEntity {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
                                 case "stun":
-                                    moveStun+=  this.nextMove.effects[effect];
+                                    moveStun += this.nextMove.effects[effect];
                                     break;
                                 case "lifesteal":
                                     moveLifesteal += this.nextMove.effects[effect];
@@ -247,7 +247,7 @@ class Player extends CombatEntity {
                         Object.keys(this.nextMove.effects).forEach(effect => {
                             switch (effect) {
                                 case "stun":
-                                    target.interrupt += moveStun*1000;
+                                    target.interrupt += moveStun * 1000;
                                 case "repeat":
                                     break;
                                 case "takedown":
@@ -279,7 +279,7 @@ class Player extends CombatEntity {
                                                 enemy.distance += this.nextMove.effects['knockback'];
                                             }
                                             if (this.moveStun > 0) {
-                                                enemy.interrupt += this.moveStun*1000;
+                                                enemy.interrupt += this.moveStun * 1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
                                             logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
@@ -295,7 +295,7 @@ class Player extends CombatEntity {
 
                     let { died: killingBlow, d: dr } = target.takeDamage(d3);
                     logConsole(`Hero ${isCrit ? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
-                    if(moveLifesteal > 0){this.health = Math.min(this.health + dr*moveLifesteal, this.maxHealth);logConsole(`Hero healed for ${format(dr*moveLifesteal)}`);}
+                    if (moveLifesteal > 0) { this.health = Math.min(this.health + dr * moveLifesteal, this.maxHealth); logConsole(`Hero healed for ${format(dr * moveLifesteal)}`); }
                     if (killingBlow) this.target = null;
                 }
                 break;
@@ -527,6 +527,7 @@ class Enemy extends CombatEntity {
         this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
         this.actionSpeed = formulas.actionSpeed(enemyData.attributes[3]);
         this.healthRegeneration = enemyData.healthRegen;
+        this.cooldownReduction = 1;
         this.distance = distance;
         this.name = enemyData.name;
         this.image = new Image();
@@ -544,6 +545,7 @@ class Enemy extends CombatEntity {
         if (target == null) {
             return;
         }
+        let repeat = false;
         switch (this.nextMove.type) {
             case 0:
                 let inRange = false;
@@ -560,12 +562,65 @@ class Enemy extends CombatEntity {
                         break;
                 }
                 if (inRange) {
+                    let moveTakedown = 0;
+                    let moveCritChance = 0;
+                    let moveLifesteal = 0;
+                    let moveStun = 0;
+                    if (this.nextMove.hasOwnProperty("effects")) {
+                        Object.keys(this.nextMove.effects).forEach(effect => {
+                            switch (effect) {
+                                case "stun":
+                                    moveStun += this.nextMove.effects[effect];
+                                    break;
+                                case "lifesteal":
+                                    moveLifesteal += this.nextMove.effects[effect];
+                                    break;
+                                case "criticalChance":
+                                    moveCritChance += this.nextMove.effects[effect];
+                                    break;
+                                case "takedown":
+                                    moveTakedown += this.nextMove.effects[effect];
+                                    break;
+                                case "repeat":
+                                    if (Math.random() < this.nextMove.effects[effect]) {
+                                        repeat = true;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    }
                     let d = this.nextMove.baseDamage
                         + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
                         + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
                         + this.nextMove.damageRatios[2] * (Math.sqrt(this.data.attributes[2] + 1) - 1)
                         + this.nextMove.damageRatios[3] * (Math.sqrt(this.data.attributes[3] + 1) - 1);
                     let dr = target.takeDamage(d);
+                    if (this.nextMove.hasOwnProperty("effects")) {
+                        Object.keys(this.nextMove.effects).forEach(effect => {
+                            switch (effect) {
+                                case "stun":
+                                    target.interrupt = moveStun * 1000;
+                                case "repeat":
+                                    break;
+                                case "takedown":
+                                    break;
+                                case "knockback":
+                                    this.distance += this.nextMove.effects[effect];
+                                    break;
+                                case "pull":
+                                    this.distance = Math.max(5, this.distance - this.nextMove.effects[effect]);
+                                    break;
+                                case "aoe":
+                                    console.log("NOT IMPLEMENTED");
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        });
+                    }
                     logConsole(`${this.name} hit ${this.target.name} with ${this.nextMove.name} for ${format(dr)}(${format(d)}) damage.`);
                 }
                 break;
@@ -573,12 +628,42 @@ class Enemy extends CombatEntity {
                 this.distance -= Math.min(this.distance - 5, this.nextMove.range[0]);
                 //logConsole(`${this.name} used ${this.nextMove.name}`)
                 break;
+            case 2:
+                if (this.nextMove.hasOwnProperty("effects")) {
+                    Object.keys(this.nextMove.effects).forEach(effect => {
+                        let amount;
+                        switch (effect) {
+                            case "heal":
+                                amount = this.nextMove.baseDamage / 100 * this.maxHealth;
+                                if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
+                                this.health = Math.min(this.health + amount, this.maxHealth);
+                                logConsole(`${this.name} healed for ${format(amount)}`);
+                                break;
+                            case "shield":
+                                amount = this.nextMove.baseDamage / 100 * this.maxHealth;
+                                if (amount > this.shield) this.shield = amount;
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }
+                break;
             default:
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
-        this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime;
-        return true;
+        if (repeat) {
+            if (target.health <= 0 || target == null) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
+            return true;
+        }
     }
     think() {
         if (this.target == null) {
@@ -610,22 +695,14 @@ class Enemy extends CombatEntity {
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
                     if (ability.effects.hasOwnProperty('heal')) {
-                        let amount = ability.damage
-                            + ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        let amount = ability.baseDamage/100*this.maxHealth;
                         if (this.maxHealth - this.health > amount) {
                             weights[index] = 100;
                         }
                     }
                     if (ability.effects.hasOwnProperty('shield')) {
-                        let amount = ability.damage
-                            + ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
-                        if (this.shield <= 0) {
+                        let amount = ability.baseDamage/100*this.maxHealth;
+                        if (this.shield <= 0.2*amount) {
                             weights[index] = 100;
                         }
                     }
@@ -737,15 +814,15 @@ restPercentageInput.addEventListener("keydown", e => e.preventDefault());
 restPercentageInput.value = playerStats.restToPercentage * 100;
 var expCount = 0;
 var expCountBuffer = 0;
-function updateExperienceEstimate(){
-    if(expCount == 0){
+function updateExperienceEstimate() {
+    if (expCount == 0) {
         expCount = expCountBuffer;
     }
-    expCount += (expCountBuffer-expCount)/10;
+    expCount += (expCountBuffer - expCount) / 10;
     expCountBuffer = 0;
-    document.getElementById("expEstimateText").innerHTML = format(expCount*4);
+    document.getElementById("expEstimateText").innerHTML = format(expCount * 4);
 }
-window.setInterval(updateExperienceEstimate,15000);
+window.setInterval(updateExperienceEstimate, 15000);
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange() {
     playerStats.engagementRange = Math.ceil(Number(engagementRangeInput.value) / 5) * 5;

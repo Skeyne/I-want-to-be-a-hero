@@ -1279,7 +1279,7 @@ playerMoves = {
         iconName: "smash",
         damage: 1,
         damageRatios: [2, .8, 0, 0],
-        damageRange: [1, 1.5],
+        damageRange: [1.1, 1.4],
         time: 7000,
         cooldownTime: 10000,
         range: [5, 5],
@@ -1331,7 +1331,7 @@ playerMoves = {
         iconName: "firecrackers",
         damage: 1,
         damageRatios: [0, 0, 1.2, .2],
-        damageRange: [0.5, 3],
+        damageRange: [1, 3],
         time: 3000,
         cooldownTime: 9000,
         range: [0, 30],
@@ -2498,7 +2498,7 @@ function addEffect(skillId) {
 }
 function removeEffect(skillId) {
     let skill = skillLibrary[playerStats.class][skillId];
-    console.log("ID: ", skillId, "Skill:", skill);
+    //console.log("ID: ", skillId, "Skill:", skill);
     for (let index = 0; index < skill.effect.length; index++) {
         if (!playerStats.effectMultipliers.hasOwnProperty(skill.effect[index].effectTarget)) {
             playerStats.effectMultipliers[skill.effect.effectTarget] = { additiveFlat: {}, additivePercent: {}, multPercent: {}, };

@@ -87,42 +87,48 @@ const areas = [
         
     }),
     new Area({
-        name: "Prison Underground", background: "bulkheadBackground.png",
-        enemies: ["infectedPrisoner"], enemyNum: 2, storyUnlock: 11,
+        name: "Prison Underground Entry", background: "bulkheadBackground.png",
+        enemies: ["prisonguard"], enemyNum: 3, storyUnlock: 11,
         patrolTime: 7000,
-        encounters: [{weight:100,enemies:{"infectedPrisoner":{1:5,2:1}}}]
+        encounters: [{weight:100,enemies:{"prisonguard":{2:1}}}]
+    }),
+    new Area({
+        name: "Prison Underground Tunnel", background: "bulkheadBackground.png",
+        enemies: ["infectedPrisoner"], enemyNum: 2, storyUnlock: 12,
+        patrolTime: 7000,
+        encounters: [{weight:100,enemies:{"infectedPrisoner":{1:3,2:1}}}]
     }),
     new Area({
         name: "Underground Lab", background: "scifilabBackground.png",
-        enemies: ["experiment999"], enemyNum: 2, storyUnlock: 12,
+        enemies: ["experiment999"], enemyNum: 2, storyUnlock: 13,
         patrolTime: 6000,
     }),
     new Area({
         name: "Streets II", background: "cyberpunk-street.png",
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 15,
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
         patrolTime: 7000,
         encounters: [{weight:100,enemies:{"thug2":{1:3,2:2,3:1},"thug3":{2:1,2:1},}}]
     }),
     new Area({
         name: "Streets III", background: "cyberpunk-street.png",
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 17,
         patrolTime: 7000,
         encounters: [{weight:900,enemies:{"thug4":{1:2,2:1,3:1},"thug5":{1:1,2:1},}},
         {weight:100,enemies:{"thug4":{3:1,},"thug5":{2:1},"don":{1:1,},}}]
     }),
     new Area({
         name: "Mafia Warehouse", background: "bulkheadBackground.png",
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 17,
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 18,
         patrolTime: 7000,
         encounters: [{weight:100,enemies:{"don2":{1:1},"donbodyguard":{1:1}}}]
     }),
     new Area({
         name: "Riverside", background: "bridgeAreaBackground-1.png",
-        enemies: ["crabman"], enemyNum: 1, storyUnlock: 18,
+        enemies: ["crabman"], enemyNum: 1, storyUnlock: 19,
         patrolTime: 7000,
     }),
     new Area({
         name: "The Depths", background: "voidBackground.png",
-        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 19,
+        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 20,
         patrolTime: 10000,
     }),];

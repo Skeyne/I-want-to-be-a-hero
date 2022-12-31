@@ -81,20 +81,30 @@ const storyQuests = [
     {
         title: `Vigilante III`,
         text: `After taking down the oversized brute, you follow the fumes to some exhaust chimneys and a hatch that leads underground.
-             The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself in some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex. Soon you spot more escaped prisoners, but they look strange.`,
+             The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself at the start of some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex.
+             A few paces in you spot some prison guards stood with some knocked out prisoners at their feet . Thinking they must have got it under control you start to turn back but they spot you. 'HEY! That one got through'.
+             'Got through?' you think, but you came from outside. Before you question it any longer they start to advance on you.`,
+        requirementType: `defeat`,
+        requirementTarget: [`prisonguard`],
+        requirementAmount: [25],
+    },
+    {
+        title: `Vigilante IV`,
+        text: `After knocking out the guards, you notice that the prisoners they had knocked have a green-ish tint to their skin.
+        'It must be the lighting' you think, but as you get closer to re-assure yourself, other similar prisoners emerge stumbling from a side corridor,and they look rather strange.`,
         requirementType: `defeat`,
         requirementTarget: [`infectedPrisoner`],
         requirementAmount: [30],
     },
     {
-        title: `Vigilante IV`,
-        text: `Finally you find a doorway that leads into a room. You seem to be in a lab. You see vats, some broken, with a similarly coloured green liquid splashed around them. Some, with- people? - still inside. In your shocked state you barely dodge out of the way as a massive blade swings from the side. From the shadows a massive disfigured prisoner appears. Did he cause all of this?`,
+        title: `Vigilante V`,
+        text: `Needing to know what is happening, you fight your way through the underground tunnel, and find a heavy door that leads into a room. You seem to be in a lab. You see vats, some broken, with a similarly coloured green liquid splashed around them. Some, with- people? - still inside. In the shock at seeing this, you barely dodge out of the way as a massive blade swings from the side. From the shadows a massive disfigured prisoner appears. Did he cause all of this?`,
         requirementType: `defeat`,
         requirementTarget: [`experiment999`],
         requirementAmount: [1],
     },
     {
-        title: `Vigilante V`,
+        title: `Vigilante VI`,
         text: `You wake up on the floor of the lab. You remember fighting the monstrosity, and as you ducked under another blade swing it smashed
          a vat next to you, and the liquid inside poured over you. You remember screaming in pain and not much else. Looking around,
           the monstrosity seems to be gone. You feel weak, like all the training you've done the past months has been sapped from you.
@@ -168,7 +178,7 @@ updateDiaryEntries();
 var areaSelect = document.getElementById("selectArea");
 checkAreaUnlocks();
 function checkTabUnlocks() {
-    if (playerStats.storyProgress >= 18) {
+    if (playerStats.storyProgress >= 19) {
         document.getElementById("prestigeBox").style.visibility = 'visible';
         document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");
     }
