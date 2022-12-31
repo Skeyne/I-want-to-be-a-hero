@@ -143,7 +143,7 @@ const storyQuests = [
         title: `A New Beginning IV`,
         text:`As you start bloodying the Don he retreats into one of the mafia warehouses. Upon entering you see crates filled with vials of liquid that remind you of the prison's underground lab. Then, you notice the hulking figure of the Don's right hand man close the door behind you. Through his body you see glowing lines and a change of skin tone not unlike the prisoner's escaping the lab, although he does not look sickly like them. Before you can think any further he lunges at you as the Don orders 'get 'im boy!'`,
         requirementType: `defeat`,
-        requirementTarget: [`donbodyguard`, 'don'],
+        requirementTarget: [`donbodyguard`, 'don2'],
         requirementAmount: [1, 1],
     },
     {
