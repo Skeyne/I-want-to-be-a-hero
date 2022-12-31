@@ -1183,7 +1183,7 @@ skillLibrary = {
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 1.01,
             },],
-            maxLevel: 20,
+            maxLevel: 15,
             cost: Array(5).fill(5).concat(Array(5).fill(10),Array(5).fill(20)),
             requires: {'ni_2_2':12},
         },
