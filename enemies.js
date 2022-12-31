@@ -203,11 +203,14 @@ var abilityLibrary = {
         type: 0,
         category:'melee',
         name: "Gut Punch",
-        iconName: "knuckleDuster",
+        iconName: "placeHolder",
         baseDamage: 1,
         damageRatios: [1.2,0.5,0,0],
-        time: 3000,
-        cooldownTime: 7000,
+        effects: {
+            'stun': 3,
+        },
+        time: 4000,
+        cooldownTime: 20000,
         range: [5,5],
 
     },
@@ -393,7 +396,7 @@ enemyData.donbodyguard = {
     reputationReward: 1,
     spriteFile: "donbodyguard.png",
     portraitFile: "prisoner9Portrait.png",
-    moves: ['punch','smash','gutPunch','walk'],
+    moves: ['knuckleDuster','smash','gutPunch','walk'],
 };
 enemyData.don2 = {
     id:"don2",
