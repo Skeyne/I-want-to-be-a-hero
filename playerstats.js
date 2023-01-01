@@ -47,14 +47,16 @@ const cleanPlayerStats = {
     currentArea: 0,
     engagementRange: 5,
     restToPercentage: 1,
+    lastSaveTime: Date.now(),
 }
 var playerStats = {};
+var justLoaded = false;
 reset();
-function save() {
+function save(imprt=false) {
     console.log("Saving data...")
-    playerStats.lastSave = Date.now();
+    if(!imprt)playerStats.lastSaveTime = Date.now();
     localStorage.setItem("heroSave", JSON.stringify(playerStats));
-    localStorage.setItem("heroLastSaved", playerStats.lastSave);
+    localStorage.setItem("heroLastSaved", Date.now());
     localStorage.setItem("version", version);
 }
 function load(file = null) {
@@ -62,6 +64,7 @@ function load(file = null) {
     let loadgame;
     if (file != null) { loadgame = file; } else { loadgame = JSON.parse(localStorage.getItem("heroSave")); }
     if (loadgame != null) {
+        justLoaded = true;
         Object.keys(loadgame).forEach(property => {
             playerStats[property] = loadgame[property];
         });
@@ -184,7 +187,7 @@ function importGame() {
     let loadgame = JSON.parse(atob(text))
     if (loadgame && loadgame != null && loadgame != "") {
         load(loadgame);
-        save();
+        save(imprt=true);
         location.reload();
     }
     else {

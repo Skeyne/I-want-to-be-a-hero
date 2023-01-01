@@ -34,7 +34,15 @@
 
 
 <body>
-    <div id="splashScreen" class = "splashScreen"><div class="pickle splashTitle splashFadeIn">I WANT TO BE A HERO</div></div>
+    <div id="splashScreen" class="splashScreen">
+        <div class="pickle splashTitle splashFadeIn">I WANT TO BE A HERO</div>
+    </div>
+    <div id="offlineProgressPopup" class="blockPanel dotted" style="position: fixed;top:25%;right:35%;width:30%;height: 50%;z-index: 2; display: none;">
+        <div class="subHeader pickle">Offline Progress</div>
+        <div id="offlineProgressText" class="oxanium"></div>
+        <button style="display:block;margin:auto;"class="bannerButton"
+        onclick="document.getElementById('offlineProgressPopup').style.display = 'none';">Confirm</button>
+    </div>
     <header>
         <!-- FPS setting to be revised -->
         <!-- <select name="updateIntervals" id="updateIntervals" onchange="changeInterval(this.value)">
@@ -67,6 +75,7 @@
     </header>
 
     <main>
+
         <section id="sidebar" class="blockPanel"></section>
         <section id="canvasLogWrap">
             <div id="canvasWrap">
@@ -107,16 +116,18 @@
                             <span id="playerInitiativeText" class="barText pickle">0</span>
                             <progress id="playerInitiativeBar" value="100" max="1000"></progress>
                         </div>
-                        <div id="expEstimate" class="pickle">Experience/min: <span id = "expEstimateText"></span></div>
+                        <div id="expEstimate" class="pickle">Experience/min: <span id="expEstimateText"></span></div>
                         <div class="statDisplay pickle blockPanel" id="nextMove">Next move: <span
                                 id="playerMoveText">0</span></div>
-                        <div class ="pickle blockPanel">
+                        <div class="pickle blockPanel">
                             <label for="quantity">Engagement distance:</label>
-                            <input class="pickle" style="background: whitesmoke;" type="number" onchange="changeEngagementRange()"
-                            id="engagementDistanceInput" name="quantity" min="5" max="70" step="5">
+                            <input class="pickle" style="background: whitesmoke;" type="number"
+                                onchange="changeEngagementRange()" id="engagementDistanceInput" name="quantity" min="5"
+                                max="70" step="5">
                             <label for="quantity">Rest until HP:</label>
-                            <input class="pickle" style="background: whitesmoke;" type="number" onchange="changeRestPercentage()"
-                            id="restPercentageInput" name="quantity" min="0" max="100" step="5">%
+                            <input class="pickle" style="background: whitesmoke;" type="number"
+                                onchange="changeRestPercentage()" id="restPercentageInput" name="quantity" min="0"
+                                max="100" step="5">%
                         </div>
                         <div class="pickle subHeader">Resources:</div>
                         <div id="resourceGrid"
@@ -146,7 +157,8 @@
                         <div class="blockBody" id="abilityLoadoutContainer" style="height:auto ;display: grid;grid-template-columns: auto;
                         grid-auto-flow:column;column-gap: normal;justify-items: center;">
                         </div>
-                        <div class="pickle subHeader">Current activity: (<span id="trainingBarOverviewIcon"></span>) <span id="trainingCanUpgradeText"></span></div>
+                        <div class="pickle subHeader">Current activity: (<span id="trainingBarOverviewIcon"></span>)
+                            <span id="trainingCanUpgradeText"></span></div>
                         <div
                             style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;margin:1%">
                             <progress id="trainingProgressBarOverview" class="trainingProgressBar"
@@ -176,17 +188,18 @@
                                 Agility: <span class="agilityText" id="agilitySoftcapText">0</span>
                             </div>
                         </div>
-                        <div id="trainingAreaName" class="statDisplay pickle" style="text-overflow:ellipsis;white-space: nowrap; overflow: hidden;"></div>
+                        <div id="trainingAreaName" class="statDisplay pickle"
+                            style="text-overflow:ellipsis;white-space: nowrap; overflow: hidden;"></div>
                         <div style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;">
                             <progress id="trainingProgressBar" class="trainingProgressBar" style="width:inherit;"
                                 value="100" max="1000"></progress>
                         </div>
-                        <div id = "activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 49.5% 49.5%;grid-auto-rows: min-content;
+                        <div id="activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 49.5% 49.5%;grid-auto-rows: min-content;
                         height: 50%;gap:1%;overflow-y: scroll;overflow-x:hidden;">
-                            
+
                         </div>
 
-                        
+
                     </div>
                 </section>
                 <section class="infoBox" id="areasBox">
@@ -215,7 +228,7 @@
                             onclick="resetSkills()">Reset</button>
                         <div class="subHeader">Trees</div>
                         <div id="subClassTabContainer"></div>
-                        <div id="passiveTreeContainer"class = "blockPanel verticalScroll" style="height: 76vh;">
+                        <div id="passiveTreeContainer" class="blockPanel verticalScroll" style="height: 76vh;">
                             <!-- <div class="gridSkills" id="passiveTreeGrid"></div> -->
                         </div>
                     </div>
@@ -223,36 +236,48 @@
                 <section class="infoBox" id="prestigeBox">
                     <div class="blockHeader pickle" style="display: block">PRESTIGE</div>
                     <div class="blockBody dotted pickle verticalScroll">
-                        <div style ="line-height:1.5;" class="oxanium"> You can take the Y you found to unlock more of your power.<br>
+                        <div style="line-height:1.5;" class="oxanium"> You can take the Y you found to unlock more of
+                            your power.<br>
                             This will reset your attributes.<br>
-                            Your attribute softcaps will increase by 10% of their current value plus 50% of the effective value over the current softcap.<br>
+                            Your attribute softcaps will increase by 10% of their current value plus 50% of the
+                            effective value over the current softcap.<br>
                             Softcaps will only increase for attributes which have reached their current softcap!<br>
-                            You gain 1% of the softcap as permanent attributes when you reset this way. (They cannot be lowered below that value by activities)<br>
-                            
+                            You gain 1% of the softcap as permanent attributes when you reset this way. (They cannot be
+                            lowered below that value by activities)<br>
+
                         </div>
-                        <div class ="subHeader">Softcaps</div>
+                        <div class="subHeader">Softcaps</div>
                         <div id="attributePrestigeText" style="text-align: center;padding:3%">
-                            
+
                         </div>
-                        <button style = "display:block; margin:auto" class="bannerButton" onclick="attributePrestige()">Take Y</button>
+                        <button style="display:block; margin:auto" class="bannerButton"
+                            onclick="attributePrestige()">Take Y</button>
                     </div>
                 </section>
                 <section class="infoBox" id="helpBox">
                     <div class="blockHeader pickle" style="display: block">HELP</div>
                     <div class="blockBody dotted pickle verticalScroll  " id="helpBody" style="overflow-y:scroll">
-                        <div style ="text-transform: uppercase; font-size: 2.5vw;">Join the <a href="https://discord.gg/rgST7fRkeq" target=”_blank”>DISCORD</a><img src="discordIcon.svg" style="
+                        <div style="text-transform: uppercase; font-size: 2.5vw;">Join the <a
+                                href="https://discord.gg/rgST7fRkeq" target=”_blank”>DISCORD</a><img
+                                src="discordIcon.svg" style="
                             margin-bottom: -0.6vw; height: 3vw;"><br></div>
                         <div class="subHeader">Combat</div>
-                        Your hero automatically uses his abilities in combat. Combat is action gauge based, once it fills the prepared ability is used.
-                        You can also set which abilities to use once you unlock more by clicking on the slots on the status tab.
-                        Finding criminals takes some time (patrolling, affected by agility) after which you'll enter an encounter.
+                        Your hero automatically uses his abilities in combat. Combat is action gauge based, once it
+                        fills the prepared ability is used.
+                        You can also set which abilities to use once you unlock more by clicking on the slots on the
+                        status tab.
+                        Finding criminals takes some time (patrolling, affected by agility) after which you'll enter an
+                        encounter.
                         If you are defeated in combat you'll take some downtime to recover (10 seconds).
                         <div class="subHeader">Movement</div>
                         You can set the engagement range, which is how close your hero will try to get to the enemy.
-                        He will only move this close and not further, so make sure your engagement range matches your abilities! By default your hero cannot move back after closing distance. However, if you have an ability with 'Retreat' he will try to use it to move back to his engagement range if an enemy closes in.
+                        He will only move this close and not further, so make sure your engagement range matches your
+                        abilities! By default your hero cannot move back after closing distance. However, if you have an
+                        ability with 'Retreat' he will try to use it to move back to his engagement range if an enemy
+                        closes in.
                         <br \>
                         <div class="subHeader">Attributes</div>
-                        
+
                         <br \><span class="pickle strengthText">STR</span>is the main component of damage in physical
                         moves.
                         <br \><span class="pickle toughnessText">TGH</span>increases your health and damage
@@ -262,10 +287,13 @@
                         <br \>
                         <br \>Attributes can be increased by training.
                         <div class="subHeader">Training</div>
-                        Training is done through activities. Each completion gives PlayerLevel*AttributeRatio attributes.
-                        The starting activities are free but more rewarding activities that you unlock as you progress cost money to perform.
+                        Training is done through activities. Each completion gives PlayerLevel*AttributeRatio
+                        attributes.
+                        The starting activities are free but more rewarding activities that you unlock as you progress
+                        cost money to perform.
                         <br \>
-                        As you complete the same activity, it gains experience and can rank up. Ranking up increases the reward multiplier.
+                        As you complete the same activity, it gains experience and can rank up. Ranking up increases the
+                        reward multiplier.
                         Ranking up needs more experience every time, but later ranks are successively more rewarding.
                         <br \>
                         New activities may not even be worth it until you gain some experience in doing them.
@@ -282,13 +310,16 @@
                         where the second part is evaluated and then summed from every contributing attribute.
                         <br \>
                         <br \> The damage ratio of abilities can be found by hovering them on the "Abilities" tab.
-                        <br \> Abilities also have a damage range, which modifies the final damage, a use time and a cooldown.
-                        Cooldowns only start AFTER the abiltiy is used. Some ranged skills have a minimum range, the screen is 100 units wide.
-                        
+                        <br \> Abilities also have a damage range, which modifies the final damage, a use time and a
+                        cooldown.
+                        Cooldowns only start AFTER the abiltiy is used. Some ranged skills have a minimum range, the
+                        screen is 100 units wide.
+
                         <div class="subHeader">Additional mechanics</div>
                         <br \>Heal: heal for an amount.
                         <br \>
-                        <br \>Shield: gives temporary health points. Lost at the end of an encounter. Does not stack, stronger shields overwrite.
+                        <br \>Shield: gives temporary health points. Lost at the end of an encounter. Does not stack,
+                        stronger shields overwrite.
                         <br \>
                         <br \>Critical strike: chance to deal 50% more damage.
                         <br \>
@@ -318,4 +349,5 @@
 <script src="class.js"></script>
 <script src="training.js"></script>
 <script src="music.js"></script>
+<script src="offline.js"></script>
 <script src="main.js"></script>
