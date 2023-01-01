@@ -48,6 +48,8 @@ const cleanPlayerStats = {
     engagementRange: 5,
     restToPercentage: 1,
     lastSaveTime: Date.now(),
+    fame: 0,
+    fameUpgradeLevels: {},
 }
 var playerStats = {};
 var justLoaded = false;
@@ -147,6 +149,7 @@ function addPlayerMoney(amount) {
 }
 function addPlayerReputation(amount) {
     playerStats.reputation += amount;
+    checkFame();
 }
 function loadGame(loadgame) {
     let shouldCheckVersion = false; //check if we need to implement a fix for version differences

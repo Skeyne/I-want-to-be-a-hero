@@ -281,7 +281,7 @@ class Player extends CombatEntity {
                                                 enemy.distance += this.nextMove.effects['knockback'];
                                             }
                                             if (moveStun > 0) {
-                                                enemy.interrupt += this.moveStun * 1000;
+                                                enemy.interrupt += moveStun * 1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
                                             logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);

@@ -691,6 +691,20 @@ progress[value]::-webkit-progress-bar {
     margin: 0 6px 0 6px;
     vertical-align: middle;
 }
+.reputationText {
+    color: rgb(33, 44, 172);
+}
+
+.reputationText:after {
+    content: "";
+    display: inline-block;
+    background: url("reputationTextIcon.png") no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+    margin: 0 6px 0 6px;
+    vertical-align: middle;
+}
 
 #moneyText {
     color: rgb(44, 190, 0);
