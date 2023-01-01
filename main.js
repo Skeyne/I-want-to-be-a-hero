@@ -9,7 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'prestige', 'info'];
+var tabNames = ['story', 'status', 'activity', 'areas', 'class','fame', 'prestige', 'info'];
 var sidebar = document.getElementById('sidebar');
 let activeTab = 0;
 for (let index = 0; index < tabNames.length; index++) {
@@ -23,7 +23,9 @@ for (let index = 0; index < tabNames.length; index++) {
 }
 changeTab(0);
 if (playerStats.storyProgress >= 18) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
-if (playerStats.storyProgress >= 18) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+if (playerStats.storyProgress >= 18) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+if (playerStats.storyProgress >= 99) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
+if (playerStats.storyProgress >= 99) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
@@ -152,7 +154,7 @@ class Player extends CombatEntity {
         this.image.src = PLAYER_SPRITES[playerStats.class];
         this.portraitImage = new Image();
         this.portraitImage.src = "joePortrait.png";
-        this.damageReduction = formulas.damageReduction(getEffectiveValue("toughness"));
+        this.damageReduction = formulas.damageReduction(getEffectiveValue("strength"));
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.actionSpeed *= getSecondaryAttribute("actionSpeed");
         this.powerMultiplier = getSecondaryAttribute("powerMultiplier");
@@ -278,7 +280,7 @@ class Player extends CombatEntity {
                                             if (this.nextMove.effects.hasOwnProperty("knockback")) {
                                                 enemy.distance += this.nextMove.effects['knockback'];
                                             }
-                                            if (this.moveStun > 0) {
+                                            if (moveStun > 0) {
                                                 enemy.interrupt += this.moveStun * 1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(d3);

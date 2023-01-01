@@ -180,7 +180,7 @@ checkAreaUnlocks();
 function checkTabUnlocks() {
     if (playerStats.storyProgress >= 19) {
         document.getElementById("prestigeBox").style.visibility = 'visible';
-        document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");
+        document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle");
     }
 }
 function checkAreaUnlocks() {

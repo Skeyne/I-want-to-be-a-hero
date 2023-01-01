@@ -954,7 +954,7 @@ skillLibrary = {
             desc: 'Mixing animal DNA into yours to enhance your power.',
             effect: [{
                 type: 1, // attribute boost
-                effectTarget: "actionSpeed",
+                effectTarget: "damageMultiplier",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.05,
             }],
@@ -1648,6 +1648,27 @@ playerMoves = {
         time: 3000,
         cooldownTime: 5000,
         range: [5, 50],
+        cost: 5,
+    },
+    'groundStomp': {
+        class: 'superhuman',
+        type: 0,
+        sub: 1,
+        position: { row: 2, column: 5 },
+        category: 'melee',
+        name: "Ground Stomp",
+        description: "Slam your foot down causing a tremor around you that destabilizes nearby foes",
+        iconName: "placeholder",
+        damage: 0,
+        damageRatios: [1, 1, 0, 0],
+        damageRange: [1, 1],
+        effects: {
+            'stun': 2,
+            'aoe': 10,
+        },
+        time: 3000,
+        cooldownTime: 12000,
+        range: [5, 5],
         cost: 5,
     },
     'secondWind': {
