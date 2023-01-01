@@ -49,7 +49,9 @@ const cleanPlayerStats = {
     restToPercentage: 1,
     lastSaveTime: Date.now(),
     fame: 0,
+    fameSpent:0,
     fameUpgradeLevels: {},
+    fameEffects: {},
 }
 var playerStats = {};
 var justLoaded = false;
@@ -133,7 +135,8 @@ function playerSetLevel(value) {
     addPlayerExp(0);
 }
 function addPlayerExp(amount) {
-    playerStats.experience += amount;
+    const fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["experienceGain"]));
+    playerStats.experience += fameBonus*amount;
     expCountBuffer += amount;
     if (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
@@ -143,11 +146,15 @@ function addPlayerExp(amount) {
         //checkAbilityRequirements();
     }
     checkLevelQuest();
+    return fameBonus*amount;
 }
 function addPlayerMoney(amount) {
-    playerStats.money += amount;
+    const fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["moneyGain"]));
+    playerStats.money += fameBonus*amount;
+    return fameBonus*amount;
 }
 function addPlayerReputation(amount) {
+    
     playerStats.reputation += amount;
     checkFame();
 }

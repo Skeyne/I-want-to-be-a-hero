@@ -786,6 +786,25 @@ progress[value]::-webkit-progress-bar {
 #trainingUpgradeButton:active {
     border: 5px grey inset;
 }
+.fameUpgradeIcon {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: .3vw grey outset;
+    position: relative;
+    padding: 0;
+    background-image: url('placeholder.png');
+    image-rendering: pixelated;
+    z-index: 1;
+    box-sizing: border-box;
+}
+.fameUpgradeButton {
+    width: 50%;
+    aspect-ratio: 2 / 1;
+    border: 2px solid black;
+    font-family: 'Pickle Pushing';
+    font-size: 1em;
+    background-color: whitesmoke;
+}
 
 .passiveSkillButton {
     width: 61%;

@@ -4,7 +4,6 @@ function calculateOfflineTime() {
     let seconds = milliseconds / 1000;
     let minutes = seconds / 60;
     let hours = minutes / 60;
-    console.log(minutes);
     if (minutes >= 1) {
         document.getElementById("offlineProgressPopup").style.display = 'block';
         calculateOfflineProgress(minutes);

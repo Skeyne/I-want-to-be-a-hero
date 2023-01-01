@@ -739,11 +739,11 @@ class Enemy extends CombatEntity {
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     onDeath() {
-        addPlayerExp(this.data.expReward);
-        addPlayerMoney(this.data.moneyReward);
+        let exp = addPlayerExp(this.data.expReward);
+        let money = addPlayerMoney(this.data.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`${this.name} was defeated! +${this.data.moneyReward}$ +${this.data.expReward}EXP +${this.data.reputationReward}REP`)
+        logConsole(`${this.name} was defeated! +${money}$ +${format(exp)}EXP +${this.data.reputationReward}REP`)
     }
 }
 class Encounter {

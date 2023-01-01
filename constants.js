@@ -84,7 +84,6 @@ formulas.softcappedAttribute = function (index) {
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;
     let softCapFactor = Math.max(1, 1 + Math.log10(baseValue / softCap));
-    //if(index == 2) console.log("Base: ",baseValue," Softcap factor: ",softCapFactor," Softcapped: ",Math.min(baseValue,softCap) * softCapFactor);
     return Math.min(baseValue, softCap) * softCapFactor;
 }
 
