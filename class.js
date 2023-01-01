@@ -840,7 +840,7 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.01,
+                effectMagnitude: 1,
             },
             {
                 type: 0, // attribute boost
@@ -849,7 +849,7 @@ skillLibrary = {
                 effectMagnitude: 1,
             }],
             maxLevel: 10,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3), Array(10).fill(4), Array(10).fill(5)),
+            cost: Array(10).fill(1),
         },
         'mu_2_1': {
             id: 'mu_2_1',
