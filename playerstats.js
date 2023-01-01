@@ -135,7 +135,9 @@ function playerSetLevel(value) {
     addPlayerExp(0);
 }
 function addPlayerExp(amount) {
-    const fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["experienceGain"]));
+    let fameBonus = 0;
+    if(playerStats.fameEffects.hasOwnProperty('experienceGain'))
+    {fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["experienceGain"]))};
     playerStats.experience += fameBonus*amount;
     expCountBuffer += amount;
     if (playerStats.experience >= playerStats.experienceToNext) {
@@ -149,7 +151,9 @@ function addPlayerExp(amount) {
     return fameBonus*amount;
 }
 function addPlayerMoney(amount) {
-    const fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["moneyGain"]));
+    let fameBonus = 0;
+    if(playerStats.fameEffects.hasOwnProperty('experienceGain'))
+    { fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["moneyGain"]));}
     playerStats.money += fameBonus*amount;
     return fameBonus*amount;
 }
