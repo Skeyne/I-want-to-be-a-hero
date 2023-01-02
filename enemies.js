@@ -203,7 +203,7 @@ var abilityLibrary = {
         type: 0,
         category:'melee',
         name: "Gut Punch",
-        iconName: "placeHolder",
+        iconName: "placeholder",
         baseDamage: 1,
         damageRatios: [1.2,0.5,0,0],
         effects: {

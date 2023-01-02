@@ -152,7 +152,7 @@ function addPlayerExp(amount) {
 }
 function addPlayerMoney(amount) {
     let fameBonus = 1;
-    if(playerStats.fameEffects.hasOwnProperty('experienceGain'))
+    if(playerStats.fameEffects.hasOwnProperty('moneyGain'))
     { fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["moneyGain"]));}
     playerStats.money += fameBonus*amount;
     return fameBonus*amount;
