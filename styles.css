@@ -841,7 +841,18 @@ progress[value]::-webkit-progress-bar {
     margin: 0 20% 0;
     margin-bottom: 5vh;
 }
-
+#masterTooltip{
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 1em;
+    border-radius: 5%;
+    background-color: #000000;
+    z-index: 100;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    pointer-events: none;
+}
 #trainingUpgradeButton:active {
     border: 5px grey inset;
 }
@@ -1169,13 +1180,13 @@ progress[value]::-webkit-progress-bar {
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+    visibility: hidden;
     z-index: 1;
     ;
 }
 
 .tooltip:hover .skilltooltiptext {
-    visibility: visible;
+    visibility: hidden;
     z-index: 1;
     ;
 }

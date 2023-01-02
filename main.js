@@ -36,6 +36,28 @@ function checkTabFocused() {
         console.log('not focused');
     }
   }
+var masterTooltip = document.createElement("div");
+document.body.append(masterTooltip);
+console.log(masterTooltip);
+masterTooltip.id = 'masterTooltip';
+
+document.addEventListener('mouseover',function (e){
+    if(e.target.classList.contains('tooltip')){
+        var rect = e.target.getBoundingClientRect();
+        masterTooltip.style.top =  rect.top + 'px';
+        masterTooltip.style.left = (rect.right + 20)+ 'px';
+        masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+        masterTooltip.style.opacity =  1;
+    }
+});
+document.addEventListener('mouseout',function (e){
+    if(e.target.classList == undefined) return;
+    if(e.target.classList.contains('tooltip')){
+        console.log('tooltip');
+        masterTooltip.style.opacity =  0;
+    }
+});
+
 document.addEventListener('visibilitychange', checkTabFocused);
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
