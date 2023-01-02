@@ -52,7 +52,7 @@ class Area {
         return arr;
     }
     tick() {
-        this.patrolCounter += logicTickTime * player.actionSpeed;
+        this.patrolCounter += logicTickTime * player.patrolSpeed;
         if (this.patrolCounter >= this.patrolTime) {
             this.patrolCounter = 0;
             return 1;
@@ -77,42 +77,42 @@ const areas = [
     new Area({
         name: "Bridge", background: "bridgeAreaBackground-1.png",
         enemies: ["prisoner"], enemyNum: 2, storyUnlock: 9,
-        patrolTime: 5000,
+        patrolTime: 4000,
         encounters: [{weight:100,enemies:{"prisoner":{1:3,2:2,3:1}}}]
     }),
     new Area({
         name: "Prison Courtyard", background: "prisonCourtyardBackground.png",
         enemies: ["prisoner9"], enemyNum: 2, storyUnlock: 10,
-        patrolTime: 6000, 
+        patrolTime: 5000, 
         
     }),
     new Area({
         name: "Prison Underground Entry", background: "bulkheadBackground.png",
         enemies: ["prisonguard"], enemyNum: 3, storyUnlock: 11,
-        patrolTime: 7000,
+        patrolTime: 6000,
         encounters: [{weight:100,enemies:{"prisonguard":{2:1}}}]
     }),
     new Area({
         name: "Prison Underground Tunnel", background: "bulkheadBackground.png",
         enemies: ["infectedPrisoner"], enemyNum: 2, storyUnlock: 12,
-        patrolTime: 7000,
+        patrolTime: 6000,
         encounters: [{weight:100,enemies:{"infectedPrisoner":{1:3,2:1}}}]
     }),
     new Area({
         name: "Underground Lab", background: "scifilabBackground.png",
         enemies: ["experiment999"], enemyNum: 2, storyUnlock: 13,
-        patrolTime: 6000,
+        patrolTime: 7000,
     }),
     new Area({
         name: "Streets II", background: "cyberpunk-street.png",
         enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
-        patrolTime: 7000,
+        patrolTime: 6000,
         encounters: [{weight:100,enemies:{"thug2":{1:3,2:2,3:1},"thug3":{2:1,2:1},}}]
     }),
     new Area({
         name: "Streets III", background: "cyberpunk-street.png",
         enemies: ["thug"], enemyNum: 2, storyUnlock: 17,
-        patrolTime: 7000,
+        patrolTime: 6000,
         encounters: [{weight:900,enemies:{"thug4":{1:2,2:1,3:1},"thug5":{1:1,2:1},}},
         {weight:100,enemies:{"thug4":{3:1,},"thug5":{2:1},"don":{1:1,},}}]
     }),

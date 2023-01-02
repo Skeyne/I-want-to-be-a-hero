@@ -78,7 +78,7 @@ class Activity {
     }
     tick() {
         if (this.costPaid == false) { if (!this.payCost()) return; }
-        this.progress += logicTickTime;
+        this.progress += logicTickTime * getFameEffect("trainingSpeed");
         if (this.progress >= this.timeToComplete) {
             this.progress -= this.timeToComplete;
             this.reward();

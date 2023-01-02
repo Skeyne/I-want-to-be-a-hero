@@ -14,7 +14,7 @@ var sidebar = document.getElementById('sidebar');
 let activeTab = 0;
 for (let index = 0; index < tabNames.length; index++) {
     const tabName = tabNames[index]
-    let b = document.createElement('button');
+    let b = document.createElement('div');
     b.setAttribute("class", "sidebarButton pickle");
     b.setAttribute("id", `${tabName}TabButton`);
     b.setAttribute("onclick", `changeTab(${index})`);
@@ -24,8 +24,8 @@ for (let index = 0; index < tabNames.length; index++) {
 changeTab(0);
 if (playerStats.storyProgress >= 18) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
 if (playerStats.storyProgress >= 18) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
-if (playerStats.storyProgress >= 99) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
-if (playerStats.storyProgress >= 99) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+if (playerStats.storyProgress >= 8) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
+if (playerStats.storyProgress >= 8) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
@@ -145,6 +145,7 @@ class Player extends CombatEntity {
     constructor(data) {
         super();
         this.data = data;
+        this.patrolSpeed = getFameEffect("patrolSpeed");
         this.name = "Hero";
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;

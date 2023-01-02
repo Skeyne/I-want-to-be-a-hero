@@ -60,7 +60,8 @@ main {
 #tabScrollWrapper::-webkit-scrollbar {
     display: none;
 }
-#sidebar{
+
+#sidebar {
     grid-column: 1;
 }
 
@@ -90,7 +91,8 @@ main {
     grid-auto-rows: 98vh;
     grid-auto-columns: 100%;
 }
-#statsGrid{
+
+#statsGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -98,15 +100,17 @@ main {
     column-gap: 1vw;
     margin: 1vh 1vw 1vh 1vw;
 }
-#resourceGrid{
+
+#resourceGrid {
     margin: 1vh 1vw 1vh 1vw;
 }
+
 .gridSkills {
     display: grid;
     width: 100%;
     height: auto;
     grid-template-rows: 7vw;
-    grid-template-columns: repeat(5,7vw);
+    grid-template-columns: repeat(5, 7vw);
     grid-auto-rows: 7vw;
     justify-items: center;
     justify-content: space-around;
@@ -114,7 +118,8 @@ main {
     row-gap: 1vw;
     column-gap: 0.4vw;
 }
-.passiveSkillLink{
+
+.passiveSkillLink {
     position: relative;
     height: 100%;
     width: 0.6vw;
@@ -122,6 +127,7 @@ main {
     border: 0.3vw solid black;
     z-index: 0;
 }
+
 .subclassTabButton {
     height: 4vh;
     border: 2px solid black;
@@ -130,10 +136,11 @@ main {
     text-transform: uppercase;
     text-align: center;
 }
+
 .subclassTabButtonActive {
     height: 4vh;
     border: 2px solid black;
-    color:whitesmoke;
+    color: whitesmoke;
     background: rgb(0, 0, 0);
     box-sizing: border-box;
     text-transform: uppercase;
@@ -223,7 +230,8 @@ main {
         12px 12px 0px rgb(255, 255, 0),
         14px 14px 0px rgb(255, 255, 0);
 }
-#previewRowHeader{
+
+#previewRowHeader {
     background: rgba(0, 0, 0, 0.616);
     text-align: center;
     line-height: 2rem;
@@ -233,20 +241,24 @@ main {
     align-content: center;
     flex-direction: column;
 }
-#previewRowHeader::before{
+
+#previewRowHeader::before {
     font-size: 2rem;
 
     content: "LOCKED";
 }
-#previewRowBody{
+
+#previewRowBody {
     background: rgba(0, 0, 0);
     text-align: center;
     z-index: 1;
 }
-#previewRowBody::before{
+
+#previewRowBody::before {
     font-size: 2rem;
     content: "I need to get stronger...";
 }
+
 .barText {
     width: inherit;
     font-size: 2vh;
@@ -259,20 +271,24 @@ main {
     right: 0px;
     left: 0px;
 }
+
 .leftAlign {
     text-align: left;
 }
-.abilityPickContainerLabel{
+
+.abilityPickContainerLabel {
     grid-column: 1;
     font-size: 2vw;
     text-align: center;
 }
-.abilityPickContainer{
+
+.abilityPickContainer {
     display: flex;
     justify-content: space-around;
     grid-column: 2;
 }
-.abilityPickButton{
+
+.abilityPickButton {
     position: relative;
     display: inline-block;
     background-repeat: no-repeat;
@@ -285,7 +301,8 @@ main {
     aspect-ratio: 1 / 1;
     border: 1vmin inset rgb(34, 34, 34);
 }
-.abilitySlot{
+
+.abilitySlot {
     background-repeat: no-repeat;
     background-size: cover;
     background-color: black;
@@ -294,11 +311,13 @@ main {
     height: 8vh;
     width: 8vh;
 }
-.abilitySlot option{
+
+.abilitySlot option {
     color: whitesmoke;
 }
+
 .sidebarButton {
-    height:min-content;
+    height: min-content;
     width: 100%;
     font-size: 1.6vw;
     color: black;
@@ -309,6 +328,14 @@ main {
     text-align: center;
     text-transform: uppercase;
     padding: 0;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
 }
 
 .sidebarButton:active {
@@ -318,6 +345,7 @@ main {
     border: 5px outset rgb(45, 45, 45);
 
 }
+
 .sidebarButtonActive {
     color: rgb(255, 255, 255);
     background-color: rgb(0, 0, 0);
@@ -325,10 +353,11 @@ main {
     border: 5px outset rgb(45, 45, 45);
 
 }
+
 .sidebarButtonLocked {
     font-size: 0px;
     pointer-events: none;
-    height:min-content;
+    height: min-content;
     width: 100%;
     color: black;
     background-color: rgb(52, 52, 52);
@@ -339,12 +368,14 @@ main {
     text-transform: uppercase;
     padding: 0;
 }
+
 .sidebarButtonLocked::after {
     content: 'LOCKED';
     font-size: 1.6vw;
 }
+
 .blockHeader {
-    height:5%;
+    height: 5%;
     font-size: 3.5vh;
     color: black;
     background-color: rgb(234, 177, 34);
@@ -367,6 +398,7 @@ main {
     margin-left: 20px;
     margin-bottom: 4px;
 }
+
 section:last-child div.blockHeader::after {
     content: "";
     background-image: none;
@@ -389,71 +421,87 @@ section:first-child div.blockHeader::before {
     content: "";
     background-image: none;
 }
-.subHeader{
+
+.subHeader {
     text-transform: uppercase;
     border-bottom: solid white;
     background: linear-gradient(0deg, black, transparent);
 }
+
 .blockBody {
     border: 5px inset rgb(53, 53, 53);
     height: 95%;
     box-sizing: border-box;
     position: relative;
 }
-.blockPanel{
+
+.blockPanel {
     border: 5px inset rgb(53, 53, 53);
     background: rgb(255 255 255 / 9%);
     box-sizing: border-box;
     position: relative;
 }
-.activityBlock{
+
+.activityBlock {
     border: 0.5vmin inset grey;
     box-sizing: border-box;
 }
-#abilityLoadoutContainer{
+
+#abilityLoadoutContainer {
     border: 5px outset rgb(53, 53, 53);
     background: rgb(255 255 255 / 9%);
     padding: 1vmin;
 }
+
 .evenFlex {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
-.verticalScroll{
+
+.verticalScroll {
     overflow-y: scroll;
 }
+
 .verticalScroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg,rgb(0, 0, 0),rgb(75, 75, 75));
+    background: linear-gradient(90deg, rgb(0, 0, 0), rgb(75, 75, 75));
     border-radius: 5px;
-    border:1px solid rgb(75, 75, 75);
+    border: 1px solid rgb(75, 75, 75);
 }
+
 .verticalScroll::-webkit-scrollbar {
     width: 1vw;
 }
-.horizontalScroll{
+
+.horizontalScroll {
     overflow-x: scroll;
 }
+
 .horizontalScroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg,rgb(0, 0, 0),rgb(75, 75, 75));
+    background: linear-gradient(90deg, rgb(0, 0, 0), rgb(75, 75, 75));
     border-radius: 5px;
-    border:1px solid rgb(75, 75, 75);
+    border: 1px solid rgb(75, 75, 75);
 }
+
 .horizontalScroll::-webkit-scrollbar {
     width: 1vw;
 }
-#activityGrid{
+
+#activityGrid {
     overflow-y: scroll;
 }
+
 #activityGrid::-webkit-scrollbar-thumb {
     background: rgb(0, 0, 0);
     border-radius: 5px;
 }
+
 #activityGrid::-webkit-scrollbar {
     width: 1vw;
 }
-#diaryEntries{
+
+#diaryEntries {
     width: 100%;
     display: grid;
     grid-auto-rows: 15%;
@@ -462,6 +510,7 @@ section:first-child div.blockHeader::before {
     row-gap: 1%;
     overflow-y: scroll;
 }
+
 #diaryEntries::-webkit-scrollbar-thumb {
     background: rgb(0, 0, 0);
     border-radius: 5px;
@@ -470,20 +519,24 @@ section:first-child div.blockHeader::before {
 #diaryEntries::-webkit-scrollbar {
     width: 1vw;
 }
-#diaryText{
+
+#diaryText {
     padding: 1em;
 }
-#diaryContainer{
+
+#diaryContainer {
     height: 50%;
     width: 100%;
     display: grid;
-    grid-template-rows: min-content minmax(0,1fr);
+    grid-template-rows: min-content minmax(0, 1fr);
 }
-#diaryGrid{
+
+#diaryGrid {
     height: 100%;
     display: grid;
     grid-template-columns: 1.1fr 4fr;
 }
+
 progress[value] {
     /* Reset the default appearance */
     -webkit-appearance: none;
@@ -608,6 +661,7 @@ progress[value]::-webkit-progress-bar {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
+
 .activityProgressBar,
 .activityProgressBar[value]::-webkit-progress-bar {
     height: 10px;
@@ -615,9 +669,11 @@ progress[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);
     margin-bottom: 0px
 }
+
 .activityProgressBar::-webkit-progress-value {
     background: rgb(128, 73, 0);
 }
+
 .rankProgressBar,
 .rankProgressBar[value]::-webkit-progress-bar {
     height: 5px;
@@ -625,9 +681,11 @@ progress[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);
     margin-bottom: 0px
 }
+
 .rankProgressBar::-webkit-progress-value {
     background: purple;
 }
+
 .trainingProgressBar,
 .trainingProgressBar[value]::-webkit-progress-bar {
     background: rgb(255, 255, 255);
@@ -691,6 +749,7 @@ progress[value]::-webkit-progress-bar {
     margin: 0 6px 0 6px;
     vertical-align: middle;
 }
+
 .reputationText {
     color: rgb(33, 44, 172);
 }
@@ -786,6 +845,12 @@ progress[value]::-webkit-progress-bar {
 #trainingUpgradeButton:active {
     border: 5px grey inset;
 }
+
+.fameItemGrid {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+}
+
 .fameUpgradeIcon {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -793,17 +858,20 @@ progress[value]::-webkit-progress-bar {
     position: relative;
     padding: 0;
     background-image: url('placeholder.png');
+    background-size: cover;
     image-rendering: pixelated;
     z-index: 1;
     box-sizing: border-box;
 }
+
 .fameUpgradeButton {
-    width: 50%;
-    aspect-ratio: 2 / 1;
+    width: 100%;
+    aspect-ratio: 10 / 1;
     border: 2px solid black;
     font-family: 'Pickle Pushing';
     font-size: 1em;
     background-color: whitesmoke;
+    padding: 0
 }
 
 .passiveSkillButton {
@@ -905,27 +973,30 @@ progress[value]::-webkit-progress-bar {
     padding: 3vh;
     background-size: 100%;
     background-position: 0%;
-    filter:saturate(0);
+    filter: saturate(0);
 }
+
 .radioAreaLabel::after {
     content: '';
-    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,255,1) 100%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 255, 1) 100%);
     height: 100%;
     width: 100%;
-    display: block; /* ::after defaults to inline */
+    display: block;
+    /* ::after defaults to inline */
     opacity: .7;
-  }
+}
+
 .radioAreaLabel:active {
     border: 5px grey inset;
 }
 
 .radioArea {
     position: fixed;
-    opacity: 0; 
+    opacity: 0;
     pointer-events: none;
 }
 
-.radioArea:checked ~ label {
+.radioArea:checked~label {
     filter: saturate(1);
 }
 
@@ -992,12 +1063,14 @@ progress[value]::-webkit-progress-bar {
     font-size: 1em;
     background-color: whitesmoke;
 }
+
 .classButton {
     border: 2px solid black;
     font-family: 'Pickle Pushing';
     font-size: 1em;
     background-color: whitesmoke;
 }
+
 .diaryButton {
     border: 2px solid black;
     font-family: 'Pickle Pushing';
@@ -1079,6 +1152,7 @@ progress[value]::-webkit-progress-bar {
     padding: 5px 0;
     border-radius: 6px;
 }
+
 .tooltip .skilltooltiptext {
     visibility: hidden;
     position: fixed;
@@ -1096,31 +1170,35 @@ progress[value]::-webkit-progress-bar {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
-    z-index: 1;;
+    z-index: 1;
+    ;
 }
 
 .tooltip:hover .skilltooltiptext {
     visibility: visible;
-    z-index: 1;;
+    z-index: 1;
+    ;
 }
 
-.splashScreen{
+.splashScreen {
     opacity: 1;
     background: black;
     position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 100;
 
 }
-@keyframes fadeIn{
-    to{
+
+@keyframes fadeIn {
+    to {
         opacity: 1;
     }
 }
-.splashTitle{
+
+.splashTitle {
     font-size: 7vw;
     letter-spacing: 0.5vw;
     text-transform: uppercase;
@@ -1143,11 +1221,13 @@ progress[value]::-webkit-progress-bar {
         12px 12px 0px rgb(255, 255, 0),
         14px 14px 0px rgb(255, 255, 0);
 }
-.splashFadeIn{
-    opacity:0;
+
+.splashFadeIn {
+    opacity: 0;
     animation: fadeIn 1s ease-in forwards;
 }
-.splashScreenFadeOut{
+
+.splashScreenFadeOut {
     /* background: black;
     position: fixed;
     top:0;
@@ -1155,7 +1235,7 @@ progress[value]::-webkit-progress-bar {
     width:100%;
     height:100%;
     z-index: 100; */
-    opacity:0;
+    opacity: 0;
     transition: all 1s;
 }
 
@@ -1173,17 +1253,68 @@ progress[value]::-webkit-progress-bar {
     main {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto 100vh;
         row-gap: 1vw;
         padding: 0.5vw;
         position: sticky;
-        height: 196vh;
+        height: auto;
         top: 1vh;
     }
-    #tabScrollGrid{
-        grid-auto-columns: 98vw;
+
+    #sidebar {
+        grid-row: 2;
     }
 
+    #tabScrollGrid {
+        grid-auto-columns: 100vw;
+    }
+
+    .sidebarButton {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        height: 30vw;
+        width: 10vw;
+        float: left;
+        font-size: 3vw;
+        line-height: 9vw;
+        -webkit-user-select: none;
+        /* Safari */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE10+/Edge */
+        user-select: none;
+        /* Standard */
+        padding: 0;
+    }
+
+    .sidebarButtonLocked {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        height: 30vw;
+        width: 10vw;
+        float: left;
+        font-size: 3vw;
+        line-height: 9vw;
+        -webkit-user-select: none;
+        /* Safari */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE10+/Edge */
+        user-select: none;
+        /* Standard */
+        padding: 0;
+        font-size: 0px;
+        pointer-events: none;
+        background-color: rgb(52, 52, 52);
+        border: 5px outset rgb(74, 74, 74);
+    }
+
+    .sidebarButtonLocked::after {
+        content: 'LOCKED';
+        font-size: 3vw;
+    }
 
     #canvasLogWrap {
         position: static;
@@ -1195,14 +1326,15 @@ progress[value]::-webkit-progress-bar {
     }
 
     #tabScrollWrapper {
-        grid-row: 2;
+        grid-row: 3;
         grid-column: 1;
         height: 100%;
         width: 100%;
-        overflow-y:hidden;
+        overflow-y: hidden;
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
     }
+
     .passiveSkillButton {
         width: 80%;
         height: 80%;
@@ -1212,19 +1344,21 @@ progress[value]::-webkit-progress-bar {
         image-rendering: pixelated;
         z-index: 1;
     }
+
     .gridSkills {
         display: grid;
         width: 100%;
         height: auto;
         grid-template-rows: 14vw;
-        grid-template-columns: repeat(5,14vw);
+        grid-template-columns: repeat(5, 14vw);
         grid-auto-rows: 14vw;
         justify-items: center;
         align-items: center;
         row-gap: 4vw;
         column-gap: 4vw;
     }
-    .passiveSkillLink{
+
+    .passiveSkillLink {
         position: relative;
         height: 100%;
         width: 1.2vw;

@@ -237,12 +237,18 @@
                 </section>
                 <section class="infoBox" id="fameBox">
                     <div class="blockHeader pickle" style="display: block">FAME</div>
-                    <div class="blockBody dotted pickle verticalScroll">
-                        <div class="pickle">Fame: <span id="famePointText"></span></div>
-                        <div class="pickle">Next at: <span id="fameToNextText"></span><span class="reputationText"></span></div>
-                        <div id = "fameUpgradeContainer" class="blockPanel"></div>
-                        <button style="display:block; margin:auto" class="bannerButton"
-                            onclick="">Test</button>
+                    <div class="blockBody dotted pickle">
+                        <div style="height: 22vh;">
+                            <div class="oxanium">As your reputation starts to spread, you gain fame points. Fame points
+                                can be allocated to give various passive.<br>
+                                You can reset your point allocation by Rebranding (requires double click). WARNING! This
+                                costs 5% of your current reputation! </div>
+                            <br><button ondblclick="resetFameUpgrades()" class="bannerButton">Rebrand</button><br>
+                            <div class="pickle">Fame: <span id="famePointText"></span></div>
+                            <div class="pickle">Next at: <span id="fameToNextText"></span><span
+                                    class="reputationText"></span></div>
+                        </div>
+                        <div id="fameUpgradeContainer" class="blockPanel verticalScroll" style="height: 70vh;"></div>
                     </div>
                 </section>
                 <section class="infoBox" id="prestigeBox">

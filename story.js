@@ -178,6 +178,10 @@ updateDiaryEntries();
 var areaSelect = document.getElementById("selectArea");
 checkAreaUnlocks();
 function checkTabUnlocks() {
+    if (playerStats.storyProgress >= 8) {
+        document.getElementById("fameBox").style.visibility = 'visible';
+        document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");
+    }
     if (playerStats.storyProgress >= 19) {
         document.getElementById("prestigeBox").style.visibility = 'visible';
         document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle");
