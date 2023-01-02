@@ -401,7 +401,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             }],
             maxLevel: 5,
-            cost: [5, 10, 20, 40, 80],
+            cost: Array(5).fill(2),
             requires: { 'sh_1_0': 10 },
         },
         'sh_1_2': {
@@ -493,7 +493,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             }],
             maxLevel: 5,
-            cost: [5, 10, 20, 40, 80],
+            cost: Array(5).fill(2),
             requires: { 'sh_2_0': 10 }
         },
         'sh_2_2': {
