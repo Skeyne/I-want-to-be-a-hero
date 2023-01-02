@@ -26,6 +26,17 @@ if (playerStats.storyProgress >= 18) { document.getElementById("prestigeBox").st
 if (playerStats.storyProgress >= 18) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 if (playerStats.storyProgress >= 8) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
 if (playerStats.storyProgress >= 8) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+var windowInFocus = true;
+function checkTabFocused() {
+    if (document.visibilityState === 'visible') {
+        windowInFocus = true;
+        console.log('focused');
+    } else {
+        windowInFocus = false;
+        console.log('not focused');
+    }
+  }
+document.addEventListener('visibilitychange', checkTabFocused);
 function changeTab(index) {
     if (index < 0 || index >= tabNames.length) return;
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
@@ -849,6 +860,7 @@ function mainLoop() {
 
 }
 function renderLoop() {
+    if(!windowInFocus) return;
     ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
     switch (gameState) {
         case "InCombat":
