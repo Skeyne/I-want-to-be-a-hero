@@ -72,7 +72,8 @@ main {
 }
 
 .oxanium {
-    font-family: Oxanium, 'Pickle Pushing', sans-serif;
+    font-family: 'Oxanium', 'Pickle Pushing', sans-serif;
+    font-weight: 100;
     padding-left: 6px;
     font-size: 2vmin;
 }
@@ -852,6 +853,8 @@ progress[value]::-webkit-progress-bar {
     -webkit-transition: .2s;
     transition: opacity .2s;
     pointer-events: none;
+    text-align: center;
+    line-height: 1.5;
 }
 #trainingUpgradeButton:active {
     border: 5px grey inset;
@@ -877,7 +880,7 @@ progress[value]::-webkit-progress-bar {
 
 .fameUpgradeButton {
     width: 100%;
-    aspect-ratio: 10 / 1;
+    aspect-ratio: 4 / 1;
     border: 2px solid black;
     font-family: 'Pickle Pushing';
     font-size: 1em;

@@ -40,13 +40,19 @@ var masterTooltip = document.createElement("div");
 document.body.append(masterTooltip);
 console.log(masterTooltip);
 masterTooltip.id = 'masterTooltip';
+masterTooltip.className ='oxanium';
 
 document.addEventListener('mouseover',function (e){
     if(e.target.classList.contains('tooltip')){
-        var rect = e.target.getBoundingClientRect();
-        masterTooltip.style.top =  rect.top + 'px';
-        masterTooltip.style.left = (rect.right + 20)+ 'px';
         masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+        var rect = e.target.getBoundingClientRect();
+        if(rect.right + 20 +masterTooltip.offsetWidth < window.innerWidth){
+            masterTooltip.style.left = (rect.right + 20)+ 'px';
+            masterTooltip.style.top =  rect.top + 'px';
+        } else {
+            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20)+ 'px';
+            masterTooltip.style.top =  (rect.bottom + 20) + 'px';
+        }      
         masterTooltip.style.opacity =  1;
     }
 });
