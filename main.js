@@ -30,10 +30,8 @@ var windowInFocus = true;
 function checkTabFocused() {
     if (document.visibilityState === 'visible') {
         windowInFocus = true;
-        console.log('focused');
     } else {
         windowInFocus = false;
-        console.log('not focused');
     }
 }
 var masterTooltip = document.createElement("div");
