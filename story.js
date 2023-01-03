@@ -148,6 +148,13 @@ const storyQuests = [
     },
     {
         title: `A New Beginning V`,
+        text: `After beating up the Don you question him about his henchman and the crates in the warehouse. He tells you 'You don't even know what's coming... if you find them they'll take care of you.' before exhaling the last breath. Inspecting some of the crates you find out that they're from some of the companies in the old industrial zone. You take some of the vials for yourself, and decide to visit the industrial zone next.`,
+        requirementType: `defeat`,
+        requirementTarget: [`infusedthug`,`psychicthug`],
+        requirementAmount: [60,20],
+    },
+    {
+        title: `Prologue.. For now`,
         text: `Ever since you defeated The Don, mafia activity around your area has simmered down, but the strange incidents around the city continue. One day while walking the streets you hear a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYONE!". This must be him. This time I won't lose.`,
         requirementType: `defeat`,
         requirementTarget: [`crabman`],

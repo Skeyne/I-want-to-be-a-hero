@@ -214,6 +214,98 @@ var abilityLibrary = {
         range: [5,5],
 
     },
+    'suckerPunch': {
+        type: 0,
+        category:'melee',
+        name: "Sucker Punch",
+        iconName: "jab",
+        baseDamage:0,
+        damageRatios: [0.6,0,0,0.5],
+        time: 1000,
+        effects: {
+            'stun': 1,
+        },
+        cooldownTime: 10000,
+        range: [5,5],
+
+    },
+    'telekineticProjectile': {
+        type: 0,
+        category:'ranged',
+        name: "Telekinetic Projectile",
+        iconName: "telekineticProjectile",
+        baseDamage:0,
+        damageRatios: [0,0,0,2],
+        time: 3000,
+        cooldownTime: 5000,
+        range: [0,60],
+
+    },
+    'confuse': {
+        type: 0,
+        category:'ranged',
+        name: "Confuse",
+        iconName: "placeholder",
+        baseDamage: 0,
+        damageRatios: [0,0,2,0],
+        effects: {
+            'stun': 1,
+        },
+        time: 2000,
+        cooldownTime: 8000,
+        range: [0,60],
+
+    },
+    'psychicShove': {
+        type: 0,
+        category:'melee',
+        name: "Psychic Shove",
+        iconName: "placeholder",
+        baseDamage: 0,
+        damageRatios: [0,0,3,0],
+        effects: {
+            'knockback': 15,
+        },
+        time: 4000,
+        cooldownTime: 14000,
+        range: [10,10],
+
+    },
+    'psionicBarrierAlly': {
+        type: 2,
+        category:'ranged',
+        name: "Psionic Barrier",
+        iconName: "psionicBarrier",
+        baseDamage:0,
+        damageRatios: [0,0,2,0],
+        effects: {
+            'allyshield': 1,
+        },
+        time: 1000,
+        cooldownTime: 20000,
+        range: [0,60],
+
+    },
+    'dash': {
+        type: 1,
+        category:'movement',
+        name: "Dash",
+        iconName: "move",
+        baseDamage: 0,
+        time: 500,
+        cooldownTime: 5000,
+        range: [5,5],
+    },
+    'crabWalk': {
+        type: 1,
+        category:'movement',
+        name: "Crab Walk",
+        iconName: "move",
+        baseDamage: 0,
+        time: 1000,
+        cooldownTime: 5000,
+        range: [10,10],
+    },
     'walk': {
         type: 1,
         category:'movement',
@@ -222,7 +314,7 @@ var abilityLibrary = {
         baseDamage: 0,
         time: 1000,
         cooldownTime: 0,
-        range: [5,5],
+        range: [5,0],
     }
 };
 
@@ -411,18 +503,33 @@ enemyData.don2 = {
     portraitFile: "thugPortrait.png",
     moves: ['tommy','knuckleDuster','walk'],
 };
-enemyData.experiment9999 = {
-    id:"experiment9999",
-    name: "Experiment #9999",
+enemyData.infusedthug = {
+    id:"infusedthug",
+    name: "Infused Thug",
     maxHealth: 5000,
-    attributes: [5000,2000,100,500],
-    healthRegen: 0.005,
-    expReward: 2500,
-    moneyReward: 200,
+    attributes: [5000,6000,500,3500],
+    healthRegen: 0,
+    expReward: 4000,
+    moneyReward: 50,
     reputationReward: 1,
-    spriteFile: "experiment999.png",
+    spriteFile: "donbodyguard.png",
     portraitFile: "prisoner9Portrait.png",
-    moves: ['walk','punch','smash','mutantSlash','vomit'],
+    moves: ['knuckleDuster','smash','suckerPunch','walk','dash'],
+};
+enemyData.psychicthug = {
+    id:"psychicthug",
+    name: "Psychic Thug",
+    maxHealth: 3000,
+    attributes: [1000,3000,6000,2500],
+    healthRegen: 0,
+    expReward: 4000,
+    moneyReward: 50,
+    reputationReward: 1,
+    spriteFile: "thug.png",
+    portraitFile: "prisoner9Portrait.png",
+    moves: ['psionicBarrierAlly','telekineticProjectile','psychicShove','confuse','walk'],
+    engagementRange: 60,
+    spawnDistance:80,
 };
 enemyData.crabman = {
     id:"crabman",
@@ -435,7 +542,7 @@ enemyData.crabman = {
     reputationReward: 1,
     spriteFile: "crabman.png",
     portraitFile: "prisoner9Portrait.png",
-    moves: ['walk','punch','smash','mutantSlash','crabWaterJet'],
+    moves: ['walk','crabWalk','punch','smash','mutantSlash','crabWaterJet'],
 };
 enemyData.ultracrabman = {
     id:"ultracrabman",

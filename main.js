@@ -112,7 +112,7 @@ document.addEventListener('mouseover', function (e) {
                 masterTooltip.innerHTML = "None";
                 break;
         }
-       
+
         let rect = e.target.getBoundingClientRect();
         if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
             masterTooltip.style.left = (rect.right + 20) + 'px';
@@ -203,7 +203,16 @@ class CombatEntity {
         this.target = target;
     }
     takeDamage(amount) {
-        let d = amount * this.damageReduction;
+        let d = Math.max(0, amount * this.damageReduction); //- this.flatReduction);
+        if (this.shield > 0) {
+            if (d >= this.shield) {
+                d -= this.shield;
+                this.shield = 0;
+            } else {
+                this.shield -= d;
+                d = 0;
+            }
+        }
         this.health -= d;
         let died = (this.health <= 0);
         if (died) {
@@ -636,6 +645,9 @@ class Enemy extends CombatEntity {
         });
         this.name = enemyData.name;
         this.drawIndex = drawIndex;
+        this.engagementRange = 5;
+        this.moveIntention = 1;
+        if(enemyData.hasOwnProperty("engagementRange")) this.engagementRange = enemyData.engagementRange;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
         this.shield = 0;
@@ -722,7 +734,11 @@ class Enemy extends CombatEntity {
                                 case "takedown":
                                     break;
                                 case "knockback":
-                                    this.distance += this.nextMove.effects[effect];
+                                    encounter.enemyArray.forEach(enemy => {
+                                        if (enemy == null) return;
+                                        enemy.distance += this.nextMove.effects[effect];
+                                    });
+                                    environmentDistance -= this.nextMove.effects[effect];
                                     break;
                                 case "pull":
                                     this.distance = Math.max(5, this.distance - this.nextMove.effects[effect]);
@@ -740,8 +756,15 @@ class Enemy extends CombatEntity {
                 }
                 break;
             case 1:
-                this.distance -= Math.min(this.distance - 5, this.nextMove.range[0]);
-                //logConsole(`${this.name} used ${this.nextMove.name}`)
+                let deltaMinus = Math.min(this.engagementRange - this.distance, this.nextMove.range[1]);
+                let deltaPlus = Math.min(Math.abs(this.distance - this.engagementRange), this.nextMove.range[0]);
+                if(this.moveIntention > 0){
+                    this.distance -= deltaPlus;
+                } else {
+                    this.distance += deltaMinus;
+                }
+                
+                if (!['Move','Wait'].includes(this.nextMove.name)) logConsole(`${this.name} used ${this.nextMove.name}!`);
                 break;
             case 2:
                 if (this.nextMove.hasOwnProperty("effects")) {
@@ -757,6 +780,16 @@ class Enemy extends CombatEntity {
                             case "shield":
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
                                 if (amount > this.shield) this.shield = amount;
+                                break;
+                            case "allyshield":
+                                let amount =
+                                this.nextMove.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[1] * (Math.pow(this.data.attributes[1]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[2] * (Math.pow(this.data.attributes[2]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                + this.nextMove.damageRatios[3] * (Math.pow(this.data.attributes[3]  + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                                if((player.target != null) && (player.target != this))
+                                if (amount > player.target.shield) player.target.shield = amount;
+                                logConsole(`${this.name} used ${this.nextMove.name} on ${player.target.name}`);
                                 break;
                             default:
                                 break;
@@ -785,8 +818,11 @@ class Enemy extends CombatEntity {
             document.getElementById("enemyMoveText").innerHTML = "No target";
             return;
         }
+        if (this.distance > this.engagementRange) { this.moveIntention = 1; }
+        else if (this.distance < this.engagementRange) { this.moveIntention = -1; }
+        else { this.moveIntention = 0; }
         let dist = this.distance;
-        let weights = [];
+        let weights = Array(this.data.moves.length).fill(0);
         for (let index = 0; index < this.data.moves.length; index++) {
             let k = this.data.moves[index];
             let ability = abilityLibrary[k];
@@ -805,7 +841,8 @@ class Enemy extends CombatEntity {
                 }
             }
             if (ability.type == 1) {
-                weights[index] = (dist <= 5 ? 0 : ability.range[0] / dist);
+                let delta = this.distance - this.engagementRange;
+                weights[index] = delta * this.moveIntention * (this.moveIntention > 0 ? ability.range[0] / 100 : ability.range[1]);
             }
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
@@ -821,12 +858,24 @@ class Enemy extends CombatEntity {
                             weights[index] = 100;
                         }
                     }
+                    if (ability.effects.hasOwnProperty('allyshield')) {
+                        let amount =
+                                ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[1] * (Math.pow(this.data.attributes[1]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[2] * (Math.pow(this.data.attributes[2]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                + ability.damageRatios[3] * (Math.pow(this.data.attributes[3]  + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        if ((player.target.shield <= 0.2 * amount) && (player.target != this)) {
+                            weights[index] = 100;
+                        }
+                    }
                 }
             }
         }
         const max = Math.max(...weights);
         const indexes = [];
-        for (let index = 0; index < weights.length; index++) {
+        let moveKey;
+        if (max > 0) {
+            for (let index = 0; index < weights.length; index++) {
             if (weights[index] === max) {
                 indexes.push(index);
             }
@@ -837,7 +886,9 @@ class Enemy extends CombatEntity {
         } else {
             pick = Math.floor(Math.random() * indexes.length);
         }
-        let moveKey = this.data.moves[indexes[pick]];
+        moveKey = this.data.moves[indexes[pick]];
+        }
+        
         if (moveKey == undefined) { moveKey = 'wait'; }
         this.nextMoveKey = moveKey;
         this.nextMove = abilityLibrary[this.nextMoveKey];
@@ -846,17 +897,18 @@ class Enemy extends CombatEntity {
     draw(context) {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 40 - (this.drawIndex) * 10;
-        
+
         context.drawImage(this.image, canvasX - this.image.width * 2, canvasY - this.image.height * 4, this.image.width * 4, this.image.height * 4);
         drawInfoBars(context, this, canvasX, canvasY);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
-        if(player.target == this){
-            context.lineWidth = 5;
+        if (player.target == this) {
+            let offset = 6 * Math.sin(Date.now() / 150);
+            context.lineWidth = 7;
             context.strokeStyle = 'black';
             context.beginPath();
-            context.moveTo(canvasX - 13, canvasY-173);
-            context.lineTo(canvasX, canvasY-160);
-            context.lineTo(canvasX + 13, canvasY- 173);
+            context.moveTo(canvasX - 13, canvasY - 173 - offset);
+            context.lineTo(canvasX, canvasY - 160 - offset);
+            context.lineTo(canvasX + 13, canvasY - 173 - offset);
             context.stroke();
             context.lineWidth = 4;
             context.strokeStyle = 'yellow';
@@ -883,8 +935,11 @@ class Encounter {
             //let picked = Math.floor(Math.random() * this.area.enemies.length);
             let picked = this.enemiesToSpawn[index];
             let drawIndex = mod(index, 2) == 0 ? Math.floor(index / 2) : -Math.floor(index + 1 / 2);
-            //let newEnemy = new Enemy(enemyData[this.area.enemies[picked]], Math.round(5 * Math.random()) * 10 + 50, drawIndex = drawIndex);
-            let newEnemy = new Enemy(enemyData[picked], Math.round(5 * Math.random()) * 10 + 50, drawIndex = drawIndex);
+            let spawnDistance = 50;
+            if(enemyData[picked].hasOwnProperty("spawnDistance")){
+                spawnDistance = enemyData[picked].spawnDistance;
+            }
+            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random()-0.5)) * 5 + spawnDistance, drawIndex = drawIndex);
             this.enemyArray.push(newEnemy);
             this.enemyArray[index].setTarget(player);
         }
