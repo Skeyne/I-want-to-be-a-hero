@@ -40,7 +40,7 @@ header input {
 
 main {
     display: grid;
-    grid-template-columns: 10% 1fr 1fr;
+    grid-template-columns: 8% 1fr 1fr;
     grid-template-rows: 1fr;
     column-gap: 1vw;
     padding: 1vh 0.5vw 1vh 0.5vw;
@@ -320,7 +320,7 @@ main {
 .sidebarButton {
     height: min-content;
     width: 100%;
-    font-size: 1.6vw;
+    font-size: 1.2vw;
     color: black;
     background-color: rgb(234, 177, 34);
     box-sizing: border-box;
