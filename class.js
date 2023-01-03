@@ -2010,6 +2010,7 @@ function RebuildSlots() {
 
         let slot = document.createElement("select");
         slot.setAttribute("class", "abilitySlot pickle");
+        slot.setAttribute("data-ability-tooltip", "1");
         slots.push(slot);
         slot.setAttribute("onchange", `changeAbilitySlot(${index})`);
         loadoutContainer.appendChild(slot);
@@ -2206,7 +2207,8 @@ function populateAbilitySlots() {
             element.appendChild(option);
             if (currentAbilities[slotN] == ability) {
                 option.setAttribute("selected", "selected");
-                element.style.backgroundImage = "url(" + playerMoves[ability].iconName + "Icon.png)"
+                element.style.backgroundImage = "url(" + playerMoves[ability].iconName + "Icon.png)";
+                element.dataset.abilityTooltip = ability;
             };
         });
     }
@@ -2232,6 +2234,7 @@ function changeAbilitySlot(slotN, internal = false) {
         if (!allow) { slot.value = playerStats.equippedAbilities[slotN + 1]; return; }
         slot.style.backgroundImage = "none";
         playerStats.equippedAbilities[slotN + 1] = null;
+        slot.dataset.abilityTooltip = "";
     } else {
         for (let i = 0; i < slots.length; i++) {
             if (i == slotN) continue;
@@ -2242,6 +2245,7 @@ function changeAbilitySlot(slotN, internal = false) {
             }
         }
         slot.style.backgroundImage = "url(" + playerMoves[newAbility].iconName + "Icon.png)";
+        slot.dataset.abilityTooltip = newAbility;
         playerStats.equippedAbilities[slotN + 1] = newAbility;
     }
 }
@@ -2329,6 +2333,7 @@ function generatePassiveTooltip(skill) {
         + requirementsText;
 }
 function generateAbilityRequirementTooltip(ability) {
+    if(!playerMoves.hasOwnProperty(ability)) return "None";
     const abilityData = playerMoves[ability];
     let stringDisplay = "";
     stringDisplay += abilityData.name + " ";

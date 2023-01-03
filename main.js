@@ -45,16 +45,16 @@ function generateAttributeTooltip(attributeId) {
     let secondaryText = "";
     switch (attributeId) {
         case "strength":
-            secondaryText =`It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))))}%`
+            secondaryText = `It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))))}%`
             break;
         case "toughness":
-            secondaryText =`It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")))}`
+            secondaryText = `It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")))}`
             break;
         case "mind":
-            secondaryText =`It also modifies your base cooldowns to ${format(100*formulas.cooldownReduction(getEffectiveValue("mind")))}%`
+            secondaryText = `It also modifies your base cooldowns to ${format(100 * formulas.cooldownReduction(getEffectiveValue("mind")))}%`
             break;
         case "agility":
-            secondaryText =`It also gives you a base action speed of ${format(100*formulas.actionSpeed(getEffectiveValue("agility")))}%`
+            secondaryText = `It also gives you a base action speed of ${format(100 * formulas.actionSpeed(getEffectiveValue("agility")))}%`
             break;
 
         default:
@@ -77,6 +77,42 @@ document.addEventListener('mouseover', function (e) {
     }
     if ('attributeTooltip' in e.target.dataset) {
         masterTooltip.innerHTML = generateAttributeTooltip(e.target.dataset.attributeTooltip);
+        let rect = e.target.getBoundingClientRect();
+        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
+            masterTooltip.style.left = (rect.right + 20) + 'px';
+            masterTooltip.style.top = rect.top + 'px';
+        } else {
+            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
+            masterTooltip.style.top = (rect.bottom + 20) + 'px';
+        }
+        masterTooltip.style.opacity = 1;
+    }
+    if ('abilityTooltip' in e.target.dataset) {
+        masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
+        let rect = e.target.getBoundingClientRect();
+        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
+            masterTooltip.style.left = (rect.right + 20) + 'px';
+            masterTooltip.style.top = rect.top + 'px';
+        } else {
+            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
+            masterTooltip.style.top = (rect.bottom + 20) + 'px';
+        }
+        masterTooltip.style.opacity = 1;
+    }
+    if ('resourceTooltip' in e.target.dataset) {
+        switch (e.target.dataset.resourceTooltip) {
+            case "money":
+                masterTooltip.innerHTML = "You earn money by defeating enemies.<br> It can be spent on higher level activities!";
+                break;
+            case "reputation":
+                masterTooltip.innerHTML = "You earn reputation by defeating enemies.<br> If you get enough of it you might earn some Fame!";
+                break;
+
+            default:
+                masterTooltip.innerHTML = "None";
+                break;
+        }
+       
         let rect = e.target.getBoundingClientRect();
         if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
             masterTooltip.style.left = (rect.right + 20) + 'px';
