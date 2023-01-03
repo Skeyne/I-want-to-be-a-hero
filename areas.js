@@ -129,13 +129,13 @@ const areas = [
         encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 },"psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 1: 2 } } }]
     }),
-    new Area({
-        name: "Scrapyard", background: "prisonCourtyardBackground.png",
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 99,
-        patrolTime: 7000,
-        encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 },"psychicthug": { 1: 1 } } },
-        { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
-    }),
+    // new Area({
+    //     name: "Scrapyard", background: "prisonCourtyardBackground.png",
+    //     enemies: ["thug"], enemyNum: 2, storyUnlock: 99,
+    //     patrolTime: 7000,
+    //     encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 },"psychicthug": { 1: 1 } } },
+    //     { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
+    // }),
     new Area({
         name: "Riverside", background: "bridgeAreaBackground-1.png",
         enemies: ["crabman"], enemyNum: 1, storyUnlock: 20,
