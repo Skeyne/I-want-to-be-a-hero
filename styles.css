@@ -372,7 +372,7 @@ main {
 
 .sidebarButtonLocked::after {
     content: 'LOCKED';
-    font-size: 1.6vw;
+    font-size: 1.2vw;
 }
 
 .blockHeader {

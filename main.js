@@ -846,10 +846,22 @@ class Enemy extends CombatEntity {
     draw(context) {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 40 - (this.drawIndex) * 10;
-
+        
         context.drawImage(this.image, canvasX - this.image.width * 2, canvasY - this.image.height * 4, this.image.width * 4, this.image.height * 4);
         drawInfoBars(context, this, canvasX, canvasY);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
+        if(player.target == this){
+            context.lineWidth = 5;
+            context.strokeStyle = 'black';
+            context.beginPath();
+            context.moveTo(canvasX - 13, canvasY-173);
+            context.lineTo(canvasX, canvasY-160);
+            context.lineTo(canvasX + 13, canvasY- 173);
+            context.stroke();
+            context.lineWidth = 4;
+            context.strokeStyle = 'yellow';
+            context.stroke();
+        }
     }
     onDeath() {
         let exp = addPlayerExp(this.data.expReward);

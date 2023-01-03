@@ -351,7 +351,7 @@ skillLibrary = {
                 type: 1, // attribute boost
                 effectTarget: "damageMultiplier",
                 effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.05,
+                effectMagnitude: 1.05,
             }],
             maxLevel: 3,
             cost: [20,30,40],
