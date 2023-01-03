@@ -9,7 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class','fame', 'prestige', 'info'];
+var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info'];
 var sidebar = document.getElementById('sidebar');
 let activeTab = 0;
 for (let index = 0; index < tabNames.length; index++) {
@@ -35,33 +35,70 @@ function checkTabFocused() {
         windowInFocus = false;
         console.log('not focused');
     }
-  }
+}
 var masterTooltip = document.createElement("div");
 document.body.append(masterTooltip);
-console.log(masterTooltip);
 masterTooltip.id = 'masterTooltip';
-masterTooltip.className ='oxanium';
+masterTooltip.className = 'oxanium';
 
-document.addEventListener('mouseover',function (e){
-    if(e.target.classList.contains('tooltip')){
+function generateAttributeTooltip(attributeId) {
+    let secondaryText = "";
+    switch (attributeId) {
+        case "strength":
+            secondaryText =`It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))))}%`
+            break;
+        case "toughness":
+            secondaryText =`It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")))}`
+            break;
+        case "mind":
+            secondaryText =`It also modifies your base cooldowns to ${format(100*formulas.cooldownReduction(getEffectiveValue("mind")))}%`
+            break;
+        case "agility":
+            secondaryText =`It also gives you a base action speed of ${format(100*formulas.actionSpeed(getEffectiveValue("agility")))}%`
+            break;
+
+        default:
+            break;
+    }
+    return `Your ${attributeDisplayNames[attributeId]} base power is ${format(Math.sqrt(getEffectiveValue(attributeId) + 1) - 1)}<br>${secondaryText}`
+}
+document.addEventListener('mouseover', function (e) {
+    if (e.target.classList.contains('tooltip')) {
         masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
-        var rect = e.target.getBoundingClientRect();
-        if(rect.right + 20 +masterTooltip.offsetWidth < window.innerWidth){
-            masterTooltip.style.left = (rect.right + 20)+ 'px';
-            masterTooltip.style.top =  rect.top + 'px';
+        let rect = e.target.getBoundingClientRect();
+        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
+            masterTooltip.style.left = (rect.right + 20) + 'px';
+            masterTooltip.style.top = rect.top + 'px';
         } else {
-            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20)+ 'px';
-            masterTooltip.style.top =  (rect.bottom + 20) + 'px';
-        }      
-        masterTooltip.style.opacity =  1;
+            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
+            masterTooltip.style.top = (rect.bottom + 20) + 'px';
+        }
+        masterTooltip.style.opacity = 1;
+    }
+    if ('attributeTooltip' in e.target.dataset) {
+        masterTooltip.innerHTML = generateAttributeTooltip(e.target.dataset.attributeTooltip);
+        let rect = e.target.getBoundingClientRect();
+        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
+            masterTooltip.style.left = (rect.right + 20) + 'px';
+            masterTooltip.style.top = rect.top + 'px';
+        } else {
+            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
+            masterTooltip.style.top = (rect.bottom + 20) + 'px';
+        }
+        masterTooltip.style.opacity = 1;
     }
 });
-document.addEventListener('mouseout',function (e){
-    if(e.target.classList == undefined) return;
-    if(e.target.classList.contains('tooltip')){
-        console.log('tooltip');
-        masterTooltip.style.opacity =  0;
+document.addEventListener('mouseout', function (e) {
+    if (e.relatedTarget == null) {
+        masterTooltip.style.opacity = 0;
+        return
     }
+    if (e.relatedTarget.classList == undefined) {
+        masterTooltip.style.opacity = 0;
+    } else
+        if (!e.relatedTarget.classList.contains('tooltip')) {
+            masterTooltip.style.opacity = 0;
+        }
 });
 
 document.addEventListener('visibilitychange', checkTabFocused);
@@ -737,14 +774,14 @@ class Enemy extends CombatEntity {
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
                     if (ability.effects.hasOwnProperty('heal')) {
-                        let amount = ability.baseDamage/100*this.maxHealth;
+                        let amount = ability.baseDamage / 100 * this.maxHealth;
                         if (this.maxHealth - this.health > amount) {
                             weights[index] = 100;
                         }
                     }
                     if (ability.effects.hasOwnProperty('shield')) {
-                        let amount = ability.baseDamage/100*this.maxHealth;
-                        if (this.shield <= 0.2*amount) {
+                        let amount = ability.baseDamage / 100 * this.maxHealth;
+                        if (this.shield <= 0.2 * amount) {
                             weights[index] = 100;
                         }
                     }
@@ -888,7 +925,7 @@ function mainLoop() {
 
 }
 function renderLoop() {
-    if(!windowInFocus) return;
+    if (!windowInFocus) return;
     ctxBuffer.clearRect(0, 0, cBuffer.width, cBuffer.height);
     switch (gameState) {
         case "InCombat":
