@@ -22,8 +22,8 @@ for (let index = 0; index < tabNames.length; index++) {
     sidebar.append(b);
 }
 changeTab(0);
-if (playerStats.storyProgress >= 18) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
-if (playerStats.storyProgress >= 18) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+if (playerStats.storyProgress >= 19) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
+if (playerStats.storyProgress >= 19) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 if (playerStats.storyProgress >= 8) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
 if (playerStats.storyProgress >= 8) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 var windowInFocus = true;
@@ -38,7 +38,53 @@ var masterTooltip = document.createElement("div");
 document.body.append(masterTooltip);
 masterTooltip.id = 'masterTooltip';
 masterTooltip.className = 'oxanium';
+function showMasterTooltip(e) {
+    let rect = e.target.getBoundingClientRect();
+    let horizontal;
+    let vertical;
+    //console.log("1) Tooltip height: ", masterTooltip.offsetHeight)
+    if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
+        horizontal = true;
+    } else {
+        horizontal = false;
+    }
+    if (rect.bottom + 20 + masterTooltip.offsetHeight > window.innerHeight) {
+        vertical = true;
+    } else {
+        vertical = false;
+    }
+    if (horizontal) {
+        masterTooltip.style.left = (rect.right + 20) + 'px';
+        masterTooltip.style.top = rect.top + 'px';
+    } else {
+        masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
+        masterTooltip.style.top = (rect.bottom + 20) + 'px';
+    }
+    if (vertical) {
+        masterTooltip.style.top = '';
+        masterTooltip.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+    } else {
+        masterTooltip.style.bottom = '';
+    }
 
+
+    // if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
+    //     masterTooltip.style.left = (rect.right + 20) + 'px';
+    //     masterTooltip.style.top = rect.top + 'px';
+    // } else {
+    //     masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
+    //     masterTooltip.style.top = (rect.bottom + 20) + 'px';
+    // }
+    //console.log("2) Rect bottom: ", rect.bottom + 20, "Tooltip height: ", masterTooltip.offsetHeight)
+    //console.log("Screen height: ", window.innerHeight)
+    // if (rect.bottom + 20 + masterTooltip.offsetHeight > window.innerHeight) {
+    //     masterTooltip.style.top = '';
+    //     masterTooltip.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+    // } else {
+    //     masterTooltip.style.bottom = '';
+    // }
+    masterTooltip.style.opacity = 1;
+}
 function generateAttributeTooltip(attributeId) {
     let secondaryText = "";
     switch (attributeId) {
@@ -63,39 +109,16 @@ function generateAttributeTooltip(attributeId) {
 document.addEventListener('mouseover', function (e) {
     if (e.target.classList.contains('tooltip')) {
         masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
-        let rect = e.target.getBoundingClientRect();
-        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
-            masterTooltip.style.left = (rect.right + 20) + 'px';
-            masterTooltip.style.top = rect.top + 'px';
-        } else {
-            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
-            masterTooltip.style.top = (rect.bottom + 20) + 'px';
-        }
-        masterTooltip.style.opacity = 1;
+        showMasterTooltip(e);
     }
     if ('attributeTooltip' in e.target.dataset) {
         masterTooltip.innerHTML = generateAttributeTooltip(e.target.dataset.attributeTooltip);
-        let rect = e.target.getBoundingClientRect();
-        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
-            masterTooltip.style.left = (rect.right + 20) + 'px';
-            masterTooltip.style.top = rect.top + 'px';
-        } else {
-            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
-            masterTooltip.style.top = (rect.bottom + 20) + 'px';
-        }
-        masterTooltip.style.opacity = 1;
+        showMasterTooltip(e);
     }
     if ('abilityTooltip' in e.target.dataset) {
         masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
         let rect = e.target.getBoundingClientRect();
-        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
-            masterTooltip.style.left = (rect.right + 20) + 'px';
-            masterTooltip.style.top = rect.top + 'px';
-        } else {
-            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
-            masterTooltip.style.top = (rect.bottom + 20) + 'px';
-        }
-        masterTooltip.style.opacity = 1;
+        showMasterTooltip(e);
     }
     if ('resourceTooltip' in e.target.dataset) {
         switch (e.target.dataset.resourceTooltip) {
@@ -110,16 +133,8 @@ document.addEventListener('mouseover', function (e) {
                 masterTooltip.innerHTML = "None";
                 break;
         }
+        showMasterTooltip(e);
 
-        let rect = e.target.getBoundingClientRect();
-        if (rect.right + 20 + masterTooltip.offsetWidth < window.innerWidth) {
-            masterTooltip.style.left = (rect.right + 20) + 'px';
-            masterTooltip.style.top = rect.top + 'px';
-        } else {
-            masterTooltip.style.left = (window.innerWidth - masterTooltip.offsetWidth - 20) + 'px';
-            masterTooltip.style.top = (rect.bottom + 20) + 'px';
-        }
-        masterTooltip.style.opacity = 1;
     }
 });
 document.addEventListener('mouseout', function (e) {
@@ -645,7 +660,7 @@ class Enemy extends CombatEntity {
         this.drawIndex = drawIndex;
         this.engagementRange = 5;
         this.moveIntention = 1;
-        if(enemyData.hasOwnProperty("engagementRange")) this.engagementRange = enemyData.engagementRange;
+        if (enemyData.hasOwnProperty("engagementRange")) this.engagementRange = enemyData.engagementRange;
         this.maxHealth = enemyData.maxHealth;
         this.health = this.maxHealth
         this.shield = 0;
@@ -736,13 +751,13 @@ class Enemy extends CombatEntity {
                                         if (enemy == null) return;
                                         enemy.distance += this.nextMove.effects[effect];
                                     });
-                                    environmentDistance -= this.nextMove.effects[effect];
+                                    environmentDistance += this.nextMove.effects[effect];
                                     break;
                                 case "pull":
                                     this.distance = Math.max(5, this.distance - this.nextMove.effects[effect]);
                                     break;
                                 case "aoe":
-                                    console.log("NOT IMPLEMENTED");
+                                    //console.log("NOT IMPLEMENTED");
                                     break;
 
                                 default:
@@ -756,13 +771,13 @@ class Enemy extends CombatEntity {
             case 1:
                 let deltaMinus = Math.min(this.engagementRange - this.distance, this.nextMove.range[1]);
                 let deltaPlus = Math.min(Math.abs(this.distance - this.engagementRange), this.nextMove.range[0]);
-                if(this.moveIntention > 0){
+                if (this.moveIntention > 0) {
                     this.distance -= deltaPlus;
                 } else {
                     this.distance += deltaMinus;
                 }
-                
-                if (!['Move','Wait'].includes(this.nextMove.name)) logConsole(`${this.name} used ${this.nextMove.name}!`);
+
+                if (!['Move', 'Wait'].includes(this.nextMove.name)) logConsole(`${this.name} used ${this.nextMove.name}!`);
                 break;
             case 2:
                 if (this.nextMove.hasOwnProperty("effects")) {
@@ -773,20 +788,20 @@ class Enemy extends CombatEntity {
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
-                                logConsole(`${this.name} healed for ${format(amount)}`);
+                                logConsole(`${this.name} healed for ${format(amount)} from ${this.nextMove.name}`);
                                 break;
                             case "shield":
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
                                 if (amount > this.shield) this.shield = amount;
                                 break;
                             case "allyshield":
-                                let amount =
-                                this.nextMove.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[1] * (Math.pow(this.data.attributes[1]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[2] * (Math.pow(this.data.attributes[2]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                + this.nextMove.damageRatios[3] * (Math.pow(this.data.attributes[3]  + 1, HEALTH_GROWTH_EXPONENT) - 1);
-                                if((player.target != null) && (player.target != this))
-                                if (amount > player.target.shield) player.target.shield = amount;
+                                amount =
+                                    this.nextMove.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                                    + this.nextMove.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                                if ((player.target != null) && (player.target != this))
+                                    if (amount > player.target.shield) player.target.shield = amount;
                                 logConsole(`${this.name} used ${this.nextMove.name} on ${player.target.name}`);
                                 break;
                             default:
@@ -844,24 +859,25 @@ class Enemy extends CombatEntity {
             }
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
+                    let amount;
                     if (ability.effects.hasOwnProperty('heal')) {
-                        let amount = ability.baseDamage / 100 * this.maxHealth;
+                        amount = ability.baseDamage / 100 * this.maxHealth;
                         if (this.maxHealth - this.health > amount) {
                             weights[index] = 100;
                         }
                     }
                     if (ability.effects.hasOwnProperty('shield')) {
-                        let amount = ability.baseDamage / 100 * this.maxHealth;
+                        amount = ability.baseDamage / 100 * this.maxHealth;
                         if (this.shield <= 0.2 * amount) {
                             weights[index] = 100;
                         }
                     }
                     if (ability.effects.hasOwnProperty('allyshield')) {
-                        let amount =
-                                ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[1] * (Math.pow(this.data.attributes[1]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[2] * (Math.pow(this.data.attributes[2]  + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                + ability.damageRatios[3] * (Math.pow(this.data.attributes[3]  + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        amount =
+                            ability.damageRatios[0] * (Math.pow(this.data.attributes[0] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(this.data.attributes[1] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(this.data.attributes[2] + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(this.data.attributes[3] + 1, HEALTH_GROWTH_EXPONENT) - 1);
                         if ((player.target.shield <= 0.2 * amount) && (player.target != this)) {
                             weights[index] = 100;
                         }
@@ -874,19 +890,19 @@ class Enemy extends CombatEntity {
         let moveKey;
         if (max > 0) {
             for (let index = 0; index < weights.length; index++) {
-            if (weights[index] === max) {
-                indexes.push(index);
+                if (weights[index] === max) {
+                    indexes.push(index);
+                }
             }
+            let pick;
+            if (indexes.length == 1) {
+                pick = 0;
+            } else {
+                pick = Math.floor(Math.random() * indexes.length);
+            }
+            moveKey = this.data.moves[indexes[pick]];
         }
-        let pick;
-        if (indexes.length == 1) {
-            pick = 0;
-        } else {
-            pick = Math.floor(Math.random() * indexes.length);
-        }
-        moveKey = this.data.moves[indexes[pick]];
-        }
-        
+
         if (moveKey == undefined) { moveKey = 'wait'; }
         this.nextMoveKey = moveKey;
         this.nextMove = abilityLibrary[this.nextMoveKey];
@@ -934,10 +950,10 @@ class Encounter {
             let picked = this.enemiesToSpawn[index];
             let drawIndex = mod(index, 2) == 0 ? Math.floor(index / 2) : -Math.floor(index + 1 / 2);
             let spawnDistance = 50;
-            if(enemyData[picked].hasOwnProperty("spawnDistance")){
+            if (enemyData[picked].hasOwnProperty("spawnDistance")) {
                 spawnDistance = enemyData[picked].spawnDistance;
             }
-            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random()-0.5)) * 5 + spawnDistance, drawIndex = drawIndex);
+            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance, drawIndex = drawIndex);
             this.enemyArray.push(newEnemy);
             this.enemyArray[index].setTarget(player);
         }
@@ -1287,7 +1303,7 @@ function changeArea(index) {
     currentArea = areas[playerStats.currentArea];
     currentArea.patrolCounter = 0;
     if (gameState != "InDead") {
-        gameState = "InPatrol";
+        gameState = "InRest";
     }
     player.target = null;
     player.nextMove = null;
