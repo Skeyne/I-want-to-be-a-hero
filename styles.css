@@ -749,7 +749,7 @@ progress[value]::-webkit-progress-bar {
 .statDisplay {
     font-size: 2.5vmin;
     text-transform: uppercase;
-    text-align: left;
+    text-align: center;
     padding-left: 6px;
 }
 
@@ -1352,7 +1352,7 @@ progress[value]::-webkit-progress-bar {
     #rightColumnWrap {
         position: static;
         top: 10vh;
-        height: min-content;
+        height: 100vh;
         grid-row: 1;
         grid-column: 1;
         grid-template-rows: min-content min-content auto;
