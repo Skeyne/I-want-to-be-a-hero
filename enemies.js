@@ -547,7 +547,7 @@ enemyData.donbodyguard = {
     maxHealth: 4000,
     attributes: [3000,5000,500,2500],
     healthRegen: 0.005,
-    expReward: 3000,
+    expReward: 2500,
     moneyReward: 50,
     reputationReward: 2,
     spriteFile: "donbodyguard.png",

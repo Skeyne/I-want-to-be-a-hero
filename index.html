@@ -117,7 +117,13 @@
                             <span id="playerInitiativeText" class="barText pickle">0</span>
                             <progress id="playerInitiativeBar" value="100" max="1000"></progress>
                         </div>
-                        <div id="expEstimate" class="pickle">Experience/min: <span id="expEstimateText"></span></div>
+                        <div id="resourceEstimates" style ="display: grid; grid-template-columns: 50% 50%;">
+                            <div id="expEstimate" class="pickle">Experience/min: <span id="expEstimateText">0</span>
+                            </div>
+                            <div id="moneyEstimate" class="pickle">Money/min: <span id="moneyEstimateText">0</span>
+                            </div>
+                        </div>
+
                         <div class="statDisplay pickle blockPanel" id="nextMove">Next move: <span
                                 id="playerMoveText">0</span></div>
                         <div class="pickle blockPanel">
@@ -133,25 +139,31 @@
                         <div class="pickle subHeader">Resources:</div>
                         <div id="resourceGrid"
                             style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr;">
-                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;" data-resource-tooltip="money"> Money: <span
-                                    class="moneyText" style="font-size: 2.5vmin;pointer-events: none;" id="moneyText">0</span></div>
-                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;" data-resource-tooltip="reputation"> Reputation: <span
-                                    style="font-size: 2.5vmin;pointer-events: none;" class="reputationText" id="reputationText">0</span>
+                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;" data-resource-tooltip="money">
+                                Money: <span class="moneyText" style="font-size: 2.5vmin;pointer-events: none;"
+                                    id="moneyText">0</span></div>
+                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;"
+                                data-resource-tooltip="reputation"> Reputation: <span
+                                    style="font-size: 2.5vmin;pointer-events: none;" class="reputationText"
+                                    id="reputationText">0</span>
                             </div>
                         </div>
                         <div class="pickle subHeader">Attributes:</div>
                         <div id="statsGrid">
                             <div class="statDisplay pickle">
-                                STR: <span class="strengthText" id="strengthText" data-attribute-tooltip="strength">0</span>
+                                STR: <span class="strengthText" id="strengthText"
+                                    data-attribute-tooltip="strength">0</span>
                             </div>
                             <div class="statDisplay pickle">
-                                TGH: <span class="toughnessText" id="toughnessText" data-attribute-tooltip="toughness">0</span>
+                                TGH: <span class="toughnessText" id="toughnessText"
+                                    data-attribute-tooltip="toughness">0</span>
                             </div>
                             <div class="statDisplay pickle">
                                 MND: <span class="mindText" id="mindText" data-attribute-tooltip="mind">0</span>
                             </div>
                             <div class="statDisplay pickle">
-                                AGI: <span class="agilityText" id="agilityText" data-attribute-tooltip="agility">0</span>
+                                AGI: <span class="agilityText" id="agilityText"
+                                    data-attribute-tooltip="agility">0</span>
                             </div>
                         </div>
                         <div class="pickle subHeader">Active abilities:</div>
@@ -175,8 +187,7 @@
                     <div class="blockHeader pickle">ACTIVITIES</div>
                     <div id="trainingAreaDisplay" class="blockBody dotted">
                         <div class="subHeader pickle">Base attributes from training</div>
-                        <div id="statsGrid"
-                            style="display: grid;">
+                        <div id="statsGrid" style="display: grid;">
                             <div id="strengthStatText" class="statDisplay pickle">
                                 Strength: <span class="strengthText" id="strengthSoftcapText">0</span>
                             </div>
@@ -300,7 +311,7 @@
                         <br \><span class="pickle strengthText">STR</span>increases your damage reduction.
                         <br \><span class="pickle toughnessText">TGH</span>increases your maximum health.
                         <br \><span class="pickle mindText">MND</span>reduces your ability cooldowns.
-                        <br \><span class="pickle agilityText">AGI</span>increases your action speed (affects patrol).
+                        <br \><span class="pickle agilityText">AGI</span>increases your action speed.
                         <br \>
                         <br \>Attributes can be increased by training.
                         <div class="subHeader">Training</div>

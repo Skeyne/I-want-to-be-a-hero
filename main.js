@@ -1018,7 +1018,18 @@ function updateExperienceEstimate() {
     expCountBuffer = 0;
     document.getElementById("expEstimateText").innerHTML = format(expCount * 4);
 }
+var moneyCount = 0;
+var moneyCountBuffer = 0;
+function updateMoneyEstimate() {
+    if (moneyCount == 0) {
+        moneyCount = moneyCountBuffer;
+    }
+    moneyCount += (moneyCountBuffer - moneyCount) / 10;
+    moneyCountBuffer = 0;
+    document.getElementById("moneyEstimateText").innerHTML = format(moneyCount * 4);
+}
 window.setInterval(updateExperienceEstimate, 15000);
+window.setInterval(updateMoneyEstimate, 15000);
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange() {
     playerStats.engagementRange = Math.ceil(Number(engagementRangeInput.value) / 5) * 5;

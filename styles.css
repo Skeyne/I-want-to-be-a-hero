@@ -492,7 +492,7 @@ section:first-child div.blockHeader::before {
 
 #activityGrid {
     overflow-y: scroll;
-    scrollbar-color: rgb(0, 255, 0) rgba(0, 0, 0,0);
+    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0,0);
 }
 
 #activityGrid::-webkit-scrollbar-thumb {
@@ -512,7 +512,7 @@ section:first-child div.blockHeader::before {
     background: rgb(255 255 255 / 9%);
     row-gap: 1%;
     overflow-y: scroll;
-    scrollbar-color: rgb(0, 255, 0) rgba(0, 0, 0,0);
+    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0,0);
 }
 
 #diaryEntries::-webkit-scrollbar-thumb {
