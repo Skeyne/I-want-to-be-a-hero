@@ -940,7 +940,7 @@ skillLibrary = {
             position: { row: 2, column: 4 },
             name: 'Bestial Speed',
             iconName: 'milerun',
-            desc: 'Mixing animal DNA into yours you enhance your speed.',
+            desc: 'Mixing animal DNA into yours enhances your speed.',
             effect: [{
                 type: 1, // attribute boost
                 effectTarget: "actionSpeed",
