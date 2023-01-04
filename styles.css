@@ -489,7 +489,21 @@ section:first-child div.blockHeader::before {
 .horizontalScroll::-webkit-scrollbar {
     width: 1vw;
 }
-
+#heroCardPanel{
+    grid-row:1;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
+#heroCardGrid{
+    height: 10vh;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+}
+#heroCardStats{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(3,33.3%);
+}
 #activityGrid {
     overflow-y: scroll;
     scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0,0);
@@ -1026,9 +1040,9 @@ progress[value]::-webkit-progress-bar {
     font-weight: lighter;
 }
 
-#canvasLogWrap {
+#rightColumnWrap {
     display: grid;
-    grid-template-rows: min-content auto;
+    grid-template-rows: min-content min-content auto;
     grid-row: 1;
     grid-column: 3;
     row-gap: 1vh;
@@ -1038,13 +1052,13 @@ progress[value]::-webkit-progress-bar {
 }
 
 #canvasWrap {
-    border: 0.5vw inset goldenrod;
-    outline: 0.5vw solid rgb(200, 145, 12);
+    border: 0.25vw inset goldenrod;
+    outline: 0.25vw solid rgb(200, 145, 12);
     aspect-ratio: 4 / 3;
     display: grid;
-    grid-row: 1;
+    grid-row: 2;
     box-sizing: border-box;
-    margin: 0.5vw;
+    margin: 0.25vw;
 }
 
 #myCanvas {
@@ -1054,6 +1068,7 @@ progress[value]::-webkit-progress-bar {
 
 .logBox {
     position: block;
+    grid-row: 3;
     border: 4px solid rgb(26, 90, 0);
     height: auto;
     align-self: stretch;
@@ -1334,13 +1349,13 @@ progress[value]::-webkit-progress-bar {
         font-size: 3vw;
     }
 
-    #canvasLogWrap {
+    #rightColumnWrap {
         position: static;
         top: 10vh;
         height: min-content;
         grid-row: 1;
         grid-column: 1;
-        grid-template-rows: min-content 10rem;
+        grid-template-rows: min-content min-content auto;
     }
 
     #tabScrollWrapper {

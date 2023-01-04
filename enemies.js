@@ -538,7 +538,7 @@ enemyData.don = {
     spriteFile: "don.png",
     portraitFile: "thugPortrait.png",
     moves: ['tommy','knuckleDuster','walk'],
-    engagementRange: 60,
+    engagementRange: 50,
     spawnDistance:80,
 };
 enemyData.donbodyguard = {
@@ -566,7 +566,7 @@ enemyData.don2 = {
     spriteFile: "don.png",
     portraitFile: "thugPortrait.png",
     moves: ['tommy','knuckleDuster','walk'],
-    engagementRange: 60,
+    engagementRange: 50,
     spawnDistance:80,
 };
 enemyData.infusedthug = {

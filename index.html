@@ -78,7 +78,28 @@
     <main>
 
         <section id="sidebar" class="blockPanel"></section>
-        <section id="canvasLogWrap">
+        <section id="rightColumnWrap">
+            <div id="heroCardPanel" class="dotted blockPanel">
+                <div class="subHeader pickle">Hero card</div>
+                <div id="heroCardGrid" class="">
+                    <img src="joePortrait.png" style="height: 10vh; aspect-ratio: 1/1;image-rendering: pixelated;">
+                    <div id="heroCardStats">
+                        <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="">
+                            Power: <span class="heroPowerText" style="font-size: auto;pointer-events: none;"
+                                id="heroPowerText">0</span></div>
+                        <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="money">
+                            Money: <span class="moneyText" style="font-size: auto;pointer-events: none;"
+                                id="moneyText">0</span></div>
+                        <div></div>
+                        <div class="pickle" style="font-size: auto  ;margin: 1vmin;" data-resource-tooltip="reputation">
+                            Reputation: <span style="font-size: auto;pointer-events: none;" class="reputationText"
+                                id="reputationText">0</span>
+                        </div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
             <div id="canvasWrap">
                 <canvas id="myCanvas"></canvas>
             </div>
@@ -117,7 +138,7 @@
                             <span id="playerInitiativeText" class="barText pickle">0</span>
                             <progress id="playerInitiativeBar" value="100" max="1000"></progress>
                         </div>
-                        <div id="resourceEstimates" style ="display: grid; grid-template-columns: 50% 50%;">
+                        <div id="resourceEstimates" style="display: grid; grid-template-columns: 50% 50%;">
                             <div id="expEstimate" class="pickle">Experience/min: <span id="expEstimateText">0</span>
                             </div>
                             <div id="moneyEstimate" class="pickle">Money/min: <span id="moneyEstimateText">0</span>
@@ -136,18 +157,7 @@
                                 onchange="changeRestPercentage()" id="restPercentageInput" name="quantity" min="0"
                                 max="100" step="5">%
                         </div>
-                        <div class="pickle subHeader">Resources:</div>
-                        <div id="resourceGrid"
-                            style="display: grid; grid-template-columns: 1fr 1fr;grid-template-rows: 1fr;">
-                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;" data-resource-tooltip="money">
-                                Money: <span class="moneyText" style="font-size: 2.5vmin;pointer-events: none;"
-                                    id="moneyText">0</span></div>
-                            <div class="pickle" style="font-size: 2.5vmin;margin: 1vmin;"
-                                data-resource-tooltip="reputation"> Reputation: <span
-                                    style="font-size: 2.5vmin;pointer-events: none;" class="reputationText"
-                                    id="reputationText">0</span>
-                            </div>
-                        </div>
+                        <br>
                         <div class="pickle subHeader">Attributes:</div>
                         <div id="statsGrid">
                             <div class="statDisplay pickle">
