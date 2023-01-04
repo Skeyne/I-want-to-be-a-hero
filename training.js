@@ -2,56 +2,69 @@ const activityLevelToRank = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS'
 var trainingAreaData = {
     0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1 },
 }
+var activityScaling = {
+    "standard1": [1, 2, 3, 6, 8, 12, 25, 50, 100, 300],
+    "detriment1": [1, 0.9, 0.8, 0.6, 0.3, 0.1, 0, 0, 0, 0],
+}
 var activityData = {
     "activity_0_0": {
-        id: "activity_0_0", name: "Do some pushups",
-        attributeRatios: [0.01, 0, 0, 0],
-        //[[0.01, 0, 0, 0], [0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0],
-        //[0.01, 0, 0, 0], [0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0],[0.01, 0, 0, 0]],
+        id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.01, 0, 0, 0],
+        attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_0_1": {
         id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.01, 0, 0],
+        attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_0_2": {
         id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.01],
+        attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_0_3": {
         id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.01, 0],
+        attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_1_0": {
         id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.05, 0, 0, 0],
+        attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_1": {
         id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.05, 0, 0],
+        attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_2": {
         id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.05],
+        attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_3": {
         id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.05, 0],
+        attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_2_0": {
         id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, 0, 0, -0.1],
+        attributeScaling: ["standard1", 0, 0, "detriment1"],
         timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
     },
     "activity_2_1": {
-        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [0.05, 0.15, -0.05,0],
+        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [0.05, 0.15, -0.05, 0],
+        attributeScaling: ["standard1", "standard1", "detriment1", 0],
         timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
     },
     "activity_2_2": {
         id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.2, 0.35],
+        attributeScaling: [0, 0, "detriment1", "standard1"],
         timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
     },
     "activity_2_3": {
-        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [-0.05, -0.05, 0.4, -0.05],
+        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [-0.05, -0.05, 0.3, -0.05],
+        attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
         timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
     },
 }
@@ -74,7 +87,18 @@ class Activity {
         return this.expBase * Math.pow(this.expPower, (playerStats.activityLevels[this.id].level));
     }
     get RewardPerPlayerLevel() {
-        return this.attributeRatios.map(x => x *(playerStats.activityLevels[this.id].level + 1));
+        if (activityData[this.id].hasOwnProperty("attributeScaling")) {
+            let scalingKeys = activityData[this.id].attributeScaling;
+            const final = Array(this.attributeRatios.length).fill(0);
+            for (let index = 0; index < this.attributeRatios.length; index++) {
+                if (isNaN(scalingKeys[index])) {
+                    final[index] = this.attributeRatios[index] * activityScaling[scalingKeys[index]][playerStats.activityLevels[this.id].level];
+                }
+            }
+            return final;
+        } else {
+            return this.attributeRatios.map(x => x * (playerStats.activityLevels[this.id].level + 1));
+        }
     }
     tick() {
         if (this.costPaid == false) { if (!this.payCost()) return; }
@@ -91,13 +115,13 @@ class Activity {
         let rewards = this.RewardPerPlayerLevel;
         let expReward = 0;
         for (let index = 0; index < this.attributeRatios.length; index++) {
-            if(rewards[index] != 0){
+            if (rewards[index] != 0) {
                 let attribute = attributeIndexToId[index];
-                let reward = rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1: getTrainingModifier(attribute));
-                if((rewards[index] > 0)){
-                    expReward += Math.log10(playerStats[attribute]+1) * this.timeToComplete/10000;
+                let reward = rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
+                if ((rewards[index] > 0)) {
+                    expReward += Math.log10(playerStats[attribute] + 1) * this.timeToComplete / 10000;
                 }
-                playerStats[attribute] = Math.max(playerStats.permanentAttributes[index],playerStats[attribute]+reward);
+                playerStats[attribute] = Math.max(playerStats.permanentAttributes[index], playerStats[attribute] + reward);
             }
         }
         playerStats.activityLevels[this.id].exp += expReward;
@@ -109,7 +133,7 @@ class Activity {
         }
         this.updateRankProgress();
         checkTrainingQuest();
-        updateAttributePrestigeText(); 
+        updateAttributePrestigeText();
     }
     payCost() {
         if (playerStats.money < this.cost) { this.costPaid = false; return false; }
@@ -120,12 +144,12 @@ class Activity {
         bars[0].value = playerStats.activityLevels[this.id].exp;
         bars[1].value = this.progress;
     }
-    updateRankProgress(){
+    updateRankProgress() {
         let rankText = this.element.getElementsByTagName("span")[0];
         rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[this.id].level]}
-        (${format(100*playerStats.activityLevels[this.id].exp/this.expToNext)}%)`;
+        (${format(100 * playerStats.activityLevels[this.id].exp / this.expToNext)}%)`;
     }
-    updateRank(){
+    updateRank() {
         let rankText = this.element.getElementsByTagName("span")[0];
         rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[this.id].level]}`;
         let bars = this.element.getElementsByClassName("rankProgressBar");
@@ -133,7 +157,7 @@ class Activity {
         let attributeText = this.element.getElementsByTagName("div")[1];
         attributeText.innerHTML = "";
         for (let index = 0; index < this.attributeRatios.length; index++) {
-            const ratio = this.attributeRatios[index];
+            const ratio = this.RewardPerPlayerLevel[index];
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
@@ -141,24 +165,24 @@ class Activity {
             attributeText.append(s);
         }
     }
-    onSelect(){
+    onSelect() {
         this.element.style.borderColor = 'goldenrod';
         let iconWrapper = document.getElementById("trainingBarOverviewIcon");
         iconWrapper.innerHTML = "";
         for (let index = 0; index < this.attributeRatios.length; index++) {
             const ratio = this.attributeRatios[index];
-            if (ratio != 0){
+            if (ratio != 0) {
                 let icon = document.createElement("span");
-                icon.innerHTML = (ratio > 0 ? ' +': ' -');
+                icon.innerHTML = (ratio > 0 ? ' +' : ' -');
                 icon.className = attributeIndexToId[index] + "Text";
-                icon.style.color = (ratio > 0 ? 'green': 'red');
+                icon.style.color = (ratio > 0 ? 'green' : 'red');
                 iconWrapper.append(icon);
             }
-            
+
         }
-       
+
     }
-    onDeselect(){
+    onDeselect() {
         this.element.style.borderColor = "";
     }
 }
@@ -180,20 +204,20 @@ Object.keys(activityData).forEach(id => {
     const activity = activities[id];
     let d = document.createElement("div");
     d.setAttribute("class", "activityBlock oxanium dotted");
-    d.setAttribute("onclick",`changeActivity("${id}")`)
+    d.setAttribute("onclick", `changeActivity("${id}")`)
     let title = document.createElement("div");
-    title.style.whiteSpace ='nowrap';
+    title.style.whiteSpace = 'nowrap';
     title.innerHTML = activity.name;
     let rankText = document.createElement("span");
-    rankText.innerHTML =  `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}
-    (${format(100*playerStats.activityLevels[id].exp/activity.expToNext)}%)`;
+    rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}
+    (${format(100 * playerStats.activityLevels[id].exp / activity.expToNext)}%)`;
     let rankProgress = document.createElement("progress");
     rankProgress.setAttribute("class", "rankProgressBar");
     rankProgress.max = activity.expToNext;
     rankProgress.value = playerStats.activityLevels[id].exp;
     let attributeText = document.createElement("div");
     for (let index = 0; index < activity.attributeRatios.length; index++) {
-        const ratio = activity.attributeRatios[index];
+        const ratio = activity.RewardPerPlayerLevel[index];
         if (ratio == 0) continue;
         let s = document.createElement("span");
         s.setAttribute("class", `${attributeIndexToId[index]}Text`);
@@ -211,10 +235,10 @@ Object.keys(activityData).forEach(id => {
     activities[id].element = d;
 });
 var currentTrainingArea;
-if (activities.hasOwnProperty(playerStats.currentActivity)){
+if (activities.hasOwnProperty(playerStats.currentActivity)) {
     currentTrainingArea = activities[playerStats.currentActivity];
-}else{
-    currentTrainingArea= activities['activity_0_0'];
+} else {
+    currentTrainingArea = activities['activity_0_0'];
     playerStats.currentActivity = currentTrainingArea
 }
 currentTrainingArea.onSelect();
