@@ -28,44 +28,44 @@ var activityData = {
         timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
     },
     "activity_1_0": {
-        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.05, 0, 0, 0],
+        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.02, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_1": {
-        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.05, 0, 0],
+        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.02, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_2": {
-        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.05],
+        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.02],
         attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_1_3": {
-        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.05, 0],
+        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.02, 0],
         attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
     },
     "activity_2_0": {
         id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, 0, 0, -0.1],
         attributeScaling: ["standard1", 0, 0, "detriment1"],
-        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
     },
     "activity_2_1": {
         id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [0.05, 0.15, -0.05, 0],
         attributeScaling: ["standard1", "standard1", "detriment1", 0],
-        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
     },
     "activity_2_2": {
         id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.2, 0.35],
         attributeScaling: [0, 0, "detriment1", "standard1"],
-        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
     },
     "activity_2_3": {
         id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [-0.05, -0.05, 0.3, -0.05],
         attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
-        timeToComplete: 20, cost: 25, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
     },
 }
 
