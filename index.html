@@ -51,27 +51,6 @@
             <option value="30">30FPS</option>
             <option value="60">60FPS</option>
         </select> -->
-        <section>
-            <button class="bannerButton" onclick="toggleMusic()">Music</button>
-            <input type="range" min="1" max="100" value="20" class="slider" id="volumeSlider"
-                onchange="setVolume(this.value)">
-            <button class="bannerButton" onclick="save()">Save Game</button>
-            <button class="bannerButton" onclick="exportGame()">Export</button>
-            <button class="bannerButton" onclick="importGame()">Import</button>
-            <span class="pickle" id="versionText" style="float:right">v0.02 Alpha</span>
-            <button class="bannerButton" onclick="hardReset()">HARD RESET</button>
-        </section>
-
-        <audio controls muted id="audioSource" style="display: none;">
-            <source src="cyberpunk-street.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
-        <h1 class="title pickle" style="display: none;">
-            I WANT TO BE A HERO
-        </h1>
-        <div style="width:100%">
-            <div class="pickle" style="text-align: center;">\/ SCROLL DOWN \/</div>
-        </div>
 
     </header>
 
@@ -185,8 +164,8 @@
                         </div>
                         <div
                             style="width: -webkit-fill-available;height: 40px;margin-left: 10px;margin-right: 10px;margin:1%">
-                            <progress id="trainingProgressBarOverview" class="trainingProgressBar"
-                                 value="100" max="1000"></progress>
+                            <progress id="trainingProgressBarOverview" class="trainingProgressBar" value="100"
+                                max="1000"></progress>
                         </div>
                         <div class="pickle subHeader">Story Progression</div>
                         <div id="storyRequirementsOverviewText" class="pickle" style="text-align: center;padding: 1%;">
@@ -234,14 +213,6 @@
                     </div>
 
                 </section>
-                <!-- <section class="infoBox" id="abilitiesBox">
-                    <div class="blockHeader pickle" style="display: block">ABILITIES</div>
-                    <div class="blockBody dotted pickle">
-                        <div id="abilityRequirementsGrid" style="height:100%;width:100%;display: grid;
-                        grid-template-columns: 20% 80%;grid-template-rows: 10%; grid-auto-rows: 10%;
-                        justify-content: center;row-gap: 2.5vh; padding: 2%;box-sizing: border-box;"></div>
-                    </div>
-                </section> -->
                 <section class="infoBox" id="skillsBox">
                     <div class="blockHeader pickle" style="display: block">CLASS</div>
                     <div class="blockBody dotted pickle" id="skillsWrap">
@@ -293,7 +264,6 @@
                             onclick="attributePrestige()">Take Y</button>
                     </div>
                 </section>
-
                 <section class="infoBox" id="helpBox">
                     <div class="blockHeader pickle" style="display: block">HELP</div>
                     <div class="blockBody dotted pickle verticalScroll  " id="helpBody" style="overflow-y:scroll">
@@ -368,7 +338,34 @@
                         <br \>Takedown: increases damage based on enemy current hp (lower hp = more damage).
                     </div>
                 </section>
+                <section class="infoBox" id="optionsBox">
+                    <div class="blockHeader pickle" style="display: block">OPTIONS</div>
+                    <div class="blockBody dotted pickle verticalScroll">
+                        <span class="pickle" id="versionText" style="display: block; text-align: right;">v0.02 Alpha</span>
+                        <h1 class="title pickle" style="display: block; font-size: 2em;">
+                            I WANT TO BE A HERO
+                        </h1>
+                        <br>
+                        <br>
+                        <button class="bannerButton" onclick="toggleMusic()">Toggle Music</button>
+                        <input type="range" min="1" max="100" value="20" class="slider" id="volumeSlider"
+                        onchange="setVolume(this.value)">
+                        <br>
+                        <br>
+                        <button class="bannerButton" onclick="save()">Save Game</button>
+                        <button class="bannerButton" onclick="exportGame()">Export</button>
+                        <button class="bannerButton" onclick="importGame()">Import</button>
+                        
+                        <button class="bannerButton" onclick="hardReset()">HARD RESET</button>
+
+                        <audio controls muted id="audioSource" style="display: none;">
+                            <source src="cyberpunk-street.mp3" type="audio/mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
             </div>
+            </section>
+        </div>
         </div>
         </div>
 

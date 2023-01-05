@@ -61,7 +61,6 @@ main {
 
 .pickle {
     font-family: 'Pickle Pushing', sans-serif;
-    padding-left: 6px;
     font-size: 2vmin;
 }
 
@@ -426,6 +425,7 @@ section:first-child div.blockHeader::before {
 .blockBody {
     border: 5px inset rgb(53, 53, 53);
     height: 95%;
+    padding: 0.5vmin;
     box-sizing: border-box;
     position: relative;
 }

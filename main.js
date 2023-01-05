@@ -9,7 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info'];
+var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info','options'];
 var sidebar = document.getElementById('sidebar');
 function updatePowerText(){
     document.getElementById('heroPowerText').innerHTML = format(arraySum([
