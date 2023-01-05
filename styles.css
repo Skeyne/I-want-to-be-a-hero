@@ -761,6 +761,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #reputationText {
+    font-family: 'Oxanium';
     color: rgb(33, 44, 172);
 }
 
@@ -776,6 +777,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .reputationText {
+    font-family: 'Oxanium';
     color: rgb(33, 44, 172);
 }
 
@@ -791,6 +793,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 #moneyText {
+    font-family: 'Oxanium';
     color: rgb(44, 190, 0);
 }
 
@@ -807,6 +810,7 @@ progress[value]::-webkit-progress-bar {
 
 
 .strengthText {
+    font-family: 'Oxanium';
     color: rgb(255, 53, 53);
 }
 
@@ -822,6 +826,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .toughnessText {
+    font-family: 'Oxanium';
     color: rgb(41, 153, 35);
 }
 
@@ -943,6 +948,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .mindText {
+    font-family: 'Oxanium';
     color: rgb(170, 66, 255);
 }
 
@@ -958,6 +964,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .agilityText {
+    font-family: 'Oxanium';
     color: rgb(255, 255, 63);
 }
 

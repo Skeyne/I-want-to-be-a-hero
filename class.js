@@ -1854,7 +1854,7 @@ playerMoves = {
         description: "Unleash a flurry of slashes in a surge of energy.",
         iconName: "bladeStorm",
         damage: 0,
-        damageRatios: [0.14, 0, 0, 0.14],
+        damageRatios: [0.13, 0, 0, 0.15],
         damageRange: [0.7, 1.3],
         effects: {
             'repeat': 0.9,

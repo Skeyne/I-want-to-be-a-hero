@@ -86,8 +86,13 @@ formulas.softcappedAttribute = function (index) {
     let softCapFactor = Math.max(1, 1 + Math.log10(baseValue / softCap));
     return Math.min(baseValue, softCap) * softCapFactor;
 }
-
+const numberFormatter = new Intl.NumberFormat('en', {
+    notation:'compact',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 3,
+  });
 function format(number) {
+    return numberFormatter.format(number);
     return Math.round((number + Number.EPSILON) * 100) / 100;
 }
 function arraySum(array) {

@@ -499,6 +499,8 @@ enemyData.thug3 = {
     spriteFile: "armedThug.png",
     portraitFile: "thugPortrait.png",
     moves: ['punch','handgun','walk'],
+    engagementRange: 50,
+    spawnDistance:80,
 };
 enemyData.thug4 = {
     id:"thug4",
@@ -525,6 +527,8 @@ enemyData.thug5 = {
     spriteFile: "rifleThug.png",
     portraitFile: "thugPortrait.png",
     moves: ['punch','rifle','walk'],
+    engagementRange: 50,
+    spawnDistance:80,
 };
 enemyData.don = {
     id:"don",
