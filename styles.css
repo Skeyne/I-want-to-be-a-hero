@@ -261,7 +261,7 @@ main {
     box-sizing: border-box;
     padding: 5px 5px;
     position: absolute;
-    display: inline-block;
+    display: block;
     text-align: right;
     right: 0px;
     left: 0px;
@@ -553,6 +553,7 @@ progress[value] {
     /* Reset the default appearance */
     -webkit-appearance: none;
     appearance: none;
+    border:none;
     margin-bottom: 10px;
 }
 
