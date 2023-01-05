@@ -15,11 +15,11 @@ var sidebar = document.getElementById('sidebar');
 const customPortraitInput = document.getElementById("customPortraitInput");
 customPortraitInput.addEventListener("change", function () {
     const reader = new FileReader();
-    if(this.files[0].size > 2097152){alert("File is too big!");return;}
+    if (this.files[0].size > 2097152) { alert("File is too big!"); return; }
     reader.addEventListener("load", () => {
-        
+
         document.getElementById("heroPortraitImage").src = reader.result;
-        localStorage.setItem("heroPortraitImageData",reader.result);
+        localStorage.setItem("heroPortraitImageData", reader.result);
         console.log(reader.result);
     })
     reader.readAsDataURL(this.files[0]);
@@ -490,7 +490,12 @@ class Player extends CombatEntity {
                                     + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                                     + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                                     + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
-                                if (amount > this.shield) this.shield = amount;
+                                if (this.nextMove.effects.hasOwnProperty("closeCombat")) {
+                                    if (dist <= 5) amount *= 1 + this.nextMove.effects.closeCombat;
+                                }
+                                if (amount > this.shield){
+                                     this.shield = amount;
+                                     logConsole(`Hero shielded for ${format(amount)} from ${this.nextMove.name}`);}
                                 break;
                             default:
                                 break;

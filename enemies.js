@@ -614,7 +614,7 @@ enemyData.crabman = {
     id:"crabman",
     name: "The Crabman",
     maxHealth: 50000,
-    attributes: [250000,200000,1000,30000],
+    attributes: [220000,200000,10000,50000],
     healthRegen: 0.0025,
     expReward: 25000,
     moneyReward: 500,

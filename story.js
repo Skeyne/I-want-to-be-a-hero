@@ -154,7 +154,7 @@ const storyQuests = [
         requirementAmount: [60,20],
     },
     {
-        title: `A New Beginning V`,
+        title: `A New Beginning VI`,
         text: `It's now pretty clear that those vials are the same liquid as that from the lab, and that the Don had been smuggling it and using it within his mafia. But how did he get his hands on it? As you're making your way through a scrpyard pondering this, you hear a whistle in the air, and suddenly a shockwave impact from something falling launches a cloud of dust in into the air. As the dust dissipates you see what seems to be one of the Don's street thugs. He says nothing, but eyes you and grins`,
         requirementType: `defeat`,
         requirementTarget: [`superthug`],
