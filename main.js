@@ -1320,7 +1320,7 @@ function drawCharacterPortrait(context, character, side) {
     context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
     context.fill();
     context.font = `italic bold 18px Oxanium`;
-    context.fillStyle = "black";
+    context.fillStyle = "white";
     context.textAlign = (side =="l")?"left": "right";
     context.textBaseline = "middle";
     context.fillText(`${format(100*(character.health+character.shield)/character.maxHealth)}%`, hanchor.x + mirror*barBorder*2, hanchor.y+barHeight/2+barBorder/2);
