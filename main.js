@@ -1319,11 +1319,16 @@ function drawCharacterPortrait(context, character, side) {
     context.lineTo(hanchor.x + mirror * (barLength*(healthPct+shieldPct)-barHeight*(healthPct+shieldPct)),hanchor.y + barHeight - barBorder);
     context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
     context.fill();
+    context.font = `italic bold 18px Oxanium`;
+    context.fillStyle = "black";
+    context.textAlign = (side =="l")?"left": "right";
+    context.textBaseline = "middle";
+    context.fillText(`${format(100*(character.health+character.shield)/character.maxHealth)}%`, hanchor.x + mirror*barBorder*2, hanchor.y+barHeight/2+barBorder/2);
     hanchor.y += barHeight-barBorder;
     //Action bar
     barLength -= 2*barHeight;
-    barBorder = 2;
-    barHeight = 20;
+    barBorder = 4;
+    barHeight = 30;
     context.fillStyle = "grey";
     context.beginPath();
     context.moveTo(hanchor.x,hanchor.y);
@@ -1360,6 +1365,12 @@ function drawCharacterPortrait(context, character, side) {
     context.lineTo(hanchor.x + mirror * (barLength*initiativePct-barHeight*(initiativePct)),hanchor.y + barHeight - barBorder);
     context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
     context.fill();
+    context.font = `16px Pickle Pushing`;
+    context.fillStyle = "black";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    if(character.nextMove != null) context.fillText(character.nextMove.name, hanchor.x + mirror * (barLength/2+barBorder - barHeight/2), hanchor.y+barHeight/2+barBorder/2);
+    context.textBaseline = "alphabetic";
     //hanchor.y += 8;
     //EXP bar   
     // if (side == "l") {
