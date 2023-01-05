@@ -76,7 +76,6 @@ function load(file = null) {
         if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
         playerStats.cooldownReduction = 1;
-        if(isOutdated){playerStats.passivePointsSpent = Array(3).fill(0)}
     } else {
         console.log("No savefile found");
     }
