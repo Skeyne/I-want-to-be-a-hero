@@ -262,8 +262,8 @@ main {
     position: absolute;
     display: block;
     text-align: right;
-    right: 0px;
-    left: 0px;
+    right: 1%;
+    left: 1%;
 }
 
 .leftAlign {
@@ -1098,6 +1098,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .bannerButton {
+    color:black;
     border: 2px solid black;
     font-family: 'Pickle Pushing';
     font-size: 1em;

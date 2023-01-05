@@ -9,15 +9,28 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info','options'];
+var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info', 'options'];
 var sidebar = document.getElementById('sidebar');
-function updatePowerText(){
+
+const customPortraitInput = document.getElementById("customPortraitInput");
+customPortraitInput.addEventListener("change", function () {
+    const reader = new FileReader();
+    if(this.files[0].size > 2097152){alert("File is too big!");return;}
+    reader.addEventListener("load", () => {
+        
+        document.getElementById("heroPortraitImage").src = reader.result;
+        localStorage.setItem("heroPortraitImageData",reader.result);
+        console.log(reader.result);
+    })
+    reader.readAsDataURL(this.files[0]);
+})
+function updatePowerText() {
     document.getElementById('heroPowerText').innerHTML = format(arraySum([
-        (Math.sqrt(getEffectiveValue("strength") + 1) - 1),(Math.sqrt(getEffectiveValue("toughness") + 1) - 1),
-        (Math.sqrt(getEffectiveValue("mind") + 1) - 1),(Math.sqrt(getEffectiveValue("agility") + 1) - 1)]));
+        (Math.sqrt(getEffectiveValue("strength") + 1) - 1), (Math.sqrt(getEffectiveValue("toughness") + 1) - 1),
+        (Math.sqrt(getEffectiveValue("mind") + 1) - 1), (Math.sqrt(getEffectiveValue("agility") + 1) - 1)]));
 }
 updatePowerText();
-setInterval(updatePowerText,15000);
+setInterval(updatePowerText, 15000);
 let activeTab = 0;
 for (let index = 0; index < tabNames.length; index++) {
     const tabName = tabNames[index]
@@ -1248,15 +1261,15 @@ function drawCharacterPortrait(context, character, side) {
     // }
     //Healthbar
     let hanchor = { x: 0, y: 0 };
-    if (side == "r") { hanchor.x = context.canvas.width;}
+    if (side == "r") { hanchor.x = context.canvas.width; }
     //Name
-    if(side == 'l'){context.textAlign = 'center'} else {context.textAlign = 'center'}
+    if (side == 'l') { context.textAlign = 'center' } else { context.textAlign = 'center' }
     let nameHeight = 30;
     context.fillStyle = "rgba(0,0,0,.5)";
-    context.fillRect(hanchor.x, anchor.y,mirror * 370, nameHeight + 12);
+    context.fillRect(hanchor.x, anchor.y, mirror * 370, nameHeight + 12);
     context.font = `${nameHeight}px Pickle Pushing`;
     context.fillStyle = "white";
-    context.fillText(character.name, hanchor.x + (mirror) * (360/2), hanchor.y + nameHeight);
+    context.fillText(character.name, hanchor.x + (mirror) * (360 / 2), hanchor.y + nameHeight);
     hanchor.y += nameHeight + 12;
     //MAIN BAR BACKGROUND SETUP
     let barHeight = 32;
@@ -1265,17 +1278,17 @@ function drawCharacterPortrait(context, character, side) {
     let barBorder = 4;
     context.fillStyle = "grey";
     context.beginPath();
-    context.moveTo(hanchor.x,hanchor.y);
-    context.lineTo(hanchor.x + mirror * barLength,hanchor.y);
-    context.lineTo(hanchor.x + mirror * (barLength-barHeight),hanchor.y + barHeight);
-    context.lineTo(hanchor.x,hanchor.y + barHeight);
+    context.moveTo(hanchor.x, hanchor.y);
+    context.lineTo(hanchor.x + mirror * barLength, hanchor.y);
+    context.lineTo(hanchor.x + mirror * (barLength - barHeight), hanchor.y + barHeight);
+    context.lineTo(hanchor.x, hanchor.y + barHeight);
     context.fill();
     context.fillStyle = "rgb(200, 35, 35)";
     context.beginPath();
-    context.moveTo(hanchor.x + mirror*barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength - 2*barBorder),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength-barHeight),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength - 2 * barBorder), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength - barHeight), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     let grdHealth = context.createLinearGradient(hanchor.x + mirror * 2, 0, hanchor.x + mirror * (196), 0);
     grdHealth.addColorStop(0, "rgb(21, 153, 41)");
@@ -1298,50 +1311,50 @@ function drawCharacterPortrait(context, character, side) {
     //SHIELD
     context.fillStyle = grdShield;
     context.beginPath();
-    context.moveTo(hanchor.x + mirror * barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * ((barLength-2*barBorder)*(healthPct+shieldPct) ),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength*(healthPct+shieldPct)-barHeight*(healthPct+shieldPct)),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * ((barLength - 2 * barBorder) * (healthPct + shieldPct)), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength * (healthPct + shieldPct) - barHeight * (healthPct + shieldPct)), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     //HEALTH
     context.fillStyle = grdHealth;
     context.beginPath();
-    context.moveTo(hanchor.x + mirror*barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * ((barLength- 2*barBorder)*healthPct ),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength*healthPct-barHeight*(healthPct)),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * ((barLength - 2 * barBorder) * healthPct), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength * healthPct - barHeight * (healthPct)), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     //SHADING
     context.fillStyle = grdShading;
     context.beginPath();
-    context.moveTo(hanchor.x + mirror * barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * ((barLength-2*barBorder)*(healthPct+shieldPct) ),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength*(healthPct+shieldPct)-barHeight*(healthPct+shieldPct)),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * ((barLength - 2 * barBorder) * (healthPct + shieldPct)), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength * (healthPct + shieldPct) - barHeight * (healthPct + shieldPct)), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     context.font = `italic bold 18px Oxanium`;
     context.fillStyle = "white";
-    context.textAlign = (side =="l")?"left": "right";
+    context.textAlign = (side == "l") ? "left" : "right";
     context.textBaseline = "middle";
-    context.fillText(`${format(100*(character.health+character.shield)/character.maxHealth)}%`, hanchor.x + mirror*barBorder*2, hanchor.y+barHeight/2+barBorder/2);
-    hanchor.y += barHeight-barBorder;
+    context.fillText(`${format(100 * (character.health + character.shield) / character.maxHealth)}%`, hanchor.x + mirror * barBorder * 2, hanchor.y + barHeight / 2 + barBorder / 2);
+    hanchor.y += barHeight - barBorder;
     //Action bar
-    barLength -= 2*barHeight;
+    barLength -= 2 * barHeight;
     barBorder = 4;
     barHeight = 30;
     context.fillStyle = "grey";
     context.beginPath();
-    context.moveTo(hanchor.x,hanchor.y);
-    context.lineTo(hanchor.x + mirror * barLength,hanchor.y);
-    context.lineTo(hanchor.x + mirror * (barLength-barHeight),hanchor.y + barHeight);
-    context.lineTo(hanchor.x,hanchor.y + barHeight);
+    context.moveTo(hanchor.x, hanchor.y);
+    context.lineTo(hanchor.x + mirror * barLength, hanchor.y);
+    context.lineTo(hanchor.x + mirror * (barLength - barHeight), hanchor.y + barHeight);
+    context.lineTo(hanchor.x, hanchor.y + barHeight);
     context.fill();
     context.fillStyle = "rgb(220,220,220)";
     context.beginPath();
-    context.moveTo(hanchor.x + mirror*barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength - 2*barBorder),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength-barHeight),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength - 2 * barBorder), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength - barHeight), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     if (character.initiative == NaN) console.log("NaN error");
     let initiativePct = (character.initiative / character.nextMoveInitiative);
@@ -1350,26 +1363,26 @@ function drawCharacterPortrait(context, character, side) {
     grdAction.addColorStop(1, "rgb(0,110,220)");
     context.fillStyle = grdAction;
     context.beginPath();
-    context.moveTo(hanchor.x + mirror*barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * ((barLength- 2*barBorder)*initiativePct ),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength*initiativePct-barHeight*(initiativePct)),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * ((barLength - 2 * barBorder) * initiativePct), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength * initiativePct - barHeight * (initiativePct)), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     let grdAction2 = context.createLinearGradient(0, hanchor.y + 2, 0, hanchor.y + 8);
     grdAction2.addColorStop(0, "rgba(255, 255, 255, .25)");
     grdAction2.addColorStop(1, "rgba(0, 0, 0, .25)");
     context.fillStyle = grdAction2;
     context.beginPath();
-    context.moveTo(hanchor.x + mirror*barBorder,hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * ((barLength- 2*barBorder)*initiativePct ),hanchor.y + barBorder);
-    context.lineTo(hanchor.x + mirror * (barLength*initiativePct-barHeight*(initiativePct)),hanchor.y + barHeight - barBorder);
-    context.lineTo(hanchor.x + mirror*barBorder,hanchor.y + barHeight - barBorder);
+    context.moveTo(hanchor.x + mirror * barBorder, hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * ((barLength - 2 * barBorder) * initiativePct), hanchor.y + barBorder);
+    context.lineTo(hanchor.x + mirror * (barLength * initiativePct - barHeight * (initiativePct)), hanchor.y + barHeight - barBorder);
+    context.lineTo(hanchor.x + mirror * barBorder, hanchor.y + barHeight - barBorder);
     context.fill();
     context.font = `16px Pickle Pushing`;
     context.fillStyle = "black";
     context.textAlign = "center";
     context.textBaseline = "middle";
-    if(character.nextMove != null) context.fillText(character.nextMove.name, hanchor.x + mirror * (barLength/2+barBorder - barHeight/2), hanchor.y+barHeight/2+barBorder/2);
+    if (character.nextMove != null) context.fillText(character.nextMove.name, hanchor.x + mirror * (barLength / 2 + barBorder - barHeight / 2), hanchor.y + barHeight / 2 + barBorder / 2);
     context.textBaseline = "alphabetic";
     //hanchor.y += 8;
     //EXP bar   

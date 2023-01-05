@@ -61,7 +61,7 @@
             <div id="heroCardPanel" class="dotted blockPanel">
                 <div class="subHeader pickle">Hero card</div>
                 <div id="heroCardGrid" class="">
-                    <img src="joePortrait.png" style="height: 10vh; aspect-ratio: 1/1;image-rendering: pixelated;">
+                    <img id="heroPortraitImage" src="joePortrait.png" style="height: 10vh; aspect-ratio: 1/1;image-rendering: pixelated;">
                     <div id="heroCardStats">
                         <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="">
                             Power: <span class="heroPowerText" style="font-size: auto;pointer-events: none;"
@@ -357,6 +357,13 @@
                         <button class="bannerButton" onclick="importGame()">Import</button>
                         
                         <button class="bannerButton" onclick="hardReset()">HARD RESET</button>
+                        <br>
+                        <br>
+                        <label for="customPortraitInput" class="bannerButton" style="padding: 2px;">
+                            Upload Custom Hero Portrait!
+                        </label>
+                        <input style="display: none;" type="file" id="customPortraitInput" accept="image/jpeg, image/png, image/jpg">
+                        
 
                         <audio controls muted id="audioSource" style="display: none;">
                             <source src="cyberpunk-street.mp3" type="audio/mp3">

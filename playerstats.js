@@ -74,6 +74,8 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
+        const imageData = localStorage.getItem("heroPortraitImageData");
+        if(imageData != null){document.getElementById("heroPortraitImage").src = imageData};
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
         playerStats.cooldownReduction = 1;
     } else {
