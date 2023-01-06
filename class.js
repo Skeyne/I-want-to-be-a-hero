@@ -282,7 +282,7 @@ skillLibrary = {
                 effectType: "additiveFlat", effectMagnitude: 1
             },
             {
-                type: 2, effectTarget: "strength",
+                type: 2, effectTarget: "strengthTraining",
                 effectType: "additivePercent", effectMagnitude: 0.01,
             }],
             maxLevel: 10,
