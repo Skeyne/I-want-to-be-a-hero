@@ -2211,7 +2211,7 @@ playerMoves = {
         damageRange: [1, 1],
         effects: {
             'shield': 0,
-            'closeCombat': 1,
+            'closeCombat': 0,
         },
         cost: 5,
         time: 500,

@@ -157,6 +157,18 @@ document.addEventListener('mouseover', function (e) {
 
     }
 });
+document.addEventListener('mouseup', function (e) {
+    setTimeout(()=>
+    {if (e.target.classList.contains('tooltip')) {
+        masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+        showMasterTooltip(e);
+    }
+    if ('abilityTooltip' in e.target.dataset) {
+        masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
+        let rect = e.target.getBoundingClientRect();
+        showMasterTooltip(e);
+    }},100);
+});
 document.addEventListener('mouseout', function (e) {
     if (e.relatedTarget == null) {
         masterTooltip.style.opacity = 0;
