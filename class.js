@@ -705,7 +705,7 @@ skillLibrary = {
             { type: 2, effectTarget: "agilityTraining", effectType: "additivePercent", effectMagnitude: 0.005, },
             { type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.005, }],
             maxLevel: 10,
-            cost: Array(10).fill(1).concat(Array(10).fill(2), Array(10).fill(3))
+            cost: Array(10).fill(1),
         },
         'es_1_2': {
             id: 'es_1_2',
@@ -889,7 +889,7 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.05,
             }],
-            maxLevel: 25,
+            maxLevel: 1,
             cost: [100],
             requires: { 'es_2_1': 10 },
         },

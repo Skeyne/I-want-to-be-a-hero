@@ -1,7 +1,7 @@
 const version = '0.05';
 var isOutdated = false;
 var lastVersion;
-document.getElementById('versionText').innerHTML ='v'+version;
+document.getElementById('versionText').innerHTML = 'v' + version;
 const cleanPlayerStats = {
     experience: 0,
     experienceToNext: baseExperienceCost,
@@ -16,20 +16,20 @@ const cleanPlayerStats = {
     agility: 0,
     attributeSoftcaps: [100, 100, 100, 100],
     attributeTrainingModifier: [1, 1, 1, 1],
-    permanentSoftcaps: [0,0,0,0],
-    permanentAttributes: [0,0,0,0],
+    permanentSoftcaps: [0, 0, 0, 0],
+    permanentAttributes: [0, 0, 0, 0],
     flatReduction: 0,
     damageTaken: 1,
     healthRegeneration: 0,
-    cooldownReduction:1,
-    actionSpeed:1,
-    powerMultiplier:1,
-    criticalChance: 0,  
+    cooldownReduction: 1,
+    actionSpeed: 1,
+    powerMultiplier: 1,
+    criticalChance: 0,
     overwhelm: 0,
     takedown: 0,
     dodgeChance: 0,
     meleeDamage: 0,
-    rangedDamage:0,
+    rangedDamage: 0,
     restRate: 0.1,
     lastSave: 0,
     muted: false,
@@ -50,16 +50,16 @@ const cleanPlayerStats = {
     restToPercentage: 1,
     lastSaveTime: Date.now(),
     fame: 0,
-    fameSpent:0,
+    fameSpent: 0,
     fameUpgradeLevels: {},
     fameEffects: {},
 }
 var playerStats = {};
 var justLoaded = false;
 reset();
-function save(imprt=false) {
+function save(imprt = false) {
     console.log("Saving data...")
-    if(!imprt)playerStats.lastSaveTime = Date.now();
+    if (!imprt) playerStats.lastSaveTime = Date.now();
     localStorage.setItem("heroSave", JSON.stringify(playerStats));
     localStorage.setItem("heroLastSaved", Date.now());
     localStorage.setItem("version", version);
@@ -74,10 +74,12 @@ function load(file = null) {
             playerStats[property] = loadgame[property];
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
-        if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
-        if (Number(localStorage.getItem("version").substring(3,4)) < 4){resetSave();}
+        if (localStorage.getItem("version") != null) {
+            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true; }
+            if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
+        }
         const imageData = localStorage.getItem("heroPortraitImageData");
-        if(imageData != null){document.getElementById("heroPortraitImage").src = imageData};
+        if (imageData != null) { document.getElementById("heroPortraitImage").src = imageData };
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
         playerStats.cooldownReduction = 1;
     } else {
@@ -139,8 +141,7 @@ function playerSetLevel(value) {
 }
 function addPlayerExp(amount) {
     let fameBonus = 1;
-    if(playerStats.fameEffects.hasOwnProperty('experienceGain'))
-    {fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["experienceGain"]))};
+    if (playerStats.fameEffects.hasOwnProperty('experienceGain')) { fameBonus = 1 + arraySum(Object.values(playerStats.fameEffects["experienceGain"])) };
     amount *= fameBonus;
     playerStats.experience += amount;
     expCountBuffer += amount;
@@ -156,15 +157,14 @@ function addPlayerExp(amount) {
 }
 function addPlayerMoney(amount) {
     let fameBonus = 1;
-    if(playerStats.fameEffects.hasOwnProperty('moneyGain'))
-    { fameBonus = 1+arraySum(Object.values(playerStats.fameEffects["moneyGain"]));}
+    if (playerStats.fameEffects.hasOwnProperty('moneyGain')) { fameBonus = 1 + arraySum(Object.values(playerStats.fameEffects["moneyGain"])); }
     amount *= fameBonus;
     playerStats.money += amount;
     moneyCountBuffer += amount;
     return amount;
 }
 function addPlayerReputation(amount) {
-    
+
     playerStats.reputation += amount;
     checkFame();
 }
@@ -203,11 +203,11 @@ function exportGame() {
 }
 function importGame() {
     let text = prompt("Input your save here:");
-    if(text == null) return;
+    if (text == null) return;
     let loadgame = JSON.parse(atob(text))
     if (loadgame && loadgame != null && loadgame != "") {
         load(loadgame);
-        save(imprt=true);
+        save(imprt = true);
         location.reload();
     }
     else {
