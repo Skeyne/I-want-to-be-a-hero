@@ -1,4 +1,4 @@
-const version = '0.04a';
+const version = '0.05';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML ='v'+version;
@@ -19,6 +19,7 @@ const cleanPlayerStats = {
     permanentSoftcaps: [0,0,0,0],
     permanentAttributes: [0,0,0,0],
     flatReduction: 0,
+    damageTaken: 1,
     healthRegeneration: 0,
     cooldownReduction:1,
     actionSpeed:1,
@@ -74,6 +75,7 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != version){lastVersion = localStorage.getItem("version"); isOutdated = true;}
+        if (Number(localStorage.getItem("version").substring(3,4)) < 4){resetSave();}
         const imageData = localStorage.getItem("heroPortraitImageData");
         if(imageData != null){document.getElementById("heroPortraitImage").src = imageData};
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);

@@ -310,6 +310,7 @@ class Player extends CombatEntity {
         this.portraitImage = new Image();
         this.portraitImage.src = "joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("strength"));
+        this.damageReduction *= getSecondaryAttribute("damageTaken");
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.actionSpeed *= getSecondaryAttribute("actionSpeed");
         this.powerMultiplier = getSecondaryAttribute("powerMultiplier");
@@ -358,6 +359,15 @@ class Player extends CombatEntity {
                     default:
                         console.log("UNKOWN ABILITY CATEGORY")
                         break;
+                }
+                if (this.nextMove.hasOwnProperty("effects")){
+                    if(this.nextMove.effects.hasOwnProperty("rush")){
+                        if (this.moveIntention >= 0){
+                        let deltaPlus = Math.min(Math.abs(dist - 5), this.nextMove.range[0]);
+                        encounter.enemyArray.forEach((enemy) => { if (enemy != null) enemy.distance = Math.max(5, enemy.distance - deltaPlus); })
+                        environmentDistance -= deltaPlus;
+                        }
+                    }
                 }
                 if (inRange) {
 
@@ -455,6 +465,7 @@ class Player extends CombatEntity {
                     if (moveLifesteal > 0) { this.health = Math.min(this.health + dr * moveLifesteal, this.maxHealth); logConsole(`Hero healed for ${format(dr * moveLifesteal)}`); }
                     if (killingBlow) this.target = null;
                 }
+                
                 break;
             case 1:
                 let deltaMinus = Math.min(playerStats.engagementRange - dist, this.nextMove.range[1]);
@@ -475,7 +486,8 @@ class Player extends CombatEntity {
                         let amount;
                         switch (effect) {
                             case "heal":
-                                amount = this.nextMove.damage
+                                amount = this.maxHealth * this.nextMove.effects.heal
+                                    + this.nextMove.damage
                                     + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                                     + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                                     + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
@@ -583,7 +595,7 @@ class Player extends CombatEntity {
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
                     if (ability.effects.hasOwnProperty('heal')) {
-                        let amount = ability.damage
+                        let amount = this.maxHealth * ability.effects.heal
                             + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                             + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
                             + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
