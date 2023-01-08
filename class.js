@@ -3122,6 +3122,7 @@ function resetSkills() {
     for (const [key, value] of Object.entries(passiveButtonDict)) {
         updateButton(key);
     }
+    
 }
 
 function changeClass(className, keep = false) {

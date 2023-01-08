@@ -136,12 +136,22 @@ const areas = [
         encounters: [{ weight: 100, enemies: { "superthug": { 1: 1 } } }]
     }),
     new Area({
+        name: "Old Steelworks", background: "bulkheadBackground.png",
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 21,
+        patrolTime: 7000,
+        encounters: [{ weight: 100, enemies: { "morphedthug": { 1: 1 },"infusedthug": { 1: 1 },"psychicthug": { 1: 1 }  } },
+        { weight: 100, enemies: { "infusedthug": { 2: 1, 3:1 }, "gatlingthug": { 1: 1 } } },
+        { weight: 100, enemies: { "morphedthug": { 1: 1 }, "psychicthug": { 2: 1 }} },
+        { weight: 100, enemies: { "morphedthug": { 1: 1 }, "gatlingthug": { 1: 1 }} }
+    ]
+    }),
+    new Area({
         name: "Riverside", background: "bridgeAreaBackground-1.png",
-        enemies: ["crabman"], enemyNum: 1, storyUnlock: 21,
+        enemies: ["crabman"], enemyNum: 1, storyUnlock: 22,
         patrolTime: 7000,
     }),
     new Area({
         name: "The Depths", background: "voidBackground.png",
-        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 22,
+        enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 23,
         patrolTime: 10000,
     }),];

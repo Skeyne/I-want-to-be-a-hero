@@ -1,4 +1,4 @@
-const version = '0.05';
+const version = '0.05a';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML = 'v' + version;
@@ -75,7 +75,7 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != null) {
-            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true; }
+            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true;playerStats.effectMultipliers = {}; }
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
