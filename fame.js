@@ -1,11 +1,14 @@
 var toNextFame = Infinity;
-Object.keys(playerStats.fameUpgradeLevels).forEach(
+if(isOutdated){
+    Object.keys(playerStats.fameUpgradeLevels).forEach(
     (id) => {
         playerStats.fameUpgradeLevels[id] = 0;
         fameUpgradeDict[id].upgrade.calculateEffect();
         updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
     }
 )
+}
+
 sanityCheckFame();
 checkFame();
 function getNextFame(fame) {
