@@ -466,7 +466,7 @@ class Player extends CombatEntity {
                                                 enemy.interrupt += moveStun * 1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
-                                            logConsole(`Hero ${isCrit ? "critically " : ""}hit ${enemy.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
+                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(d3)}) damage.`);
                                         }
                                     })
                                     break;

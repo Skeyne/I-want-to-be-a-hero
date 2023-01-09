@@ -665,7 +665,7 @@ enemyData.gatlingthug = {
     spriteFile: "gatlingthug.png",
     portraitFile: "prisoner9Portrait.png",
     moves: ['gatling', 'gatlingsalvo', 'shove', 'walk'],
-    engagementRange: 60,
+    engagementRange: 50,
     spawnDistance: 80,
 };
 enemyData.morphedthug = {
