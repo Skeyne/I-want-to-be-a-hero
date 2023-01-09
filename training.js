@@ -137,7 +137,7 @@ class Activity {
     }
     payCost() {
         if (playerStats.money < this.cost) { this.costPaid = false; return false; }
-        playerStats.money -= this.cost; this.costPaid = true; return true;
+        playerStats.money -= this.cost; this.costPaid = true; moneyCountBuffer -= this.cost; return true;
     }
     updateBars() {
         let bars = this.element.getElementsByTagName("progress");

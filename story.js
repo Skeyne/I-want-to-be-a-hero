@@ -301,8 +301,7 @@ function updateStoryQuest() {
     if (completed) {
         playerStats.storyProgress += 1;
         console.log(getStoryQuest(playerStats.storyProgress).length);
-        playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
-        console.log(playerStats.currentStoryQuestProgress);
+        playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);   
         checkAreaUnlocks();
         checkTabUnlocks();
         updateDiaryEntries();

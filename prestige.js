@@ -18,6 +18,7 @@ function prestigeAttributes() {
 }
 function attributePrestige() {
     if(!canAttributePrestige()) {logConsole("You have no capped attributes!"); return;}
+    else {let c = confirm('Are you sure you want to prestige?'); if (!c){return}}
     prestigeSoftCaps();
     prestigeAttributes();
     playerStats.strength = playerStats.permanentAttributes[0];

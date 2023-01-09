@@ -495,7 +495,7 @@ section:first-child div.blockHeader::before {
 }
 #heroCardStats{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: min-content auto;
     grid-template-rows: repeat(3,33.3%);
 }
 #activityGrid {
@@ -1378,6 +1378,7 @@ progress[value]::-webkit-progress-bar {
         grid-column: 1;
         height: 100%;
         width: 100%;
+        scrollbar-width: none;
         overflow-y: hidden;
         overflow-x: scroll;
         scroll-snap-type: x mandatory;

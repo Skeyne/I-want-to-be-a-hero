@@ -66,9 +66,9 @@
                         <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="">
                             Power: <span class="heroPowerText" style="font-size: auto;pointer-events: none;"
                                 id="heroPowerText">0</span></div>
-                        <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="money">
-                            Money: <span class="moneyText" style="font-size: auto;pointer-events: none;"
-                                id="moneyText">0</span></div>
+                        <div class="pickle moneyText" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="money">
+                            Money: <span style="font-size: auto;pointer-events: none;"
+                                id="moneyText">0</span><span id="moneyEstimateText">0</span>/min</div>
                         <div></div>
                         <div class="pickle" style="font-size: auto  ;margin: 1vmin;" data-resource-tooltip="reputation">
                             Reputation: <span style="font-size: auto;pointer-events: none;" class="reputationText"
@@ -363,6 +363,7 @@
                             Upload Custom Hero Portrait!
                         </label>
                         <input style="display: none;" type="file" id="customPortraitInput" accept="image/jpeg, image/png, image/jpg">
+                        <button id="resetPortraitButton" class="bannerButton"> Reset Portrait</button>
                         
 
                         <audio controls muted id="audioSource" style="display: none;">

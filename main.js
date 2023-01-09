@@ -24,6 +24,11 @@ customPortraitInput.addEventListener("change", function () {
     })
     reader.readAsDataURL(this.files[0]);
 })
+const resetPortraitButton = document.getElementById("resetPortraitButton");
+resetPortraitButton.addEventListener("click", function () {
+        document.getElementById("heroPortraitImage").src = "joePortrait.png";
+        localStorage.removeItem("heroPortraitImageData");
+})
 function updatePowerText() {
     document.getElementById('heroPowerText').innerHTML = format(arraySum([
         (Math.sqrt(getEffectiveValue("strength") + 1) - 1), (Math.sqrt(getEffectiveValue("toughness") + 1) - 1),
@@ -473,7 +478,7 @@ class Player extends CombatEntity {
                     }
 
                     let { died: killingBlow, d: dr } = target.takeDamage(d3);
-                    logConsole(`Hero ${isCrit ? "critically " : ""}hit ${this.target.name} with ${playerMoves[this.nextMoveKey].name} for ${format(dr)}(${format(d3)}) damage.`);
+                    logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(d3)}) damage.`);
                     if (moveLifesteal > 0) { this.health = Math.min(this.health + dr * moveLifesteal, this.maxHealth); logConsole(`Hero healed for ${format(dr * moveLifesteal)}`); }
                     if (killingBlow) this.target = null;
                 }
@@ -817,7 +822,7 @@ class Enemy extends CombatEntity {
                             }
                         });
                     }
-                    logConsole(`${this.name} hit ${this.target.name} with ${this.nextMove.name} for ${format(dr)}(${format(d1)}) damage.`);
+                    logConsole(`${this.name} <span style="color:red">${isCrit ? "critically " : ""}</span> hit ${this.target.name} with <span style="color:yellow">${this.nextMove.name}</span> for <span style="color:yellow">${format(dr)}</span>(${format(d1)}) damage.`);
                 }
                 break;
             case 1:
@@ -986,7 +991,7 @@ class Enemy extends CombatEntity {
         let money = addPlayerMoney(this.data.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`${this.name} was defeated! +${money}$ +${format(exp)}EXP +${this.data.reputationReward}REP`)
+        logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money)}$ +${format(exp)}EXP +${this.data.reputationReward}REP</span>`)
     }
 }
 class Encounter {
@@ -1224,7 +1229,7 @@ function logicLoop() {
                     }
                     break;
                 case 2:
-                    logConsole("Player defeated, resting.")
+                    logConsole("<span style='color: red'>Player defeated, resting.</span>")
                     gameState = "InDead";
                     player = new Player(playerStats);
                     player.health = 0;
