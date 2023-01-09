@@ -762,7 +762,7 @@ progress[value]::-webkit-progress-bar {
 
 #reputationText {
     font-family: 'Oxanium';
-    color: rgb(33, 44, 172);
+    color: rgb(45 62 255);
 }
 
 #reputationText:after {

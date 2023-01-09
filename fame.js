@@ -1,16 +1,5 @@
 var toNextFame = Infinity;
-if(isOutdated){
-    Object.keys(playerStats.fameUpgradeLevels).forEach(
-    (id) => {
-        playerStats.fameUpgradeLevels[id] = 0;
-        fameUpgradeDict[id].upgrade.calculateEffect();
-        updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
-    }
-)
-}
 
-sanityCheckFame();
-checkFame();
 function getNextFame(fame) {
     return 75 + Math.pow((fame+1)/2, 2)*100;
 }
@@ -86,7 +75,7 @@ class FameUpgrade {
     get effectValue() {
         if (playerStats.fameUpgradeLevels[this.data.id] != undefined) {
             let level = playerStats.fameUpgradeLevels[this.data.id];
-            return 0.05 + ((level * 2) * Math.exp(-0.06*Math.sqrt(level)))/100;
+            return (level > 0 ? 0.05 : 0) + ((level * 2) * Math.exp(-0.06*Math.sqrt(level)))/100;
         }
         else { return 0; }
     }
@@ -129,3 +118,16 @@ for (let index = 0; index < fameUpgradeData.length; index++) {
     let element = generateFameUpgradeUI(upgrade)
     fameUpgradeDict[upgrade.data.id] = { upgrade: upgrade, element: element };
 }
+
+if(isOutdated){
+    Object.keys(playerStats.fameUpgradeLevels).forEach(
+    (id) => {
+        playerStats.fameUpgradeLevels[id] = 0;
+        fameUpgradeDict[id].upgrade.calculateEffect();
+        updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
+    }
+)
+}
+
+sanityCheckFame();
+checkFame();    
