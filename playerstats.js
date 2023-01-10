@@ -8,6 +8,7 @@ const cleanPlayerStats = {
     money: 0,
     reputation: 0,
     class: "human",
+    classPrestige: 0,
     level: 0,
     passivePointsSpent: Array(3).fill(0),
     strength: 0,

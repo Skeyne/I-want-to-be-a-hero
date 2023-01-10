@@ -75,7 +75,7 @@ class FameUpgrade {
     get effectValue() {
         if (playerStats.fameUpgradeLevels[this.data.id] != undefined) {
             let level = playerStats.fameUpgradeLevels[this.data.id];
-            return (level > 0 ? 0.05 : 0) + ((level * 2) * Math.exp(-0.06*Math.sqrt(level)))/100;
+            return (level > 0 ? 0.05 : 0) + ((level * 2) * Math.exp(-0.05*Math.sqrt(level)))/100;
         }
         else { return 0; }
     }
