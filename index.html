@@ -61,14 +61,16 @@
             <div id="heroCardPanel" class="dotted blockPanel">
                 <div class="subHeader pickle">Hero card</div>
                 <div id="heroCardGrid" class="">
-                    <img id="heroPortraitImage" src="joePortrait.png" style="height: 10vh; aspect-ratio: 1/1;image-rendering: pixelated;">
+                    <img id="heroPortraitImage" src="joePortrait.png"
+                        style="height: 10vh; aspect-ratio: 1/1;image-rendering: pixelated;">
                     <div id="heroCardStats">
                         <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="">
                             Power: <span class="heroPowerText" style="font-size: auto;pointer-events: none;"
                                 id="heroPowerText">0</span></div>
-                        <div class="pickle moneyText" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="money">
-                            Money: <span style="font-size: auto;pointer-events: none;"
-                                id="moneyText">0</span><span id="moneyEstimateText">0</span>/min</div>
+                        <div class="pickle moneyText" style="font-size: auto;margin: 1vmin;"
+                            data-resource-tooltip="money">
+                            Money: <span style="font-size: auto;pointer-events: none;" id="moneyText">0</span><span
+                                id="moneyEstimateText">0</span>/min</div>
                         <div></div>
                         <div class="pickle" style="font-size: auto  ;margin: 1vmin;" data-resource-tooltip="reputation">
                             Reputation: <span style="font-size: auto;pointer-events: none;" class="reputationText"
@@ -245,23 +247,73 @@
                 </section>
                 <section class="infoBox" id="prestigeBox">
                     <div class="blockHeader pickle" style="display: block">PRESTIGE</div>
-                    <div class="blockBody dotted pickle verticalScroll">
-                        <div style="line-height:1.5;" class="oxanium"> You can take the Y you found to unlock more of
-                            your power.<br>
-                            This will reset your attributes.<br>
-                            Your attribute softcaps will increase by 10% of their current value plus 50% of the
-                            effective value over the current softcap.<br>
-                            Softcaps will only increase for attributes which have reached their current softcap!<br>
-                            You gain 1% of the softcap as permanent attributes when you reset this way. (They cannot be
-                            lowered below that value by activities)<br>
 
-                        </div>
-                        <div class="subHeader">Softcaps</div>
-                        <div id="attributePrestigeText" style="text-align: center;padding:3%">
+                    <div class="blockBody dotted pickle">
+                        <div style="display:grid;height:100%;grid-template-rows: 5% 95%;overflow:hidden;">
+                            <div id="prestigeTabHeader"
+                                style="display:grid;grid-auto-columns: 1fr;grid-auto-flow: column;">
+                                <div class="bannerButton prestigePanelTab" onclick="changePrestigeTab(0)">Attribute
+                                </div>
+                                <div class="bannerButton prestigePanelTab" onclick="changePrestigeTab(1)">Class</div>
+                            </div>
+                            <div id="attributePrestigePanel">
+                                <div class="subHeader">Softcaps</div>
+                                <div id="attributePrestigeText" style="text-align: center;padding:3%">
 
+                                </div>
+                                <button style="display:block; margin:auto" class="bannerButton"
+                                    onclick="attributePrestige()">Take Y</button>
+                                <br>
+                                <div style="line-height:1.5;" class="oxanium"> You can take the Y you found to unlock
+                                    more of
+                                    your power.<br><br>
+                                    This will reset your attributes.<br><br>
+                                    Your attribute softcaps will increase by 10% of their current value plus 50% of the
+                                    effective value over the current softcap.<br><br>
+                                    Softcaps will only increase for attributes which have reached their current
+                                    softcap!<br><br>
+                                    You gain 1% of the softcap as permanent attributes when you reset this way. (They
+                                    cannot be
+                                    lowered below that value by activities)<br><br>
+
+                                </div>
+                            </div>
+                            <div id="classPrestigePanel">
+                                <div style="line-height:1.5;" class="oxanium">
+                                    Prestige your class to the next hero rank to gain even more power to become the most
+                                    powerful hero<br>
+                                    <div class="subHeader pickle">Requirements:</div>
+                                    <div class="blockPanel">
+                                        Level: <span class="cpLevelRequirement">0</span><br>
+                                        Story Progress: <span class="cpStoryRequirement">0</span><br>
+                                        Total softcap: <span class="cpSoftcapRequirement">0</span><br>
+                                    </div>
+                                    Your class prestige bonus will become:<br>
+                                    <div class="blockPanel">
+                                        Attribute Gain: <span class="cpReward1">0</span><br>
+                                        Bonus Passive Points: <span class="cpReward2">0</span><br>
+                                        Training speed: <span class="cpReward3">0</span><br>
+                                    </div>
+                                    You lose all your levels when you class prestige, keeping your softcaps (forces an
+                                    attribute prestige)<br>
+
+                                    You can advance one of your subclass trees with this prestige
+                                </div>
+                                
+                                <div id="classPrestigePick" style="display:flex; gap: 10%; justify-content: center;">
+                                    <div class="bannerButton subclassPickButton" onclick="populateAbilityPreview(0)">Bladelore</div>
+                                    <div class="bannerButton subclassPickButton" onclick="populateAbilityPreview(1)">Ninjutsu</div>
+                                    <div class="bannerButton subclassPickButton" onclick="populateAbilityPreview(2)">Shadowcraft</div>
+                                </div>
+                                <div class="subHeader">Preview</div>
+                                <div id="subclassPreviewGrid" class="blockPanel" style="height:13%;display: grid; grid-template-columns: repeat(5,1fr);
+                                grid-auto-rows: 1f; gap:5%;">
+
+                                </div>
+                                <button style="display:block; margin:auto" class="bannerButton"
+                                    onclick="classPrestige()">Advance rank</button>
+                            </div>
                         </div>
-                        <button style="display:block; margin:auto" class="bannerButton"
-                            onclick="attributePrestige()">Take Y</button>
                     </div>
                 </section>
                 <section class="infoBox" id="helpBox">
@@ -341,7 +393,8 @@
                 <section class="infoBox" id="optionsBox">
                     <div class="blockHeader pickle" style="display: block">OPTIONS</div>
                     <div class="blockBody dotted pickle verticalScroll">
-                        <span class="pickle" id="versionText" style="display: block; text-align: right;">v0.02 Alpha</span>
+                        <span class="pickle" id="versionText" style="display: block; text-align: right;">v0.02
+                            Alpha</span>
                         <h1 class="title pickle" style="display: block; font-size: 2em;">
                             I WANT TO BE A HERO
                         </h1>
@@ -349,22 +402,23 @@
                         <br>
                         <button class="bannerButton" onclick="toggleMusic()">Toggle Music</button>
                         <input type="range" min="1" max="100" value="20" class="slider" id="volumeSlider"
-                        onchange="setVolume(this.value)">
+                            onchange="setVolume(this.value)">
                         <br>
                         <br>
                         <button class="bannerButton" onclick="save()">Save Game</button>
                         <button class="bannerButton" onclick="exportGame()">Export</button>
                         <button class="bannerButton" onclick="importGame()">Import</button>
-                        
+
                         <button class="bannerButton" onclick="hardReset()">HARD RESET</button>
                         <br>
                         <br>
                         <label for="customPortraitInput" class="bannerButton" style="padding: 2px;">
                             Upload Custom Hero Portrait!
                         </label>
-                        <input style="display: none;" type="file" id="customPortraitInput" accept="image/jpeg, image/png, image/jpg">
+                        <input style="display: none;" type="file" id="customPortraitInput"
+                            accept="image/jpeg, image/png, image/jpg">
                         <button id="resetPortraitButton" class="bannerButton"> Reset Portrait</button>
-                        
+
 
                         <audio controls muted id="audioSource" style="display: none;">
                             <source src="cyberpunk-street.mp3" type="audio/mp3">
@@ -389,6 +443,8 @@
 <script src="areas.js"></script>
 <script src="prestige.js"></script>
 <script src="story.js"></script>
+<script src="classTreeData.js"></script>
+<script src="classAbilityData.js"></script>
 <script src="class.js"></script>
 <script src="fame.js"></script>
 <script src="training.js"></script>

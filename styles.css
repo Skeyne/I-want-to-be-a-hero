@@ -1,4 +1,3 @@
-
 html,
 body {
     color: whitesmoke;
@@ -117,7 +116,7 @@ main {
     position: relative;
     height: 100%;
     width: 0.6vw;
-    background: rgb(218, 218, 218);
+    background-image: linear-gradient(0deg, black 33%, whitesmoke);
     border: 0.3vw solid black;
     z-index: 0;
 }
@@ -290,10 +289,10 @@ main {
     background-color: black;
     color: transparent;
     image-rendering: pixelated;
-    grid-column: 2;
-    height: 80%;
+    width: 80%;
     aspect-ratio: 1 / 1;
     border: 1vmin inset rgb(34, 34, 34);
+    border-radius: 2vmin;
 }
 
 .abilitySlot {
@@ -457,7 +456,7 @@ section:first-child div.blockHeader::before {
 
 .verticalScroll {
     overflow-y: scroll;
-    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0,0);
+    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0, 0);
 }
 
 .verticalScroll::-webkit-scrollbar-thumb {
@@ -483,24 +482,28 @@ section:first-child div.blockHeader::before {
 .horizontalScroll::-webkit-scrollbar {
     width: 1vw;
 }
-#heroCardPanel{
-    grid-row:1;
+
+#heroCardPanel {
+    grid-row: 1;
     display: grid;
     grid-template-rows: min-content 1fr;
 }
-#heroCardGrid{
+
+#heroCardGrid {
     height: 10vh;
     display: grid;
     grid-template-columns: min-content 1fr;
 }
-#heroCardStats{
+
+#heroCardStats {
     display: grid;
     grid-template-columns: min-content auto;
-    grid-template-rows: repeat(3,33.3%);
+    grid-template-rows: repeat(3, 33.3%);
 }
+
 #activityGrid {
     overflow-y: scroll;
-    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0,0);
+    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0, 0);
 }
 
 #activityGrid::-webkit-scrollbar-thumb {
@@ -520,7 +523,7 @@ section:first-child div.blockHeader::before {
     background: rgb(255 255 255 / 9%);
     row-gap: 1%;
     overflow-y: scroll;
-    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0,0);
+    scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0, 0);
 }
 
 #diaryEntries::-webkit-scrollbar-thumb {
@@ -553,7 +556,7 @@ progress[value] {
     /* Reset the default appearance */
     -webkit-appearance: none;
     appearance: none;
-    border:none;
+    border: none;
     margin-bottom: 10px;
 }
 
@@ -678,8 +681,10 @@ progress[value]::-webkit-progress-bar {
 .activityProgressBar,
 .activityProgressBar[value]::-webkit-progress-bar {
     height: 10px;
-    width: -moz-available;          /* WebKit-based browsers will ignore this. */
-    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width: -moz-available;
+    /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;
+    /* Mozilla-based browsers will ignore this. */
     width: fill-available;
     background: rgb(255, 255, 255);
     margin-bottom: 0px
@@ -688,6 +693,7 @@ progress[value]::-webkit-progress-bar {
 .activityProgressBar::-webkit-progress-value {
     background: rgb(128, 73, 0);
 }
+
 .activityProgressBar::-moz-progress-bar {
     background: rgb(128, 73, 0);
 }
@@ -695,8 +701,10 @@ progress[value]::-webkit-progress-bar {
 .rankProgressBar,
 .rankProgressBar[value]::-webkit-progress-bar {
     height: 5px;
-    width: -moz-available;          /* WebKit-based browsers will ignore this. */
-    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width: -moz-available;
+    /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;
+    /* Mozilla-based browsers will ignore this. */
     width: fill-available;
     background: rgb(255, 255, 255);
     margin-bottom: 0px
@@ -705,6 +713,7 @@ progress[value]::-webkit-progress-bar {
 .rankProgressBar::-webkit-progress-value {
     background: purple;
 }
+
 .rankProgressBar::-moz-progress-bar {
     background: purple;
 }
@@ -732,7 +741,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .trainingProgressBar::-moz-progress-bar {
-    
+
     background-image: linear-gradient(0deg,
             transparent 33%,
             rgba(0, 0, 0, .1) 33%,
@@ -871,7 +880,8 @@ progress[value]::-webkit-progress-bar {
     margin: 0 20% 0;
     margin-bottom: 5vh;
 }
-#masterTooltip{
+
+#masterTooltip {
     position: fixed;
     width: auto;
     height: auto;
@@ -885,6 +895,7 @@ progress[value]::-webkit-progress-bar {
     text-align: center;
     line-height: 1.5;
 }
+
 #trainingUpgradeButton:active {
     border: 5px grey inset;
 }
@@ -921,6 +932,7 @@ progress[value]::-webkit-progress-bar {
     width: 61%;
     height: 61%;
     border: .3vw grey outset;
+    border-radius: .6vw;
     position: relative;
     padding: 0;
     image-rendering: pixelated;
@@ -1092,7 +1104,7 @@ progress[value]::-webkit-progress-bar {
     font-style: oblique;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: rgb(0, 255, 0);
-    scrollbar-color: rgb(0, 255, 0) rgba(0, 0, 0,0);
+    scrollbar-color: rgb(0, 255, 0) rgba(0, 0, 0, 0);
 }
 
 .logBox::-webkit-scrollbar-thumb {
@@ -1105,13 +1117,33 @@ progress[value]::-webkit-progress-bar {
 }
 
 .bannerButton {
-    color:black;
+    text-align: center;
+    color: black;
     border: 2px solid black;
     font-family: 'Pickle Pushing';
     font-size: 1em;
     background-color: whitesmoke;
 }
-
+.prestigePanelTab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, black 5%, whitesmoke 40%, whitesmoke 60%,black 95%);
+}
+.subclassPickButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+}
+.subclassPickButton:hover{
+    outline: goldenrod solid 2px;
+}
+.subclassPickButton.selected{
+    color: whitesmoke;
+    background-color: black;
+    outline: goldenrod solid 2px;
+}
 .classButton {
     border: 2px solid black;
     font-family: 'Pickle Pushing';
@@ -1287,6 +1319,30 @@ progress[value]::-webkit-progress-bar {
     transition: all 1s;
 }
 
+.requirementNotMet {
+    color: green;
+}
+
+.requirementNotMet {
+    color: firebrick;
+}
+
+@keyframes effect {
+    0% {
+        color: goldenrod;
+    }
+
+    50% {
+        color: yellow;
+    }
+
+    100% {
+        color: goldenrod;
+    }
+}
+
+
+
 @media (max-width:1000px) {
     body {
         max-width: 100vw;
@@ -1411,7 +1467,7 @@ progress[value]::-webkit-progress-bar {
         position: relative;
         height: 100%;
         width: 1.2vw;
-        background: rgb(218, 218, 218);
+        background-image: linear-gradient(0deg, black 33%, whitesmoke);
         border: 0.3vw solid black;
         z-index: 0;
     }

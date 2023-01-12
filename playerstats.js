@@ -9,6 +9,7 @@ const cleanPlayerStats = {
     reputation: 0,
     class: "human",
     classPrestige: 0,
+    subclassPrestige: Array(3).fill(0), 
     level: 0,
     passivePointsSpent: Array(3).fill(0),
     strength: 0,
@@ -76,7 +77,7 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != null) {
-            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true;playerStats.effectMultipliers = {}; }
+            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true;console.log("outdated save");playerStats.effectMultipliers = {}; resetSkills(); }
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
@@ -91,7 +92,8 @@ load();
 setInterval(save, 30000);
 function getTotalPassivePoints() {
     let decades = Math.floor(playerStats.level / 10);
-    return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1);
+    return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1)
+    + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
 }
 function getAvailablePassivePoints() {
     return arraySum(playerStats.passivePointsSpent);
@@ -125,8 +127,9 @@ function getSecondaryAttribute(property) {
 function getTrainingModifier(attributeName) {
     let baseValue = playerStats.attributeTrainingModifier[attributeIdToIndex[attributeName]];
     let property = attributeName + "Training";
+    baseValue *= classPrestigeBonus[playerStats.classPrestige].attributeGain;
     if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
-    return (baseValue
+    return  (baseValue
         + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
         * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
         * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))

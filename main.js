@@ -229,9 +229,17 @@ document.addEventListener('DOMContentLoaded', (e) => {
 //     if (e.deltaY > 0) changeTab(activeTab + 1);
 //     else changeTab(activeTab - 1);;
 // });
-function logConsole(text) {
+function logConsole(text,type = '') {
     let lines = log.innerHTML.split(/<br>/);
     if (lines.length > 100) { log.innerHTML = lines.slice(30).join('<br>'); }
+    switch (type) {
+        case 'warning':
+            text = '<span style="color: red">'+text+'</span>'
+            break;
+    
+        default:
+            break;
+    }
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
 }
@@ -998,10 +1006,10 @@ class Encounter {
     constructor(area) {
         this.enemyArray = [];
         this.enemiesToSpawn = area.getEnemies();
-        let lastHealth = player.health
+        let lastHealth = player.health/player.maxHealth;
         this.area = area;
         player = new Player(playerStats);
-        if (lastHealth > 0) { player.health = lastHealth; }
+        if (lastHealth > 0) { player.health = lastHealth*player.maxHealth; }
         for (let index = 0; index < this.enemiesToSpawn.length; index++) {
             //let picked = Math.floor(Math.random() * this.area.enemies.length);
             let picked = this.enemiesToSpawn[index];
