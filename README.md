@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -36,4 +35,4 @@
     <a href="https://skeyne.github.io/I-want-to-be-a-hero/">Play here!</a>
   </p>
 </div>
->>>>>>> ef97f83f19a69053d27dd9fb0b292847c9a80504
+
