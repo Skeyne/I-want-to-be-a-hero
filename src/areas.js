@@ -130,13 +130,13 @@ const areas = [
         encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 2: 1, 2: 1 }, } }]
     }),
     new Area({
-        name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power:194,expPerPower:1.76,
+        name: "Neighbourhood Suburbs II", background: "cyberpunk-street.png", power:194,expPerPower:1.76,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
         patrolTime: 6000,
         encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 2: 1, 2: 1 }, } }]
     }),
     new Area({
-        name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power:250,expPerPower:2.07,
+        name: "Neighbourhood Suburbs III", background: "cyberpunk-street.png", power:250,expPerPower:2.07,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
         patrolTime: 6000,
         encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 2: 1, 2: 1 }, } }]
@@ -178,7 +178,7 @@ const areas = [
     ]
     }),
     new Area({
-        name: "Old Steelworks", background: "bulkheadBackground.png",power:1191,expPerPower:5.44,
+        name: "Old Steelworks II", background: "bulkheadBackground.png",power:1191,expPerPower:5.44,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 21,
         patrolTime: 7000,
         encounters: [{ weight: 100, enemies: { "morphedthug": { 1: 1 },"infusedthug": { 1: 1 },"psychicthug": { 1: 1 }  } },
