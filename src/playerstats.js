@@ -77,7 +77,7 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (localStorage.getItem("version") != null) {
-            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true;console.log("outdated save");playerStats.effectMultipliers = {}; resetSkills(); }
+            if (localStorage.getItem("version") != version) { lastVersion = localStorage.getItem("version"); isOutdated = true;console.log("outdated save");playerStats.effectMultipliers = {}; }
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
