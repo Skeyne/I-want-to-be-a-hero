@@ -119,7 +119,7 @@ class Activity {
                 let attribute = attributeIndexToId[index];
                 let reward = rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
                 if ((rewards[index] > 0)) {
-                    expReward += Math.log10(playerStats[attribute] + 1) * this.timeToComplete / 10000;
+                    expReward += getPrestigeBonus(playerStats.classPrestige).activityExp * (1 + Math.log10(playerStats[attribute] + 1)) * this.timeToComplete / 10000;
                 }
                 playerStats[attribute] = Math.max(playerStats.permanentAttributes[index], playerStats[attribute] + reward);
             }

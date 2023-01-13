@@ -57,9 +57,9 @@ const classPrestigeRequirements = [
     { level: 1000, storyProgress: 991, cumulativeSoftcaps: 1e10 },
 ]
 const classPrestigeBonus = [
-    { attributeGain: 1, bonusPassives: 0, trainingSpeed: 1 },
-    { attributeGain: 2, bonusPassives: 100, trainingSpeed: 1.25 },
-    { attributeGain: 4, bonusPassives: 1000, trainingSpeed: 1.75 },
+    { attributeGain: 1, bonusPassives: 0, activityExp: 1 },
+    { attributeGain: 2, bonusPassives: 100, activityExp: 2 },
+    { attributeGain: 4, bonusPassives: 1000, activityExp: 4},
 ]
 function getPrestigeBonus(index) {
     if (index >= classPrestigeBonus.length) { return classPrestigeBonus[classPrestigeBonus.length - 1]; }
@@ -117,7 +117,7 @@ function updateClassPrestigeRewards() {
     let panel = document.getElementById("classPrestigePanel");
     panel.getElementsByClassName("cpReward1")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].attributeGain}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].attributeGain + 'x'}`;
     panel.getElementsByClassName("cpReward2")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].bonusPassives} -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].bonusPassives}`;
-    panel.getElementsByClassName("cpReward3")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].trainingSpeed}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].trainingSpeed + 'x'}`;
+    panel.getElementsByClassName("cpReward3")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].activityExp}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].activityExp + 'x'}`;
 }
 function populateAbilityPreview(subclassIndex) {
     let previewGrid = document.getElementById("subclassPreviewGrid");
@@ -158,7 +158,7 @@ function populateSubclassPickButtons() {
 
     }
 }
-if (playerStats.storyProgress < 22) {
+if (playerStats.storyProgress < 99) {
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[0].style.display = 'none';
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[1].style.display = 'none';
 }

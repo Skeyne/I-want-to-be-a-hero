@@ -782,7 +782,7 @@ function changeClass(className, keep = false) {
     if (className != 'human') {
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
     } else {
-        playerStats.attributeSoftcaps = [100, 100, 100, 100];
+        playerStats.attributeSoftcaps = [1000, 1000, 1000, 1000];
         playerStats.strength = 1;
         playerStats.toughness = 1;
         playerStats.mind = 1;

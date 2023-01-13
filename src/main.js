@@ -279,16 +279,16 @@ class CombatEntity {
         this.buffEffects = {};
         this.combatState = new CombatProperties(this);
     }
-    addBuff(id,skill){
-        this.buffEffects[id] = {duration: skill.duration, effects: skill.effects};
-        Object.keys(skill.effects).forEach((prop) =>{
+    addBuff(id, skill) {
+        this.buffEffects[id] = { duration: skill.duration, effects: skill.effects };
+        Object.keys(skill.effects).forEach((prop) => {
             this.updateCombatProperty(prop);
         })
     }
-    removeBuff(id){
+    removeBuff(id) {
         let effects = this.buffEffects[id].effects;
         this.buffEffects[id] = null;
-        Object.keys(effects).forEach((prop) =>{
+        Object.keys(effects).forEach((prop) => {
             this.updateCombatProperty(prop);
         })
     }
@@ -299,7 +299,7 @@ class CombatEntity {
             let mults = [];
             let pcts = [];
             Object.values(this.buffEffects).forEach((buff) => {
-                if(buff == null) return;
+                if (buff == null) return;
                 Object.keys(buff.effects).forEach((effectTarget) => {
                     if (effectTarget == propertyName) {
                         //type of effect, percent or mult
@@ -316,7 +316,7 @@ class CombatEntity {
                     }
                 })
             })
-            this.combatState[propertyName] = this[propertyName]*(1+arraySum(pcts))*arrayMult(mults);
+            this.combatState[propertyName] = this[propertyName] * (1 + arraySum(pcts)) * arrayMult(mults);
         } else {
             console.error("Not a valid CombatProperty");
         }
@@ -372,12 +372,12 @@ class CombatEntity {
     tickCooldowns() {
         console.error("Do not use CombatEntity directly.");
     }
-    tickBuffs(){
+    tickBuffs() {
         Object.keys(this.buffEffects).forEach((id) => {
-            if(this.buffEffects[id] == null) return;
+            if (this.buffEffects[id] == null) return;
             this.buffEffects[id].duration -= logicTickTime;
             //console.log(this.buffEffects[id].duration);
-            if(this.buffEffects[id].duration <= 0){
+            if (this.buffEffects[id].duration <= 0) {
                 //console.warn("REMOVING BUFF");
                 this.removeBuff(id);
             }
@@ -619,7 +619,7 @@ class Player extends CombatEntity {
                 }
                 break;
             case 3:
-                this.addBuff(this.nextMoveKey,this.nextMove);
+                this.addBuff(this.nextMoveKey, this.nextMove);
 
             default:
                 logConsole("ERROR: Not a valid move type");
@@ -795,9 +795,15 @@ class Player extends CombatEntity {
     }
 }
 class Enemy extends CombatEntity {
-    constructor(enemyData, distance, drawIndex = 0) {
+    constructor(enemyData, distance, drawIndex = 0, area = 0,scaling = 1) {
         super();
         this.data = enemyData;
+        this.attributes = Array.from(this.data.attributes);
+        let attrSum = arraySum(this.attributes.map(x => Math.sqrt(x)));
+        for (let index = 0; index < this.attributes.length; index++) {
+            this.attributes[index] = Math.pow((area.power/scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
+        }
+        this.expReward = area.expPerPower*area.power;
         this.abilityCooldowns = {};
         enemyData.moves.forEach(ability => {
             this.abilityCooldowns[ability] = 0;
@@ -1077,7 +1083,7 @@ class Enemy extends CombatEntity {
         }
     }
     onDeath() {
-        let exp = addPlayerExp(this.data.expReward);
+        let exp = addPlayerExp(this.expReward);
         let money = addPlayerMoney(this.data.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
@@ -1100,7 +1106,7 @@ class Encounter {
             if (enemyData[picked].hasOwnProperty("spawnDistance")) {
                 spawnDistance = enemyData[picked].spawnDistance;
             }
-            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance, drawIndex = drawIndex);
+            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance,drawIndex,area,1/Math.sqrt(this.enemiesToSpawn));
             this.enemyArray.push(newEnemy);
             this.enemyArray[index].setTarget(player);
         }
@@ -1348,7 +1354,7 @@ function logicLoop() {
                     player.tick();
                     break;
                 case 1:
-                    encounter = new Encounter(currentArea, currentArea.enemyNum);
+                    encounter = new Encounter(currentArea);
                     gameState = "InCombat";
                     logConsole("Entering combat.")
                     break;

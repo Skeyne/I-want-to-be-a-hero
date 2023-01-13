@@ -1,4 +1,4 @@
-const version = '0.05b1';
+const version = '0.05c';
 var isOutdated = false;
 var lastVersion;
 document.getElementById('versionText').innerHTML = 'v' + version;
@@ -16,7 +16,7 @@ const cleanPlayerStats = {
     toughness: 0,
     mind: 0,
     agility: 0,
-    attributeSoftcaps: [100, 100, 100, 100],
+    attributeSoftcaps: [1000, 1000, 1000, 1000],
     attributeTrainingModifier: [1, 1, 1, 1],
     permanentSoftcaps: [0, 0, 0, 0],
     permanentAttributes: [0, 0, 0, 0],
