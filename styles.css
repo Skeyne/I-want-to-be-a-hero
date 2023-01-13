@@ -381,7 +381,7 @@ main {
 
 .blockHeader::after {
     content: "";
-    background-image: url(rightAngleBracket.png);
+    background-image: url('./resources/misc/rightAngleBracket.png');
     height: 20px;
     width: 20px;
     display: inline-block;
@@ -399,7 +399,7 @@ section:last-child div.blockHeader::after {
 
 .blockHeader::before {
     content: "";
-    background-image: url(leftAngleBracket.png);
+    background-image: url('./resources/misc/leftAngleBracket.png');
     height: 20px;
     width: 20px;
     display: inline-block;
@@ -777,7 +777,7 @@ progress[value]::-webkit-progress-bar {
 #reputationText:after {
     content: "";
     display: inline-block;
-    background: url("reputationTextIcon.png") no-repeat;
+    background: url("./resources/textIcons/reputationTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -793,7 +793,7 @@ progress[value]::-webkit-progress-bar {
 .reputationText:after {
     content: "";
     display: inline-block;
-    background: url("reputationTextIcon.png") no-repeat;
+    background: url("./resources/textIcons/reputationTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -809,7 +809,7 @@ progress[value]::-webkit-progress-bar {
 #moneyText:after {
     content: "";
     display: inline-block;
-    background: url("moneyTextIcon.png") no-repeat;
+    background: url("./resources/textIcons/moneyTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -826,7 +826,7 @@ progress[value]::-webkit-progress-bar {
 .strengthText:after {
     content: "";
     display: inline-block;
-    background: url("strengthTextIcon.png") no-repeat;
+    background: url("./resources/textIcons/strengthTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -842,7 +842,7 @@ progress[value]::-webkit-progress-bar {
 .toughnessText:after {
     content: "";
     display: inline-block;
-    background: url("toughnessTextIcon.png") no-repeat;
+    background: url("./resources/textIcons/toughnessTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -892,6 +892,7 @@ progress[value]::-webkit-progress-bar {
     -webkit-transition: .2s;
     transition: opacity .2s;
     pointer-events: none;
+    color: rgb(180, 180, 180);
     text-align: center;
     line-height: 1.5;
 }
@@ -911,7 +912,7 @@ progress[value]::-webkit-progress-bar {
     border: .3vw grey outset;
     position: relative;
     padding: 0;
-    background-image: url('placeholder.png');
+    background-image: url('./placeholder.png');
     background-size: cover;
     image-rendering: pixelated;
     z-index: 1;
@@ -967,7 +968,7 @@ progress[value]::-webkit-progress-bar {
 .mindText:after {
     content: "";
     display: inline-block;
-    background: url("mindTextIcon.png") no-repeat;
+    background: url("./resources/textIcons/mindTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;
@@ -983,7 +984,7 @@ progress[value]::-webkit-progress-bar {
 .agilityText:after {
     content: "";
     display: inline-block;
-    background: url("agilityTextIcon.png") no-repeat;
+    background: url("resources/textIcons/agilityTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
     height: 32px;

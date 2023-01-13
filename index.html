@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="styles.css">
 
     <title>I Want To Be A Hero</title>
-    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="resources/misc/favicon.png">
 </head>
 
 
@@ -61,7 +61,7 @@
             <div id="heroCardPanel" class="dotted blockPanel">
                 <div class="subHeader pickle">Hero card</div>
                 <div id="heroCardGrid" class="">
-                    <img id="heroPortraitImage" src="joePortrait.png"
+                    <img id="heroPortraitImage" src="resources/misc/joePortrait.png"
                         style="height: 10vh; aspect-ratio: 1/1;image-rendering: pixelated;">
                     <div id="heroCardStats">
                         <div class="pickle" style="font-size: auto;margin: 1vmin;" data-resource-tooltip="">
@@ -321,7 +321,7 @@
                     <div class="blockBody dotted pickle verticalScroll  " id="helpBody" style="overflow-y:scroll">
                         <div style="text-transform: uppercase; font-size: 2.5vw;">Join the <a
                                 href="https://discord.gg/HzVyvdQnkW" target=”_blank”>DISCORD</a><img
-                                src="discordIcon.svg" style="
+                                src="resources/misc/discordIcon.svg" style="
                             margin-bottom: -0.6vw; height: 3vw;"><br></div>
                         <div class="subHeader">Combat</div>
                         Your hero automatically uses his abilities in combat. Combat is action gauge based, once it
@@ -361,12 +361,12 @@
                         The more of the activity's respective stat you have the more experience you earn doing it.
                         <div class="subHeader">Abilities</div>
                         <br \>Your first ability is Punch. Punch's damage ratio is 80% <span
-                            class="pickle strengthText">STR</span> 20% <span class="pickle agilityText">AGI</span>,
+                            class="pickle strengthText">STR</span> 20% <sp  an class="pickle agilityText">AGI</span>,
                         which is to say that,
                         that
                         percentage of the respective attribute value is used in the move's damage formula.
                         <br \>The damage formula is:
-                        <br \><img id="damageFormula" src="./damageFormulaInvert.png" />,
+                        <br \><img id="damageFormula" src="resources/misc/damageFormulaInvert.png" />,
                         where the second part is evaluated and then summed from every contributing attribute.
                         <br \>
                         <br \> The damage ratio of abilities can be found by hovering them on the "Abilities" tab.
@@ -421,7 +421,7 @@
 
 
                         <audio controls muted id="audioSource" style="display: none;">
-                            <source src="cyberpunk-street.mp3" type="audio/mp3">
+                            <source src="resources/music/cyberpunk-street.mp3" type="audio/mp3">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -435,19 +435,19 @@
 </body>
 
 </html>
-<script src="worker.js"></script>
-<script src="constants.js"></script>
-<script src="colors.js"></script>
-<script src="playerstats.js"></script>
-<script src="enemies.js "></script>
-<script src="areas.js"></script>
-<script src="prestige.js"></script>
-<script src="story.js"></script>
-<script src="classTreeData.js"></script>
-<script src="classAbilityData.js"></script>
-<script src="class.js"></script>
-<script src="fame.js"></script>
-<script src="training.js"></script>
-<script src="music.js"></script>
-<script src="offline.js"></script>
-<script src="main.js"></script>
+<script src="src/worker.js"></script>
+<script src="src/constants.js"></script>
+<script src="src/colors.js"></script>
+<script src="src/playerstats.js"></script>
+<script src="src/enemies.js "></script>
+<script src="src/areas.js"></script>
+<script src="src/prestige.js"></script>
+<script src="src/story.js"></script>
+<script src="src/classTreeData.js"></script>
+<script src="src/classAbilityData.js"></script>
+<script src="src/class.js"></script>
+<script src="src/fame.js"></script>
+<script src="src/training.js"></script>
+<script src="src/music.js"></script>
+<script src="src/offline.js"></script>
+<script src="src/main.js"></script>

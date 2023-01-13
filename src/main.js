@@ -26,8 +26,8 @@ customPortraitInput.addEventListener("change", function () {
 })
 const resetPortraitButton = document.getElementById("resetPortraitButton");
 resetPortraitButton.addEventListener("click", function () {
-        document.getElementById("heroPortraitImage").src = "joePortrait.png";
-        localStorage.removeItem("heroPortraitImageData");
+    document.getElementById("heroPortraitImage").src = "resources/misc/joePortrait.png";
+    localStorage.removeItem("heroPortraitImageData");
 })
 function updatePowerText() {
     document.getElementById('heroPowerText').innerHTML = format(arraySum([
@@ -163,16 +163,17 @@ document.addEventListener('mouseover', function (e) {
     }
 });
 document.addEventListener('mouseup', function (e) {
-    setTimeout(()=>
-    {if (e.target.classList.contains('tooltip')) {
-        masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
-        showMasterTooltip(e);
-    }
-    if ('abilityTooltip' in e.target.dataset) {
-        masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
-        let rect = e.target.getBoundingClientRect();
-        showMasterTooltip(e);
-    }},100);
+    setTimeout(() => {
+        if (e.target.classList.contains('tooltip')) {
+            masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+            showMasterTooltip(e);
+        }
+        if ('abilityTooltip' in e.target.dataset) {
+            masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
+            let rect = e.target.getBoundingClientRect();
+            showMasterTooltip(e);
+        }
+    }, 100);
 });
 document.addEventListener('mouseout', function (e) {
     if (e.relatedTarget == null) {
@@ -229,19 +230,38 @@ document.addEventListener('DOMContentLoaded', (e) => {
 //     if (e.deltaY > 0) changeTab(activeTab + 1);
 //     else changeTab(activeTab - 1);;
 // });
-function logConsole(text,type = '') {
+function logConsole(text, type = '') {
     let lines = log.innerHTML.split(/<br>/);
     if (lines.length > 100) { log.innerHTML = lines.slice(30).join('<br>'); }
     switch (type) {
         case 'warning':
-            text = '<span style="color: red">'+text+'</span>'
+            text = '<span style="color: red">' + text + '</span>'
             break;
-    
+
         default:
             break;
     }
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
+}
+class CombatProperties {
+    constructor(data) {
+        this.maxHealth = 0;
+        this.health = 0;
+        this.criticalChance = 0;
+        this.dodgeChance = 0;
+        this.moveLifesteal = 0;
+        this.damageReduction = 0;
+        this.repeat = 0;
+        this.actionSpeed = 1;
+    }
+    init(data) {
+        Object.keys(data).forEach((prop) => {
+            if (this.hasOwnProperty(prop)) {
+                this[prop] = data[prop];
+            }
+        })
+    }
 }
 class CombatEntity {
     constructor() {
@@ -256,6 +276,50 @@ class CombatEntity {
         this.target = null;
         this.spriteSize = { x: 32, y: 32 }
         this.actionSpeed = 1;
+        this.buffEffects = {};
+        this.combatState = new CombatProperties(this);
+    }
+    addBuff(id,skill){
+        this.buffEffects[id] = {duration: skill.duration, effects: skill.effects};
+        Object.keys(skill.effects).forEach((prop) =>{
+            this.updateCombatProperty(prop);
+        })
+    }
+    removeBuff(id){
+        let effects = this.buffEffects[id].effects;
+        this.buffEffects[id] = null;
+        Object.keys(effects).forEach((prop) =>{
+            this.updateCombatProperty(prop);
+        })
+    }
+    updateCombatProperty(propertyName) {
+        //console.log(propertyName);
+        //console.log(this.combatState?.[propertyName]);
+        if (this.combatState[propertyName] != undefined) {
+            let mults = [];
+            let pcts = [];
+            Object.values(this.buffEffects).forEach((buff) => {
+                if(buff == null) return;
+                Object.keys(buff.effects).forEach((effectTarget) => {
+                    if (effectTarget == propertyName) {
+                        //type of effect, percent or mult
+                        switch (buff.effects[propertyName][0]) {
+                            case "mult":
+                                mults.push(buff.effects[propertyName][1]);
+                                break;
+                            default:
+                                console.error("Not a valid effect type for buff");
+                                break;
+                        }
+                    } else {
+                        return;
+                    }
+                })
+            })
+            this.combatState[propertyName] = this[propertyName]*(1+arraySum(pcts))*arrayMult(mults);
+        } else {
+            console.error("Not a valid CombatProperty");
+        }
     }
     setTarget(target) {
         this.target = target;
@@ -291,13 +355,14 @@ class CombatEntity {
             let tickTime = logicTickTime;
             if (this.interrupt > 0) { this.interrupt -= tickTime };
             if (this.interrupt <= 0) {
-                this.initiative += 1000 * tickTime / 1000 * this.actionSpeed;
+                this.initiative += 1000 * tickTime / 1000 * this.combatState.actionSpeed;
             }
 
         } else {
             this.think();
         }
         this.tickCooldowns();
+        this.tickBuffs();
         if (this.initiative >= this.nextMoveInitiative) {
             this.initiative -= this.nextMoveInitiative;
             if (this.act(this.target)) { this.think() };
@@ -306,6 +371,17 @@ class CombatEntity {
     }
     tickCooldowns() {
         console.error("Do not use CombatEntity directly.");
+    }
+    tickBuffs(){
+        Object.keys(this.buffEffects).forEach((id) => {
+            if(this.buffEffects[id] == null) return;
+            this.buffEffects[id].duration -= logicTickTime;
+            //console.log(this.buffEffects[id].duration);
+            if(this.buffEffects[id].duration <= 0){
+                //console.warn("REMOVING BUFF");
+                this.removeBuff(id);
+            }
+        })
     }
     act(target) {
         console.error("Do not use CombatEntity directly.");
@@ -331,9 +407,9 @@ class Player extends CombatEntity {
         this.shield = 0;
         this.flatReduction = formulas.flatReduction(this);
         this.image = new Image(32, 32);
-        this.image.src = PLAYER_SPRITES[playerStats.class];
+        this.image.src = "resources/characterSprites/" + PLAYER_SPRITES[playerStats.class];
         this.portraitImage = new Image();
-        this.portraitImage.src = "joePortrait.png";
+        this.portraitImage.src = "resources/misc/joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("strength"));
         this.damageReduction *= getSecondaryAttribute("damageTaken");
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
@@ -356,6 +432,7 @@ class Player extends CombatEntity {
                 }
             }
         });
+        this.combatState.init(this);
 
     }
     tickCooldowns() {
@@ -385,12 +462,12 @@ class Player extends CombatEntity {
                         console.log("UNKOWN ABILITY CATEGORY")
                         break;
                 }
-                if (this.nextMove.hasOwnProperty("effects")){
-                    if(this.nextMove.effects.hasOwnProperty("rush")){
-                        if (this.moveIntention >= 0){
-                        let deltaPlus = Math.min(Math.abs(dist - 5), this.nextMove.range[0]);
-                        encounter.enemyArray.forEach((enemy) => { if (enemy != null) enemy.distance = Math.max(5, enemy.distance - deltaPlus); })
-                        environmentDistance -= deltaPlus;
+                if (this.nextMove.hasOwnProperty("effects")) {
+                    if (this.nextMove.effects.hasOwnProperty("rush")) {
+                        if (this.moveIntention >= 0) {
+                            let deltaPlus = Math.min(Math.abs(dist - 5), this.nextMove.range[0]);
+                            encounter.enemyArray.forEach((enemy) => { if (enemy != null) enemy.distance = Math.max(5, enemy.distance - deltaPlus); })
+                            environmentDistance -= deltaPlus;
                         }
                     }
                 }
@@ -490,7 +567,7 @@ class Player extends CombatEntity {
                     if (moveLifesteal > 0) { this.health = Math.min(this.health + dr * moveLifesteal, this.maxHealth); logConsole(`Hero healed for ${format(dr * moveLifesteal)}`); }
                     if (killingBlow) this.target = null;
                 }
-                
+
                 break;
             case 1:
                 let deltaMinus = Math.min(playerStats.engagementRange - dist, this.nextMove.range[1]);
@@ -530,9 +607,10 @@ class Player extends CombatEntity {
                                 if (this.nextMove.effects.hasOwnProperty("closeCombat")) {
                                     if (dist <= 5) amount *= 1 + this.nextMove.effects.closeCombat;
                                 }
-                                if (amount > this.shield){
-                                     this.shield = amount;
-                                     logConsole(`Hero shielded for ${format(amount)} from ${this.nextMove.name}`);}
+                                if (amount > this.shield) {
+                                    this.shield = amount;
+                                    logConsole(`Hero shielded for ${format(amount)} from ${this.nextMove.name}`);
+                                }
                                 break;
                             default:
                                 break;
@@ -540,6 +618,9 @@ class Player extends CombatEntity {
                     });
                 }
                 break;
+            case 3:
+                this.addBuff(this.nextMoveKey,this.nextMove);
+
             default:
                 logConsole("ERROR: Not a valid move type");
                 break;
@@ -641,6 +722,9 @@ class Player extends CombatEntity {
                     }
                 }
             }
+            if (ability.type == 3) {
+                weights[index] = 100;
+            }
         }
 
         const max = Math.max(...weights);
@@ -733,9 +817,7 @@ class Enemy extends CombatEntity {
         this.distance = distance;
         this.name = enemyData.name;
         this.image = new Image();
-        this.image.src = enemyData.spriteFile;
-        this.portraitImage = new Image(32, 32);
-        this.portraitImage.src = enemyData.portraitFile;
+        this.image.src = "resources/characterSprites/" + enemyData.spriteFile;
         this.nextMoveKey = null;
     }
     tickCooldowns() {
@@ -1006,10 +1088,10 @@ class Encounter {
     constructor(area) {
         this.enemyArray = [];
         this.enemiesToSpawn = area.getEnemies();
-        let lastHealth = player.health/player.maxHealth;
+        let lastHealth = player.health / player.maxHealth;
         this.area = area;
         player = new Player(playerStats);
-        if (lastHealth > 0) { player.health = lastHealth*player.maxHealth; }
+        if (lastHealth > 0) { player.health = lastHealth * player.maxHealth; }
         for (let index = 0; index < this.enemiesToSpawn.length; index++) {
             //let picked = Math.floor(Math.random() * this.area.enemies.length);
             let picked = this.enemiesToSpawn[index];
@@ -1458,7 +1540,7 @@ function changeArea(index) {
 function drawSkillIcon(context, skillname, x, y) {
     let heightAbove = 110;
     let img = new Image();
-    img.src = skillname + "Icon.png";
+    img.src = "resources/abilityIcons/" + skillname + "Icon.png";
     context.drawImage(img, x - img.width / 2, y - img.height - heightAbove);
 }
 function drawInfoBars(context, entity, rootx, rooty) {

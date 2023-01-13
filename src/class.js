@@ -150,7 +150,7 @@ function populateAbilityRequirements() {
             const ability = abilities[abilityN];
             let b = document.createElement("button");
             b.setAttribute("class", "abilityPickButton tooltip");
-            b.style.backgroundImage = `url("${playerMoves[ability].iconName}Icon.png")`;
+            b.style.backgroundImage = `url("resources/abilityIcons/${playerMoves[ability].iconName}Icon.png")`;
             c.append(b);
             let t = document.createElement("div");
             t.setAttribute("class", "tooltiptext oxanium");
@@ -199,10 +199,18 @@ function populatePassiveTree() {
     if (!skillLibrary.hasOwnProperty(playerStats.class)) { console.error("ERROR: CLASS PASSIVE TREE DOES NOT EXIST"); return; }
     Object.values(skillLibrary[playerStats.class]).forEach(skill => {
         let subclass = skill.sub;
+        if (skill.hasOwnProperty("prestige")) {
+            if (skill.prestige > playerStats.classPrestige) {
+                return;
+            }
+            if(skill.prestige > playerStats.subclassPrestige[subclass]){
+                return;
+            }
+        }
         let b = document.createElement("button");
         passiveButtonDict[skill.id] = b;
 
-        b.style.background = "url(" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
+        b.style.background = "url(resources/passiveIcons/" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
         b.style.backgroundSize = "contain";
         b.setAttribute("class", "passiveSkillButton tooltip");
         b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
@@ -261,7 +269,7 @@ function populatePassiveTree() {
         tabs[ability.sub].append(b);
         b.setAttribute("class", "abilityPickButton tooltip");
         b.setAttribute("onclick", `checkAbilityPurchase("${abilityKey}")`)
-        b.style.backgroundImage = `url("${playerMoves[abilityKey].iconName}Icon.png")`;
+        b.style.backgroundImage = `url("resources/abilityIcons/${playerMoves[abilityKey].iconName}Icon.png")`;
         b.style.gridRow = ability.position.row;
         b.style.gridColumn = ability.position.column;
         let t = document.createElement("div");
@@ -290,7 +298,7 @@ function populateAbilitySlots() {
             element.appendChild(option);
             if (currentAbilities[slotN] == ability) {
                 option.setAttribute("selected", "selected");
-                element.style.backgroundImage = "url(" + playerMoves[ability].iconName + "Icon.png)";
+                element.style.backgroundImage = "url(resources/abilityIcons/" + playerMoves[ability].iconName + "Icon.png)";
                 element.dataset.abilityTooltip = ability;
             };
         });
@@ -327,7 +335,7 @@ function changeAbilitySlot(slotN, internal = false) {
                 changeAbilitySlot(i, true);
             }
         }
-        slot.style.backgroundImage = "url(" + playerMoves[newAbility].iconName + "Icon.png)";
+        slot.style.backgroundImage = "url(resources/abilityIcons/" + playerMoves[newAbility].iconName + "Icon.png)";
         slot.dataset.abilityTooltip = newAbility;
         playerStats.equippedAbilities[slotN + 1] = newAbility;
     }
@@ -415,11 +423,14 @@ function generatePassiveTooltip(skill) {
         "Cost: " + costString + "<br><br>"
         + requirementsText;
 }
+function highlightProperty(label = "", value = "") {
+    return `${label}<span style="color:white">${value}</span>`
+}
 function generateAbilityRequirementTooltip(ability) {
     if (!playerMoves.hasOwnProperty(ability)) return "None";
     const abilityData = playerMoves[ability];
     let stringDisplay = "";
-    stringDisplay += abilityData.name + " ";
+    stringDisplay += highlightProperty("", abilityData.name) + " ";
     switch (abilityData.type) {
         case 0:
             stringDisplay += "(Attack)"
@@ -435,7 +446,7 @@ function generateAbilityRequirementTooltip(ability) {
             break;
     }
     stringDisplay += "<br>";
-    stringDisplay += abilityData.description + "<br>";
+    stringDisplay += highlightProperty("", abilityData.description) + "<br>";
     switch (abilityData.type) {
         case 0:
             stringDisplay += "Ratios:" + "<br />";
@@ -443,7 +454,7 @@ function generateAbilityRequirementTooltip(ability) {
                 let ratio = abilityData.damageRatios[attributeRatio] * 100;
                 if (ratio == 0) continue;
                 let attributeId = attributeIndexToId[attributeRatio];
-                stringDisplay += `${ratio}% <span class="${attributeId}Text">${attributeDisplayShort[attributeId]}</span><br />`;
+                stringDisplay += `${highlightProperty("", ratio + '%')} <span class="${attributeId}Text">${attributeDisplayShort[attributeId]}</span><br />`;
             }
             stringDisplay += `Damage range: x${abilityData.damageRange[0]} - ${abilityData.damageRange[1]}<br />`
             if (abilityData.hasOwnProperty("effects")) {
@@ -470,17 +481,34 @@ function generateAbilityRequirementTooltip(ability) {
                 })
             }
             break;
+        case 3:
+            stringDisplay += `Buff effect:<br>`;
+            Object.keys(abilityData.effects).forEach((effectTarget) => {
+                stringDisplay += `${effectTarget}: `
+                switch (abilityData.effects[effectTarget][0]) {
+                    case "mult":
+                        stringDisplay += 'x';
+                        break;
+
+                    default:
+                        break;
+                }
+                stringDisplay += highlightProperty("", abilityData.effects[effectTarget][1]);
+                stringDisplay += '<br>'
+            })
+            stringDisplay += highlightProperty(`<br> Duration: `, `${abilityData.duration / 1000}s <br>`)
+            break;
         default:
             break;
     }
-    stringDisplay += `Use time: ${format(abilityData.time / 1000)}s<br>`
+    stringDisplay += highlightProperty(`Use time: `, `${format(abilityData.time / 1000)}s<br>`)
     switch (abilityData.type) {
         case 1:
-            stringDisplay += `Range:<br>`;
-            if (abilityData.range[0] > 0) stringDisplay += `Advance:${abilityData.range[0]}<br>`;
-            if (abilityData.range[1] > 0) stringDisplay += `Retreat:${abilityData.range[1]}<br>`;
+            if (abilityData.range[0] > 0) stringDisplay += `Advance: ${abilityData.range[0]}<br>`;
+            if (abilityData.range[1] > 0) stringDisplay += `Retreat: ${abilityData.range[1]}<br>`;
             break;
-
+        case 3:
+            break;
         default:
             if (abilityData.range[1] != abilityData.range[0]) {
                 stringDisplay += `Range: ${abilityData.range[0]}-${abilityData.range[1]}<br>`
@@ -490,10 +518,10 @@ function generateAbilityRequirementTooltip(ability) {
             break;
     }
     if (abilityData.cooldownTime > 0) {
-        stringDisplay += `Cooldown: ${abilityData.cooldownTime / 1000}s<br />`
+        stringDisplay += highlightProperty(`Cooldown: `, `${abilityData.cooldownTime / 1000}s<br />`);
     }
     if (playerStats.unlockedAbilities[ability] == 1) {
-        stringDisplay += `Cost: MAX!<br>`
+        stringDisplay += `Cost: <span style="color:forestgreen">Already learned!</span><br>`
     } else {
         if (abilityData.hasOwnProperty("cost")) {
             stringDisplay += `Cost: ${abilityData.cost}<br>`
@@ -630,7 +658,7 @@ function checkSkillPurchase(skillId) {
     if (skill.hasOwnProperty('requires')) {
         for (const [key, value] of Object.entries(skill.requires)) {
             if (playerStats.unlockedSkills[key] < value || playerStats.unlockedSkills[key] == undefined) {
-                logConsole(`Requirements are not met!`,type='warning');
+                logConsole(`Requirements are not met!`, type = 'warning');
                 return false;
             }
         }
@@ -715,7 +743,7 @@ function resetSkills() {
     for (const [key, value] of Object.entries(passiveButtonDict)) {
         updateButton(key);
     }
-    
+
 }
 function changeClass(className, keep = false) {
     //if (className == playerStats.class) return;

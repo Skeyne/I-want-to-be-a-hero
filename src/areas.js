@@ -4,7 +4,7 @@ class Area {
         this.storyUnlock = data.storyUnlock;
         this.background = data.background;
         this.backgroundImage = new Image();
-        this.backgroundImage.src = this.background;
+        this.backgroundImage.src = `resources/backgroundImages/${this.background}`;
         this.enemies = data.enemies;
         this.enemyNum = data.enemyNum;
         this.encounters = data.encounters;

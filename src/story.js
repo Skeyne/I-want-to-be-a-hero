@@ -230,7 +230,7 @@ function checkAreaUnlocks() {
         l = document.createElement('label');
         l.setAttribute("class", "radioAreaLabel");
         l.setAttribute("for", `${area.name}`);
-        l.style.backgroundImage = `url(${area.background})`;
+        l.style.backgroundImage = `url(resources/backgroundImages/${area.background})`;
         l.innerHTML = area.name;
         dGradient = document.createElement('div');
         dGradient.setAttribute("class", "radioAreaGradient");

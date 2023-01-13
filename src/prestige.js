@@ -82,6 +82,7 @@ function classPrestige() {
         updateClassPrestigeRequirements();
         updateClassPrestigeRewards();
         populateAbilityPreview(-1);
+        populatePassiveTree();
     } else {
         return;
     }
@@ -139,7 +140,7 @@ function populateAbilityPreview(subclassIndex) {
         let b = document.createElement("button");
         previewGrid.append(b);
         b.setAttribute("class", "abilityPickButton tooltip");
-        b.style.backgroundImage = `url("${playerMoves[abilityKey].iconName}Icon.png")`;
+        b.style.backgroundImage = `url(resources/abilityIcons/"${playerMoves[abilityKey].iconName}Icon.png")`;
         let t = document.createElement("div");
         t.setAttribute("class", "skilltooltiptext oxanium");
         t.innerHTML = generateAbilityRequirementTooltip(abilityKey);
