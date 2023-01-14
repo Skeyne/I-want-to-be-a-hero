@@ -800,10 +800,7 @@ class Enemy extends CombatEntity {
         this.data = enemyData;
         this.attributes = Array.from(this.data.attributes);
         let attrSum = arraySum(this.attributes.map(x => Math.sqrt(x)));
-        console.log("SUM: "+attrSum)
         for (let index = 0; index < this.attributes.length; index++) {
-            console.log("Scaling ",scaling);
-            console.log("Index ",index," ",(area.power*scaling)*Math.sqrt(this.attributes[index])/ attrSum)
             this.attributes[index] = Math.pow((area.power*scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
         }
         this.expReward = area.expPerPower*(area.power*scaling);
@@ -822,7 +819,7 @@ class Enemy extends CombatEntity {
             if(enemyData.rank == "boss"){
                 this.maxHealth *= 2;
                 this.expReward *= 3;
-                this.expReward *= 1.5;
+                this.moneyReward *= 1.5;
             }
         }
         this.health = this.maxHealth
@@ -1095,7 +1092,7 @@ class Enemy extends CombatEntity {
     }
     onDeath() {
         let exp = addPlayerExp(this.expReward);
-        let money = addPlayerMoney(this.data.moneyReward);
+        let money = addPlayerMoney(this.moneyReward);
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
         logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money)}$ +${format(exp)}EXP +${this.data.reputationReward}REP</span>`)

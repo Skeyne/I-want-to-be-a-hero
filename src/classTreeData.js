@@ -5,6 +5,7 @@ skillLibrary = {
         'h_0': {
             id: 'h_0',
             sub: 0,
+            position: { row: 1, column: 2 },
             name: 'Calisthenics',
             iconName: 'calisthenics',
             desc: 'Increase your Strength through the power of home workouts',
@@ -20,6 +21,7 @@ skillLibrary = {
         'h_1': {
             id: 'h_1',
             sub: 0,
+            position: { row: 1, column: 3 },
             name: '"Borrowed Dumbells"',
             iconName: 'calisthenics',
             desc: 'They weren\'t using them anyways.',
@@ -36,6 +38,7 @@ skillLibrary = {
         'h_2': {
             id: 'h_2',
             sub: 0,
+            position: { row: 1, column: 4},
             name: '"Big Boy Pills"',
             iconName: 'calisthenics',
             desc: 'It\'s just like hard candy.',
@@ -52,6 +55,7 @@ skillLibrary = {
         'h_1_4': {
             id: 'h_1_4',
             sub: 0,
+            position: { row: 1, column: 5 },
             name: 'Heavy Hitter',
             iconName: 'calisthenics',
             desc: 'All that training has made you swole. That first hit really packs a punch',
@@ -68,6 +72,7 @@ skillLibrary = {
         'h_3': {
             id: 'h_3',
             sub: 0,
+            position: { row: 2, column: 2 },
             name: 'Five Mile Run',
             iconName: 'milerun',
             desc: 'Coach said this would toughen you up.',
@@ -83,6 +88,7 @@ skillLibrary = {
         'h_4': {
             id: 'h_4',
             sub: 0,
+            position: { row: 2, column: 3 },
             name: 'Construction Job',
             iconName: 'milerun',
             desc: 'And a cold one after work.',
@@ -99,6 +105,7 @@ skillLibrary = {
         'h_5': {
             id: 'h_5',
             sub: 0,
+            position: { row: 2, column: 4 },
             name: '8200 Postcode Night Run',
             iconName: 'milerun',
             desc: 'Hey this area doesn\'t look so b-',
@@ -115,6 +122,7 @@ skillLibrary = {
         'h_2_4': {
             id: 'h_2_4',
             sub: 0,
+            position: { row: 2, column: 5 },
             name: 'Built To Last',
             iconName: 'milerun',
             desc: 'With all the beatings you\'ve taken and lived through, it takes a lot to bring you down.',
@@ -131,6 +139,7 @@ skillLibrary = {
         'h_6': {
             id: 'h_6',
             sub: 0,
+            position: { row: 3, column: 2 },
             name: 'Dodge the swing',
             iconName: 'shadowB',
             desc: 'We used to do this as kids.',
@@ -147,6 +156,7 @@ skillLibrary = {
         'h_7': {
             id: 'h_7',
             sub: 0,
+            position: { row: 3, column: 3 },
             name: 'Shadow boxing',
             iconName: 'shadowB',
             desc: 'Shadows to keep you light.',
@@ -163,6 +173,7 @@ skillLibrary = {
         'h_8': {
             id: 'h_8',
             sub: 0,
+            position: { row: 3, column: 4 },
             name: 'Acquire J\'s',
             iconName: 'shadowB',
             desc: 'Jays on my feet.',
@@ -179,6 +190,7 @@ skillLibrary = {
         'h_3_4': {
             id: 'h_3_4',
             sub: 0,
+            position: { row: 3, column: 5 },
             name: 'Opportunity Seeker',
             iconName: 'shadowB',
             desc: 'Being faster than your foe gives you the opportunity to hit them in a vital spot.',
@@ -195,6 +207,7 @@ skillLibrary = {
         'h_9': {
             id: 'h_9',
             sub: 0,
+            position: { row: 4, column: 2 },
             name: 'Read algebra book',
             iconName: 'studying',
             desc: 'Actually learn it. Don\'t memorize it.',
@@ -210,6 +223,7 @@ skillLibrary = {
         'h_10': {
             id: 'h_10',
             sub: 0,
+            position: { row: 4, column: 3 },
             name: 'Attend debate club',
             iconName: 'studying',
             desc: 'Let\'s say, hypothetically....',
@@ -226,6 +240,7 @@ skillLibrary = {
         'h_11': {
             id: 'h_11',
             sub: 0,
+            position: { row: 4, column: 4 },
             name: 'Win at street chess',
             iconName: 'studying',
             desc: 'Check it, mate, I won.',
@@ -242,6 +257,7 @@ skillLibrary = {
         'h_4_4': {
             id: 'h_4_4',
             sub: 0,
+            position: { row: 4, column: 5 },
             name: 'Skilled Combatant',
             iconName: 'studying',
             desc: 'Your strategic mind allows you to setup your foe\'s swift defeat.',
@@ -905,7 +921,7 @@ skillLibrary = {
             }],
             maxLevel: 25,
             cost: Array(25).fill(4),
-            requires: { 'es_0_1': 1 }
+            requires: { 'es_0_2': 1 }
         },
         'es_0_5': {
             id: 'es_0_5',
