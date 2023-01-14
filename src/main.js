@@ -822,6 +822,7 @@ class Enemy extends CombatEntity {
             if(enemyData.rank == "boss"){
                 this.maxHealth *= 2;
                 this.expReward *= 3;
+                this.expReward *= 1.5;
             }
         }
         this.health = this.maxHealth
