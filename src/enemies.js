@@ -463,6 +463,7 @@ enemyData.prisoner = {
 };
 enemyData.prisoner9 = {
     id: "prisoner9",
+    rank:"boss",
     name: "Prisoner 9",
     maxHealth: 120,
     attributes: [3, 3, 1, 1],
