@@ -13,6 +13,7 @@ class Area {
         this.patrolCounter = 0;
         this.power = data.power;
         this.expPerPower = data.expPerPower;
+        this.moneyPerPower = data.moneyPerPower;
     }
     getEnemies() {
         let arr = [];

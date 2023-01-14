@@ -804,6 +804,8 @@ class Enemy extends CombatEntity {
             this.attributes[index] = Math.pow((area.power*scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
         }
         this.expReward = area.expPerPower*(area.power*scaling);
+        console.log(area.moneyPerPower);
+        console.log(area.power*scaling);
         this.moneyReward = area.moneyPerPower*(area.power*scaling);
         this.abilityCooldowns = {};
         enemyData.moves.forEach(ability => {
