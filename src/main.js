@@ -893,10 +893,10 @@ class Enemy extends CombatEntity {
                     }
                     let isCrit = (Math.random() < moveCritChance);
                     let d1 = this.nextMove.baseDamage
-                        + this.nextMove.damageRatios[0] * (Math.sqrt(this.data.attributes[0] + 1) - 1)
-                        + this.nextMove.damageRatios[1] * (Math.sqrt(this.data.attributes[1] + 1) - 1)
-                        + this.nextMove.damageRatios[2] * (Math.sqrt(this.data.attributes[2] + 1) - 1)
-                        + this.nextMove.damageRatios[3] * (Math.sqrt(this.data.attributes[3] + 1) - 1);
+                        + this.nextMove.damageRatios[0] * (Math.sqrt(this.attributes[0] + 1) - 1)
+                        + this.nextMove.damageRatios[1] * (Math.sqrt(this.attributes[1] + 1) - 1)
+                        + this.nextMove.damageRatios[2] * (Math.sqrt(this.attributes[2] + 1) - 1)
+                        + this.nextMove.damageRatios[3] * (Math.sqrt(this.attributes[3] + 1) - 1);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
                     let dr = target.takeDamage(d2);
