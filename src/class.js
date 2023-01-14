@@ -213,7 +213,14 @@ function populatePassiveTree() {
         b.style.background = "url(resources/passiveIcons/" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
         b.style.backgroundSize = "contain";
         b.setAttribute("class", "passiveSkillButton tooltip");
-        b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
+        //b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
+        b.addEventListener('click', (event)=>{
+            let times = 1;
+            if(event.shiftKey){
+                times *= 10;
+            }
+            checkSkillPurchase(skill.id, times);
+        });
         tabs[subclass].appendChild(b);
         if (skill.hasOwnProperty('position')) {
             b.style.gridRow = skill.position.row;
@@ -661,7 +668,7 @@ function removeEffect(skillId) {
         }
     }
 }
-function checkSkillPurchase(skillId) {
+function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
     if (skill.hasOwnProperty('requires')) {
@@ -672,17 +679,18 @@ function checkSkillPurchase(skillId) {
             }
         }
     }
-
-    if (playerStats.unlockedSkills.hasOwnProperty(skillId)) {
-        let skill = skillLibrary[playerStats.class][skillId];
-        if (playerStats.unlockedSkills[skillId] >= skill.maxLevel) { logConsole(`${skill.name} is already max level!`); return false; }
-        cost = skillLibrary[playerStats.class][skillId].cost[playerStats.unlockedSkills[skillId]];
-    } else {
-        cost = skillLibrary[playerStats.class][skillId].cost[0];
-    }
-    if (cost <= (getTotalPassivePoints() - getAvailablePassivePoints())) {
-        playerStats.passivePointsSpent[skill.sub] += cost;
-        addSkill(skillId);
+    for (let index = 0; index < times; index++) {
+        if (playerStats.unlockedSkills.hasOwnProperty(skillId)) {
+            let skill = skillLibrary[playerStats.class][skillId];
+            if (playerStats.unlockedSkills[skillId] >= skill.maxLevel) { logConsole(`${skill.name} is already max level!`); break; }
+            cost = skillLibrary[playerStats.class][skillId].cost[playerStats.unlockedSkills[skillId]];
+        } else {
+            cost = skillLibrary[playerStats.class][skillId].cost[0];
+        }
+        if (cost <= (getTotalPassivePoints() - getAvailablePassivePoints())) {
+            playerStats.passivePointsSpent[skill.sub] += cost;
+            addSkill(skillId);
+        }
     }
     updateButton(skillId);
 }
@@ -732,6 +740,7 @@ function updateAbilityButton(abilityId) {
     t.innerHTML = generateAbilityRequirementTooltip(abilityId);
 }
 function resetSkills() {
+    playerStats.effectMultipliers = {};
     playerStats.unlockedAbilities = { 'punch': 1 }
     Object.keys(abilityButtonDict).forEach((abilityKey) => {
         updateAbilityButton(abilityKey);
