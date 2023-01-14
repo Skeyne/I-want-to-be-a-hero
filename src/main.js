@@ -145,6 +145,11 @@ document.addEventListener('mouseover', function (e) {
         let rect = e.target.getBoundingClientRect();
         showMasterTooltip(e);
     }
+    if ('abilityTooltipDynamic' in e.target.dataset) {
+        masterTooltip.innerHTML = generateAbilityDynamicTooltip(e.target.dataset.abilityTooltipDynamic);
+        let rect = e.target.getBoundingClientRect();
+        showMasterTooltip(e);
+    }
     if ('resourceTooltip' in e.target.dataset) {
         switch (e.target.dataset.resourceTooltip) {
             case "money":
@@ -804,8 +809,6 @@ class Enemy extends CombatEntity {
             this.attributes[index] = Math.pow((area.power*scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
         }
         this.expReward = area.expPerPower*(area.power*scaling);
-        console.log(area.moneyPerPower);
-        console.log(area.power*scaling);
         this.moneyReward = area.moneyPerPower*(area.power*scaling);
         this.abilityCooldowns = {};
         enemyData.moves.forEach(ability => {

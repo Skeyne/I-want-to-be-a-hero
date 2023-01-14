@@ -315,7 +315,7 @@ function populateAbilitySlots() {
             if (currentAbilities[slotN] == ability) {
                 option.setAttribute("selected", "selected");
                 element.style.backgroundImage = "url(resources/abilityIcons/" + playerMoves[ability].iconName + "Icon.png)";
-                element.dataset.abilityTooltip = ability;
+                element.dataset.abilityTooltipDynamic = ability;
             };
         });
     }
@@ -352,7 +352,7 @@ function changeAbilitySlot(slotN, internal = false) {
             }
         }
         slot.style.backgroundImage = "url(resources/abilityIcons/" + playerMoves[newAbility].iconName + "Icon.png)";
-        slot.dataset.abilityTooltip = newAbility;
+        slot.dataset.abilityTooltipDynamic = newAbility;
         playerStats.equippedAbilities[slotN + 1] = newAbility;
     }
 }
@@ -546,6 +546,59 @@ function generateAbilityRequirementTooltip(ability) {
         }
     }
     return stringDisplay;
+}
+function generateAbilityDynamicTooltip(ability) {
+    if (!playerMoves.hasOwnProperty(ability)) return "None";
+    const abilityData = playerMoves[ability];
+    let header = "";
+    let ratioDamage = "";
+    let useTime = "";
+    let cooldownText = "";
+
+    //HEADER
+    header += highlightProperty("", abilityData.name) + " ";
+    //add type
+    switch (abilityData.type) {
+        case 0:
+            header += "(Attack)"
+            break;
+        case 1:
+            header += "(Movement)"
+            break;
+        case 2:
+            header += "(Support)"
+            break;
+        default:
+            break;
+    }
+    header += "<br>";
+    header += highlightProperty("", abilityData.description) + "<br>";
+
+    //DAMAGE FROM RATIOS AND TOTAL
+    switch (abilityData.type) {
+        case 0:
+            let parts = Array(4).fill(0);
+            for (let index = 0; index < abilityData.damageRatios.length; index++) {
+                let ratio = abilityData.damageRatios[index];
+                if(ratio > 0){
+                    parts[index] = ratio * (Math.sqrt(getEffectiveValue(attributeIndexToId[index]) + 1) - 1);
+                    ratioDamage += `<span class='${attributeIndexToId[index]}Text'>${attributeDisplayShort[attributeIndexToId[index]]}</span>: `
+                    ratioDamage += highlightProperty("",`${format(parts[index]*abilityData.damageRange[0])}-${format(parts[index]*abilityData.damageRange[1])}`) + "<br>";
+                }
+            }
+            ratioDamage += highlightProperty("Total: ",`${format(arraySum(parts)*abilityData.damageRange[0])}-${format((arraySum(parts)*abilityData.damageRange[1]))}`) + "<br>";
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            break;
+    }
+    useTime += highlightProperty(`Use time: `, `${format(abilityData.time / 1000 / player.actionSpeed)}s<br>`);
+    if(abilityData.cooldownTime > 0)
+    {cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction)}s<br>`);}
+    return header + ratioDamage + useTime + cooldownText;
 }
 function getPlayerPassiveLevel(skillId) {
     if (!playerStats.unlockedSkills.hasOwnProperty(skillId)) {
