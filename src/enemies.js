@@ -502,6 +502,7 @@ enemyData.infectedPrisoner = {
 };
 enemyData.experiment999 = {
     id: "experiment999",
+    rank:"boss",
     name: "Experiment #999",
     maxHealth: 350,
     attributes: [200, 200, 10, 100],
@@ -571,6 +572,7 @@ enemyData.thug5 = {
 };
 enemyData.don = {
     id: "don",
+    rank:"boss",
     name: "The Don",
     maxHealth: 1000,
     attributes: [1000, 1500, 1000, 1000],
@@ -586,6 +588,7 @@ enemyData.don = {
 };
 enemyData.donbodyguard = {
     id: "donbodyguard",
+    rank:"boss",
     name: "Don's Right Hand",
     maxHealth: 4000,
     attributes: [3000, 5000, 500, 2500],
@@ -599,6 +602,7 @@ enemyData.donbodyguard = {
 };
 enemyData.don2 = {
     id: "don2",
+    rank:"boss",
     name: "The Don",
     maxHealth: 2000,
     attributes: [2400, 3000, 2000, 3000],
@@ -642,6 +646,7 @@ enemyData.psychicthug = {
 };
 enemyData.superthug = {
     id: "superthug",
+    rank:"boss",
     name: "Superthug",
     maxHealth: 11000,
     attributes: [25000, 20000, 4000, 20000],
@@ -684,6 +689,7 @@ enemyData.morphedthug = {
 };
 enemyData.crabman = {
     id: "crabman",
+    rank:"boss",
     name: "The Crabman",
     maxHealth: 70000,
     attributes: [250000, 300000, 50000, 100000],
@@ -697,6 +703,7 @@ enemyData.crabman = {
 };
 enemyData.ultracrabman = {
     id: "ultracrabman",
+    rank:"boss",
     name: "The Ultra Crabman",
     maxHealth: 250000,
     attributes: [2500000, 2000000, 10000, 300000],

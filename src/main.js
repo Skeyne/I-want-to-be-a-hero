@@ -800,10 +800,14 @@ class Enemy extends CombatEntity {
         this.data = enemyData;
         this.attributes = Array.from(this.data.attributes);
         let attrSum = arraySum(this.attributes.map(x => Math.sqrt(x)));
+        console.log("SUM: "+attrSum)
         for (let index = 0; index < this.attributes.length; index++) {
-            this.attributes[index] = Math.pow((area.power/scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
+            console.log("Scaling ",scaling);
+            console.log("Index ",index," ",(area.power*scaling)*Math.sqrt(this.attributes[index])/ attrSum)
+            this.attributes[index] = Math.pow((area.power*scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
         }
-        this.expReward = area.expPerPower*area.power;
+        this.expReward = area.expPerPower*(area.power*scaling);
+        this.moneyReward = area.moneyPerPower*(area.power*scaling);
         this.abilityCooldowns = {};
         enemyData.moves.forEach(ability => {
             this.abilityCooldowns[ability] = 0;
@@ -813,11 +817,17 @@ class Enemy extends CombatEntity {
         this.engagementRange = 5;
         this.moveIntention = 1;
         if (enemyData.hasOwnProperty("engagementRange")) this.engagementRange = enemyData.engagementRange;
-        this.maxHealth = enemyData.maxHealth;
+        this.maxHealth = formulas.maxHealth(this.attributes[1]);
+        if(enemyData.hasOwnProperty("rank")){
+            if(enemyData.rank == "boss"){
+                this.maxHealth *= 2;
+                this.expReward *= 3;
+            }
+        }
         this.health = this.maxHealth
         this.shield = 0;
-        this.damageReduction = formulas.damageReduction(enemyData.attributes[1]);
-        this.actionSpeed = formulas.actionSpeed(enemyData.attributes[3]);
+        this.damageReduction = formulas.damageReduction(this.attributes[1]);
+        this.actionSpeed = formulas.actionSpeed(this.attributes[3]);
         this.healthRegeneration = enemyData.healthRegen;
         this.cooldownReduction = 1;
         this.distance = distance;
@@ -1106,7 +1116,7 @@ class Encounter {
             if (enemyData[picked].hasOwnProperty("spawnDistance")) {
                 spawnDistance = enemyData[picked].spawnDistance;
             }
-            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance,drawIndex,area,1/Math.sqrt(this.enemiesToSpawn));
+            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance,drawIndex,area,1/Math.sqrt(this.enemiesToSpawn.length));
             this.enemyArray.push(newEnemy);
             this.enemyArray[index].setTarget(player);
         }

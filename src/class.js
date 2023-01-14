@@ -262,6 +262,15 @@ function populatePassiveTree() {
     abilityButtonDict = {};
     Object.keys(playerMoves).forEach(abilityKey => {
         const ability = playerMoves[abilityKey];
+        let subclass = ability.sub;
+        if (ability.hasOwnProperty("prestige")) {
+            if (ability.prestige > playerStats.classPrestige) {
+                return;
+            }
+            if(ability.prestige > playerStats.subclassPrestige[subclass]){
+                return;
+            }
+        }
         if (ability.class != playerStats.class) return;
         if (!ability.hasOwnProperty("position")) return;
         if (!ability.hasOwnProperty("sub")) return;
