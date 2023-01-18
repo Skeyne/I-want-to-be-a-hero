@@ -119,7 +119,7 @@ for (let index = 0; index < fameUpgradeData.length; index++) {
     fameUpgradeDict[upgrade.data.id] = { upgrade: upgrade, element: element };
 }
 
-if(isOutdated && false){
+if(isOutdated){
     Object.keys(playerStats.fameUpgradeLevels).forEach(
     (id) => {
         playerStats.fameUpgradeLevels[id] = 0;
