@@ -604,8 +604,8 @@ function generateAbilityRequirementTooltip(ability) {
     if (playerStats.unlockedAbilities[ability] == 1) {
         stringDisplay += `<span style="color:forestgreen">Learned!</span><br>`
     } else {
-        if ((playerStats.class == 'human' ? 0:unlockPointsLookup[abilityData.position.row - 1]) > playerStats.passivePointsSpent[abilityData.sub]) {
-            stringDisplay += `<span style="color:red">Not learned (Needs ${unlockPointsLookup[abilityData.position.row - 1]} points in subclass)</span><br>`
+        if ((unlockPointsLookup(abilityData.position.row - 1)) > playerStats.passivePointsSpent[abilityData.sub]) {
+            stringDisplay += `<span style="color:red">Not learned (Needs ${unlockPointsLookup(abilityData.position.row - 1)} points in subclass)</span><br>`
         } else {
             stringDisplay += `<span style="color:red">Not learned (<span style="color:yellow">Available</span>)</span><br>`
         }
@@ -792,7 +792,7 @@ function updateSubclassButton(index) {
 function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
-    if (skill.unlockPoints > playerStats.passivePointsSpent[skill.sub]) {
+    if ((unlockPointsLookup(abilityData.position.row - 1)) > playerStats.passivePointsSpent[skill.sub]) {
         logConsole(`You do not have enough points in this subclass!`, 'warning');
         return false;
     }
