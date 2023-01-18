@@ -184,13 +184,7 @@ function UpdateAbilityPreview() {
     previewRowBody.style.gridRow = `${previewIndex + 3}/${Math.max(previewIndex + 3, levels.length + 1)}`;
     previewRowBody.style.gridColumn = `1/-1`;
 }
-function unlockPointsLookup(index){
-    if(playerStats.class == 'human'){
-        return [0, 1, 5, 10, 20, 40][index]
-    } else {
-        return [0, 10, 50, 100, 200, 400][index]
-    }
-} ;
+
 let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 let abilityButtonDict = {};
@@ -789,6 +783,13 @@ function updateSubclassButton(index) {
     let b = document.getElementById(`subclassTreeButton${index}`);
     b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index])})`;
 }
+function unlockPointsLookup(index) {
+    if (playerStats.class == 'human') {
+        return [0, 1, 5, 10, 20, 40][index]
+    } else {
+        return [0, 10, 50, 100, 200, 400][index]
+    }
+}
 function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
@@ -824,25 +825,12 @@ function checkSkillPurchase(skillId, times = 1) {
 function checkAbilityPurchase(abilityId) {
     let cost = 0;
     let ability = playerMoves[abilityId];
-    // if (skill.hasOwnProperty('requires')) {
-    //     for (const [key, value] of Object.entries(skill.requires)) {
-    //         if (playerStats.unlockedSkills[key] < value || playerStats.unlockedSkills[key] == undefined) {
-    //             logConsole(`Requirements are not met!`);
-    //             return false;
-    //         }
-    //     }
-    // }
-    if (ability.hasOwnProperty("unlockPoints")) {
-        if (ability.unlockPoints > playerStats.passivePointsSpent[ability.sub]) {
-            logConsole(`You do not have enough points in this subclass!`, 'warning');
-            return false;
-        }
-    } else {
-        if (unlockPointsLookup[ability.position.row - 1] > playerStats.passivePointsSpent[ability.sub]) {
-            logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup[ability.position.row - 1]})`, 'warning');
-            return false;
-        }
+
+    if (unlockPointsLookup(ability.position.row - 1) > playerStats.passivePointsSpent[ability.sub]) {
+        logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup(ability.position.row - 1)})`, 'warning');
+        return false;
     }
+
     if (playerStats.unlockedAbilities.hasOwnProperty(abilityId)) {
         if (playerStats.unlockedAbilities[abilityId] > 0) { logConsole(`${ability.name} is already max level!`, 'warning'); return false; }
     } else {
@@ -872,7 +860,7 @@ function updateButton(skillId) {
     }
 }
 function updateAbilityButton(abilityId) {
-   //maybe used later
+    //maybe used later
 }
 function resetSkills() {
     playerStats.effectMultipliers = {};
