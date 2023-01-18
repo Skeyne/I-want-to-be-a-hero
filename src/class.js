@@ -184,7 +184,13 @@ function UpdateAbilityPreview() {
     previewRowBody.style.gridRow = `${previewIndex + 3}/${Math.max(previewIndex + 3, levels.length + 1)}`;
     previewRowBody.style.gridColumn = `1/-1`;
 }
-let unlockPointsLookup = [0, 10, 50, 100, 200, 400];
+function unlockPointsLookup(index){
+    if(playerStats.class == 'human'){
+        return [0, 1, 5, 10, 20, 40][index]
+    } else {
+        return [0, 10, 50, 100, 200, 400][index]
+    }
+} ;
 let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 let abilityButtonDict = {};
@@ -598,7 +604,7 @@ function generateAbilityRequirementTooltip(ability) {
     if (playerStats.unlockedAbilities[ability] == 1) {
         stringDisplay += `<span style="color:forestgreen">Learned!</span><br>`
     } else {
-        if (unlockPointsLookup[abilityData.position.row - 1] > playerStats.passivePointsSpent[abilityData.sub]) {
+        if ((playerStats.class == 'human' ? 0:unlockPointsLookup[abilityData.position.row - 1]) > playerStats.passivePointsSpent[abilityData.sub]) {
             stringDisplay += `<span style="color:red">Not learned (Needs ${unlockPointsLookup[abilityData.position.row - 1]} points in subclass)</span><br>`
         } else {
             stringDisplay += `<span style="color:red">Not learned (<span style="color:yellow">Available</span>)</span><br>`

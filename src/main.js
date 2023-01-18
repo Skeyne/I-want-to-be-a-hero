@@ -1124,12 +1124,12 @@ class Enemy extends CombatEntity {
     onDeath() {
         let exp = addPlayerExp(this.expReward);
         let money = addPlayerMoney(this.moneyReward);
-        for (let index = 0; index < this.attributes.length; index++) {
-            if (playerStats[attributeIndexToId[index]] < this.attributes[index]) {
-                playerStats[attributeIndexToId[index]] += 0.01 * this.attributes[index];
-            }
+        // for (let index = 0; index < this.attributes.length; index++) {
+        //     if (playerStats[attributeIndexToId[index]] < this.attributes[index]) {
+        //         playerStats[attributeIndexToId[index]] += 0.01 * this.attributes[index];
+        //     }
 
-        }
+        // }
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
         logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money)}$ +${format(exp)}EXP +${this.data.reputationReward}REP</span>`)
