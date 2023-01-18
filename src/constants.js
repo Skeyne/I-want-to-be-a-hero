@@ -6,7 +6,7 @@ const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
 const COOLDOWN_BASE = 0.04;
 const PLAYER_BASE_HEALTH = 5;
-const HEALTH_GROWTH_EXPONENT = 0.65;
+const HEALTH_GROWTH_EXPONENT = 0.55;
 const TRAINING_REWARD_GROWTH_BASE = 1.22;
 const TRAINING_COST_GROWTH_BASE = 1.55;
 const PRESTIGE_SOFTCAP_RATE = 0.1;
@@ -74,7 +74,7 @@ formulas.flatReduction = function (entity) {
     return baseValue;
 }
 formulas.maxHealth = function (value) {
-    if (value < 100) return 5 * Math.pow(value, HEALTH_GROWTH_EXPONENT);
+    if (value < 100) return 5 + 10*Math.pow(value, HEALTH_GROWTH_EXPONENT-0.01);
     return 10 * Math.pow(value, HEALTH_GROWTH_EXPONENT);
 }
 formulas.softcappedAttribute = function (index) {

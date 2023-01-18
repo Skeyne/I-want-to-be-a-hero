@@ -116,7 +116,9 @@ main {
     position: relative;
     height: 100%;
     width: 0.6vw;
-    background-image: linear-gradient(0deg, black 33%, whitesmoke);
+    background-image: linear-gradient(90deg, black , whitesmoke,black);
+/* 
+    linear-gradient(0deg, yellow,yellow 50%,white 50%,white); */
     border: 0.3vw solid black;
     z-index: 0;
 }
@@ -293,6 +295,7 @@ main {
     aspect-ratio: 1 / 1;
     border: 1vmin inset rgb(34, 34, 34);
     border-radius: 2vmin;
+    z-index: 1;
 }
 
 .abilitySlot {
@@ -329,6 +332,8 @@ main {
     /* IE10+/Edge */
     user-select: none;
     /* Standard */
+    transition: all 500ms;
+    transition-property: background-color, color;
 }
 
 .sidebarButton:active {
@@ -336,7 +341,9 @@ main {
     background-color: rgb(0, 0, 0);
     box-sizing: border-box;
     border: 5px outset rgb(45, 45, 45);
-
+    transition: all 0s;
+    transition-property: background-color, color;
+    
 }
 
 .sidebarButtonActive {
@@ -344,6 +351,9 @@ main {
     background-color: rgb(0, 0, 0);
     box-sizing: border-box;
     border: 5px outset rgb(45, 45, 45);
+    transition: all 0s;
+    transition-property: background-color, color;
+    
 
 }
 
@@ -932,16 +942,40 @@ progress[value]::-webkit-progress-bar {
 .passiveSkillButton {
     width: 61%;
     height: 61%;
-    border: .3vw grey outset;
-    border-radius: .6vw;
+    border: .4vw black outset;
+    border-radius: 50%;
     position: relative;
     padding: 0;
     image-rendering: pixelated;
     z-index: 1;
+    transition: border-color 0.5s;
+}
+.passiveMinorButton {
+    width: 30%;
+    height: 30%;
+    border: .3vw grey outset;
+    border-radius: 50%;
+    position: relative;
+    padding: 0;
+    image-rendering: pixelated;
+    z-index: 1;
+    transition: border-color 0.5s;
+}
+.passiveMajorButton {
+    position: relative;
+    width: 70%;
+    height: 70%;
+    padding: 0;
+    border: 0.6vw inset goldenrod;
+    border-radius: 50%;
+    image-rendering: pixelated;
+    z-index: 1;
+    transition: border-color 0.5s;
 }
 
-.passiveSkillButton:active {
-    border: .4vw rgb(73, 73, 73) outset;
+.passiveSkillButton:active, .passiveMajorButton:active, .passiveMinorButton:active {
+    border-color: white;
+    transition: border-color 0s;
 }
 
 .passiveSkillLevel {
@@ -1028,10 +1062,10 @@ progress[value]::-webkit-progress-bar {
     border: 5px grey outset;
     text-align: center;
     font-size: 2rem;
-    padding: 3vh;
+    padding: 2vh;
     background-size: 100%;
     background-position: 0%;
-    filter: saturate(0);
+    filter: saturate(0) brightness(0.5);
 }
 
 .radioAreaLabel::after {
@@ -1106,6 +1140,7 @@ progress[value]::-webkit-progress-bar {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: rgb(0, 255, 0);
     scrollbar-color: rgb(0, 255, 0) rgba(0, 0, 0, 0);
+    padding-left: 1%;
 }
 
 .logBox::-webkit-scrollbar-thumb {
@@ -1468,7 +1503,8 @@ progress[value]::-webkit-progress-bar {
         position: relative;
         height: 100%;
         width: 1.2vw;
-        background-image: linear-gradient(0deg, black 33%, whitesmoke);
+        background-image: linear-gradient(90deg, black , lightgrey,black),
+        ;
         border: 0.3vw solid black;
         z-index: 0;
     }

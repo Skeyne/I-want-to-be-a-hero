@@ -22,8 +22,10 @@ function calculateOfflineProgress(minutes) {
     const completionsPerMinute = 60000 / activity.timeToComplete;
     let textElement = document.getElementById("offlineProgressText");
     let text = `<br>You were offline for ${Math.floor(hoursDisplay)}h${Math.floor(minutesDisplay)}m${Math.floor(secondsDisplay)}s<br>You got: <br>`
-    minutes = Math.min(minutes, 60 * 4);
-    minutes /= 2;
+    if(minutes > 8*60){
+        minutes = 8*60 + 0.5*(minutes - 8*60)
+    }
+    minutes = Math.min(minutes,16*60);
     if (activity.cost > 0) {
         if (activity.cost * completionsPerMinute * minutes > playerStats.money) {
             minutes = playerStats.money/(activity.cost * completionsPerMinute);

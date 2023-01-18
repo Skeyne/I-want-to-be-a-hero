@@ -10,42 +10,42 @@ var activityData = {
     "activity_0_0": {
         id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.01, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
     },
     "activity_0_1": {
         id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.01, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
     },
     "activity_0_2": {
         id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.01],
         attributeScaling: [0, 0, 0, "standard1"],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
     },
     "activity_0_3": {
         id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.01, 0],
         attributeScaling: [0, 0, "standard1", 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 5
+        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
     },
     "activity_1_0": {
-        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.02, 0, 0, 0],
+        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.03, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
     },
     "activity_1_1": {
-        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.02, 0, 0],
+        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.03, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
     },
     "activity_1_2": {
-        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.02],
+        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.03],
         attributeScaling: [0, 0, 0, "standard1"],
-        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
     },
     "activity_1_3": {
-        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.02, 0],
+        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.03, 0],
         attributeScaling: [0, 0, "standard1", 0],
-        timeToComplete: 15, cost: 5, expBase: 100, expPower: 3.9,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
     },
     "activity_2_0": {
         id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, -0.1, -0, 0],
@@ -136,7 +136,7 @@ class Activity {
         updateAttributePrestigeText();
     }
     payCost() {
-        if (playerStats.money < this.cost) { this.costPaid = false; return false; }
+        if (playerStats.money < this.cost) { this.costPaid = false; changeActivity(playerStats.lastFreeActivity); return false; }
         playerStats.money -= this.cost; this.costPaid = true; moneyCountBuffer -= this.cost; return true;
     }
     updateBars() {
@@ -253,6 +253,9 @@ function changeTrainingAttribute(attribute) {
     document.getElementById("trainingBarOverviewIcon").className = attribute + "Text";
 }
 function changeActivity(id) {
+    if(["activity_0_0","activity_0_1","activity_0_2","activity_0_3"].includes(id)){
+        playerStats.lastFreeActivity = id;
+    }
     currentTrainingArea.onDeselect();
     playerStats.currentActivity = id;
     currentTrainingArea = activities[id];

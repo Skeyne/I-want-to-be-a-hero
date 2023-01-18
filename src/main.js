@@ -133,7 +133,11 @@ function generateAttributeTooltip(attributeId) {
 }
 document.addEventListener('mouseover', function (e) {
     if (e.target.classList.contains('tooltip')) {
-        masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+        // masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+        // showMasterTooltip(e);
+    }
+    if ('skillTooltip' in e.target.dataset) {
+        masterTooltip.innerHTML = generatePassiveTooltip(e.target.dataset.skillTooltip);
         showMasterTooltip(e);
     }
     if ('attributeTooltip' in e.target.dataset) {
@@ -142,12 +146,10 @@ document.addEventListener('mouseover', function (e) {
     }
     if ('abilityTooltip' in e.target.dataset) {
         masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
-        let rect = e.target.getBoundingClientRect();
         showMasterTooltip(e);
     }
     if ('abilityTooltipDynamic' in e.target.dataset) {
         masterTooltip.innerHTML = generateAbilityDynamicTooltip(e.target.dataset.abilityTooltipDynamic);
-        let rect = e.target.getBoundingClientRect();
         showMasterTooltip(e);
     }
     if ('resourceTooltip' in e.target.dataset) {
@@ -169,13 +171,16 @@ document.addEventListener('mouseover', function (e) {
 });
 document.addEventListener('mouseup', function (e) {
     setTimeout(() => {
-        if (e.target.classList.contains('tooltip')) {
-            masterTooltip.innerHTML = e.target.getElementsByClassName("skilltooltiptext")[0].innerHTML;
+        if ('skillTooltip' in e.target.dataset) {
+            masterTooltip.innerHTML = generatePassiveTooltip(e.target.dataset.skillTooltip);
             showMasterTooltip(e);
         }
         if ('abilityTooltip' in e.target.dataset) {
             masterTooltip.innerHTML = generateAbilityRequirementTooltip(e.target.dataset.abilityTooltip);
-            let rect = e.target.getBoundingClientRect();
+            showMasterTooltip(e);
+        }
+        if ('abilityTooltipDynamic' in e.target.dataset) {
+            masterTooltip.innerHTML = generateAbilityDynamicTooltip(e.target.dataset.abilityTooltipDynamic);
             showMasterTooltip(e);
         }
     }, 100);
@@ -255,10 +260,14 @@ class CombatProperties {
         this.health = 0;
         this.criticalChance = 0;
         this.dodgeChance = 0;
-        this.moveLifesteal = 0;
+        this.lifesteal= 0;
+        this.damageDealt = 0;
         this.damageReduction = 0;
+        this.damageTaken = 0;
+        this.healthRegeneration = 0;
         this.repeat = 0;
         this.actionSpeed = 1;
+    
     }
     init(data) {
         Object.keys(data).forEach((prop) => {
@@ -278,6 +287,7 @@ class CombatEntity {
         this.nextMove = null;
         this.nextMoveInitiative = 0;
         this.damageReduction = 0;
+        this.damageTaken = 0;
         this.target = null;
         this.spriteSize = { x: 32, y: 32 }
         this.actionSpeed = 1;
@@ -303,6 +313,7 @@ class CombatEntity {
         if (this.combatState[propertyName] != undefined) {
             let mults = [];
             let pcts = [];
+            let flats = [];
             Object.values(this.buffEffects).forEach((buff) => {
                 if (buff == null) return;
                 Object.keys(buff.effects).forEach((effectTarget) => {
@@ -311,6 +322,12 @@ class CombatEntity {
                         switch (buff.effects[propertyName][0]) {
                             case "mult":
                                 mults.push(buff.effects[propertyName][1]);
+                                break;
+                            case "percent":
+                                pcts.push(buff.effects[propertyName][1]);
+                                break;
+                            case "flat":
+                                flats.push(buff.effects[propertyName][1]);
                                 break;
                             default:
                                 console.error("Not a valid effect type for buff");
@@ -321,7 +338,7 @@ class CombatEntity {
                     }
                 })
             })
-            this.combatState[propertyName] = this[propertyName] * (1 + arraySum(pcts)) * arrayMult(mults);
+            this.combatState[propertyName] = ((this[propertyName] ?this[propertyName] :0)+arraySum(flats)) * (1 + arraySum(pcts)) * arrayMult(mults);
         } else {
             console.error("Not a valid CombatProperty");
         }
@@ -354,12 +371,14 @@ class CombatEntity {
         if (this.health <= 0) {
             return false;
         } else {
-            this.health = Math.min(this.health + this.maxHealth * this.healthRegeneration * logicTickTime / 1000, this.maxHealth);
+            this.health = Math.min(this.health + this.maxHealth * this.combatState.healthRegeneration * logicTickTime / 1000, this.maxHealth);
         }
         if (this.nextMove != null) {
             let tickTime = logicTickTime;
-            if (this.interrupt > 0) { this.interrupt -= tickTime };
-            if (this.interrupt <= 0) {
+            if (this.interrupt > 0) {
+                this.interrupt -= tickTime;
+                this.initiative += 0.25 * 1000 * tickTime / 1000 * this.combatState.actionSpeed;
+            } else {
                 this.initiative += 1000 * tickTime / 1000 * this.combatState.actionSpeed;
             }
 
@@ -416,10 +435,11 @@ class Player extends CombatEntity {
         this.portraitImage = new Image();
         this.portraitImage.src = "resources/misc/joePortrait.png";
         this.damageReduction = formulas.damageReduction(getEffectiveValue("strength"));
-        this.damageReduction *= getSecondaryAttribute("damageTaken");
+        this.damageTaken = getSecondaryAttribute("damageTaken");
         this.actionSpeed = formulas.actionSpeed(getEffectiveValue("agility"));
         this.actionSpeed *= getSecondaryAttribute("actionSpeed");
         this.powerMultiplier = getSecondaryAttribute("powerMultiplier");
+        this.damageDealt = getSecondaryAttribute("damageDealt");
         this.healthRegeneration = getSecondaryAttribute("healthRegeneration");
         this.criticalChance = getSecondaryAttribute("criticalChance");
         this.overwhelm = getSecondaryAttribute("overwhelm");
@@ -479,6 +499,7 @@ class Player extends CombatEntity {
                 if (inRange) {
 
                     let moveTakedown = this.takedown;
+                    let moveOverwhelm = this.overwhelm;
                     let moveCritChance = this.criticalChance;
                     let moveLifesteal = 0;
                     let moveStun = 0;
@@ -496,6 +517,9 @@ class Player extends CombatEntity {
                                     break;
                                 case "takedown":
                                     moveTakedown += this.nextMove.effects[effect];
+                                    break;
+                                case "overwhelm":
+                                    moveOverwhelm += this.nextMove.effects[effect];
                                     break;
                                 case "repeat":
                                     if (Math.random() < this.nextMove.effects[effect]) {
@@ -515,7 +539,8 @@ class Player extends CombatEntity {
                         + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
-                    let d3 = d2 * (1 + target.health / target.maxHealth * this.overwhelm) * (1 + (1 - target.health / target.maxHealth) * moveTakedown);
+                    let d3 = d2 * this.combatState.damageDealt;
+                    let df = d3 * (1 + target.health / target.maxHealth * moveOverwhelm) * (1 + (1 - target.health / target.maxHealth) * moveTakedown);
 
                     if (this.nextMove.hasOwnProperty("effects")) {
                         Object.keys(this.nextMove.effects).forEach(effect => {
@@ -555,8 +580,8 @@ class Player extends CombatEntity {
                                             if (moveStun > 0) {
                                                 enemy.interrupt += moveStun * 1000;
                                             }
-                                            let { died: killingBlow, d: dr } = enemy.takeDamage(d3);
-                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(d3)}) damage.`);
+                                            let { died: killingBlow, d: dr } = enemy.takeDamage(df);
+                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(df)}) damage.`);
                                         }
                                     })
                                     break;
@@ -567,9 +592,9 @@ class Player extends CombatEntity {
                         });
                     }
 
-                    let { died: killingBlow, d: dr } = target.takeDamage(d3);
+                    let { died: killingBlow, d: dr } = target.takeDamage(df);
                     logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(d3)}) damage.`);
-                    if (moveLifesteal > 0) { this.health = Math.min(this.health + dr * moveLifesteal, this.maxHealth); logConsole(`Hero healed for ${format(dr * moveLifesteal)}`); }
+                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`Hero healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal))}`); }
                     if (killingBlow) this.target = null;
                 }
 
@@ -781,7 +806,7 @@ class Player extends CombatEntity {
         this.health = Math.min(this.health + this.maxHealth * restRate * logicTickTime / 1000, this.maxHealth);
     }
     takeDamage(amount) {
-        let d = Math.max(0, amount * this.damageReduction - this.flatReduction);
+        let d = Math.max(0, amount * this.combatState.damageReduction * this.combatState.damageTaken - this.flatReduction);
         if (this.dodgeChance > Math.random()) {
             logConsole(`${this.name} dodged ${format(amount)} damage!`)
             return 0;
@@ -800,16 +825,16 @@ class Player extends CombatEntity {
     }
 }
 class Enemy extends CombatEntity {
-    constructor(enemyData, distance, drawIndex = 0, area = 0,scaling = 1) {
+    constructor(enemyData, distance, drawIndex = 0, area = 0, scaling = 1) {
         super();
         this.data = enemyData;
         this.attributes = Array.from(this.data.attributes);
         let attrSum = arraySum(this.attributes.map(x => Math.sqrt(x)));
         for (let index = 0; index < this.attributes.length; index++) {
-            this.attributes[index] = Math.pow((area.power*scaling) * Math.sqrt(this.attributes[index])/ attrSum , 2);
+            this.attributes[index] = Math.pow((area.power * scaling) * Math.sqrt(this.attributes[index]) / attrSum, 2);
         }
-        this.expReward = area.expPerPower*(area.power*scaling);
-        this.moneyReward = area.moneyPerPower*(area.power*scaling);
+        this.expReward = area.expPerPower * (area.power * scaling);
+        this.moneyReward = area.moneyPerPower * (area.power * scaling);
         this.abilityCooldowns = {};
         enemyData.moves.forEach(ability => {
             this.abilityCooldowns[ability] = 0;
@@ -820,11 +845,11 @@ class Enemy extends CombatEntity {
         this.moveIntention = 1;
         if (enemyData.hasOwnProperty("engagementRange")) this.engagementRange = enemyData.engagementRange;
         this.maxHealth = formulas.maxHealth(this.attributes[1]);
-        if(enemyData.hasOwnProperty("rank")){
-            if(enemyData.rank == "boss"){
+        if (enemyData.hasOwnProperty("rank")) {
+            if (enemyData.rank == "boss") {
                 this.maxHealth *= 2;
-                this.expReward *= 3;
-                this.moneyReward *= 1.5;
+                this.expReward *= 4;
+                this.moneyReward *= 2;
             }
         }
         this.health = this.maxHealth
@@ -1098,6 +1123,12 @@ class Enemy extends CombatEntity {
     onDeath() {
         let exp = addPlayerExp(this.expReward);
         let money = addPlayerMoney(this.moneyReward);
+        for (let index = 0; index < this.attributes.length; index++) {
+            if (playerStats[attributeIndexToId[index]] < this.attributes[index]) {
+                playerStats[attributeIndexToId[index]] += 0.01 * this.attributes[index];
+            }
+
+        }
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
         logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money)}$ +${format(exp)}EXP +${this.data.reputationReward}REP</span>`)
@@ -1119,7 +1150,7 @@ class Encounter {
             if (enemyData[picked].hasOwnProperty("spawnDistance")) {
                 spawnDistance = enemyData[picked].spawnDistance;
             }
-            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance,drawIndex,area,1/Math.sqrt(this.enemiesToSpawn.length));
+            let newEnemy = new Enemy(enemyData[picked], Math.round(2 * (Math.random() - 0.5)) * 5 + spawnDistance, drawIndex, area, 1 / Math.sqrt(this.enemiesToSpawn.length));
             this.enemyArray.push(newEnemy);
             this.enemyArray[index].setTarget(player);
         }

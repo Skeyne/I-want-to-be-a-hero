@@ -1,6 +1,10 @@
-const version = '0.05c1';
+const version = '0.05d';
 var isOutdated = false;
 var lastVersion;
+var debug = false;
+if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "") {
+    debug = true;
+}
 document.getElementById('versionText').innerHTML = 'v' + version;
 const cleanPlayerStats = {
     experience: 0,
@@ -9,7 +13,7 @@ const cleanPlayerStats = {
     reputation: 0,
     class: "human",
     classPrestige: 0,
-    subclassPrestige: Array(3).fill(0), 
+    subclassPrestige: Array(3).fill(0),
     level: 0,
     passivePointsSpent: Array(3).fill(0),
     strength: 0,
@@ -22,6 +26,7 @@ const cleanPlayerStats = {
     permanentAttributes: [0, 0, 0, 0],
     flatReduction: 0,
     damageTaken: 1,
+    damageDealt:1,
     healthRegeneration: 0,
     cooldownReduction: 1,
     actionSpeed: 1,
@@ -55,6 +60,7 @@ const cleanPlayerStats = {
     fameSpent: 0,
     fameUpgradeLevels: {},
     fameEffects: {},
+    lastFreeActivity: "activity_0_0",
 }
 var playerStats = {};
 var justLoaded = false;
@@ -79,9 +85,10 @@ function load(file = null) {
         if (localStorage.getItem("version") != null) {
             if (localStorage.getItem("version") != version) {
                 lastVersion = localStorage.getItem("version");
-                isOutdated = true;console.log("outdated save");
-                
-                if(playerStats.class == 'human')playerStats.attributeSoftcaps = [1e3,1e3,1e3,1e3];}
+                isOutdated = true; console.log("outdated save");
+
+                if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
+            }
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
@@ -97,7 +104,7 @@ setInterval(save, 30000);
 function getTotalPassivePoints() {
     let decades = Math.floor(playerStats.level / 10);
     return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1)
-    + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
+        + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
 }
 function getAvailablePassivePoints() {
     return arraySum(playerStats.passivePointsSpent);
@@ -133,7 +140,7 @@ function getTrainingModifier(attributeName) {
     let property = attributeName + "Training";
     baseValue *= classPrestigeBonus[playerStats.classPrestige].attributeGain;
     if (!playerStats.effectMultipliers.hasOwnProperty(property)) { return baseValue; }
-    return  (baseValue
+    return (baseValue
         + arraySum(Object.values(playerStats.effectMultipliers[property].additiveFlat)))
         * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
         * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent))

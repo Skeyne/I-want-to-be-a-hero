@@ -361,7 +361,7 @@
                         The more of the activity's respective stat you have the more experience you earn doing it.
                         <div class="subHeader">Abilities</div>
                         <br \>Your first ability is Punch. Punch's damage ratio is 80% <span
-                            class="pickle strengthText">STR</span> 20% <sp  an class="pickle agilityText">AGI</span>,
+                            class="pickle strengthText">STR</span> 20% <span class="pickle agilityText">AGI</span>,
                         which is to say that,
                         that
                         percentage of the respective attribute value is used in the move's damage formula.
@@ -405,7 +405,7 @@
                             onchange="setVolume(this.value)">
                         <br>
                         <br>
-                        <button class="bannerButton" onclick="save()">Save Game</button>
+                        <button class="bannerButton" onclick="(function(){save();logConsole('Saved!')})()">Save Game</button>
                         <button class="bannerButton" onclick="exportGame()">Export</button>
                         <button class="bannerButton" onclick="importGame()">Import</button>
 

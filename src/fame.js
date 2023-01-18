@@ -30,7 +30,7 @@ function resetFameUpgrades() {
             updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
         }
     )
-    playerStats.reputation = getNextFame(Math.floor(0.95*playerStats.fame));
+    playerStats.reputation = 0.95*playerStats.reputation;
     sanityCheckFame();
 }
 function updateUI(upgrade = null) {
@@ -119,7 +119,7 @@ for (let index = 0; index < fameUpgradeData.length; index++) {
     fameUpgradeDict[upgrade.data.id] = { upgrade: upgrade, element: element };
 }
 
-if(isOutdated){
+if(isOutdated && false){
     Object.keys(playerStats.fameUpgradeLevels).forEach(
     (id) => {
         playerStats.fameUpgradeLevels[id] = 0;

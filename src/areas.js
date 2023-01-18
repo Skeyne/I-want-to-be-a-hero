@@ -1,6 +1,6 @@
 class Area {
     constructor(data) {
-        this.name = data.name;
+        this.name = `${data.name}<br><span style="font-size:1rem">(Power:${data.power})</span>`;
         this.storyUnlock = data.storyUnlock;
         this.background = data.background;
         this.backgroundImage = new Image();
@@ -96,74 +96,75 @@ const areas = [
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        name: "Bridge", background: "bridgeAreaBackground-1.png", power:30,expPerPower:0.671,moneyPerPower:0.1049,
+        name: "Bridge", background: "bridgeAreaBackground-1.png", power:32,expPerPower:0.671,moneyPerPower:0.1049,
         enemies: ["prisoner"], enemyNum: 2, storyUnlock: 9,
         patrolTime: 4000,
         encounters: [{ weight: 100, enemies: { "prisoner": { 1: 3, 2: 2, 3: 1 } } }]
     }),
     new Area({
-        name: "Prison Courtyard", background: "prisonCourtyardBackground.png",power:39, expPerPower:0.788,moneyPerPower:0.1059,
+        name: "Prison Courtyard", background: "prisonCourtyardBackground.png",power:42, expPerPower:0.788,moneyPerPower:0.1059,
         enemies: ["prisoner9"], enemyNum: 2, storyUnlock: 10,
         patrolTime: 5000,
 
     }),
     new Area({
-        name: "Prison Underground Entry", background: "bulkheadBackground.png",power:51,expPerPower:0.926,moneyPerPower:0.1069,
+        name: "Prison Underground Entry", background: "bulkheadBackground.png",power:53,expPerPower:0.926,moneyPerPower:0.1069,
         enemies: ["prisonguard"], enemyNum: 3, storyUnlock: 11, 
         patrolTime: 6000,
         encounters: [{ weight: 100, enemies: { "prisonguard": { 2: 1 } } }]
     }),
     new Area({
-        name: "Prison Underground Tunnel", background: "bulkheadBackground.png",power:66, expPerPower:1.087,moneyPerPower:0.1079,
+        name: "Prison Underground Tunnel", background: "bulkheadBackground.png",power:78, expPerPower:1.087,moneyPerPower:0.1079,
         enemies: ["infectedPrisoner"], enemyNum: 2, storyUnlock: 12,
         patrolTime: 6000,
         encounters: [{ weight: 100, enemies: { "infectedPrisoner": { 1: 3, 2: 1 } } }]
     }),
     new Area({
-        name: "Underground Lab", background: "scifilabBackground.png",power:85,expPerPower:1.28,moneyPerPower:0.1090,
+        name: "Underground Lab", background: "scifilabBackground.png",power:100,expPerPower:1.28,moneyPerPower:0.1090,
         enemies: ["experiment999"], enemyNum: 2, storyUnlock: 13,
         patrolTime: 7000,
     }),
     new Area({
-        name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power:150,expPerPower:1.50, moneyPerPower:0.11,
+        name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power:160,expPerPower:1.50, moneyPerPower:0.11,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
         patrolTime: 6000,
-        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 2: 1, 2: 1 }, } }]
+        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 1: 1, 2: 1 }, } }]
     }),
     new Area({
-        name: "Neighbourhood Suburbs II", background: "cyberpunk-street.png", power:194,expPerPower:1.76,moneyPerPower:0.1111,
+        name: "Shady Suburbs", background: "cyberpunk-street.png", power:210,expPerPower:1.76,moneyPerPower:0.1111,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
         patrolTime: 6000,
-        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 2: 1, 2: 1 }, } }]
+        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 1: 1, 2: 1 }, } }]
     }),
     new Area({
-        name: "Neighbourhood Suburbs III", background: "cyberpunk-street.png", power:250,expPerPower:2.07,moneyPerPower:0.1121,
-        enemies: ["thug"], enemyNum: 2, storyUnlock: 16,
-        patrolTime: 6000,
-        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 2: 1, 2: 1 }, } }]
-    }),
-    new Area({
-        name: "Mafia Territory", background: "cyberpunk-street.png",power:323,expPerPower:2.43,moneyPerPower:0.1132,
+        name: "Mafia Territory", background: "cyberpunk-street.png",power:299,expPerPower:2.07,moneyPerPower:0.1121,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 17,
         patrolTime: 6000,
         encounters: [{ weight: 900, enemies: { "thug4": { 1: 2, 2: 1, 3: 1 }, "thug5": { 1: 1, 2: 1 }, } },
         { weight: 100, enemies: { "thug4": { 3: 1, }, "thug5": { 2: 1 }, "don": { 1: 1, }, } }]
     }),
     new Area({
-        name: "Mafia Warehouse", background: "bulkheadBackground.png",power:417,expPerPower:2.86,moneyPerPower:0.1143,
+        name: "Mafia Warehouse", background: "bulkheadBackground.png",power:377,expPerPower:2.43,moneyPerPower:0.1132,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 18,
         patrolTime: 7000,
         encounters: [{ weight: 100, enemies: { "don2": { 1: 1 }, "donbodyguard": { 1: 1 } } }]
     }),
     new Area({
-        name: "Abandoned Industrial Zone", background: "prisonCourtyardBackground.png",power:539,expPerPower:3.35,moneyPerPower:0.1154,
+        name: "Abandoned Industrial Zone", background: "prisonCourtyardBackground.png",power:474,expPerPower:2.86,moneyPerPower:0.1143,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 19,
         patrolTime: 7000,
         encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 },"psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
     }),
     new Area({
-        name: "Scrapyard", background: "prisonCourtyardBackground.png",power:696,expPerPower:3.94,moneyPerPower:0.1165,
+        name: "Overgrown Carpark", background: "prisonCourtyardBackground.png",power:597,expPerPower:3.35,moneyPerPower:0.1154,
+        enemies: ["thug"], enemyNum: 2, storyUnlock: 19,
+        patrolTime: 7000,
+        encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 },"psychicthug": { 1: 1 } } },
+        { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
+    }),
+    new Area({
+        name: "Scrapyard", background: "prisonCourtyardBackground.png",power:752,expPerPower:3.94,moneyPerPower:0.1165,
         enemies: ["thug"], enemyNum: 2, storyUnlock: 20,
         patrolTime: 7000,
         encounters: [{ weight: 100, enemies: { "superthug": { 1: 1 } } }]
@@ -194,7 +195,7 @@ const areas = [
         patrolTime: 7000,
     }),
     new Area({
-        name: "The Depths", background: "voidBackground.png",power:478900,expPerPower:32,moneyPerPower:0.1318,
+        name: "The Depths", background: "voidBackground.png",power:15000,expPerPower:31.93,moneyPerPower:0.1318,
         enemies: ["ultracrabman"], enemyNum: 1, storyUnlock: 23,
         patrolTime: 10000,
     }),];

@@ -62,7 +62,8 @@ function generateSubclassTabs() {
     for (let index = 0; index < classTrees[playerStats.class]; index++) {
         let b = document.createElement("button");
         b.className = "pickle subclassTabButton";
-        b.innerHTML = classTreeNames[playerStats.class][index];
+        b.id = `subclassTreeButton${index}`
+        b.innerHTML = `${classTreeNames[playerStats.class][index]} (${playerStats.passivePointsSpent[index]})`;
         b.style.width = 100 / classTrees[playerStats.class] + '%';
         b.onclick = () => { changeSubclassTab(index) };
         container.append(b);
@@ -183,7 +184,7 @@ function UpdateAbilityPreview() {
     previewRowBody.style.gridRow = `${previewIndex + 3}/${Math.max(previewIndex + 3, levels.length + 1)}`;
     previewRowBody.style.gridColumn = `1/-1`;
 }
-
+let unlockPointsLookup = [0, 10, 50, 100, 200, 400];
 let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 let abilityButtonDict = {};
@@ -203,20 +204,28 @@ function populatePassiveTree() {
             if (skill.prestige > playerStats.classPrestige) {
                 return;
             }
-            if(skill.prestige > playerStats.subclassPrestige[subclass]){
+            if (skill.prestige > playerStats.subclassPrestige[subclass]) {
                 return;
             }
         }
         let b = document.createElement("button");
         passiveButtonDict[skill.id] = b;
+        b.setAttribute("data-skill-tooltip", skill.id);
 
-        b.style.background = "url(resources/passiveIcons/" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
+        if (skill.rank == 2) {
+            b.setAttribute("class", "passiveMajorButton");
+            b.style.background = "url(resources/passiveIcons/" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
+        } else if (skill.rank == 1) {
+            b.style.background = "url(resources/passiveIcons/" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
+            b.setAttribute("class", "passiveSkillButton");
+        } else {
+            b.style.background = "url(resources/passiveIcons/" + skill.iconName + "PassiveIcon.png)" + " no-repeat";
+            b.setAttribute("class", "passiveSkillButton");
+        }
         b.style.backgroundSize = "contain";
-        b.setAttribute("class", "passiveSkillButton tooltip");
-        //b.setAttribute("onclick", `checkSkillPurchase("${skill.id}")`)
-        b.addEventListener('click', (event)=>{
+        b.addEventListener('click', (event) => {
             let times = 1;
-            if(event.shiftKey){
+            if (event.shiftKey) {
                 times *= 10;
             }
             checkSkillPurchase(skill.id, times);
@@ -253,10 +262,6 @@ function populatePassiveTree() {
                 })
             }
         }
-        let t = document.createElement("div");
-        t.setAttribute("class", "skilltooltiptext oxanium");
-        t.innerHTML = generatePassiveTooltip(skill);
-        b.appendChild(t);
         let l = document.createElement("div");
         l.setAttribute("class", "passiveSkillLevel");
         if (!playerStats.unlockedSkills.hasOwnProperty(skill.id)) {
@@ -274,7 +279,7 @@ function populatePassiveTree() {
             if (ability.prestige > playerStats.classPrestige) {
                 return;
             }
-            if(ability.prestige > playerStats.subclassPrestige[subclass]){
+            if (ability.prestige > playerStats.subclassPrestige[subclass]) {
                 return;
             }
         }
@@ -283,15 +288,68 @@ function populatePassiveTree() {
         if (!ability.hasOwnProperty("sub")) return;
         let b = document.createElement("button");
         tabs[ability.sub].append(b);
-        b.setAttribute("class", "abilityPickButton tooltip");
+        b.setAttribute("class", "abilityPickButton");
+        b.setAttribute("data-ability-tooltip", abilityKey);
         b.setAttribute("onclick", `checkAbilityPurchase("${abilityKey}")`)
         b.style.backgroundImage = `url("resources/abilityIcons/${playerMoves[abilityKey].iconName}Icon.png")`;
         b.style.gridRow = ability.position.row;
         b.style.gridColumn = ability.position.column;
-        let t = document.createElement("div");
-        t.setAttribute("class", "skilltooltiptext oxanium");
-        t.innerHTML = generateAbilityRequirementTooltip(abilityKey);
-        b.appendChild(t);
+        //LINKS
+        if (ability.hasOwnProperty('position')) {
+            b.style.gridRow = ability.position.row;
+            b.style.gridColumn = ability.position.column;
+
+            if (ability.hasOwnProperty('requiresPassive')) {
+                Object.keys(ability.requiresPassive).forEach((id) => {
+                    let reqPassive = skillLibrary[playerStats.class][id];
+                    if (!reqPassive.hasOwnProperty('position')) { return; }
+                    let link = document.createElement("div");
+                    link.setAttribute("class", "passiveSkillLink");
+                    tabs[subclass].appendChild(link);
+                    let area = [0, 0, 0, 0];
+                    area[0] = Math.min(ability.position.row, reqPassive.position.row);
+                    area[2] = Math.max(ability.position.row, reqPassive.position.row);
+                    area[1] = Math.min(ability.position.column, reqPassive.position.column);
+                    area[3] = Math.max(ability.position.column, reqPassive.position.column);
+                    let length = Math.sqrt(Math.pow((area[3] - area[1]), 2) + Math.pow((area[2] - area[0]), 2));
+                    let width = area[3] - area[1];
+                    let height = area[2] - area[0];
+                    length = (length) / (length + 1) * (Math.max((width + 1) / (height + 1), 1));
+                    let angle = Math.atan2(ability.position.column - reqPassive.position.column, reqPassive.position.row - ability.position.row);
+                    area[2] += 1;
+                    area[3] += 1;
+                    link.style.gridArea = area.join("/");
+                    link.style.rotate = `${angle}rad`
+                    link.style.height = `${100 * length}%`;
+                })
+            }
+            if (ability.hasOwnProperty('requiresAbility')) {
+                Object.keys(ability.requiresAbility).forEach((id) => {
+                    let reqAbility = playerMoves[id];
+                    if (!reqAbility.hasOwnProperty('position')) { return; }
+                    let link = document.createElement("div");
+                    link.setAttribute("class", "passiveSkillLink");
+                    tabs[subclass].appendChild(link);
+                    let area = [0, 0, 0, 0];
+                    area[0] = Math.min(ability.position.row, reqAbility.position.row);
+                    area[2] = Math.max(ability.position.row, reqAbility.position.row);
+                    area[1] = Math.min(ability.position.column, reqAbility.position.column);
+                    area[3] = Math.max(ability.position.column, reqAbility.position.column);
+                    console.log(area);
+                    let length = Math.sqrt(Math.pow((area[3] - area[1]), 2) + Math.pow((area[2] - area[0]), 2));
+                    let width = area[3] - area[1];
+                    let height = area[2] - area[0];
+                    length = (length) / (length + 1) * (Math.max((width + 1) / (height + 1), 1));
+                    let angle = Math.atan2(ability.position.column - reqAbility.position.column, reqAbility.position.row - ability.position.row);
+                    area[2] += 1;
+                    area[3] += 1;
+                    link.style.gridArea = area.join("/");
+                    link.style.rotate = `${angle}rad`
+                    link.style.height = `${100 * length}%`;
+                })
+            }
+
+        }
         abilityButtonDict[abilityKey] = b;
 
     })
@@ -356,10 +414,11 @@ function changeAbilitySlot(slotN, internal = false) {
         playerStats.equippedAbilities[slotN + 1] = newAbility;
     }
 }
-function generatePassiveTooltip(skill) {
+function generatePassiveTooltip(skillId) {
     let numberDisplay = "";
     let effectText = "";
     let requirementsText = "";
+    let skill = skillLibrary[playerStats.class][skillId];
     if (skill.hasOwnProperty("requires")) {
         requirementsText = "Requires skill(s):<br>"
         for (const [key, value] of Object.entries(skill.requires)) {
@@ -437,7 +496,7 @@ function generatePassiveTooltip(skill) {
         (skill.desc == "" ? "" : skill.desc + "<br /><br>") +
         `${effectText}` +
         "Cost: " + costString + "<br><br>"
-        + requirementsText;
+        + requirementsText + (debug ? "<br> Skill ID: " + skill.id : "");
 }
 function highlightProperty(label = "", value = "") {
     return `${label}<span style="color:white">${value}</span>`
@@ -537,12 +596,12 @@ function generateAbilityRequirementTooltip(ability) {
         stringDisplay += highlightProperty(`Cooldown: `, `${abilityData.cooldownTime / 1000}s<br />`);
     }
     if (playerStats.unlockedAbilities[ability] == 1) {
-        stringDisplay += `Cost: <span style="color:forestgreen">Already learned!</span><br>`
+        stringDisplay += `<span style="color:forestgreen">Learned!</span><br>`
     } else {
-        if (abilityData.hasOwnProperty("cost")) {
-            stringDisplay += `Cost: ${abilityData.cost}<br>`
+        if (unlockPointsLookup[abilityData.position.row - 1] > playerStats.passivePointsSpent[abilityData.sub]) {
+            stringDisplay += `<span style="color:red">Not learned (Needs ${unlockPointsLookup[abilityData.position.row - 1]} points in subclass)</span><br>`
         } else {
-            stringDisplay += `Cost: ${0}<br>`
+            stringDisplay += `<span style="color:red">Not learned (<span style="color:yellow">Available</span>)</span><br>`
         }
     }
     return stringDisplay;
@@ -580,13 +639,13 @@ function generateAbilityDynamicTooltip(ability) {
             let parts = Array(4).fill(0);
             for (let index = 0; index < abilityData.damageRatios.length; index++) {
                 let ratio = abilityData.damageRatios[index];
-                if(ratio > 0){
+                if (ratio > 0) {
                     parts[index] = ratio * (Math.sqrt(getEffectiveValue(attributeIndexToId[index]) + 1) - 1);
                     ratioDamage += `<span class='${attributeIndexToId[index]}Text'>${attributeDisplayShort[attributeIndexToId[index]]}</span>: `
-                    ratioDamage += highlightProperty("",`${format(parts[index]*abilityData.damageRange[0])}-${format(parts[index]*abilityData.damageRange[1])}`) + "<br>";
+                    ratioDamage += highlightProperty("", `${format(parts[index] * abilityData.damageRange[0])}-${format(parts[index] * abilityData.damageRange[1])}`) + "<br>";
                 }
             }
-            ratioDamage += highlightProperty("Total: ",`${format(arraySum(parts)*abilityData.damageRange[0])}-${format((arraySum(parts)*abilityData.damageRange[1]))}`) + "<br>";
+            ratioDamage += highlightProperty("Total: ", `${format(arraySum(parts) * abilityData.damageRange[0])}-${format((arraySum(parts) * abilityData.damageRange[1]))}`) + "<br>";
             break;
         case 2:
             break;
@@ -596,8 +655,7 @@ function generateAbilityDynamicTooltip(ability) {
             break;
     }
     useTime += highlightProperty(`Use time: `, `${format(abilityData.time / 1000 / player.actionSpeed)}s<br>`);
-    if(abilityData.cooldownTime > 0)
-    {cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction)}s<br>`);}
+    if (abilityData.cooldownTime > 0) { cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction)}s<br>`); }
     return header + ratioDamage + useTime + cooldownText;
 }
 function getPlayerPassiveLevel(skillId) {
@@ -721,9 +779,17 @@ function removeEffect(skillId) {
         }
     }
 }
+function updateSubclassButton(index) {
+    let b = document.getElementById(`subclassTreeButton${index}`);
+    b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index])})`;
+}
 function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
+    if (skill.unlockPoints > playerStats.passivePointsSpent[skill.sub]) {
+        logConsole(`You do not have enough points in this subclass!`, 'warning');
+        return false;
+    }
     if (skill.hasOwnProperty('requires')) {
         for (const [key, value] of Object.entries(skill.requires)) {
             if (playerStats.unlockedSkills[key] < value || playerStats.unlockedSkills[key] == undefined) {
@@ -746,7 +812,9 @@ function checkSkillPurchase(skillId, times = 1) {
         }
     }
     updateButton(skillId);
+    updateSubclassButton(skill.sub);
 }
+
 function checkAbilityPurchase(abilityId) {
     let cost = 0;
     let ability = playerMoves[abilityId];
@@ -758,9 +826,19 @@ function checkAbilityPurchase(abilityId) {
     //         }
     //     }
     // }
-
+    if (ability.hasOwnProperty("unlockPoints")) {
+        if (ability.unlockPoints > playerStats.passivePointsSpent[ability.sub]) {
+            logConsole(`You do not have enough points in this subclass!`, 'warning');
+            return false;
+        }
+    } else {
+        if (unlockPointsLookup[ability.position.row - 1] > playerStats.passivePointsSpent[ability.sub]) {
+            logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup[ability.position.row - 1]})`, 'warning');
+            return false;
+        }
+    }
     if (playerStats.unlockedAbilities.hasOwnProperty(abilityId)) {
-        if (playerStats.unlockedAbilities[abilityId] > 0) { logConsole(`${ability.name} is already max level!`); return false; }
+        if (playerStats.unlockedAbilities[abilityId] > 0) { logConsole(`${ability.name} is already max level!`, 'warning'); return false; }
     } else {
         if (ability.hasOwnProperty("cost")) {
             cost = ability.cost;
@@ -773,6 +851,7 @@ function checkAbilityPurchase(abilityId) {
         unlockAbility(abilityId);
         populateAbilitySlots();
         updateAbilityButton(abilityId);
+        updateSubclassButton(ability.sub);
     }
 }
 function unlockAbility(id) {
@@ -785,12 +864,9 @@ function updateButton(skillId) {
     } else {
         l.innerHTML = 0;
     }
-    let t = passiveButtonDict[skillId].querySelector('.skilltooltiptext');
-    t.innerHTML = generatePassiveTooltip(skillLibrary[playerStats.class][skillId]);
 }
 function updateAbilityButton(abilityId) {
-    let t = abilityButtonDict[abilityId].querySelector('.skilltooltiptext');
-    t.innerHTML = generateAbilityRequirementTooltip(abilityId);
+   //maybe used later
 }
 function resetSkills() {
     playerStats.effectMultipliers = {};
@@ -814,10 +890,16 @@ function resetSkills() {
     for (const [key, value] of Object.entries(passiveButtonDict)) {
         updateButton(key);
     }
+    for (let index = 0; index < classTrees[playerStats.class]; index++) {
+        updateSubclassButton(index);
+    }
 
 }
 function changeClass(className, keep = false) {
     //if (className == playerStats.class) return;
+    let confirm;
+    confirm = window.confirm(`You are going to become a ${className}. Are you sure?`);
+    if (!confirm) return;
     if (className != 'human') { playerStats.abilitySlots = 4; player.health = -1; } else { playerStats.abilitySlots = 3 };
     resetSkills();
     playerStats.class = className;
