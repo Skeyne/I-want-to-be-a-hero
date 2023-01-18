@@ -650,6 +650,7 @@ class Player extends CombatEntity {
                 break;
             case 3:
                 this.addBuff(this.nextMoveKey, this.nextMove);
+                break;
 
             default:
                 logConsole("ERROR: Not a valid move type");

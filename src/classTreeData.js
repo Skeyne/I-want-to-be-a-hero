@@ -1671,7 +1671,7 @@ skillLibrary = {
         'mu_0_9': {
             id: 'mu_0_9', sub: 0, position: { row: 6, column: 3 }, name: 'Efficient Replication', iconName: 'milerun',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 0.004, }],
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.004, }],
             maxLevel: 999, cost: Array(999).fill(10), requires: { 'mu_0_3': 1 }
         },
         'mu_0_20': {
@@ -2574,7 +2574,7 @@ skillLibrary = {
                     effectType: "multPercent", //additiveFlat, additivePercent, multPercent
                     effectMagnitude: 1.05,
                 }],
-            maxLevel: 3,
+            maxLevel: 1,
             cost: [100],
             requires: { 'ni_1_2': 1 }
         },
@@ -2583,7 +2583,7 @@ skillLibrary = {
             desc: '',
             effect: [
                 { type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.05 }],
-            maxLevel: 3, cost: Array(999).fill(10), requires: { 'ni_1_5': 1 }
+            maxLevel: 999, cost: Array(999).fill(10), requires: { 'ni_1_5': 1 }
         },
         'ni_1_7': {
             id: 'ni_1_7', sub: 1, position: { row: 5, column: 4 }, name: 'Wall Running', iconName: 'shadowB',
