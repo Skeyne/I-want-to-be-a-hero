@@ -494,7 +494,7 @@ playerMoves = {
         type: 0,
         sub: 0,
         position: { row: 4, column: 5 },
-        category: 'melee',
+        category: 'ranged',
         name: "Acid Blob",
         description: "",
         iconName: "placeholder",
