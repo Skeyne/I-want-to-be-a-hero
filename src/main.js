@@ -1213,7 +1213,6 @@ class Encounter {
 
 //console.log(document.querySelector('input[name="selectArea"]:checked').value);
 currentArea = areas[playerStats.currentArea];
-areaSelect.value = playerStats.currentArea;
 
 var player = new Player(playerStats);
 //var encounter = new Encounter(currentArea, 1);
