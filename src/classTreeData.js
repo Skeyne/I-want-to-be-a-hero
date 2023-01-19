@@ -1668,6 +1668,13 @@ skillLibrary = {
             effect: [{ type: 1, effectTarget: "takedown", effectType: "additiveFlat", effectMagnitude: 0.1, }],
             maxLevel: 1, cost: [100], requires: { 'mu_0_2': 1 }
         },
+        'mu_0_8': {
+            id: 'mu_0_8', sub: 0, position: { row: 4, column: 4 }, name: 'Internal Chemistry', iconName: 'milerun',
+            desc: '',
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.01, },
+            { type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 5000, }],
+            maxLevel: 1, cost: [150], requires: { 'mu_0_2': 1 }
+        },
         'mu_0_9': {
             id: 'mu_0_9', sub: 0, position: { row: 6, column: 3 }, name: 'Efficient Replication', iconName: 'milerun',
             desc: '',
@@ -1996,13 +2003,6 @@ skillLibrary = {
                     effectTarget: "toughness",
                     effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
                     effectMagnitude: 0.0025,
-                },
-
-                {
-                    type: 2, // attribute boost
-                    effectTarget: "strengthTraining",
-                    effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                    effectMagnitude: 0.005,
                 }],
             maxLevel: 25,
             cost: Array(25).fill(2),
