@@ -116,8 +116,8 @@ main {
     position: relative;
     height: 100%;
     width: 0.6vw;
-    background-image: linear-gradient(90deg, black , whitesmoke,black);
-/* 
+    background-image: linear-gradient(90deg, black, whitesmoke, black);
+    /* 
     linear-gradient(0deg, yellow,yellow 50%,white 50%,white); */
     border: 0.3vw solid black;
     z-index: 0;
@@ -343,7 +343,7 @@ main {
     border: 5px outset rgb(45, 45, 45);
     transition: all 0s;
     transition-property: background-color, color;
-    
+
 }
 
 .sidebarButtonActive {
@@ -353,7 +353,7 @@ main {
     border: 5px outset rgb(45, 45, 45);
     transition: all 0s;
     transition-property: background-color, color;
-    
+
 
 }
 
@@ -950,6 +950,7 @@ progress[value]::-webkit-progress-bar {
     z-index: 1;
     transition: border-color 0.5s;
 }
+
 .passiveMinorButton {
     width: 30%;
     height: 30%;
@@ -961,6 +962,7 @@ progress[value]::-webkit-progress-bar {
     z-index: 1;
     transition: border-color 0.5s;
 }
+
 .passiveMajorButton {
     position: relative;
     width: 70%;
@@ -973,7 +975,9 @@ progress[value]::-webkit-progress-bar {
     transition: border-color 0.5s;
 }
 
-.passiveSkillButton:active, .passiveMajorButton:active, .passiveMinorButton:active {
+.passiveSkillButton:active,
+.passiveMajorButton:active,
+.passiveMinorButton:active {
     border-color: white;
     transition: border-color 0s;
 }
@@ -1055,7 +1059,7 @@ progress[value]::-webkit-progress-bar {
     column-gap: 20px;
 }
 
-.radioAreaLabel {
+.areaButton {
     box-sizing: border-box;
     width: 100%;
     height: min-content;
@@ -1066,9 +1070,17 @@ progress[value]::-webkit-progress-bar {
     background-size: 100%;
     background-position: 0%;
     filter: saturate(0) brightness(0.5);
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
 }
 
-.radioAreaLabel::after {
+.areaButton::after {
     content: '';
     background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 255, 1) 100%);
     height: 100%;
@@ -1078,17 +1090,11 @@ progress[value]::-webkit-progress-bar {
     opacity: .7;
 }
 
-.radioAreaLabel:active {
+.areaButton:active {
     border: 5px grey inset;
 }
 
-.radioArea {
-    position: fixed;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.radioArea:checked~label {
+.areaButton.active {
     filter: saturate(1);
 }
 
@@ -1160,26 +1166,31 @@ progress[value]::-webkit-progress-bar {
     font-size: 1em;
     background-color: whitesmoke;
 }
-.prestigePanelTab{
+
+.prestigePanelTab {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(180deg, black 5%, whitesmoke 40%, whitesmoke 60%,black 95%);
+    background: linear-gradient(180deg, black 5%, whitesmoke 40%, whitesmoke 60%, black 95%);
 }
-.subclassPickButton{
+
+.subclassPickButton {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1%;
 }
-.subclassPickButton:hover{
+
+.subclassPickButton:hover {
     outline: goldenrod solid 2px;
 }
-.subclassPickButton.selected{
+
+.subclassPickButton.selected {
     color: whitesmoke;
     background-color: black;
     outline: goldenrod solid 2px;
 }
+
 .classButton {
     border: 2px solid black;
     font-family: 'Pickle Pushing';
@@ -1503,7 +1514,7 @@ progress[value]::-webkit-progress-bar {
         position: relative;
         height: 100%;
         width: 1.2vw;
-        background-image: linear-gradient(90deg, black , lightgrey,black),
+        background-image: linear-gradient(90deg, black, lightgrey, black),
         ;
         border: 0.3vw solid black;
         z-index: 0;

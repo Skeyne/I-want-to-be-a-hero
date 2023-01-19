@@ -208,33 +208,25 @@ function checkTabUnlocks() {
         document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle");
     }
 }
+areaButtonDict = {};
 function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
+    areaButtonDict = {};
     for (let index = 0; index < areas.length; index++) {
-        let area = areas[index];
-        
+        let area = areas[index];   
         let d = document.createElement('div');
-        d.setAttribute("class", "radioWrap");
+        d.addEventListener('click',()=>{
+            document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
+            changeArea(index)
+            document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');;
+        })
+        d.id = `areaButton_${area.id}`;
+        d.classList.add('areaButton')
+        d.style.backgroundImage = `linear-gradient(180deg,transparent ,rgba(15,15,15,.5) 25% 75%,transparent),url(resources/backgroundImages/${area.background})`;
+        d.innerHTML = area.displayText;
+        if (index == playerStats.currentArea){d.classList.toggle('active')}
         areaSelect.append(d);
-        let radioSelect = document.createElement('input');
-        radioSelect.setAttribute('type', 'radio');
-        radioSelect.setAttribute('name', 'selectArea');
-        radioSelect.setAttribute("id", `${area.name}`);
-        radioSelect.setAttribute("value", index);
-        radioSelect.setAttribute("class", "radioArea");
-        radioSelect.setAttribute("onChange", "changeArea(this.value)");
-        if (index == playerStats.currentArea) radioSelect.setAttribute("checked", "checked");
-        d.append(radioSelect);
-        l = document.createElement('label');
-        l.setAttribute("class", "radioAreaLabel");
-        l.setAttribute("for", `${area.name}`);
-        l.style.backgroundImage = `linear-gradient(180deg,transparent ,rgba(15,15,15,.5) 25% 75%,transparent),url(resources/backgroundImages/${area.background})`;
-        l.innerHTML = area.name;
-        dGradient = document.createElement('div');
-        dGradient.setAttribute("class", "radioAreaGradient");
-        d.append(dGradient);
-        d.append(l);
-        //console.log("Area unlock requirement: ",area.storyUnlock, "Story:",getStoryQuest(playerStats.storyProgress).title)
+        areaButtonDict[area.id] = d;
         if (!(playerStats.areaCompletions[area.id] >= 10)) {
             break;
         }
