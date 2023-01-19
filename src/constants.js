@@ -74,26 +74,26 @@ formulas.flatReduction = function (entity) {
     return baseValue;
 }
 formulas.maxHealth = function (value) {
-    if (value < 100) return 5 + 10*Math.pow(value, HEALTH_GROWTH_EXPONENT-0.01);
+    if (value < 100) return 5 + 10 * Math.pow(value, HEALTH_GROWTH_EXPONENT - 0.01);
     return 10 * Math.pow(value, HEALTH_GROWTH_EXPONENT);
 }
 formulas.softcappedAttribute = function (index) {
     let baseValue = playerStats[attributeIndexToId[index]];
 
-    let softCap = playerStats.attributeSoftcaps[index]+playerStats.permanentSoftcaps[index];
+    let softCap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;
     let softCapFactor = Math.max(1, 1 + Math.log10(baseValue / softCap));
     return Math.min(baseValue, softCap) * softCapFactor;
 }
-const numberFormatter = new Intl.NumberFormat('en', {
-    notation:'compact',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 3,
-  });
-function format(number) {
-    return numberFormatter.format(number);
-    return Math.round((number + Number.EPSILON) * 100) / 100;
+const numberFormatters = [new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 0 }),
+new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 1 }),
+new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 2 }),
+new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 3 })];
+function format(number,digits = 0) {
+    if(isNaN(digits)) console.error('Digits for formatter is NaN');
+    if(digits < 0 || digits > 3) digits = 0;
+    return numberFormatters[digits].format(number);
 }
 function arraySum(array) {
     return array.reduce((accumulator, value) => {
@@ -113,4 +113,23 @@ function getMoveBasePower(move) {
         + move.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
         + move.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
     return d
+}
+const LOGCATEGORY = {
+    combat: 'combat',
+    reward: 'reward',
+    area: 'area'
+}
+function logConsole(text, type = '',category='') {
+    let lines = log.innerHTML.split(/<br>/);
+    if (lines.length > 100) { log.innerHTML = lines.slice(30).join('<br>'); }
+    switch (type) {
+        case 'warning':
+            text = '<span style="color: red">' + text + '</span>'
+            break;
+
+        default:
+            break;
+    }
+    log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
+    log.scrollTop = log.scrollHeight;
 }

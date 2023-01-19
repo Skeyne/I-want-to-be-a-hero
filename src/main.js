@@ -32,7 +32,7 @@ resetPortraitButton.addEventListener("click", function () {
 function updatePowerText() {
     document.getElementById('heroPowerText').innerHTML = format(arraySum([
         (Math.sqrt(getEffectiveValue("strength") + 1) - 1), (Math.sqrt(getEffectiveValue("toughness") + 1) - 1),
-        (Math.sqrt(getEffectiveValue("mind") + 1) - 1), (Math.sqrt(getEffectiveValue("agility") + 1) - 1)]));
+        (Math.sqrt(getEffectiveValue("mind") + 1) - 1), (Math.sqrt(getEffectiveValue("agility") + 1) - 1)]),2);
 }
 updatePowerText();
 setInterval(updatePowerText, 15000);
@@ -114,22 +114,22 @@ function generateAttributeTooltip(attributeId) {
     let secondaryText = "";
     switch (attributeId) {
         case "strength":
-            secondaryText = `It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))))}%`
+            secondaryText = `It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))),2)}%`
             break;
         case "toughness":
-            secondaryText = `It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")))}`
+            secondaryText = `It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")),3)}`
             break;
         case "mind":
-            secondaryText = `It also modifies your base cooldowns to ${format(100 * formulas.cooldownReduction(getEffectiveValue("mind")))}%`
+            secondaryText = `It also modifies your base cooldowns to ${format(100 * formulas.cooldownReduction(getEffectiveValue("mind")),2)}%`
             break;
         case "agility":
-            secondaryText = `It also gives you a base action speed of ${format(100 * formulas.actionSpeed(getEffectiveValue("agility")))}%`
+            secondaryText = `It also gives you a base action speed of ${format(100 * formulas.actionSpeed(getEffectiveValue("agility")),2)}%`
             break;
 
         default:
             break;
     }
-    return `Your ${attributeDisplayNames[attributeId]} base power is ${format(Math.sqrt(getEffectiveValue(attributeId) + 1) - 1)}<br>${secondaryText}`
+    return `Your ${attributeDisplayNames[attributeId]} base power is ${format(Math.sqrt(getEffectiveValue(attributeId) + 1) - 1,2)}<br>${secondaryText}`
 }
 document.addEventListener('mouseover', function (e) {
     if (e.target.classList.contains('tooltip')) {
@@ -258,20 +258,7 @@ false);
 //     if (e.deltaY > 0) changeTab(activeTab + 1);
 //     else changeTab(activeTab - 1);;
 // });
-function logConsole(text, type = '') {
-    let lines = log.innerHTML.split(/<br>/);
-    if (lines.length > 100) { log.innerHTML = lines.slice(30).join('<br>'); }
-    switch (type) {
-        case 'warning':
-            text = '<span style="color: red">' + text + '</span>'
-            break;
 
-        default:
-            break;
-    }
-    log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
-    log.scrollTop = log.scrollHeight;
-}
 class CombatProperties {
     constructor(data) {
         this.maxHealth = 0;
@@ -599,7 +586,7 @@ class Player extends CombatEntity {
                                                 enemy.interrupt += moveStun * 1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(df);
-                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(df)}) damage.`);
+                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr,2)}</span>(${format(df,2)}) damage.`);
                                         }
                                     })
                                     break;
@@ -611,8 +598,8 @@ class Player extends CombatEntity {
                     }
 
                     let { died: killingBlow, d: dr } = target.takeDamage(df);
-                    logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr)}</span>(${format(d3)}) damage.`);
-                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`Hero healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal))}`); }
+                    logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr,2)}</span>(${format(d3,2)}) damage.`);
+                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`Hero healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal),2)}`); }
                     if (killingBlow) this.target = null;
                 }
 
@@ -644,7 +631,7 @@ class Player extends CombatEntity {
                                     + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
-                                logConsole(`Hero healed for ${format(amount)}`);
+                                logConsole(`Hero healed for ${format(amount,2)}`);
                                 break;
                             case "shield":
                                 amount = this.nextMove.damage
@@ -657,7 +644,7 @@ class Player extends CombatEntity {
                                 }
                                 if (amount > this.shield) {
                                     this.shield = amount;
-                                    logConsole(`Hero shielded for ${format(amount)} from ${this.nextMove.name}`);
+                                    logConsole(`Hero shielded for ${format(amount,2)} from ${this.nextMove.name}`);
                                 }
                                 break;
                             default:
@@ -827,7 +814,7 @@ class Player extends CombatEntity {
     takeDamage(amount) {
         let d = Math.max(0, amount * this.combatState.damageReduction * this.combatState.damageTaken - this.flatReduction);
         if (this.dodgeChance > Math.random()) {
-            logConsole(`${this.name} dodged ${format(amount)} damage!`)
+            logConsole(`${this.name} dodged ${format(amount,2)} damage!`)
             return 0;
         }
         if (this.shield > 0) {
@@ -840,7 +827,7 @@ class Player extends CombatEntity {
             }
         }
         this.health -= d;
-        return d;
+        return d;   
     }
 }
 class Enemy extends CombatEntity {
@@ -975,7 +962,7 @@ class Enemy extends CombatEntity {
                             }
                         });
                     }
-                    logConsole(`${this.name} <span style="color:red">${isCrit ? "critically " : ""}</span> hit ${this.target.name} with <span style="color:yellow">${this.nextMove.name}</span> for <span style="color:yellow">${format(dr)}</span>(${format(d1)}) damage.`);
+                    logConsole(`${this.name} <span style="color:red">${isCrit ? "critically " : ""}</span> hit ${this.target.name} with <span style="color:yellow">${this.nextMove.name}</span> for <span style="color:yellow">${format(dr,2)}</span>(${format(d1,2)}) damage.`);
                 }
                 break;
             case 1:
@@ -998,7 +985,7 @@ class Enemy extends CombatEntity {
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
-                                logConsole(`${this.name} healed for ${format(amount)} from ${this.nextMove.name}`);
+                                logConsole(`${this.name} healed for ${format(amount,2)} from ${this.nextMove.name}`);
                                 break;
                             case "shield":
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
@@ -1150,7 +1137,7 @@ class Enemy extends CombatEntity {
         // }
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money)}$ +${format(exp)}EXP +${this.data.reputationReward}REP</span>`)
+        logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money,2)}$ +${format(exp,2)}EXP +${format(this.data.reputationReward,2)}REP</span>`)
     }
 }
 class Encounter {
@@ -1232,7 +1219,7 @@ function updateExperienceEstimate() {
     }
     expCount += (expCountBuffer - expCount) / 10;
     expCountBuffer = 0;
-    document.getElementById("expEstimateText").innerHTML = format(expCount * 4);
+    document.getElementById("expEstimateText").innerHTML = format(expCount * 4,2);
 }
 var moneyCount = 0;
 var moneyCountBuffer = 0;
@@ -1242,7 +1229,7 @@ function updateMoneyEstimate() {
     }
     moneyCount += (moneyCountBuffer - moneyCount) / 10;
     moneyCountBuffer = 0;
-    document.getElementById("moneyEstimateText").innerHTML = format(moneyCount * 4);
+    document.getElementById("moneyEstimateText").innerHTML = format(moneyCount * 4,2);
 }
 window.setInterval(updateExperienceEstimate, 15000);
 window.setInterval(updateMoneyEstimate, 15000);
@@ -1333,14 +1320,14 @@ function renderLoop() {
     ctx.drawImage(cBuffer, 0, 0);
     //Update html values
     document.getElementById("playerLevelText").innerHTML = "LEVEL " + playerStats.level;
-    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience) + "/" + playerStats.experienceToNext;
+    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience,2) + "/" + format(playerStats.experienceToNext,2);
     document.getElementById("playerExperienceBar").max = playerStats.experienceToNext;
     document.getElementById("playerExperienceBar").value = playerStats.experience;
-    document.getElementById("playerHealthText").innerHTML = format(player.health) + "/" + format(player.maxHealth);
-    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience) + "/" + format(playerStats.experienceToNext);
+    document.getElementById("playerHealthText").innerHTML = format(player.health,3) + "/" + format(player.maxHealth,3);
+    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience,2) + "/" + format(playerStats.experienceToNext,2);
     document.getElementById("playerHealthBar").max = player.maxHealth;
     document.getElementById("playerHealthBar").value = player.health;
-    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed) + "s";
+    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed,2) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed,2) + "s";
     document.getElementById("playerInitiativeBar").max = player.nextMoveInitiative;
     document.getElementById("playerInitiativeBar").value = player.initiative;
     document.getElementById("trainingAreaName").innerHTML = "Current: " + currentTrainingArea.name;
@@ -1350,17 +1337,17 @@ function renderLoop() {
     document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
     document.getElementById("passivePointsText").innerHTML = getTotalPassivePoints() - getAvailablePassivePoints();
-    document.getElementById("moneyText").innerHTML = format(playerStats.money);
-    document.getElementById("reputationText").innerHTML = format(playerStats.reputation);
+    document.getElementById("moneyText").innerHTML = format(playerStats.money,2);
+    document.getElementById("reputationText").innerHTML = format(playerStats.reputation,2);
     Object.values(attribute).forEach(attributeName => {
         let baseAttributeValue = playerStats[attributeName];
-        let effectiveValue = format(getEffectiveValue(attributeName))
-        let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]));
+        let effectiveValue = format(getEffectiveValue(attributeName),3)
+        let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]),3);
         let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]] + playerStats.permanentSoftcaps[attributeIdToIndex[attributeName]];
         let softCapText = (baseAttributeValue > softCap) ? `EFFECTIVE BASE: ${softCappedValue}` : `${softCappedValue}`;
         if (baseAttributeValue > softCap) {
-            softCapText += `<br>(RAW: ${format(baseAttributeValue)})`
-            softCapText += `<br>[SOFTCAP: ${format(softCap)}]`;
+            softCapText += `<br>(RAW: ${format(baseAttributeValue,3)})`
+            softCapText += `<br>[SOFTCAP: ${format(softCap,3)}]`;
             effectiveValue = effectiveValue + "(!)";
         }
         document.getElementById(attributeName + "Text").innerHTML = effectiveValue;
@@ -1532,7 +1519,7 @@ function drawCharacterPortrait(context, character, side) {
     context.fillStyle = "white";
     context.textAlign = (side == "l") ? "left" : "right";
     context.textBaseline = "middle";
-    context.fillText(`${format(100 * (character.health + character.shield) / character.maxHealth)}%`, hanchor.x + mirror * barBorder * 2, hanchor.y + barHeight / 2 + barBorder / 2);
+    context.fillText(`${format(100 * (character.health + character.shield) / character.maxHealth,1)}%`, hanchor.x + mirror * barBorder * 2, hanchor.y + barHeight / 2 + barBorder / 2);
     hanchor.y += barHeight - barBorder;
     //Action bar
     barLength -= 2 * barHeight;

@@ -642,10 +642,10 @@ function generateAbilityDynamicTooltip(ability) {
                 if (ratio > 0) {
                     parts[index] = ratio * (Math.sqrt(getEffectiveValue(attributeIndexToId[index]) + 1) - 1);
                     ratioDamage += `<span class='${attributeIndexToId[index]}Text'>${attributeDisplayShort[attributeIndexToId[index]]}</span>: `
-                    ratioDamage += highlightProperty("", `${format(parts[index] * abilityData.damageRange[0])}-${format(parts[index] * abilityData.damageRange[1])}`) + "<br>";
+                    ratioDamage += highlightProperty("", `${format(parts[index] * abilityData.damageRange[0],3)}-${format(parts[index] * abilityData.damageRange[1],3)}`) + "<br>";
                 }
             }
-            ratioDamage += highlightProperty("Total: ", `${format(arraySum(parts) * abilityData.damageRange[0])}-${format((arraySum(parts) * abilityData.damageRange[1]))}`) + "<br>";
+            ratioDamage += highlightProperty("Total: ", `${format(arraySum(parts) * abilityData.damageRange[0],3)}-${format((arraySum(parts) * abilityData.damageRange[1]),3)}`) + "<br>";
             break;
         case 2:
             break;
@@ -654,8 +654,8 @@ function generateAbilityDynamicTooltip(ability) {
         default:
             break;
     }
-    useTime += highlightProperty(`Use time: `, `${format(abilityData.time / 1000 / player.actionSpeed)}s<br>`);
-    if (abilityData.cooldownTime > 0) { cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction)}s<br>`); }
+    useTime += highlightProperty(`Use time: `, `${format(abilityData.time / 1000 / player.actionSpeed,2)}s<br>`);
+    if (abilityData.cooldownTime > 0) { cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction,2)}s<br>`); }
     return header + ratioDamage + useTime + cooldownText;
 }
 function getPlayerPassiveLevel(skillId) {
@@ -781,7 +781,7 @@ function removeEffect(skillId) {
 }
 function updateSubclassButton(index) {
     let b = document.getElementById(`subclassTreeButton${index}`);
-    b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index])})`;
+    b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index],0)})`;
 }
 function unlockPointsLookup(index) {
     if (playerStats.class == 'human') {

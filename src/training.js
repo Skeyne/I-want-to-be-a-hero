@@ -111,7 +111,6 @@ class Activity {
         this.updateBars();
     }
     reward() {
-
         let rewards = this.RewardPerPlayerLevel;
         let expReward = 0;
         for (let index = 0; index < this.attributeRatios.length; index++) {
@@ -119,7 +118,7 @@ class Activity {
                 let attribute = attributeIndexToId[index];
                 let reward = rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
                 if ((rewards[index] > 0)) {
-                    expReward += getPrestigeBonus(playerStats.classPrestige).activityExp * (1 + Math.log10(playerStats[attribute] + 1)) * this.timeToComplete / 10000;
+                    expReward += getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1+(Math.log10(playerStats[attribute] + 1)/10),1+(Math.log10(playerStats[attribute] + 1)/10)) * this.timeToComplete / 10000;
                 }
                 playerStats[attribute] = Math.max(playerStats.permanentAttributes[index], playerStats[attribute] + reward);
             }
@@ -147,7 +146,7 @@ class Activity {
     updateRankProgress() {
         let rankText = this.element.getElementsByTagName("span")[0];
         rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[this.id].level]}
-        (${format(100 * playerStats.activityLevels[this.id].exp / this.expToNext)}%)`;
+        (${format(100 * playerStats.activityLevels[this.id].exp / this.expToNext,2)}%)`;
     }
     updateRank() {
         let rankText = this.element.getElementsByTagName("span")[0];
@@ -161,7 +160,7 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index])}x`
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index],2)}x`
             attributeText.append(s);
         }
     }
@@ -210,7 +209,7 @@ Object.keys(activityData).forEach(id => {
     title.innerHTML = activity.name;
     let rankText = document.createElement("span");
     rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}
-    (${format(100 * playerStats.activityLevels[id].exp / activity.expToNext)}%)`;
+    (${format(100 * playerStats.activityLevels[id].exp / activity.expToNext),2}%)`;
     let rankProgress = document.createElement("progress");
     rankProgress.setAttribute("class", "rankProgressBar");
     rankProgress.max = activity.expToNext;
@@ -221,11 +220,11 @@ Object.keys(activityData).forEach(id => {
         if (ratio == 0) continue;
         let s = document.createElement("span");
         s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-        s.innerHTML = `${format(activity.RewardPerPlayerLevel[index])}x`
+        s.innerHTML = `${format(activity.RewardPerPlayerLevel[index],2)}x`
         attributeText.append(s);
     }
     let costText = document.createElement("span");
-    costText.innerHTML = `Cost: ${format(activity.cost)}$`;
+    costText.innerHTML = `Cost: ${format(activity.cost,3)}$`;
     let activityProgress = document.createElement("progress");
     activityProgress.setAttribute("class", "activityProgressBar");
     activityProgress.max = activity.timeToComplete;
@@ -269,16 +268,16 @@ function upgradeTrainingArea() {
         updateTrainingCanBuy();
     }
 }
-function updateTrainingText() {
-    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
-    document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward);
-}
+// function updateTrainingText() {
+//     document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
+//     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward);
+// }
 
-function updateTrainingNextText() {
-    document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
-    document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward) +
-        " -> " + format(currentTrainingArea.Reward * TRAINING_REWARD_GROWTH_BASE);
-}
+// function updateTrainingNextText() {
+//     document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
+//     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward) +
+//         " -> " + format(currentTrainingArea.Reward * TRAINING_REWARD_GROWTH_BASE);
+// }
 function updateTrainingCanBuy() {
     if (playerStats.money >= currentTrainingArea.Cost) {
         document.getElementById("trainingCanUpgradeText").innerHTML = "Upgrade available!";

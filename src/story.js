@@ -219,7 +219,7 @@ function checkAreaUnlocks() {
         d.addEventListener('click',()=>{
             document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
             changeArea(index)
-            document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');;
+            document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
         })
         d.id = `areaButton_${area.id}`;
         d.classList.add('areaButton');

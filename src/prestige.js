@@ -54,12 +54,12 @@ function updateAttributePrestigeText() {
 updateAttributePrestigeText();
 const classPrestigeRequirements = [
     { level: 150, storyProgress: 21, cumulativeSoftcaps: 1e6 },
-    { level: 1000, storyProgress: 991, cumulativeSoftcaps: 1e10 },
+    { level: 1000, storyProgress: 999, cumulativeSoftcaps: 1e10 },
 ]
 const classPrestigeBonus = [
     { attributeGain: 1, bonusPassives: 0, activityExp: 1 },
     { attributeGain: 2, bonusPassives: 100, activityExp: 2 },
-    { attributeGain: 4, bonusPassives: 1000, activityExp: 4},
+    { attributeGain: 4, bonusPassives: 1000, activityExp: 4 },
 ]
 function getPrestigeBonus(index) {
     if (index >= classPrestigeBonus.length) { return classPrestigeBonus[classPrestigeBonus.length - 1]; }
@@ -76,13 +76,16 @@ function classPrestige() {
     if (confirmed) {
         if (canAttributePrestige) { attributePrestige(); }
         playerStats.classPrestige += 1;
-        playerStats.subclassPrestige[subclassPick[0]] += 1;
         playerSetLevel(0);
         resetSkills();
         updateClassPrestigeRequirements();
         updateClassPrestigeRewards();
         populateAbilityPreview(-1);
         populatePassiveTree();
+        //Go back to Alley
+        document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
+        changeArea(0);
+        document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
     } else {
         return;
     }
@@ -96,6 +99,7 @@ function canClassPrestige() {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         cumulativeSC += softcap
     }
+    if (!classCheck) { return false; }
     if (cumulativeSC < requirements.cumulativeSoftcaps) { return false; }
     if (playerStats.level < requirements.level) { return false; }
     if (playerStats.storyProgress < requirements.storyProgress) { return false; }
@@ -122,8 +126,7 @@ function updateClassPrestigeRewards() {
 function populateAbilityPreview(subclassIndex) {
     let previewGrid = document.getElementById("subclassPreviewGrid");
     previewGrid.innerHTML = "";
-    if (subclassIndex < 0) {subclassPick[0] == null; return;}
-    subclassPick[0] = subclassIndex;
+    if (subclassIndex < 0) { return false; }
     let buttons = document.getElementById("classPrestigePick").getElementsByTagName("div");
     for (let index = 0; index < buttons.length; index++) {
         const element = buttons[index];
@@ -138,14 +141,11 @@ function populateAbilityPreview(subclassIndex) {
         if (!ability.hasOwnProperty("sub")) return;
         if (ability.sub != subclassIndex) return;
         let b = document.createElement("button");
-        previewGrid.append(b);
-        b.setAttribute("class", "abilityPickButton tooltip");
-        b.style.backgroundImage = `url(resources/abilityIcons/"${playerMoves[abilityKey].iconName}Icon.png")`;
-        let t = document.createElement("div");
-        t.setAttribute("class", "skilltooltiptext oxanium");
-        t.innerHTML = generateAbilityRequirementTooltip(abilityKey);
-        b.appendChild(t);
+        b.setAttribute("class", "abilityPickButton");
+        b.setAttribute("data-ability-tooltip", abilityKey);
+        b.style.backgroundImage = `url("resources/abilityIcons/${playerMoves[abilityKey].iconName}Icon.png")`;
         abilityButtonDict[abilityKey] = b;
+        previewGrid.append(b);
 
     })
 }
@@ -158,7 +158,7 @@ function populateSubclassPickButtons() {
 
     }
 }
-if (playerStats.storyProgress < 99) {
+if (true) {
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[0].style.display = 'none';
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[1].style.display = 'none';
 }

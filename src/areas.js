@@ -25,7 +25,7 @@ class Area {
         } else {
             completionText = '(0/10)';
         }
-        return `${name} ${completionText}<br><span style="font-size:1rem">(Power:${power})</span>`;
+        return `${name} ${completionText}<br><span style="font-size:1rem">(Power: ${power})</span>`;
     }
     addCompletion(){
         if(playerStats.areaCompletions.hasOwnProperty(this.id)){
