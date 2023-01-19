@@ -1202,8 +1202,9 @@ class Encounter {
     isActive() {
         if (player.health <= 0) { return 2; }
         for (let index = 0; index < this.enemyArray.length; index++) {
-            if (this.enemyArray[index] != null) { return 0; }
+            if (this.enemyArray[index] != null) {return 0; }
         }
+        currentArea.addCompletion();
         return 1;
     }
 }

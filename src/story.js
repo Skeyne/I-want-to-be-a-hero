@@ -212,9 +212,7 @@ function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
     for (let index = 0; index < areas.length; index++) {
         let area = areas[index];
-        if (area.storyUnlock > playerStats.storyProgress) {
-            break;
-        }
+        
         let d = document.createElement('div');
         d.setAttribute("class", "radioWrap");
         areaSelect.append(d);
@@ -237,6 +235,9 @@ function checkAreaUnlocks() {
         d.append(dGradient);
         d.append(l);
         //console.log("Area unlock requirement: ",area.storyUnlock, "Story:",getStoryQuest(playerStats.storyProgress).title)
+        if (!(playerStats.areaCompletions[area.id] >= 10)) {
+            break;
+        }
     }
 }
 function resetStoryline() {
