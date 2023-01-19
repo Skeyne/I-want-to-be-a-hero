@@ -7,6 +7,7 @@ if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || lo
 }
 document.getElementById('versionText').innerHTML = 'v' + version;
 const cleanPlayerStats = {
+    version: version,
     experience: 0,
     experienceToNext: baseExperienceCost,
     money: 0,
