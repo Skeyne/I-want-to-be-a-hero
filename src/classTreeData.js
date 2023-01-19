@@ -2582,7 +2582,8 @@ skillLibrary = {
             id: 'ni_1_6', sub: 1, position: { row: 6, column: 3 }, name: 'Summoning Practice', iconName: 'shadowB',
             desc: '',
             effect: [
-                { type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.05 }],
+                { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.003 },
+                { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.002 }],
             maxLevel: 999, cost: Array(999).fill(10), requires: { 'ni_1_5': 1 }
         },
         'ni_1_7': {
