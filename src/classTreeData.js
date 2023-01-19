@@ -2513,10 +2513,10 @@ skillLibrary = {
                     type: 0, // secondary attribute boost
                     effectTarget: "mind",
                     effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                    effectMagnitude: 1.1,
+                    effectMagnitude: 1.01,
                 }],
-            maxLevel: 1,
-            cost: [100],
+            maxLevel: 10,
+            cost: Array(10).fill(10),
             requires: { 'ni_1_1': 10 }
         },
         'ni_1_3': {

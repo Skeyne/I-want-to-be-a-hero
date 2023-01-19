@@ -119,7 +119,14 @@ const LOGCATEGORY = {
     reward: 'reward',
     area: 'area'
 }
-function logConsole(text, type = '',category='') {
+const logOptions = {
+    combat: true,
+    reward: true,
+    area: true,
+    system: true,
+}
+function logConsole(text, type = '',category='system') {
+    if(!logOptions[category]) return;
     let lines = log.innerHTML.split(/<br>/);
     if (lines.length > 100) { log.innerHTML = lines.slice(30).join('<br>'); }
     switch (type) {
