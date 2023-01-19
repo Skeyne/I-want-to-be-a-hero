@@ -212,7 +212,6 @@ function checkTabUnlocks() {
 checkAreaUnlocks();
 function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
-    console.log(areaButtonDict);
     areaButtonDict = {};
     for (let index = 0; index < areas.length; index++) {
         let area = areas[index];   
