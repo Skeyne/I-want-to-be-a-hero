@@ -21,7 +21,7 @@ class Area {
         let power = this.power
         let completionText;
         if(playerStats.areaCompletions[this.id]){
-            completionText = playerStats.areaCompletions[this.id] >= 10 ? '' : `(${playerStats.areaCompletions[area.id]}/10)`;
+            completionText = playerStats.areaCompletions[this.id] >= 10 ? '' : `(${playerStats.areaCompletions[this.id]}/10)`;
         } else {
             completionText = '(0/10)';
         }
@@ -36,6 +36,7 @@ class Area {
         if(playerStats.areaCompletions[this.id] == 10){
             checkAreaUnlocks();
         }
+        areaButtonDict[this.id].innerHTML = this.displayText;
     }
     getEnemies() {
         let arr = [];

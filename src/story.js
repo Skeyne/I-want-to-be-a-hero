@@ -197,7 +197,8 @@ updateStoryQuest();
 updateDiaryEntries();
 
 var areaSelect = document.getElementById("selectArea");
-checkAreaUnlocks();
+var areaButtonDict = {};
+
 function checkTabUnlocks() {
     if (playerStats.storyProgress >= 8) {
         document.getElementById("fameBox").style.visibility = 'visible';
@@ -208,9 +209,10 @@ function checkTabUnlocks() {
         document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle");
     }
 }
-areaButtonDict = {};
+checkAreaUnlocks();
 function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
+    console.log(areaButtonDict);
     areaButtonDict = {};
     for (let index = 0; index < areas.length; index++) {
         let area = areas[index];   
@@ -221,12 +223,12 @@ function checkAreaUnlocks() {
             document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');;
         })
         d.id = `areaButton_${area.id}`;
-        d.classList.add('areaButton')
+        d.classList.add('areaButton');
         d.style.backgroundImage = `linear-gradient(180deg,transparent ,rgba(15,15,15,.5) 25% 75%,transparent),url(resources/backgroundImages/${area.background})`;
         d.innerHTML = area.displayText;
         if (index == playerStats.currentArea){d.classList.toggle('active')}
-        areaSelect.append(d);
         areaButtonDict[area.id] = d;
+        areaSelect.append(d);
         if (!(playerStats.areaCompletions[area.id] >= 10)) {
             break;
         }
