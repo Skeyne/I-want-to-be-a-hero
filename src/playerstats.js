@@ -1,4 +1,4 @@
-const version = '0.05d';
+const version = '0.05d1';
 var isOutdated = false;
 var lastVersion;
 var debug = false;
@@ -87,7 +87,7 @@ function load(file = null) {
             if (localStorage.getItem("version") != version) {
                 lastVersion = localStorage.getItem("version");
                 isOutdated = true; console.log("outdated save");
-
+                currentArea = 0;
                 if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
             }
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
