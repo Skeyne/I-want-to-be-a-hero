@@ -10,62 +10,62 @@ var activityData = {
     "activity_0_0": {
         id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.01, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
+        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_1": {
         id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.01, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
+        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_2": {
         id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.01],
         attributeScaling: [0, 0, 0, "standard1"],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
+        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_3": {
         id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.01, 0],
         attributeScaling: [0, 0, "standard1", 0],
-        timeToComplete: 10, cost: 0, expBase: 10, expPower: 3
+        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_1_0": {
         id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.03, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
     },
     "activity_1_1": {
         id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.03, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
     },
     "activity_1_2": {
         id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.03],
         attributeScaling: [0, 0, 0, "standard1"],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
     },
     "activity_1_3": {
         id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.03, 0],
         attributeScaling: [0, 0, "standard1", 0],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3,
+        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
     },
     "activity_2_0": {
         id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, -0.1, -0, 0],
         attributeScaling: ["standard1", "detriment1", 0, 0],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
     },
     "activity_2_1": {
         id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.1, 0.25, 0, 0],
         attributeScaling: ["detriment1", "standard1", 0, 0],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
     },
     "activity_2_2": {
         id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.1, 0.25],
         attributeScaling: ["detriment1","detriment1", "detriment1", "standard1"],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
     },
     "activity_2_3": {
         id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.25, -0.1],
         attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3,
+        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
     },
 }
 
@@ -118,7 +118,7 @@ class Activity {
                 let attribute = attributeIndexToId[index];
                 let reward = rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
                 if ((rewards[index] > 0)) {
-                    expReward += getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1+(Math.log10(playerStats[attribute] + 1)/10),1+(Math.log10(playerStats[attribute] + 1)/10)) * this.timeToComplete / 10000;
+                    expReward += getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1+(Math.log10(playerStats[attribute] + 1)/5),1+(Math.log10(playerStats[attribute] + 1)/10)) * this.timeToComplete / 10000;
                 }
                 playerStats[attribute] = Math.max(playerStats.permanentAttributes[index], playerStats[attribute] + reward);
             }

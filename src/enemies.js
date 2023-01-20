@@ -388,6 +388,7 @@ var abilityLibrary = {
         cooldownTime: 0,
         range: [5, 0],
     },
+
     'shove': {
         type: 0, category: 'ranged', name: "Shove", iconName: "jab",
         baseDamage: 1, damageRatios: [.2, 0, 0, 0], damageRange: [1, 1],

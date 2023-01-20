@@ -236,7 +236,7 @@
                             <div class="oxanium">As your reputation starts to spread, you gain fame points. Fame points
                                 can be allocated to give various passive bonuses.<br>
                                 You can reset your point allocation by Rebranding (requires double click). WARNING! This
-                                costs 5% of your current reputation! </div>
+                                costs 1% of your current reputation! </div>
                             <br><button ondblclick="resetFameUpgrades()" class="bannerButton">Rebrand</button><br>
                             <div class="pickle">Fame: <span id="famePointText"></span></div>
                             <div class="pickle">Next at: <span id="fameToNextText"></span><span
@@ -301,9 +301,9 @@
                                 </div>
                                 
                                 <div id="classPrestigePick" style="display:flex; gap: 10%; justify-content: center;">
-                                    <div class="bannerButton subclassPickButton" onclick="populateAbilityPreview(0)">Bladelore</div>
-                                    <div class="bannerButton subclassPickButton" onclick="populateAbilityPreview(1)">Ninjutsu</div>
-                                    <div class="bannerButton subclassPickButton" onclick="populateAbilityPreview(2)">Shadowcraft</div>
+                                    <div class="bannerButton subclassPickButton" ></div>
+                                    <div class="bannerButton subclassPickButton" ></div>
+                                    <div class="bannerButton subclassPickButton"></div>
                                 </div>
                                 <div class="subHeader">Preview</div>
                                 <div id="subclassPreviewGrid" class="blockPanel" style="height:13%;display: grid; grid-template-columns: repeat(5,1fr);
@@ -444,13 +444,15 @@
 <script src="src/constants.js"></script>
 <script src="src/colors.js"></script>
 <script src="src/playerstats.js"></script>
+<script src="src/combat.js"></script>
 <script src="src/enemies.js "></script>
+<script src="src/allies.js "></script>
 <script src="src/areas.js"></script>
-<script src="src/prestige.js"></script>
 <script src="src/story.js"></script>
 <script src="src/classTreeData.js"></script>
 <script src="src/classAbilityData.js"></script>
 <script src="src/class.js"></script>
+<script src="src/prestige.js"></script>
 <script src="src/fame.js"></script>
 <script src="src/training.js"></script>
 <script src="src/music.js"></script>

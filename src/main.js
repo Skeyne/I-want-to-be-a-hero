@@ -32,7 +32,7 @@ resetPortraitButton.addEventListener("click", function () {
 function updatePowerText() {
     document.getElementById('heroPowerText').innerHTML = format(arraySum([
         (Math.sqrt(getEffectiveValue("strength") + 1) - 1), (Math.sqrt(getEffectiveValue("toughness") + 1) - 1),
-        (Math.sqrt(getEffectiveValue("mind") + 1) - 1), (Math.sqrt(getEffectiveValue("agility") + 1) - 1)]),2);
+        (Math.sqrt(getEffectiveValue("mind") + 1) - 1), (Math.sqrt(getEffectiveValue("agility") + 1) - 1)]), 2);
 }
 updatePowerText();
 setInterval(updatePowerText, 15000);
@@ -114,22 +114,22 @@ function generateAttributeTooltip(attributeId) {
     let secondaryText = "";
     switch (attributeId) {
         case "strength":
-            secondaryText = `It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))),2)}%`
+            secondaryText = `It also gives you a base damage reduction of ${format(100 * (1 - formulas.damageReduction(getEffectiveValue("strength"))), 2)}%`
             break;
         case "toughness":
-            secondaryText = `It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")),3)}`
+            secondaryText = `It also gives you a maximum health of ${format(PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness")), 3)}`
             break;
         case "mind":
-            secondaryText = `It also modifies your base cooldowns to ${format(100 * formulas.cooldownReduction(getEffectiveValue("mind")),2)}%`
+            secondaryText = `It also modifies your base cooldowns to ${format(100 * formulas.cooldownReduction(getEffectiveValue("mind")), 2)}%`
             break;
         case "agility":
-            secondaryText = `It also gives you a base action speed of ${format(100 * formulas.actionSpeed(getEffectiveValue("agility")),2)}%`
+            secondaryText = `It also gives you a base action speed of ${format(100 * formulas.actionSpeed(getEffectiveValue("agility")), 2)}%`
             break;
 
         default:
             break;
     }
-    return `Your ${attributeDisplayNames[attributeId]} base power is ${format(Math.sqrt(getEffectiveValue(attributeId) + 1) - 1,2)}<br>${secondaryText}`
+    return `Your ${attributeDisplayNames[attributeId]} base power is ${format(Math.sqrt(getEffectiveValue(attributeId) + 1) - 1, 2)}<br>${secondaryText}`
 }
 document.addEventListener('mouseover', function (e) {
     if (e.target.classList.contains('tooltip')) {
@@ -226,20 +226,20 @@ document.addEventListener('DOMContentLoaded', (e) => {
 //unintended scrolling
 var keys = {};
 window.addEventListener("keydown",
-    function(e){
+    function (e) {
         keys[e.code] = true;
-        switch(e.code){
+        switch (e.code) {
             case "ArrowUp": case "ArrowDown": case "ArrowLeft": case "ArrowRight":
             case "Space": e.preventDefault(); break;
             default: break; // do not block other keys
         }
     },
-false);
+    false);
 window.addEventListener('keyup',
-    function(e){
+    function (e) {
         keys[e.code] = false;
     },
-false);
+    false);
 
 // let isMouseHover = false
 // leftWindow.addEventListener("mouseleave", function (event) {
@@ -259,171 +259,9 @@ false);
 //     else changeTab(activeTab - 1);;
 // });
 
-class CombatProperties {
-    constructor(data) {
-        this.maxHealth = 0;
-        this.health = 0;
-        this.criticalChance = 0;
-        this.dodgeChance = 0;
-        this.lifesteal= 0;
-        this.damageDealt = 0;
-        this.damageReduction = 0;
-        this.damageTaken = 0;
-        this.healthRegeneration = 0;
-        this.repeat = 0;
-        this.actionSpeed = 1;
-    
-    }
-    init(data) {
-        Object.keys(data).forEach((prop) => {
-            if (this.hasOwnProperty(prop)) {
-                this[prop] = data[prop];
-            }
-        })
-    }
-}
-class CombatEntity {
-    constructor() {
-        this.maxHealth = 0;
-        this.health = 0;
-        this.distance = 0;
-        this.initiative = 0;
-        this.interrupt = 0;
-        this.nextMove = null;
-        this.nextMoveInitiative = 0;
-        this.damageReduction = 0;
-        this.damageTaken = 0;
-        this.target = null;
-        this.spriteSize = { x: 32, y: 32 }
-        this.actionSpeed = 1;
-        this.buffEffects = {};
-        this.combatState = new CombatProperties(this);
-    }
-    addBuff(id, skill) {
-        this.buffEffects[id] = { duration: skill.duration, effects: skill.effects };
-        Object.keys(skill.effects).forEach((prop) => {
-            this.updateCombatProperty(prop);
-        })
-    }
-    removeBuff(id) {
-        let effects = this.buffEffects[id].effects;
-        this.buffEffects[id] = null;
-        Object.keys(effects).forEach((prop) => {
-            this.updateCombatProperty(prop);
-        })
-    }
-    updateCombatProperty(propertyName) {
-        //console.log(propertyName);
-        //console.log(this.combatState?.[propertyName]);
-        if (this.combatState[propertyName] != undefined) {
-            let mults = [];
-            let pcts = [];
-            let flats = [];
-            Object.values(this.buffEffects).forEach((buff) => {
-                if (buff == null) return;
-                Object.keys(buff.effects).forEach((effectTarget) => {
-                    if (effectTarget == propertyName) {
-                        //type of effect, percent or mult
-                        switch (buff.effects[propertyName][0]) {
-                            case "mult":
-                                mults.push(buff.effects[propertyName][1]);
-                                break;
-                            case "percent":
-                                pcts.push(buff.effects[propertyName][1]);
-                                break;
-                            case "flat":
-                                flats.push(buff.effects[propertyName][1]);
-                                break;
-                            default:
-                                console.error("Not a valid effect type for buff");
-                                break;
-                        }
-                    } else {
-                        return;
-                    }
-                })
-            })
-            this.combatState[propertyName] = ((this[propertyName] ?this[propertyName] :0)+arraySum(flats)) * (1 + arraySum(pcts)) * arrayMult(mults);
-        } else {
-            console.error("Not a valid CombatProperty");
-        }
-    }
-    setTarget(target) {
-        this.target = target;
-    }
-    takeDamage(amount) {
-        let d = Math.max(0, amount * this.damageReduction); //- this.flatReduction);
-        if (this.shield > 0) {
-            if (d >= this.shield) {
-                d -= this.shield;
-                this.shield = 0;
-            } else {
-                this.shield -= d;
-                d = 0;
-            }
-        }
-        this.health -= d;
-        let died = (this.health <= 0);
-        if (died) {
-            this.onDeath();
-        }
-        return { died, d };
-    }
-    onDeath() {
-        return;
-    }
-    tick() {
-        if (this.health <= 0) {
-            return false;
-        } else {
-            this.health = Math.min(this.health + this.maxHealth * this.combatState.healthRegeneration * logicTickTime / 1000, this.maxHealth);
-        }
-        if (this.nextMove != null) {
-            let tickTime = logicTickTime;
-            if (this.interrupt > 0) {
-                this.interrupt -= tickTime;
-                this.initiative += 0.25 * 1000 * tickTime / 1000 * this.combatState.actionSpeed;
-            } else {
-                this.initiative += 1000 * tickTime / 1000 * this.combatState.actionSpeed;
-            }
 
-        } else {
-            this.think();
-        }
-        this.tickCooldowns();
-        this.tickBuffs();
-        if (this.initiative >= this.nextMoveInitiative) {
-            this.initiative -= this.nextMoveInitiative;
-            if (this.act(this.target)) { this.think() };
-        }
-        return true;
-    }
-    tickCooldowns() {
-        console.error("Do not use CombatEntity directly.");
-    }
-    tickBuffs() {
-        Object.keys(this.buffEffects).forEach((id) => {
-            if (this.buffEffects[id] == null) return;
-            this.buffEffects[id].duration -= logicTickTime;
-            //console.log(this.buffEffects[id].duration);
-            if (this.buffEffects[id].duration <= 0) {
-                //console.warn("REMOVING BUFF");
-                this.removeBuff(id);
-            }
-        })
-    }
-    act(target) {
-        console.error("Do not use CombatEntity directly.");
-    }
-    think() {
-        console.error("Do not use CombatEntity directly.");
-    }
-    draw(context) {
-        return;
-    }
-}
+
 var environmentDistance = 0;
-
 let restRate = 5;
 class Player extends CombatEntity {
     constructor(data) {
@@ -431,6 +269,11 @@ class Player extends CombatEntity {
         this.data = data;
         this.patrolSpeed = getFameEffect("patrolSpeed");
         this.name = "Hero";
+        //ATTRIBUTES
+        this.strength = getEffectiveValue("strength");
+        this.toughness = getEffectiveValue("toughness");
+        this.mind = getEffectiveValue("mind");
+        this.agility = getEffectiveValue("agility");
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.shield = 0;
@@ -537,11 +380,7 @@ class Player extends CombatEntity {
                         });
                     }
                     let isCrit = (Math.random() < moveCritChance);
-                    let d1 = this.nextMove.damage
-                        + this.nextMove.damageRatios[0] * (Math.sqrt(getEffectiveValue("strength") + 1) - 1)
-                        + this.nextMove.damageRatios[1] * (Math.sqrt(getEffectiveValue("toughness") + 1) - 1)
-                        + this.nextMove.damageRatios[2] * (Math.sqrt(getEffectiveValue("mind") + 1) - 1)
-                        + this.nextMove.damageRatios[3] * (Math.sqrt(getEffectiveValue("agility") + 1) - 1);
+                    let d1 = formulas.attackPower(this.nextMove.damageRatios,this.combatState);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
                     let d3 = d2 * this.combatState.damageDealt;
@@ -586,7 +425,7 @@ class Player extends CombatEntity {
                                                 enemy.interrupt += moveStun * 1000;
                                             }
                                             let { died: killingBlow, d: dr } = enemy.takeDamage(df);
-                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr,2)}</span>(${format(df,2)}) damage.`);
+                                            logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr, 2)}</span>(${format(df, 2)}) damage.`);
                                         }
                                     })
                                     break;
@@ -598,8 +437,8 @@ class Player extends CombatEntity {
                     }
 
                     let { died: killingBlow, d: dr } = target.takeDamage(df);
-                    logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr,2)}</span>(${format(d3,2)}) damage.`);
-                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`Hero healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal),2)}`); }
+                    logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr, 2)}</span>(${format(d3, 2)}) damage.`);
+                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`Hero healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal), 2)}`); }
                     if (killingBlow) this.target = null;
                 }
 
@@ -624,27 +463,19 @@ class Player extends CombatEntity {
                         switch (effect) {
                             case "heal":
                                 amount = this.maxHealth * this.nextMove.effects.heal
-                                    + this.nextMove.damage
-                                    + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                    + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                    + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                    + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                                    + formulas.healPower(this.nextMove.ratios,this.combatState);
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
-                                logConsole(`Hero healed for ${format(amount,2)}`);
+                                logConsole(`Hero healed for ${format(amount, 2)}`);
                                 break;
                             case "shield":
-                                amount = this.nextMove.damage
-                                    + this.nextMove.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                    + this.nextMove.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                    + this.nextMove.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                                    + this.nextMove.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                                amount = formulas.healPower(this.nextMove.ratios,this.combatState);
                                 if (this.nextMove.effects.hasOwnProperty("closeCombat")) {
                                     if (dist <= 5) amount *= 1 + this.nextMove.effects.closeCombat;
                                 }
                                 if (amount > this.shield) {
                                     this.shield = amount;
-                                    logConsole(`Hero shielded for ${format(amount,2)} from ${this.nextMove.name}`);
+                                    logConsole(`Hero shielded for ${format(amount, 2)} from ${this.nextMove.name}`);
                                 }
                                 break;
                             default:
@@ -738,20 +569,20 @@ class Player extends CombatEntity {
                 if (ability.hasOwnProperty("effects")) {
                     if (ability.effects.hasOwnProperty('heal')) {
                         let amount = this.maxHealth * ability.effects.heal
-                            + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                            + ability.damageRatios[0] * (Math.pow(this.combatState.strength + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(this.combatState.toughneess + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(this.combatState.mind + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(this.combatState.agility + 1, HEALTH_GROWTH_EXPONENT) - 1);
                         if (this.maxHealth - this.health > amount) {
                             weights[index] = 100;
                         }
                     }
                     if (ability.effects.hasOwnProperty('shield')) {
                         let amount = ability.damage
-                            + ability.damageRatios[0] * (Math.pow(getEffectiveValue("strength") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[1] * (Math.pow(getEffectiveValue("toughness") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[2] * (Math.pow(getEffectiveValue("mind") + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[3] * (Math.pow(getEffectiveValue("agility") + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                            + ability.damageRatios[0] * (Math.pow(this.combatState.strength + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[1] * (Math.pow(this.combatState.toughneess + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[2] * (Math.pow(this.combatState.mind + 1, HEALTH_GROWTH_EXPONENT) - 1)
+                            + ability.damageRatios[3] * (Math.pow(this.combatState.agility + 1, HEALTH_GROWTH_EXPONENT) - 1);
                         if (this.shield <= 0.2 * amount) {
                             weights[index] = 100;
                         }
@@ -759,7 +590,7 @@ class Player extends CombatEntity {
                 }
             }
             if (ability.type == 3) {
-                weights[index] = 100;
+                if (this.moveIntention == 0) { weights[index] = 100; }
             }
         }
 
@@ -814,7 +645,7 @@ class Player extends CombatEntity {
     takeDamage(amount) {
         let d = Math.max(0, amount * this.combatState.damageReduction * this.combatState.damageTaken - this.flatReduction);
         if (this.dodgeChance > Math.random()) {
-            logConsole(`${this.name} dodged ${format(amount,2)} damage!`)
+            logConsole(`${this.name} dodged ${format(amount, 2)} damage!`)
             return 0;
         }
         if (this.shield > 0) {
@@ -827,7 +658,7 @@ class Player extends CombatEntity {
             }
         }
         this.health -= d;
-        return d;   
+        return d;
     }
 }
 class Enemy extends CombatEntity {
@@ -962,7 +793,7 @@ class Enemy extends CombatEntity {
                             }
                         });
                     }
-                    logConsole(`${this.name} <span style="color:red">${isCrit ? "critically " : ""}</span> hit ${this.target.name} with <span style="color:yellow">${this.nextMove.name}</span> for <span style="color:yellow">${format(dr,2)}</span>(${format(d1,2)}) damage.`);
+                    logConsole(`${this.name} <span style="color:red">${isCrit ? "critically " : ""}</span> hit ${this.target.name} with <span style="color:yellow">${this.nextMove.name}</span> for <span style="color:yellow">${format(dr, 2)}</span>(${format(d1, 2)}) damage.`);
                 }
                 break;
             case 1:
@@ -985,7 +816,7 @@ class Enemy extends CombatEntity {
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
-                                logConsole(`${this.name} healed for ${format(amount,2)} from ${this.nextMove.name}`);
+                                logConsole(`${this.name} healed for ${format(amount, 2)} from ${this.nextMove.name}`);
                                 break;
                             case "shield":
                                 amount = this.nextMove.baseDamage / 100 * this.maxHealth;
@@ -1137,12 +968,13 @@ class Enemy extends CombatEntity {
         // }
         addPlayerReputation(this.data.reputationReward);
         checkDefeatQuest(this.data.id);
-        logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money,2)}$ +${format(exp,2)}EXP +${format(this.data.reputationReward,2)}REP</span>`)
+        logConsole(`<span style="color: cyan;">${this.name} was defeated! +${format(money, 2)}$ +${format(exp, 2)}EXP +${format(this.data.reputationReward, 2)}REP</span>`)
     }
 }
 class Encounter {
     constructor(area) {
         this.enemyArray = [];
+        this.allyArray = [];
         this.enemiesToSpawn = area.getEnemies();
         let lastHealth = player.health / player.maxHealth;
         this.area = area;
@@ -1173,9 +1005,25 @@ class Encounter {
             }
         }
         player.setTarget(this.enemyArray[closest]);
+        this.addAlly(summons['shadowClone']);
+    }
+    addAlly(data){    
+        const ally = new Ally(data);
+        ally.distance = player.target.distance - 5;
+        this.allyArray.push(ally);
+        
     }
     tick() {
+        //Player -> Allies -> Enemies
         player.tick();
+        for (let index = 0; index < this.allyArray.length; index++) {
+            let a = this.allyArray[index];
+            if (a == null) { continue; }
+            let active = a.tick();
+            if (!active) {
+                this.allyArray[index] = null;
+            }
+        }
         for (let index = 0; index < encounter.enemyArray.length; index++) {
             let e = encounter.enemyArray[index];
             if (e == null) { continue; }
@@ -1189,7 +1037,7 @@ class Encounter {
     isActive() {
         if (player.health <= 0) { return 2; }
         for (let index = 0; index < this.enemyArray.length; index++) {
-            if (this.enemyArray[index] != null) {return 0; }
+            if (this.enemyArray[index] != null) { return 0; }
         }
         currentArea.addCompletion();
         return 1;
@@ -1219,7 +1067,7 @@ function updateExperienceEstimate() {
     }
     expCount += (expCountBuffer - expCount) / 10;
     expCountBuffer = 0;
-    document.getElementById("expEstimateText").innerHTML = format(expCount * 4,2);
+    document.getElementById("expEstimateText").innerHTML = format(expCount * 4, 2);
 }
 var moneyCount = 0;
 var moneyCountBuffer = 0;
@@ -1229,7 +1077,7 @@ function updateMoneyEstimate() {
     }
     moneyCount += (moneyCountBuffer - moneyCount) / 10;
     moneyCountBuffer = 0;
-    document.getElementById("moneyEstimateText").innerHTML = format(moneyCount * 4,2);
+    document.getElementById("moneyEstimateText").innerHTML = format(moneyCount * 4, 2);
 }
 window.setInterval(updateExperienceEstimate, 15000);
 window.setInterval(updateMoneyEstimate, 15000);
@@ -1262,6 +1110,7 @@ function renderLoop() {
         case "InCombat":
             drawBackground();
             drawEnemies();
+            drawAllies();
             drawPlayer();
             drawCharacterPortrait(ctxBuffer, player, 'l');
             if (player.target != null) {
@@ -1320,14 +1169,14 @@ function renderLoop() {
     ctx.drawImage(cBuffer, 0, 0);
     //Update html values
     document.getElementById("playerLevelText").innerHTML = "LEVEL " + playerStats.level;
-    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience,2) + "/" + format(playerStats.experienceToNext,2);
+    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience, 2) + "/" + format(playerStats.experienceToNext, 2);
     document.getElementById("playerExperienceBar").max = playerStats.experienceToNext;
     document.getElementById("playerExperienceBar").value = playerStats.experience;
-    document.getElementById("playerHealthText").innerHTML = format(player.health,3) + "/" + format(player.maxHealth,3);
-    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience,2) + "/" + format(playerStats.experienceToNext,2);
+    document.getElementById("playerHealthText").innerHTML = format(player.health, 3) + "/" + format(player.maxHealth, 3);
+    document.getElementById("playerExperienceText").innerHTML = format(playerStats.experience, 2) + "/" + format(playerStats.experienceToNext, 2);
     document.getElementById("playerHealthBar").max = player.maxHealth;
     document.getElementById("playerHealthBar").value = player.health;
-    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed,2) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed,2) + "s";
+    document.getElementById("playerInitiativeText").innerHTML = format(player.initiative / 1000 / player.actionSpeed, 2) + "/" + format(player.nextMoveInitiative / 1000 / player.actionSpeed, 2) + "s";
     document.getElementById("playerInitiativeBar").max = player.nextMoveInitiative;
     document.getElementById("playerInitiativeBar").value = player.initiative;
     document.getElementById("trainingAreaName").innerHTML = "Current: " + currentTrainingArea.name;
@@ -1337,17 +1186,17 @@ function renderLoop() {
     document.getElementById("trainingProgressBarOverview").value = currentTrainingArea.progress;
     document.getElementById("classText").innerHTML = playerStats.class;
     document.getElementById("passivePointsText").innerHTML = getTotalPassivePoints() - getAvailablePassivePoints();
-    document.getElementById("moneyText").innerHTML = format(playerStats.money,2);
-    document.getElementById("reputationText").innerHTML = format(playerStats.reputation,2);
+    document.getElementById("moneyText").innerHTML = format(playerStats.money, 2);
+    document.getElementById("reputationText").innerHTML = format(playerStats.reputation, 2);
     Object.values(attribute).forEach(attributeName => {
         let baseAttributeValue = playerStats[attributeName];
-        let effectiveValue = format(getEffectiveValue(attributeName),3)
-        let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]),3);
+        let effectiveValue = format(getEffectiveValue(attributeName), 3)
+        let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]), 3);
         let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]] + playerStats.permanentSoftcaps[attributeIdToIndex[attributeName]];
         let softCapText = (baseAttributeValue > softCap) ? `EFFECTIVE BASE: ${softCappedValue}` : `${softCappedValue}`;
         if (baseAttributeValue > softCap) {
-            softCapText += `<br>(RAW: ${format(baseAttributeValue,3)})`
-            softCapText += `<br>[SOFTCAP: ${format(softCap,3)}]`;
+            softCapText += `<br>(RAW: ${format(baseAttributeValue, 3)})`
+            softCapText += `<br>[SOFTCAP: ${format(softCap, 3)}]`;
             effectiveValue = effectiveValue + "(!)";
         }
         document.getElementById(attributeName + "Text").innerHTML = effectiveValue;
@@ -1519,7 +1368,7 @@ function drawCharacterPortrait(context, character, side) {
     context.fillStyle = "white";
     context.textAlign = (side == "l") ? "left" : "right";
     context.textBaseline = "middle";
-    context.fillText(`${format(100 * (character.health + character.shield) / character.maxHealth,1)}%`, hanchor.x + mirror * barBorder * 2, hanchor.y + barHeight / 2 + barBorder / 2);
+    context.fillText(`${format(100 * (character.health + character.shield) / character.maxHealth, 1)}%`, hanchor.x + mirror * barBorder * 2, hanchor.y + barHeight / 2 + barBorder / 2);
     hanchor.y += barHeight - barBorder;
     //Action bar
     barLength -= 2 * barHeight;
@@ -1625,6 +1474,12 @@ function drawEnemies() {
     encounter.enemyArray.forEach(enemy => {
         if (enemy == null) { return; }
         enemy.draw(ctxBuffer);
+    });
+}
+function drawAllies() {
+    encounter.allyArray.forEach(ally => {
+        if (ally == null) { return; }
+        ally.draw(ctxBuffer);
     });
 }
 function mod(n, m) {

@@ -30,7 +30,7 @@ function resetFameUpgrades() {
             updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
         }
     )
-    playerStats.reputation = 0.95*playerStats.reputation;
+    playerStats.reputation = 0.99*playerStats.reputation;
     sanityCheckFame();
 }
 function updateUI(upgrade = null) {

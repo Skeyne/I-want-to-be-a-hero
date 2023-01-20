@@ -71,12 +71,13 @@ function getPrestigeBonus(index) {
 }
 function classPrestige() {
     if (!canClassPrestige()) { logConsole("You do not meet the requirements to class prestige!", type = 'warning'); return; }
-    if (subclassPick[0] == null) { logConsole("You must pick a subclass to advance!", type = 'warning'); return; }
-    let confirmed = confirm(`Are you sure you want to class prestige? \n You will advance the ${subclassPick} subclass`)
+    //if (subclassPick[0] == null) { logConsole("You must pick a subclass to advance!", type = 'warning'); return; }
+    let confirmed = confirm(`Are you sure you want to class prestige? \n Most of your progress will be reset and you will gain permanent bonuses and unlock more class skills`)
     if (confirmed) {
         if (canAttributePrestige) { attributePrestige(); }
         playerStats.classPrestige += 1;
         playerSetLevel(0);
+        setMoney(0);
         resetSkills();
         updateClassPrestigeRequirements();
         updateClassPrestigeRewards();
@@ -92,17 +93,17 @@ function classPrestige() {
 }
 function canClassPrestige() {
     if ((classPrestigeRequirements.length - 1) <= playerStats.classPrestige) { return false; }
-    let classCheck = (playerStats.class in ["superhuman", "mutant", "esper", "ninja"]);
+    let classCheck = (["superhuman", "mutant", "esper", "ninja"].includes(playerStats.class));
     let requirements = classPrestigeRequirements[playerStats.classPrestige]
     let cumulativeSC = 0;
     for (let index = 0; index < 4; index++) {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         cumulativeSC += softcap
     }
-    if (!classCheck) { return false; }
-    if (cumulativeSC < requirements.cumulativeSoftcaps) { return false; }
-    if (playerStats.level < requirements.level) { return false; }
-    if (playerStats.storyProgress < requirements.storyProgress) { return false; }
+    if (!classCheck) {logConsole("You cannot prestige this class!", type = 'warning'); return false; }
+    if (cumulativeSC < requirements.cumulativeSoftcaps) { logConsole("Your cumulative softcap does not meet the requirement!", type = 'warning'); return false; }
+    if (playerStats.level < requirements.level) {logConsole("Your level does not meet the requirement!", type = 'warning'); return false; }
+    if (playerStats.storyProgress < requirements.storyProgress) { logConsole("Your story progress does not meet the requirement!", type = 'warning'); return false; }
     return true;
 }
 function changePrestigeTab(index) {
@@ -154,14 +155,16 @@ function populateSubclassPickButtons() {
     let buttons = container.getElementsByTagName("div");
     for (let index = 0; index < buttons.length; index++) {
         const element = buttons[index];
-        element.addEventListener("click",);
+        element.innerHTML = classTreeNames[playerStats.class][index];
+        element.addEventListener("click",() => {populateAbilityPreview(index)});
 
     }
 }
-if (true) {
+if (!debug) {
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[0].style.display = 'none';
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[1].style.display = 'none';
 }
 var subclassPick = [null];
 updateClassPrestigeRequirements();
 updateClassPrestigeRewards();
+populateSubclassPickButtons();

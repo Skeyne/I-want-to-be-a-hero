@@ -51,6 +51,7 @@ const attribute = {
     mind: "mind",
     agility: "agility",
 }
+
 var formulas = {};
 formulas.playerExp = function (value) {
     return (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, Math.floor(Math.log10(Math.max(1, playerStats.level)))) * Math.pow(Math.max(1, playerStats.level), experienceLevelExponent);
@@ -86,13 +87,25 @@ formulas.softcappedAttribute = function (index) {
     let softCapFactor = Math.max(1, 1 + Math.log10(baseValue / softCap));
     return Math.min(baseValue, softCap) * softCapFactor;
 }
+formulas.attackPower = function (ratios, attributes) {
+    return ratios[0] * (Math.sqrt(attributes.strength + 1) - 1)
+        + ratios[1] * (Math.sqrt(attributes.toughness + 1) - 1)
+        + ratios[2] * (Math.sqrt(attributes.mind + 1) - 1)
+        + ratios[3] * (Math.sqrt(attributes.agility + 1) - 1);
+}
+formulas.healPower = function (ratios, attributes) {
+    return ratios[0] * (Math.pow(attributes.strength + 1,HEALTH_GROWTH_EXPONENT) - 1)
+        + ratios[1] * (Math.pow(attributes.toughness + 1,HEALTH_GROWTH_EXPONENT) - 1)
+        + ratios[2] * (Math.pow(attributes.mind + 1,HEALTH_GROWTH_EXPONENT) - 1)
+        + ratios[3] * (Math.pow(attributes.agility + 1,HEALTH_GROWTH_EXPONENT) - 1);
+}
 const numberFormatters = [new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 0 }),
 new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 1 }),
 new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 2 }),
 new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 3 })];
-function format(number,digits = 0) {
-    if(isNaN(digits)) console.error('Digits for formatter is NaN');
-    if(digits < 0 || digits > 3) digits = 0;
+function format(number, digits = 0) {
+    if (isNaN(digits)) console.error('Digits for formatter is NaN');
+    if (digits < 0 || digits > 3) digits = 0;
     return numberFormatters[digits].format(number);
 }
 function arraySum(array) {
@@ -125,8 +138,8 @@ const logOptions = {
     area: true,
     system: true,
 }
-function logConsole(text, type = '',category='system') {
-    if(!logOptions[category]) return;
+function logConsole(text, type = '', category = 'system') {
+    if (!logOptions[category]) return;
     let lines = log.innerHTML.split(/<br>/);
     if (lines.length > 100) { log.innerHTML = lines.slice(30).join('<br>'); }
     switch (type) {

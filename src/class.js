@@ -279,9 +279,6 @@ function populatePassiveTree() {
             if (ability.prestige > playerStats.classPrestige) {
                 return;
             }
-            if (ability.prestige > playerStats.subclassPrestige[subclass]) {
-                return;
-            }
         }
         if (ability.class != playerStats.class) return;
         if (!ability.hasOwnProperty("position")) return;
@@ -335,7 +332,6 @@ function populatePassiveTree() {
                     area[2] = Math.max(ability.position.row, reqAbility.position.row);
                     area[1] = Math.min(ability.position.column, reqAbility.position.column);
                     area[3] = Math.max(ability.position.column, reqAbility.position.column);
-                    console.log(area);
                     let length = Math.sqrt(Math.pow((area[3] - area[1]), 2) + Math.pow((area[2] - area[0]), 2));
                     let width = area[3] - area[1];
                     let height = area[2] - area[0];

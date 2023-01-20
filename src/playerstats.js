@@ -156,13 +156,16 @@ function playerSetLevel(value) {
     playerStats.experience = playerStats.experienceToNext + 1;
     addPlayerExp(0);
 }
+function setMoney(value) {
+    playerStats.money = Math.max(0,value);
+}
 function addPlayerExp(amount) {
     let fameBonus = 1;
     if (playerStats.fameEffects.hasOwnProperty('experienceGain')) { fameBonus = 1 + arraySum(Object.values(playerStats.fameEffects["experienceGain"])) };
     amount *= fameBonus;
     playerStats.experience += amount;
     expCountBuffer += amount;
-    if (playerStats.experience >= playerStats.experienceToNext) {
+    while (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
         playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
