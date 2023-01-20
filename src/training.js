@@ -209,7 +209,7 @@ Object.keys(activityData).forEach(id => {
     title.innerHTML = activity.name;
     let rankText = document.createElement("span");
     rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[id].level]}
-    (${format(100 * playerStats.activityLevels[id].exp / activity.expToNext),2}%)`;
+    (${format(100 * playerStats.activityLevels[id].exp / activity.expToNext,2)}%)`;
     let rankProgress = document.createElement("progress");
     rankProgress.setAttribute("class", "rankProgressBar");
     rankProgress.max = activity.expToNext;

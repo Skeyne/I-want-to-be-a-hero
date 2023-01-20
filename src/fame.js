@@ -70,7 +70,7 @@ class FameUpgrade {
     get description() {
         let level =0;
         if (playerStats.fameUpgradeLevels[this.data.id] != undefined){level = playerStats.fameUpgradeLevels[this.data.id]}
-        return `<div class="subHeader">${this.data.name} (${level})</div><br><div class="oxanium">Effect: +${format(100 * this.effectValue)}% ${this.data.effectTarget}</div>`
+        return `<div class="subHeader">${this.data.name} (${level})</div><br><div class="oxanium">Effect: +${format(100 * this.effectValue,2)}% ${this.data.effectTarget}</div>`
     }
     get effectValue() {
         if (playerStats.fameUpgradeLevels[this.data.id] != undefined) {
