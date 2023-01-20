@@ -1,10 +1,11 @@
 var summons = {
     'shadowClone': {
-        id: "shadowClone", name: "ShadowClone",
+        id: "shadowClone", name: "Shadow Clone",
         attributes: [1,1,1,1],
         combatProperties: new CombatProperties(),
-        spriteFile: "morphedthug.png",
-        moves: ['katana', 'allyWalk'],
+        spriteFile: "shadowClone.png",
+        moves: ['katana','shuriken', 'shadowWalk'],
         engagementRange: 5,
+        duration: 5,
     }
 }

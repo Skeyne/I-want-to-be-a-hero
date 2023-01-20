@@ -380,7 +380,7 @@ class Player extends CombatEntity {
                         });
                     }
                     let isCrit = (Math.random() < moveCritChance);
-                    let d1 = formulas.attackPower(this.nextMove.damageRatios,this.combatState);
+                    let d1 = formulas.attackPower(this.nextMove.damageRatios, this.combatState);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
                     let d3 = d2 * this.combatState.damageDealt;
@@ -448,11 +448,11 @@ class Player extends CombatEntity {
                 let deltaPlus = Math.min(Math.abs(dist - playerStats.engagementRange), this.nextMove.range[0]);
                 if (this.moveIntention > 0) {
                     encounter.enemyArray.forEach((enemy) => { if (enemy != null) enemy.distance = Math.max(5, enemy.distance - deltaPlus); })
-                    //this.target.distance -= deltaPlus;
+                    encounter.allyArray.forEach((ally) => { if (ally != null) ally.distance = Math.max(5, ally.distance - deltaPlus); })
                     environmentDistance -= deltaPlus;
                 } else {
                     encounter.enemyArray.forEach((enemy) => { if (enemy != null) enemy.distance = Math.max(5, enemy.distance + deltaMinus) })
-                    //this.target.distance += deltaMinus;
+                    encounter.allyArray.forEach((ally) => { if (ally != null) ally.distance = Math.max(5, ally.distance + deltaMinus) })
                     environmentDistance += deltaMinus;
                 }
                 break;
@@ -463,13 +463,13 @@ class Player extends CombatEntity {
                         switch (effect) {
                             case "heal":
                                 amount = this.maxHealth * this.nextMove.effects.heal
-                                    + formulas.healPower(this.nextMove.ratios,this.combatState);
+                                    + formulas.healPower(this.nextMove.ratios, this.combatState);
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
                                 logConsole(`Hero healed for ${format(amount, 2)}`);
                                 break;
                             case "shield":
-                                amount = formulas.healPower(this.nextMove.ratios,this.combatState);
+                                amount = formulas.healPower(this.nextMove.ratios, this.combatState);
                                 if (this.nextMove.effects.hasOwnProperty("closeCombat")) {
                                     if (dist <= 5) amount *= 1 + this.nextMove.effects.closeCombat;
                                 }
@@ -487,7 +487,12 @@ class Player extends CombatEntity {
             case 3:
                 this.addBuff(this.nextMoveKey, this.nextMove);
                 break;
+            case 4:
+                Object.entries(this.nextMove.effects.summon).forEach(([key, value]) => {
+                    encounter.addAlly(summons[key],this.nextMove.damageRatios);
+                });
 
+                break;
             default:
                 logConsole("ERROR: Not a valid move type");
                 break;
@@ -591,6 +596,9 @@ class Player extends CombatEntity {
             }
             if (ability.type == 3) {
                 if (this.moveIntention == 0) { weights[index] = 100; }
+            }
+            if (ability.type == 4) {
+                weights[index] = 100;
             }
         }
 
@@ -1004,14 +1012,14 @@ class Encounter {
                 }
             }
         }
-        player.setTarget(this.enemyArray[closest]);
-        this.addAlly(summons['shadowClone']);
+        // player.setTarget(this.enemyArray[closest]);
+        // this.addAlly(summons['shadowClone'], [0.45, 0.45, 0.45, 0.45]);
     }
-    addAlly(data){    
-        const ally = new Ally(data);
-        ally.distance = player.target.distance - 5;
+    addAlly(data, ratios) {
+        const ally = new Ally(data, ratios);
+        ally.distance = player.distance;
         this.allyArray.push(ally);
-        
+
     }
     tick() {
         //Player -> Allies -> Enemies

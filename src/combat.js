@@ -166,15 +166,15 @@ class CombatEntity {
     }
 }
 class Ally extends CombatEntity {
-    constructor(data) {
+    constructor(data, attributeRatios) {
         super();
         this.data = data;
         this.name = data.name;
         //ATTRIBUTES
-        this.strength = getEffectiveValue("strength");
-        this.toughness = getEffectiveValue("toughness");
-        this.mind = getEffectiveValue("mind");
-        this.agility = getEffectiveValue("agility");
+        this.strength = attributeRatios[0] * getEffectiveValue("strength");
+        this.toughness = attributeRatios[1] * getEffectiveValue("toughness");
+        this.mind = attributeRatios[2] * getEffectiveValue("mind");
+        this.agility = attributeRatios[3] * getEffectiveValue("agility");
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
         this.health = this.maxHealth;
         this.shield = 0;
@@ -205,6 +205,7 @@ class Ally extends CombatEntity {
             }
         });
         this.combatState.init(this);
+        this.startTime = Date.now();
 
     }
     tickCooldowns() {
@@ -215,13 +216,14 @@ class Ally extends CombatEntity {
 
     act(target) {
         if (target == null) {
-            return;
+            this.think();
         }
         if (target.health < 0) {
             this.target = null;
+            this.think();
             return;
         }
-        let dist = target.distance;
+        let dist = Math.abs(target.distance - this.distance);
         let repeat = false;
         switch (this.nextMove.type) {
             case 0:
@@ -339,14 +341,14 @@ class Ally extends CombatEntity {
                     }
 
                     let { died: killingBlow, d: dr } = target.takeDamage(df);
-                    logConsole(`Hero <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr, 2)}</span>(${format(d3, 2)}) damage.`);
-                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`Hero healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal), 2)}`); }
+                    logConsole(`${this.name} <span style="color:red">${isCrit ? "critically " : ""}</span>hit ${this.target.name} with <span style="color:white">${playerMoves[this.nextMoveKey].name}</span> for <span style="color:white">${format(dr, 2)}</span>(${format(d3, 2)}) damage.`);
+                    if (this.combatState.lifesteal + moveLifesteal > 0) { this.health = Math.min(this.health + dr * (this.combatState.lifesteal + moveLifesteal), this.maxHealth); logConsole(`${this.name} healed for ${format(dr * (this.combatState.lifesteal + moveLifesteal), 2)}`); }
                     if (killingBlow) this.target = null;
                 }
 
                 break;
             case 1:
-                let deltaMinus = Math.min(this.data.engagementRange - dist, this.nextMove.range[1]);
+                let deltaMinus = Math.min(Math.min(Math.abs(this.distance - dist), this.data.engagementRange), this.nextMove.range[1]);
                 let deltaPlus = Math.min(Math.abs(dist - this.data.engagementRange), this.nextMove.range[0]);
                 if (this.moveIntention > 0) {
                     this.distance += deltaPlus;
@@ -389,6 +391,9 @@ class Ally extends CombatEntity {
             default:
                 logConsole("ERROR: Not a valid move type");
                 break;
+        }
+        if (Date.now() - this.startTime > 5000) {
+            this.maxHealth = -1;
         }
         if (repeat) {
             if (target.health <= 0 || target == null) {
@@ -433,7 +438,7 @@ class Ally extends CombatEntity {
         if (distSign > 0) { this.moveIntention = 1; }
         else if (distSign < 0) { this.moveIntention = -1; }
         else { this.moveIntention = 0; }
-        if(dist <= this.engagementRange){ this.moveIntention = 0}
+        if (dist <= this.engagementRange) { this.moveIntention = 0 }
         let weights = Array(this.equippedAbilities.length).fill(0);
         for (let index = 0; index < this.equippedAbilities.length; index++) {
             let k = this.equippedAbilities[index];
@@ -459,7 +464,7 @@ class Ally extends CombatEntity {
                 }
             }
             if (ability.type == 1) {
-                let delta = Math.abs(dist - this.data.enemyArray);
+                let delta = dist * this.moveIntention;
                 weights[index] = delta * this.moveIntention * (this.moveIntention > 0 ? ability.range[0] / 100 : ability.range[1]);
             }
             if (ability.type == 2) {
@@ -512,6 +517,7 @@ class Ally extends CombatEntity {
         let canvasX = scaleDistance(this.distance);
         let canvasY = cBuffer.height - 40;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
+        drawInfoBars(context, this, canvasX, canvasY);
         if (this.nextMove != null) drawSkillIcon(context, this.nextMove.iconName, canvasX, canvasY);
     }
     rest() {
