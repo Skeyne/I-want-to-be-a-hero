@@ -408,7 +408,7 @@ skillLibrary = {
         'sh_0_5': {
             id: 'sh_0_5', sub: 0, rank: 1, position: { row: 2, column: 4 },
             name: 'Huge Muscles', iconName: 'calisthenics', desc: 'Even without trying you\'re stronger than you\'ve ever been before',
-            effect: { type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.05 }[
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.05 },
                 { type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5000 }],
             maxLevel: 1, cost: Array(1).fill(20), requires: { 'sh_0_1': 10 }
         },
