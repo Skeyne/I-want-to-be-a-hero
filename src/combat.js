@@ -170,6 +170,7 @@ class Ally extends CombatEntity {
         super();
         this.data = data;
         this.name = data.name;
+        this.offset = 5*(Math.random()-0.5)
         //ATTRIBUTES
         this.strength = attributeRatios[0] * getEffectiveValue("strength");
         this.toughness = attributeRatios[1] * getEffectiveValue("toughness");
@@ -193,6 +194,12 @@ class Ally extends CombatEntity {
         this.dodgeChance = getSecondaryAttribute("dodgeChance");
         this.cooldownReduction = formulas.cooldownReduction(getEffectiveValue("mind"));
         this.cooldownReduction /= getSecondaryAttribute("cooldownReduction");
+        Object.keys(data.modifiers).forEach((prop) => {
+            if (this.hasOwnProperty(prop)) {
+                console.log(prop);
+                this[prop] *= data.modifiers[prop];
+            }
+        })
         this.moveIntention = 1;
         this.nextMoveKey = null;
         this.abilityCooldowns = {};
@@ -514,7 +521,7 @@ class Ally extends CombatEntity {
     }
 
     draw(context) {
-        let canvasX = scaleDistance(this.distance);
+        let canvasX = scaleDistance(this.distance +this.offset);
         let canvasY = cBuffer.height - 40;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);

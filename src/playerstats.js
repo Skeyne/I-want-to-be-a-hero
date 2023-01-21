@@ -92,6 +92,7 @@ function load(file = null) {
                 if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
             }
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
+            if (Number(localStorage.getItem("version").substring(3, 4)) < 6) { playerStats.currentArea = 0; }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
         if (imageData != null) { document.getElementById("heroPortraitImage").src = imageData };

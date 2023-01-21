@@ -489,7 +489,9 @@ class Player extends CombatEntity {
                 break;
             case 4:
                 Object.entries(this.nextMove.effects.summon).forEach(([key, value]) => {
-                    encounter.addAlly(summons[key],this.nextMove.damageRatios);
+                    for (let index = 0; index < value; index++) {
+                        encounter.addAlly(summons[key], this.nextMove.damageRatios, Math.min(this.nextMove.range[1], this.target.distance));
+                    }
                 });
 
                 break;
@@ -1015,9 +1017,9 @@ class Encounter {
         // player.setTarget(this.enemyArray[closest]);
         // this.addAlly(summons['shadowClone'], [0.45, 0.45, 0.45, 0.45]);
     }
-    addAlly(data, ratios) {
+    addAlly(data, ratios, distance) {
         const ally = new Ally(data, ratios);
-        ally.distance = player.distance;
+        ally.distance = distance;
         this.allyArray.push(ally);
 
     }

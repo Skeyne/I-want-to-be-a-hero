@@ -47,7 +47,7 @@ function updateAttributePrestigeText() {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const softcapped = formulas.softcappedAttribute(index);
         const change = softcapped >= softcap ? ((PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE)) : 0;
-        text += `${attributeDisplayShort[attributeIndexToId[index]]}: <span class="${attributeIndexToId[index]}Text">${format(softcap)}</span> -> <span class="${attributeIndexToId[index]}Text">${format(softcap + change)}</span> (+${format(change)})<br>`
+        text += `${attributeDisplayShort[attributeIndexToId[index]]}: <span class="${attributeIndexToId[index]}Text">${format(softcap,3)}</span> -> <span class="${attributeIndexToId[index]}Text">${format(softcap + change,3)}</span> (+${format(change,3)})<br>`
     }
     container.innerHTML = text;
 }

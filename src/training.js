@@ -92,12 +92,12 @@ class Activity {
             const final = Array(this.attributeRatios.length).fill(0);
             for (let index = 0; index < this.attributeRatios.length; index++) {
                 if (isNaN(scalingKeys[index])) {
-                    final[index] = this.attributeRatios[index] * activityScaling[scalingKeys[index]][playerStats.activityLevels[this.id].level];
+                    final[index] = this.attributeRatios[index] * activityScaling[scalingKeys[index]][Math.min(playerStats.activityLevels[this.id].level,9)];
                 }
             }
             return final;
         } else {
-            return this.attributeRatios.map(x => x * (playerStats.activityLevels[this.id].level + 1));
+            return this.attributeRatios.map(x => x * (Math.min(playerStats.activityLevels[this.id].level,9) + 1));
         }
     }
     tick() {
@@ -145,12 +145,12 @@ class Activity {
     }
     updateRankProgress() {
         let rankText = this.element.getElementsByTagName("span")[0];
-        rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[this.id].level]}
+        rankText.innerHTML = `Rank: ${activityLevelToRank[Math.min(playerStats.activityLevels[this.id].level,9)]}
         (${format(100 * playerStats.activityLevels[this.id].exp / this.expToNext,2)}%)`;
     }
     updateRank() {
         let rankText = this.element.getElementsByTagName("span")[0];
-        rankText.innerHTML = `Rank: ${activityLevelToRank[playerStats.activityLevels[this.id].level]}`;
+        rankText.innerHTML = `Rank: ${activityLevelToRank[Math.min(playerStats.activityLevels[this.id].level,9)]}`;
         let bars = this.element.getElementsByClassName("rankProgressBar");
         bars[0].max = this.expToNext;
         let attributeText = this.element.getElementsByTagName("div")[1];
