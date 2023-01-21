@@ -465,7 +465,6 @@ class Player extends CombatEntity {
                                 amount = this.maxHealth * this.nextMove.effects.heal
                                     + formulas.healPower(this.nextMove.damageRatios, this.combatState);
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
-                                console.log(amount);
                                 this.health = Math.min(this.health + amount, this.maxHealth);
                                 logConsole(`Hero healed for ${format(amount, 2)}`);
                                 break;
@@ -578,21 +577,13 @@ class Player extends CombatEntity {
                     if (ability.effects.hasOwnProperty('heal')) {
                         let amount = this.maxHealth * ability.effects.heal
                         + formulas.healPower(ability.damageRatios, this.combatState);
-                            + ability.damageRatios[0] * (Math.pow(this.combatState.strength + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[1] * (Math.pow(this.combatState.toughneess + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[2] * (Math.pow(this.combatState.mind + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[3] * (Math.pow(this.combatState.agility + 1, HEALTH_GROWTH_EXPONENT) - 1);
                             console.log(amount);
                         if (this.maxHealth - this.health > amount) {
                             weights[index] = 100;
                         }
                     }
                     if (ability.effects.hasOwnProperty('shield')) {
-                        let amount = ability.damage
-                            + ability.damageRatios[0] * (Math.pow(this.combatState.strength + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[1] * (Math.pow(this.combatState.toughneess + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[2] * (Math.pow(this.combatState.mind + 1, HEALTH_GROWTH_EXPONENT) - 1)
-                            + ability.damageRatios[3] * (Math.pow(this.combatState.agility + 1, HEALTH_GROWTH_EXPONENT) - 1);
+                        let amount = ability.damage + formulas.healPower(ability.damageRatios, this.combatState);
                         if (this.shield <= 0.2 * amount) {
                             weights[index] = 100;
                         }
