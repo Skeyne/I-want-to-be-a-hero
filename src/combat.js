@@ -196,7 +196,6 @@ class Ally extends CombatEntity {
         this.cooldownReduction /= getSecondaryAttribute("cooldownReduction");
         Object.keys(data.modifiers).forEach((prop) => {
             if (this.hasOwnProperty(prop)) {
-                console.log(prop);
                 this[prop] *= data.modifiers[prop];
             }
         })

@@ -16,24 +16,24 @@ class Area {
         this.expPerPower = data.expPerPower;
         this.moneyPerPower = data.moneyPerPower;
     }
-    get displayText(){
+    get displayText() {
         let name = this.name
         let power = this.power
         let completionText;
-        if(playerStats.areaCompletions[this.id]){
+        if (playerStats.areaCompletions[this.id]) {
             completionText = playerStats.areaCompletions[this.id] >= 10 ? '' : `(${playerStats.areaCompletions[this.id]}/10)`;
         } else {
             completionText = '(0/10)';
         }
         return `${name} ${completionText}<br><span style="font-size:1rem">(Power: ${power})</span>`;
     }
-    addCompletion(){
-        if(playerStats.areaCompletions.hasOwnProperty(this.id)){
+    addCompletion() {
+        if (playerStats.areaCompletions.hasOwnProperty(this.id)) {
             playerStats.areaCompletions[this.id] += 1;
         } else {
             playerStats.areaCompletions[this.id] = 1;
         }
-        if(playerStats.areaCompletions[this.id] == 10){
+        if (playerStats.areaCompletions[this.id] == 10) {
             checkAreaUnlocks();
         }
         areaButtonDict[this.id].innerHTML = this.displayText;
@@ -188,7 +188,7 @@ const areas = [
     }),
     new Area({
         id: 'industrial5', name: "Old Steelworks II", background: "bulkheadBackground.png", power: 1191, expPerPower: 5.44, moneyPerPower: 0.1187,
-        storyUnlock: 21, patrolTime: 7000,  completionsReq: 10,
+        storyUnlock: 21, patrolTime: 7000, completionsReq: 10,
         encounters: [{ weight: 100, enemies: { "morphedthug": { 1: 1 }, "infusedthug": { 1: 1 }, "psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 2: 1, 3: 1 }, "gatlingthug": { 1: 1 } } },
         { weight: 100, enemies: { "morphedthug": { 1: 1 }, "psychicthug": { 2: 1 } } },
@@ -197,11 +197,18 @@ const areas = [
     }),
     new Area({
         id: 'industrial6', name: "Riverside", background: "bridgeAreaBackground-1.png", power: 1500, expPerPower: 6.39, moneyPerPower: 0.1199,
-        storyUnlock: 22, patrolTime: 7000,  completionsReq: 100,
+        storyUnlock: 22, patrolTime: 7000, completionsReq: 100,
         encounters: [{ weight: 100, enemies: { "crabman": { 1: 1 } } }]
     }),
     new Area({
         id: 'misc1', name: "The Depths", background: "voidBackground.png", power: 15000, expPerPower: 31.93, moneyPerPower: 0.1318,
-        storyUnlock: 23, patrolTime: 10000,  completionsReq: 1,
+        storyUnlock: 23, patrolTime: 10000, completionsReq: 1,
         encounters: [{ weight: 100, enemies: { "ultracrabman": { 1: 1 } } }]
     }),];
+
+
+if (playerStats.areaCompletions[areas[Math.max(playerStats.currentArea - 1,0)].id] < areas[Math.max(playerStats.currentArea - 1,0)].completionsReq ){
+    console.log(playerStats.areaCompletions[areas[Math.max(playerStats.currentArea - 1,0)].id],
+    areas[Math.max(playerStats.currentArea - 1,0)].completionsReq)
+    changeArea(0);
+}

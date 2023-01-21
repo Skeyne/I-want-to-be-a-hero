@@ -418,7 +418,7 @@ playerMoves = {
         description: "Alter the charge in the air to conjure a bolt of lightning",
         iconName: "conjureLightning",
         damage: 0,
-        damageRatios: [0, 0, 3, 2],
+        damageRatios: [0, 0, 2, 1.4],
         damageRange: [1, 3],
         effects: {
             'criticalChance': 25,
@@ -721,7 +721,7 @@ playerMoves = {
         class: 'superhuman',
         type: 0,
         sub: 0,
-        position: { row: 2, column: 2 },
+        position: { row: 1, column: 2 },
         category: 'melee',
         name: "Simple Punch",
         description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one punch 10,000 times.",
@@ -739,7 +739,7 @@ playerMoves = {
         class: 'superhuman',
         type: 0,
         sub: 0,
-        position: { row: 3, column: 2 },
+        position: { row: 2, column: 2 },
         category: 'melee',
         name: "Multiple Simple Punches",
         description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one 10,000 punches, 10,000 times.",
@@ -926,7 +926,7 @@ playerMoves = {
         cooldownTime: 10000,
         range: [5, 50],
         cost: 0,
-        requiresPassive: { 'sh_1_0': 1 }
+        requiresPassive: { 'sh_1_7': 1 }
     },
     'titansGrit': {
         class: 'superhuman', prestige: 1, type: 3, sub: 0, position: { row: 8, column: 1 },

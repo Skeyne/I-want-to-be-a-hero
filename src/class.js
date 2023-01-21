@@ -790,7 +790,7 @@ function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
     if ((unlockPointsLookup(skill.position.row - 1)) > playerStats.passivePointsSpent[skill.sub]) {
-        logConsole(`You do not have enough points in this subclass!`, 'warning');
+        logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup(skill.position.row - 1)})`, 'warning');
         return false;
     }
     if (skill.hasOwnProperty('requires')) {
