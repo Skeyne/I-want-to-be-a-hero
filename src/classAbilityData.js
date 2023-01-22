@@ -432,7 +432,7 @@ playerMoves = {
         damageRatios: [0, 0, 2, 1.4],
         damageRange: [1, 3],
         effects: {
-            'criticalChance': 25,
+            'criticalChance': 0.25,
         },
         time: 3000,
         cooldownTime: 20000,

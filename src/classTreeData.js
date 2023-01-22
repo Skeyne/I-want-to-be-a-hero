@@ -960,7 +960,7 @@ skillLibrary = {
             effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.01 },
             { type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.01 },
             { type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.01 }],
-            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_1_4': 10 },
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_1_4': 5 },
         },
         'es_1_6': {
             id: 'es_1_6', sub: 1, position: { row: 5, column: 2 }, name: 'Uncontrolled Creation', iconName: 'studying',
