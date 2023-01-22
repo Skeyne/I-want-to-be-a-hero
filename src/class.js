@@ -781,9 +781,9 @@ function updateSubclassButton(index) {
 }
 function unlockPointsLookup(index) {
     if (playerStats.class == 'human') {
-        return [0, 1, 5, 10, 20, 40][index]
+        return [0, 0, 0, 0, 0, 0][index]
     } else {
-        return [0, 10, 50, 100, 200, 400][index]
+        return [0, 10, 35, 35, 35, 35][index]
     }
 }
 function checkSkillPurchase(skillId, times = 1) {

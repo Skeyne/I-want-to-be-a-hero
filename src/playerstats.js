@@ -107,9 +107,10 @@ function load(file = null) {
 load();
 setInterval(save, 30000);
 function getTotalPassivePoints() {
-    let decades = Math.floor(playerStats.level / 10);
-    return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1)
-        + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
+    // let decades = Math.floor(playerStats.level / 10);
+    // return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1)
+    //     + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
+    return playerStats.level;
 }
 function getAvailablePassivePoints() {
     return arraySum(playerStats.passivePointsSpent);
