@@ -329,6 +329,17 @@ playerMoves = {
         range: [60, 60],
         cost: 0,
     },
+    'clarity': {
+        class: 'esper', prestige: 1, type: 3, sub: 0, position: { row: 8, column: 1 },
+        category: 'buff', name: "Clarity",
+        description: "", iconName: "placeHolder",
+        duration: 1000,
+        effects: {
+            cooldownSpeed: ["mult", 3],
+        },
+        time: 1000, cooldownTime: 10000, range: [5, 5], cost: 0,
+    },
+    //MATTER
     'acceleratedPunch': {
         class: 'esper',
         type: 0,
@@ -925,8 +936,8 @@ playerMoves = {
         },
         time: 3000,
         cooldownTime: 10000,
-        range: [5, 50],
-        cost: 0,
+        range: [40, 40],
+       cost: 0,
         requiresPassive: { 'sh_1_7': 1 }
     },
     'titansGrit': {
