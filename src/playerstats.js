@@ -84,14 +84,15 @@ function load(file = null) {
             playerStats[property] = loadgame[property];
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
-        if (localStorage.getItem("version") != null) {
-            if (localStorage.getItem("version") != version) {
-                lastVersion = localStorage.getItem("version");
+        if (playerStats.version != null) {
+            if(!loadgame.hasOwnProperty("version")){playerStats.currentArea = 0; }
+            if (playerStats.version != version) {
+                lastVersion = playerStats.version;
                 isOutdated = true; console.log("outdated save");
                 if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
             }
-            if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
-            if (Number(localStorage.getItem("version").substring(3, 4)) < 6) {playerStats.currentArea = 0; }
+            if (Number(playerStats.version.substring(3, 4)) < 4) { resetSave(); }
+            if (Number(playerStats.version.substring(3, 4)) < 6) {playerStats.currentArea = 0; }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
         if (imageData != null) { document.getElementById("heroPortraitImage").src = imageData };
