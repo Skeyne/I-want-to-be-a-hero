@@ -887,6 +887,8 @@ class Player extends CombatEntity {
             }
             if (ability.type == 3) {
                 if (this.moveIntention == 0) { weights[index] = 100; }
+                if (ability.effects.actionSpeed) { weights[index] = 100; }
+                if (ability.effects.cooldownSpeed) { weights[index] = 100; }
             }
             if (ability.type == 4) {
                 weights[index] = 100;

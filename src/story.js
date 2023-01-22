@@ -228,7 +228,7 @@ function checkAreaUnlocks() {
         if (index == playerStats.currentArea){d.classList.toggle('active')}
         areaButtonDict[area.id] = d;
         areaSelect.append(d);
-        if (!(playerStats.areaCompletions[area.id] >= 10)) {
+        if (!(playerStats.areaCompletions[area.id] >= area.completionsReq)) {
             break;
         }
     }

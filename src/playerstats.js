@@ -70,6 +70,8 @@ reset();
 function save(imprt = false) {
     console.log("Saving data...")
     if (!imprt) playerStats.lastSaveTime = Date.now();
+
+    playerStats.version = version;
     localStorage.setItem("heroSave", JSON.stringify(playerStats));
     localStorage.setItem("heroLastSaved", Date.now());
     localStorage.setItem("version", version);

@@ -9,6 +9,7 @@ class Area {
         this.enemies = data.enemies;
         this.enemyNum = data.enemyNum;
         this.encounters = data.encounters;
+        this.completionsReq = data.completionsReq;
         //this.patrolDifficulty = data.patrolDifficulty;
         this.patrolTime = data.patrolTime;
         this.patrolCounter = 0;
@@ -21,9 +22,9 @@ class Area {
         let power = this.power
         let completionText;
         if (playerStats.areaCompletions[this.id]) {
-            completionText = playerStats.areaCompletions[this.id] >= 10 ? '' : `(${playerStats.areaCompletions[this.id]}/10)`;
+            completionText = playerStats.areaCompletions[this.id] >= this.completionsReq ? '' : `(${playerStats.areaCompletions[this.id]}/${this.completionsReq})`;
         } else {
-            completionText = '(0/10)';
+            completionText = `(0/${this.completionsReq})`;
         }
         return `${name} ${completionText}<br><span style="font-size:1rem">(Power: ${power})</span>`;
     }
@@ -33,7 +34,7 @@ class Area {
         } else {
             playerStats.areaCompletions[this.id] = 1;
         }
-        if (playerStats.areaCompletions[this.id] == 10) {
+        if (playerStats.areaCompletions[this.id] == this.completionsReq) {
             checkAreaUnlocks();
         }
         areaButtonDict[this.id].innerHTML = this.displayText;

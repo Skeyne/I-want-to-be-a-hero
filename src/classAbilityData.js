@@ -439,6 +439,28 @@ playerMoves = {
         range: [0, 100],
         cost: 0,
     },
+    'phaseShiftred': {
+        class: 'esper', prestige: 1, type: 3, sub: 1, position: { row: 8, column: 1 },
+        category: 'buff', name: "Phase Shift: Red",
+        description: "", iconName: "placeHolder",
+        duration: 10000,
+        effects: {
+            cooldownSpeed: ["mult", 0.5],
+            actionSpeed: ["mult", 2],
+        },
+        time: 1000, cooldownTime: 30000, range: [5, 5], cost: 0,
+    },
+    'phaseShiftblue': {
+        class: 'esper', prestige: 1, type: 3, sub: 1, position: { row: 8, column: 5 },
+        category: 'buff', name: "Phase Shift: Blue",
+        description: "", iconName: "placeHolder",
+        duration: 10000,
+        effects: {
+            cooldownSpeed: ["mult", 2],
+            actionSpeed: ["mult", 0.5],
+        },
+        time: 1000, cooldownTime: 30000, range: [5, 5], cost: 0,
+    },
     //Mutant
     //BIOLOGICAL
     'bulkFist': {
