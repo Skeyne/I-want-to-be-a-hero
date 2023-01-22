@@ -208,8 +208,3 @@ const areas = [
     }),];
 
 
-if (playerStats.areaCompletions[areas[Math.max(playerStats.currentArea - 1,0)].id] < areas[Math.max(playerStats.currentArea - 1,0)].completionsReq ){
-    console.log(playerStats.areaCompletions[areas[Math.max(playerStats.currentArea - 1,0)].id],
-    areas[Math.max(playerStats.currentArea - 1,0)].completionsReq)
-    changeArea(0);
-}
