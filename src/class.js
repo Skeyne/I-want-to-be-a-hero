@@ -897,12 +897,12 @@ function changeClass(className, keep = false) {
     generateSubclassTabs();
     populatePassiveTree();
     changeSubclassTab(0);
-    if (!keep) {
-        playerStats.level = 0;
-        playerStats.experience = 0;
-        addPlayerExp(0);
-        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
-    }
+    // if (!keep) {
+    //     playerStats.level = 0;
+    //     playerStats.experience = 0;
+    //     addPlayerExp(0);
+    //     playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+    // }
     playerStats.unlockedAbilities = { 'punch': 1 };
     //populateAbilityRequirements();
     //checkAbilityRequirements();
@@ -916,11 +916,11 @@ function changeClass(className, keep = false) {
     RebuildSlots();
     populateAbilitySlots();
     if (!keep) {
-        playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
         playerStats.strength = 0.1 * formulas.softcappedAttribute(0);
         playerStats.toughness = 0.1 * formulas.softcappedAttribute(1);
         playerStats.mind = 0.1 * formulas.softcappedAttribute(2);
         playerStats.agility = 0.1 * formulas.softcappedAttribute(3);
+        playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
 
     }
     if (className != 'human') {

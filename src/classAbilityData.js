@@ -766,7 +766,6 @@ playerMoves = {
         cooldownTime: 0,
         range: [5, 5],
         cost: 0,
-        requiresPassive: { 'sh_0_0': 1 },
     },
     'multipleSimplePunches': {
         class: 'superhuman',
@@ -794,7 +793,7 @@ playerMoves = {
         class: 'superhuman',
         type: 0,
         sub: 0,
-        position: { row: 4, column: 5 },
+        position: { row: 3, column: 5 },
         category: 'melee',
         name: "Solar Plexus Strike",
         description: "Knock the wind out of your foe with an unexpected blow",
@@ -810,7 +809,6 @@ playerMoves = {
         range: [5, 5],
         unlockPoints: 10,
         cost: 0,
-        requiresPassive: { 'sh_0_8': 1 }
     },
     'templeCrush': {
         class: 'superhuman',
@@ -1033,7 +1031,7 @@ playerMoves = {
         class: 'superhuman',
         type: 2,
         sub: 2,
-        position: { row: 3, column: 5 },
+        position: { row: 4, column: 5 },
         category: 'ranged',
         name: "Second Wind",
         description: "Take a few breaths and let your supernatural constitution catch up.",

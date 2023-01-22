@@ -3,10 +3,7 @@ skillLibrary = {
         //#region 0
         //#endregion
         'h_0': {
-            id: 'h_0',
-            sub: 0,
-            position: { row: 1, column: 2 },
-            name: 'Calisthenics',
+            id: 'h_0', sub: 0, position: { row: 1, column: 2 }, name: 'Calisthenics',
             iconName: 'calisthenics',
             desc: 'Increase your Strength through the power of home workouts',
             effect: [{
@@ -70,10 +67,7 @@ skillLibrary = {
             requires: { 'h_2': 1, },
         },
         'h_3': {
-            id: 'h_3',
-            sub: 0,
-            position: { row: 2, column: 2 },
-            name: 'Five Mile Run',
+            id: 'h_3', sub: 0, position: { row: 2, column: 2 }, name: 'Five Mile Run',
             iconName: 'milerun',
             desc: 'Coach said this would toughen you up.',
             effect: [{
@@ -86,10 +80,7 @@ skillLibrary = {
             cost: Array(10).fill(1),
         },
         'h_4': {
-            id: 'h_4',
-            sub: 0,
-            position: { row: 2, column: 3 },
-            name: 'Construction Job',
+            id: 'h_4', sub: 0, position: { row: 2, column: 3 }, name: 'Construction Job',
             iconName: 'milerun',
             desc: 'And a cold one after work.',
             effect: [{
@@ -103,10 +94,7 @@ skillLibrary = {
             requires: { 'h_3': 3, },
         },
         'h_5': {
-            id: 'h_5',
-            sub: 0,
-            position: { row: 2, column: 4 },
-            name: '8200 Postcode Night Run',
+            id: 'h_5', sub: 0, position: { row: 2, column: 4 }, name: '8200 Postcode Night Run',
             iconName: 'milerun',
             desc: 'Hey this area doesn\'t look so b-',
             effect: [{
@@ -120,10 +108,7 @@ skillLibrary = {
             requires: { 'h_4': 2, },
         },
         'h_2_4': {
-            id: 'h_2_4',
-            sub: 0,
-            position: { row: 2, column: 5 },
-            name: 'Built To Last',
+            id: 'h_2_4', sub: 0, position: { row: 2, column: 5 }, name: 'Built To Last',
             iconName: 'milerun',
             desc: 'With all the beatings you\'ve taken and lived through, it takes a lot to bring you down.',
             effect: [{
@@ -137,10 +122,7 @@ skillLibrary = {
             requires: { 'h_5': 1, },
         },
         'h_6': {
-            id: 'h_6',
-            sub: 0,
-            position: { row: 3, column: 2 },
-            name: 'Dodge the swing',
+            id: 'h_6', sub: 0, position: { row: 3, column: 2 }, name: 'Dodge the swing',
             iconName: 'shadowB',
             desc: 'We used to do this as kids.',
             effect: [{
@@ -154,10 +136,7 @@ skillLibrary = {
 
         },
         'h_7': {
-            id: 'h_7',
-            sub: 0,
-            position: { row: 3, column: 3 },
-            name: 'Shadow boxing',
+            id: 'h_7', sub: 0, position: { row: 3, column: 3 }, name: 'Shadow boxing',
             iconName: 'shadowB',
             desc: 'Shadows to keep you light.',
             effect: [{
@@ -171,10 +150,7 @@ skillLibrary = {
             requires: { 'h_6': 3, },
         },
         'h_8': {
-            id: 'h_8',
-            sub: 0,
-            position: { row: 3, column: 4 },
-            name: 'Acquire J\'s',
+            id: 'h_8', sub: 0, position: { row: 3, column: 4 }, name: 'Acquire J\'s',
             iconName: 'shadowB',
             desc: 'Jays on my feet.',
             effect: [{
@@ -188,10 +164,7 @@ skillLibrary = {
             requires: { 'h_7': 3, },
         },
         'h_3_4': {
-            id: 'h_3_4',
-            sub: 0,
-            position: { row: 3, column: 5 },
-            name: 'Opportunity Seeker',
+            id: 'h_3_4', sub: 0, position: { row: 3, column: 5 }, name: 'Opportunity Seeker',
             iconName: 'shadowB',
             desc: 'Being faster than your foe gives you the opportunity to hit them in a vital spot.',
             effect: [{
@@ -205,10 +178,7 @@ skillLibrary = {
             requires: { 'h_8': 1, },
         },
         'h_9': {
-            id: 'h_9',
-            sub: 0,
-            position: { row: 4, column: 2 },
-            name: 'Read algebra book',
+            id: 'h_9', sub: 0, position: { row: 4, column: 2 }, name: 'Read algebra book',
             iconName: 'studying',
             desc: 'Actually learn it. Don\'t memorize it.',
             effect: [{
@@ -221,10 +191,7 @@ skillLibrary = {
             cost: Array(10).fill(1),
         },
         'h_10': {
-            id: 'h_10',
-            sub: 0,
-            position: { row: 4, column: 3 },
-            name: 'Attend debate club',
+            id: 'h_10', sub: 0, position: { row: 4, column: 3 }, name: 'Attend debate club',
             iconName: 'studying',
             desc: 'Let\'s say, hypothetically....',
             effect: [{
@@ -238,10 +205,7 @@ skillLibrary = {
             requires: { 'h_9': 3, },
         },
         'h_11': {
-            id: 'h_11',
-            sub: 0,
-            position: { row: 4, column: 4 },
-            name: 'Win at street chess',
+            id: 'h_11', sub: 0, position: { row: 4, column: 4 }, name: 'Win at street chess',
             iconName: 'studying',
             desc: 'Check it, mate, I won.',
             effect: [{
@@ -255,10 +219,7 @@ skillLibrary = {
             requires: { 'h_10': 1, },
         },
         'h_4_4': {
-            id: 'h_4_4',
-            sub: 0,
-            position: { row: 4, column: 5 },
-            name: 'Skilled Combatant',
+            id: 'h_4_4', sub: 0, position: { row: 4, column: 5 }, name: 'Skilled Combatant',
             iconName: 'studying',
             desc: 'Your strategic mind allows you to setup your foe\'s swift defeat.',
             effect: [{
@@ -276,72 +237,62 @@ skillLibrary = {
     "superhuman": {
         //#region 0
         'sh_0_0': {
-            id: 'sh_0_0', sub: 0, position: { row: 1, column: 3 },
-            rank: 1,
-            name: 'Raw Muscle', iconName: 'calisthenics',
-            desc: 'Does this invalidate your natty card?',
-            effect: [{
-                type: 0, effectTarget: "strength",
-                effectType: "additiveFlat", effectMagnitude: 5
-            },
-            {
-                type: 2, effectTarget: "strengthTraining",
-                effectType: "additivePercent", effectMagnitude: 0.01,
-            }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            id: 'sh_0_0', sub: 0, position: { row: 1, column: 3 }, rank: 1, name: 'Origin: Might', iconName: 'calisthenics',
+            desc: 'Even without trying you\'re stronger than you\'ve ever been before',
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.005 }],
+            maxLevel: 100, cost: Array(100).fill(1)
         },
         'sh_0_1': {
-            id: 'sh_0_1', sub: 0, rank: 1, position: { row: 2, column: 3 },
-            name: 'Inhuman strength', iconName: 'calisthenics',
-            desc: 'Even without trying you\'re stronger than you\'ve ever been before',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.005 }],
-            maxLevel: 25, cost: Array(25).fill(1), requires: { 'sh_0_0': 3 }
+            id: 'sh_0_1', sub: 0, rank: 1, position: { row: 2, column: 3 }, name: 'Inhuman strength', iconName: 'calisthenics',
+            desc: 'Does this invalidatee your natty card?',
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'sh_0_0': 5 }
         },
         'sh_0_2': {
             id: 'sh_0_2', sub: 0, rank: 1, position: { row: 3, column: 3 }, name: 'Matter Over Mind', iconName: 'calisthenics',
             desc: 'Physical strength that breaks through even spirit',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.01 }],
-            maxLevel: 10, cost: Array(10).fill(1), requires: { 'sh_0_1': 10 }
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.02 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'sh_0_1': 5 }
         },
         'sh_0_3': {
             id: 'sh_0_3', sub: 0, rank: 1, position: { row: 5, column: 2 }, name: 'Overwhelming strength', iconName: 'calisthenics',
             desc: 'Lesser foes cower at your insurmountable strength',
             effect: [{ type: 1, effectTarget: "overwhelm", effectType: "additiveFlat", effectMagnitude: 0.1, }],
-            maxLevel: 1, cost: [1], requires: { 'sh_0_2': 3 }
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'sh_0_2': 5 }
         },
         'sh_0_4': {
             id: 'sh_0_4', sub: 0, rank: 1, position: { row: 5, column: 3 }, name: 'Utmost Might', iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 1, effectTarget: "damageDealt", effectType: "multPercent", effectMagnitude: 1.02, }],
-            maxLevel: 3, cost: [1, 1, 1], requires: { 'sh_0_2': 3 }
+            effect: [{ type: 1, effectTarget: "damageDealt", effectType: "multPercent", effectMagnitude: 1.01, }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'sh_0_2': 5 }
         },
         'sh_0_5': {
-            id: 'sh_0_5', sub: 0, rank: 1, position: { row: 2, column: 4 },
-            name: 'Huge Muscles', iconName: 'calisthenics', desc: 'Even without trying you\'re stronger than you\'ve ever been before',
+            id: 'sh_0_5', sub: 0, rank: 1, position: { row: 3, column: 4 },
+            name: 'Huge Muscles', iconName: 'calisthenics', desc: '',
             effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.05 },
             { type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5000 }],
-            maxLevel: 1, cost: Array(1).fill(1), requires: { 'sh_0_1': 10 }
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'sh_0_1': 5 }
         },
         'sh_0_6': {
             id: 'sh_0_6', sub: 0, rank: 1, position: { row: 5, column: 4 }, name: 'Mighty Tough', iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.10 }],
-            maxLevel: 1, cost: [1],
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.15 }],
+            maxLevel: 1, cost: [5],
         },
         'sh_0_7': {
             id: 'sh_0_7', sub: 0, rank: 1, position: { row: 6, column: 3 }, name: 'Ultimate Workout', iconName: 'calisthenics',
             desc: '100 Pushups, 1000 Situps, 10km, every day',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.005 }],
-            maxLevel: 999, cost: Array(999).fill(1),
-            requires: { 'sh_0_4': 3 }
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.2 }],
+            maxLevel: 1, cost: Array(1).fill(5),
+            requires: { 'sh_0_4': 5 }
         },
         'sh_0_8': {
             id: 'sh_0_8', sub: 0, rank: 1, position: { row: 4, column: 4 }, name: 'Boxer Reflex', iconName: 'calisthenics',
-            desc: '100 Pushups, 1000 Situps, 10km, every day',
-            effect: [{ type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.01 }],
-            maxLevel: 30, cost: Array(10).fill(1).concat(Array(10).fill(1), Array(10).fill(1)),
-            requires: { 'sh_0_2': 10 }
+            desc: '',
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            maxLevel: 5, cost: Array(5).fill(1),
+            requires: { 'sh_0_2': 5 }
         },
         'sh_0_20': {
             id: 'sh_0_20', sub: 0, position: { row: 6, column: 3 }, prestige: 1,
@@ -429,114 +380,60 @@ skillLibrary = {
         //#endregion
         //#region 1
         'sh_1_0': {
-            id: 'sh_1_0', sub: 1, rank: 1, position: { row: 1, column: 3 }, name: 'STR+TGH',
+            id: 'sh_1_0', sub: 1, rank: 1, position: { row: 1, column: 3 }, name: 'Origin: Titan',
             iconName: 'calisthenics', desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 },
-            { type: 2, effectTarget: "toughnessTraining", effectType: "additivePercent", effectMagnitude: 0.01 }],
-            maxLevel: 10, cost: Array(10).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.002 },
+            { type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.003 }],
+            maxLevel: 100, cost: Array(100).fill(1),
         },
         'sh_1_1': {
             id: 'sh_1_1', sub: 1, rank: 1, position: { row: 2, column: 3 }, name: 'Giant Training', iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.0025 },
-            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 25, cost: Array(25).fill(1), requires: { 'sh_1_0': 3 },
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.01 },
+            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.01 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'sh_1_0': 5 },
         },
         'sh_1_2': {
             id: 'sh_1_2', sub: 1, rank: 1, rank: 1, position: { row: 3, column: 3 }, name: 'Colossal Constitution', iconName: 'calisthenics',
-            desc: 'PLACEHOLDER',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.005 },
-            { type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.005 }],
-            maxLevel: 10, requires: { 'sh_1_1': 3 }, cost: Array(10).fill(1),
+            desc: '',
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.01 },
+            { type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.01 }],
+            maxLevel: 5, requires: { 'sh_1_1': 5 }, cost: Array(5).fill(1),
         },
         'sh_1_3': {
-            id: 'sh_1_3', sub: 1, rank: 1, position: { row: 3, column: 2 }, name: 'Titanic Blows', iconName: 'calisthenics',
+            id: 'sh_1_3', sub: 1, rank: 1, position: { row: 4, column: 2 }, name: 'Titanic Blows', iconName: 'calisthenics',
             desc: 'Rather than throw meek punches you put measured time into each strike',
             effect: [{ type: 1, effectTarget: "actionSpeed", effectType: "multPercent", effectMagnitude: 0.95 },
-            { type: 1, effectTarget: "damageDealt", effectType: "multPercent", effectMagnitude: 1.1, }],
-            maxLevel: 1, requires: { 'sh_1_2': 3 }, cost: [1],
+            { type: 1, effectTarget: "damageDealt", effectType: "multPercent", effectMagnitude: 1.11, }],
+            maxLevel: 1, requires: { 'sh_1_2': 5 }, cost: [3],
         },
         'sh_1_4': {
-            id: 'sh_1_4', sub: 1, rank: 1, position: { row: 4, column: 3 }, name: 'Body Of Steel', iconName: 'calisthenics',
+            id: 'sh_1_4', sub: 1, rank: 1, position: { row: 5, column: 3 }, name: 'Body Of Steel', iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 1, effectTarget: "damageTaken", effectType: "multPercent", effectMagnitude: 0.95, },],
-            maxLevel: 1, requires: { 'sh_1_2': 1 }, cost: [1],
+            effect: [{ type: 1, effectTarget: "damageTaken", effectType: "multPercent", effectMagnitude: 0.95, },
+            { type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.05, }],
+            maxLevel: 1, requires: { 'sh_1_2': 5 }, cost: [5],
         },
         'sh_1_5': {
-            id: 'sh_1_5', sub: 1, rank: 1, position: { row: 5, column: 1 }, name: 'Titanic Strength', iconName: 'calisthenics',
+            id: 'sh_1_5', sub: 1, rank: 1, position: { row: 4, column: 4 }, name: 'Titanic Strength', iconName: 'calisthenics',
             desc: '',
             effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.15, },],
-            maxLevel: 1, requires: {}, requiresSkill: { 'titanicSwing': 1 }, cost: [1],
+            maxLevel: 1, requires: {}, requiresSkill: { 'titanicSwing': 1 }, cost: [5],
         },
         'sh_1_6': {
             id: 'sh_1_6', sub: 1, rank: 1, position: { row: 5, column: 2 }, name: 'Great Vitality', iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 1000, },
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 10000, },
             { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.05, },],
-            maxLevel: 1, requires: { 'sh_1_4': 1 }, cost: [1],
+            maxLevel: 1, requires: { 'sh_1_4': 1 }, cost: [3],
         },
         'sh_1_7': {
             id: 'sh_1_7', sub: 1, rank: 1, position: { row: 6, column: 3 }, name: 'Titanic Growth', iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.004 },
-            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.001 }],
-            maxLevel: 999, cost: Array(999).fill(1), requires: { 'sh_1_4': 1 },
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.15 },
+            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.1 }],
+            maxLevel: 1, cost: Array(1).fill(5), requires: { 'sh_1_4': 1 },
         },
-        // 'sh_1_1m': {
-        //     id: 'sh_1_1m', sub: 1, position: { row: 1, column: 2 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_0': 5 }
-        // },
-        // 'sh_1_2m': {
-        //     id: 'sh_1_2m', sub: 1, position: { row: 1, column: 4 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_1': 5 }
-        // },
-        // 'sh_1_3m': {
-        //     id: 'sh_1_3m', sub: 1, position: { row: 2, column: 2 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_4m': 3 }
-        // },
-        // 'sh_1_4m': {
-        //     id: 'sh_1_4m', sub: 1, position: { row: 2, column: 3 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_0': 10 }
-        // },
-        // 'sh_1_5m': {
-        //     id: 'sh_1_5m', sub: 1, position: { row: 3, column: 4 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_4m': 5 }
-        // },
-        // 'sh_1_6m': {
-        //     id: 'sh_1_6m', sub: 1, position: { row: 3, column: 5 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_5m': 5 }
-        // },
-        // 'sh_1_7m': {
-        //     id: 'sh_1_7m', sub: 1, position: { row: 3, column: 2 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "agility", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_4m': 3 }
-        // },
-        // 'sh_1_8m': {
-        //     id: 'sh_1_8m', sub: 1, position: { row: 4, column: 4 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "agility", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_10m': 3 }
-        // },
-        // 'sh_1_9m': {
-        //     id: 'sh_1_9m', sub: 1, position: { row: 4, column: 5 }, name: 'Strength+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_8m': 3 }
-        // },
-        // 'sh_1_10m': {
-        //     id: 'sh_1_10m', sub: 1, position: { row: 4, column: 3 }, name: 'Toughness+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_2': 10 }
-        // },
-        // 'sh_1_11m': {
-        //     id: 'sh_1_11m', sub: 1, position: { row: 5, column: 3 }, name: 'Toughness+', iconName: 'calisthenics', desc: '',
-        //     effect: [{ type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 5 }],
-        //     maxLevel: 3, cost: Array(3).fill(1), requires: { 'sh_1_10m': 5 }
-        // },
         'sh_1_20': {
             id: 'sh_1_20',
             sub: 1, prestige: 1,
@@ -647,27 +544,13 @@ skillLibrary = {
         //#endregion
         //#region 2
         'sh_2_0': {
-            id: 'sh_2_0',
-            sub: 2,
-            rank: 1,
-            position: { row: 1, column: 3 },
-            name: 'STR+MND',
+            id: 'sh_2_0', sub: 2, rank: 1, position: { row: 1, column: 3 }, name: 'Origin: Spirit',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{
-                type: 2,
-                effectTarget: "strengthTraining",
-                effectType: "additivePercent",
-                effectMagnitude: 0.005,
-            },
-            {
-                type: 2,
-                effectTarget: "mindTraining",
-                effectType: "additivePercent",
-                effectMagnitude: 0.005,
-            }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.003 },
+            { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.002 },],
+            maxLevel: 100,
+            cost: Array(100).fill(1),
         },
         'sh_2_1': {
             id: 'sh_2_1',
@@ -677,21 +560,11 @@ skillLibrary = {
             name: 'Circular Breathing',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{
-                type: 0, // training boost
-                effectTarget: "strength",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.0025,
-            },
-            {
-                type: 0, // training boost
-                effectTarget: "mind",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.0025,
-            }],
-            maxLevel: 25,
-            cost: Array(25).fill(1),
-            requires: { 'sh_2_0': 10 }
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.01, },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.01, }],
+            maxLevel: 5,
+            cost: Array(5).fill(1),
+            requires: { 'sh_2_0': 5 }
         },
         'sh_2_2': {
             id: 'sh_2_2',
@@ -700,22 +573,11 @@ skillLibrary = {
             position: { row: 3, column: 3 },
             name: 'Body & Soul',
             iconName: 'calisthenics',
-            desc: '',
-            effect: [{
-                type: 0, // training boost
-                effectTarget: "strength",
-                effectType: "multPercent", //additiveFlat, multPercent, multPercent
-                effectMagnitude: 1.005,
-            },
-            {
-                type: 0, // training boost
-                effectTarget: "mind",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.005,
-            }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
-            requires: { 'sh_2_1': 1 }
+            desc: '', effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.01 },
+            { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.01 }],
+            maxLevel: 5,
+            cost: Array(5).fill(1),
+            requires: { 'sh_2_1': 5 }
         },
         'sh_2_3': {
             id: 'sh_2_3',
@@ -725,15 +587,10 @@ skillLibrary = {
             name: 'Focused Breathing',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{
-                type: 1, // training boost
-                effectTarget: "cooldownReduction",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.02,
-            }],
-            maxLevel: 3,
-            cost: [1, 1, 1],
-            requires: { 'sh_2_1': 1 }
+            effect: [{ type: 1, effectTarget: "cooldownReduction", effectType: "additiveFlat", effectMagnitude: 0.06, }],
+            maxLevel: 1,
+            cost: [3],
+            requires: { 'sh_2_1': 5 }
         },
         'sh_2_4': {
             id: 'sh_2_4',
@@ -743,35 +600,33 @@ skillLibrary = {
             name: 'Full-body Circulation',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.0025 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 10, cost: Array(10).fill(1), requires: { 'sh_2_1': 1 }
-        },
-        'sh_2_5': {
-            id: 'sh_2_5',
-            sub: 2,
-            rank: 1,
-            position: { row: 4, column: 2 },
-            name: 'Focused Breathing',
-            iconName: 'calisthenics',
-            desc: '',
-            effect: [{
-                type: 1, effectTarget: "cooldownReduction", effectType: "additiveFlat", effectMagnitude: 0.02,
-            }],
-            maxLevel: 3, cost: [1, 1, 1], requires: { 'sh_2_2': 1 }
+            effect: [{ type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.01 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.01 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'sh_2_1': 5 }
         },
         'sh_2_5': {
             id: 'sh_2_5',
             sub: 2,
             rank: 1,
             position: { row: 4, column: 3 },
-            name: 'Focused Breathing',
+            name: 'Inhale Ki',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{
-                type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.05,
-            }],
-            maxLevel: 1, cost: [1], requires: { 'sh_2_2': 1 }
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.02, },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02, }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'sh_2_2': 1 }
+        },
+        'sh_2_8': {
+            id: 'sh_2_8',
+            sub: 2,
+            rank: 1,
+            position: { row: 5, column: 4 },
+            name: 'Combat Flow',
+            iconName: 'calisthenics',
+            desc: '',
+            effect: [{ type: 1, effectTarget: "actionSpeed", effectType: "multPercent", effectMagnitude: 1.03 },
+            { type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.03 }],
+            maxLevel: 1, cost: [5], requires: { 'sh_2_2': 1 }
         },
         'sh_2_6': {
             id: 'sh_2_6',
@@ -781,21 +636,22 @@ skillLibrary = {
             name: 'Ki Recirculation',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.003 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.002 }],
-            maxLevel: 999, cost: Array(999).fill(1), requires: { 'sh_2_2': 1 }
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.08 },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.08 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.1 }],
+            maxLevel: 1, cost: Array(1).fill(5), requires: { 'sh_2_5': 5 }
         },
         'sh_2_7': {
             id: 'sh_2_7',
             sub: 2,
             rank: 1,
-            position: { row: 5, column: 2 },
+            position: { row: 4, column: 2 },
             name: 'Combat Focus',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 5000 },
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 10000 },
             { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.05 }],
-            maxLevel: 1, cost: [1], requires: { 'sh_2_2': 1 }
+            maxLevel: 1, cost: [3], requires: { 'sh_2_2': 1 }
         },
         'sh_2_20': {
             id: 'sh_2_20',
@@ -1083,7 +939,7 @@ skillLibrary = {
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
                 effectMagnitude: 0.06,
             }],
-            maxLevel: 3, cost: Array(1).fill(3), requires: { 'es_1_5': 1 },
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_1_5': 1 },
         },
         'es_1_3': {
             id: 'es_1_3', sub: 1, position: { row: 4, column: 4 }, name: 'Energy Alteration: Alacrity', iconName: 'studying',
@@ -1096,7 +952,7 @@ skillLibrary = {
             desc: '',
             effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.01, },
             { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.01, }],
-            maxLevel: 10, cost: Array(10).fill(1), requires: { 'es_1_0': 10 },
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_1_0': 10 },
         },
         'es_1_5': {
             id: 'es_1_5', sub: 1, position: { row: 3, column: 3 }, name: 'Sustained Augmentation', iconName: 'studying',
@@ -1110,7 +966,7 @@ skillLibrary = {
             id: 'es_1_6', sub: 1, position: { row: 5, column: 2 }, name: 'Uncontrolled Creation', iconName: 'studying',
             desc: 'Sometimes the energy you create is more volatile than you expect',
             effect: [{ type: 1, effectTarget: "criticalChance", effectType: "additiveFlat", effectMagnitude: 0.10 }],
-            maxLevel: 1, cost: [3], requires: { 'es_1_7': 10 },
+            maxLevel: 1, cost: [3], requires: { 'es_1_7': 5 },
         },
         'es_1_7': {
             id: 'es_1_7', sub: 1, position: { row: 4, column: 3 }, name: 'Energy Creation I', iconName: 'studying',
@@ -1277,7 +1133,6 @@ skillLibrary = {
             effect: [{ type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.0002 },
             { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.0003 }],
             maxLevel: 100, cost: Array(100).fill(1),
-
         },
         'es_2_1': {
             id: 'es_2_1', sub: 2, position: { row: 2, column: 3 }, name: 'Friendly Possession', iconName: 'studying',
@@ -1297,34 +1152,34 @@ skillLibrary = {
             id: 'es_2_3', sub: 2, position: { row: 3, column: 4 }, name: 'Etherealness', iconName: 'studying',
             desc: '',
             effect: [{ type: 1, effectTarget: "dodgeChance", effectType: "additiveFlat", effectMagnitude: 0.1 },
-            { type: 1, effectTarget: "damageTaken", effectType: "multPercent", effectMagnitude: 1.05     }],
-            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_1': 10 },
+            { type: 1, effectTarget: "damageTaken", effectType: "multPercent", effectMagnitude: 1.05 }],
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_1': 5 },
         },
         'es_2_4': {
             id: 'es_2_4', sub: 2, position: { row: 4, column: 3 }, name: 'Forced Possession', iconName: 'studying',
             desc: '',
             effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 },
             { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 }],
-            maxLevel: 1, cost: [1], requires: { 'es_2_2': 10 },
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_2_2': 5 },
         },
         'es_2_5': {
             id: 'es_2_5', sub: 2, position: { row: 5, column: 4 }, name: 'Ethereal Vitality', iconName: 'studying',
             desc: '',
             effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.2 }],
-            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_3': 1},
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_3': 1 },
         },
         'es_2_6': {
             id: 'es_2_6', sub: 2, position: { row: 4, column: 2 }, name: 'Metaphysical Body', iconName: 'studying',
             desc: '',
             effect: [{ type: 1, effectTarget: "maxHP", effectType: "multPercent", effectMagnitude: 1.1 }],
-            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_2': 10 },
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_2': 5 },
         },
         'es_2_9': {
             id: 'es_2_9', sub: 2, position: { row: 6, column: 3 }, name: 'Spirit Summoning', iconName: 'studying',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.001 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.004 }],
-            maxLevel: 1, cost: Array(999).fill(1), requires: { 'es_2_4': 1 },
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.1 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.15 }],
+            maxLevel: 1, cost: Array(1).fill(5), requires: { 'es_2_4': 1 },
         },
         'es_2_20': {
             id: 'es_2_20',
