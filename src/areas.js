@@ -90,17 +90,17 @@ class Area {
 
 const areas = [
     new Area({
-        id: 'alley1', name: "Alley", background: "alleyBackground.png", power: 2, expPerPower: 0.5, moneyPerPower: 0.1,
+        id: 'alley1', name: "Alley", background: "alleyBackground.png", power: 1, expPerPower: 0.5, moneyPerPower: 0.4,
         storyUnlock: 0, patrolTime: 3000, completionsReq: 10,
         encounters: [{ weight: 100, enemies: { "criminal": { 1: 1 } } }]
     }),
     new Area({
-        id: 'streets1', name: "Streets", background: "cyberpunk-street.png", power: 5, expPerPower: 0.352, moneyPerPower: 0.101,
+        id: 'streets1', name: "Streets", background: "cyberpunk-street.png", power: 6, expPerPower: 0.352, moneyPerPower: 0.101,
         storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        id: 'streets2', name: "Mean Streets", background: "cyberpunk-street.png", power: 9, expPerPower: 0.414, moneyPerPower: 0.1019,
+        id: 'streets2', name: "Mean Streets", background: "cyberpunk-street.png", power: 10, expPerPower: 0.414, moneyPerPower: 0.1019,
         storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
@@ -110,7 +110,7 @@ const areas = [
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        id: 'streets4', name: "Dangerous Streets", background: "cyberpunk-street.png", power: 24, expPerPower: 0.571, moneyPerPower: 0.1039,
+        id: 'streets4', name: "Dangerous Streets", background: "cyberpunk-street.png", power: 26, expPerPower: 0.571, moneyPerPower: 0.1039,
         storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),

@@ -1,4 +1,4 @@
-const version = '0.05d2';
+const version = '0.06';
 var isOutdated = false;
 var lastVersion;
 var debug = false;
@@ -17,10 +17,10 @@ const cleanPlayerStats = {
     subclassPrestige: Array(3).fill(0),
     level: 0,
     passivePointsSpent: Array(3).fill(0),
-    strength: 0,
-    toughness: 0,
-    mind: 0,
-    agility: 0,
+    strength: 1,
+    toughness: 1,
+    mind: 1,
+    agility: 1,
     attributeSoftcaps: [1000, 1000, 1000, 1000],
     attributeTrainingModifier: [1, 1, 1, 1],
     permanentSoftcaps: [0, 0, 0, 0],
@@ -88,11 +88,10 @@ function load(file = null) {
             if (localStorage.getItem("version") != version) {
                 lastVersion = localStorage.getItem("version");
                 isOutdated = true; console.log("outdated save");
-                playerStats.currentArea = 0;
                 if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
             }
-            
             if (Number(localStorage.getItem("version").substring(3, 4)) < 4) { resetSave(); }
+            if (Number(localStorage.getItem("version").substring(3, 4)) < 6) {playerStats.currentArea = 0; }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
         if (imageData != null) { document.getElementById("heroPortraitImage").src = imageData };

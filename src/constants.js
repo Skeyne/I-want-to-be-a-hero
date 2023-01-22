@@ -88,16 +88,16 @@ formulas.softcappedAttribute = function (index) {
     return Math.min(baseValue, softCap) * softCapFactor;
 }
 formulas.attackPower = function (ratios, attributes) {
-    return ratios[0] * (Math.sqrt(attributes.strength + 1) - 1)
-        + ratios[1] * (Math.sqrt(attributes.toughness + 1) - 1)
-        + ratios[2] * (Math.sqrt(attributes.mind + 1) - 1)
-        + ratios[3] * (Math.sqrt(attributes.agility + 1) - 1);
+    return ratios[0] * (Math.sqrt(attributes.strength))
+        + ratios[1] * (Math.sqrt(attributes.toughness))
+        + ratios[2] * (Math.sqrt(attributes.mind))
+        + ratios[3] * (Math.sqrt(attributes.agility));
 }
 formulas.healPower = function (ratios, attributes) {
-    return ratios[0] * (Math.pow(attributes.strength + 1,HEALTH_GROWTH_EXPONENT) - 1)
-        + ratios[1] * (Math.pow(attributes.toughness + 1,HEALTH_GROWTH_EXPONENT) - 1)
-        + ratios[2] * (Math.pow(attributes.mind + 1,HEALTH_GROWTH_EXPONENT) - 1)
-        + ratios[3] * (Math.pow(attributes.agility + 1,HEALTH_GROWTH_EXPONENT) - 1);
+    return ratios[0] * (Math.pow(attributes.strength, HEALTH_GROWTH_EXPONENT))
+        + ratios[1] * (Math.pow(attributes.toughness, HEALTH_GROWTH_EXPONENT))
+        + ratios[2] * (Math.pow(attributes.mind, HEALTH_GROWTH_EXPONENT))
+        + ratios[3] * (Math.pow(attributes.agility, HEALTH_GROWTH_EXPONENT));
 }
 const numberFormatters = [new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 0 }),
 new Intl.NumberFormat('en', { notation: 'compact', minimumFractionDigits: 0, maximumFractionDigits: 1 }),
