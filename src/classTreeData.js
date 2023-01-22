@@ -10,10 +10,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1,
+                effectMagnitude: 5,
             }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            maxLevel: 1,
+            cost: Array(1).fill(1),
         },
         'h_1': {
             id: 'h_1',
@@ -26,10 +26,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "strength",
                 effectType: "additivePercent",
-                effectMagnitude: 0.05,
+                effectMagnitude: 0.1,
             }],
-            maxLevel: 3,
-            cost: [1, 1, 1],
+            maxLevel: 1,
+            cost: [1],
             requires: { 'h_0': 3, }
         },
         'h_2': {
@@ -46,8 +46,8 @@ skillLibrary = {
                 effectMagnitude: 1.2,
             }],
             maxLevel: 1,
-            cost: [1],
-            requires: { 'h_1': 3, }
+            cost: [2],
+            requires: { 'h_1': 1, }
         },
         'h_1_4': {
             id: 'h_1_4',
@@ -63,7 +63,7 @@ skillLibrary = {
                 effectMagnitude: 0.2,
             }],
             maxLevel: 1,
-            cost: [1],
+            cost: [3],
             requires: { 'h_2': 1, },
         },
         'h_3': {
@@ -74,10 +74,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "toughness",
                 effectType: "additiveFlat", //additive
-                effectMagnitude: 1,
+                effectMagnitude: 5,
             }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            maxLevel: 1,
+            cost: Array(1).fill(1),
         },
         'h_4': {
             id: 'h_4', sub: 0, position: { row: 2, column: 3 }, name: 'Construction Job',
@@ -89,7 +89,7 @@ skillLibrary = {
                 effectType: "additivePercent", //additive
                 effectMagnitude: 0.1,
             }],
-            maxLevel: 2,
+            maxLevel: 1,
             cost: [1],
             requires: { 'h_3': 3, },
         },
@@ -104,7 +104,7 @@ skillLibrary = {
                 effectMagnitude: 1.2,
             }],
             maxLevel: 1,
-            cost: [1],
+            cost: [2],
             requires: { 'h_4': 2, },
         },
         'h_2_4': {
@@ -118,7 +118,7 @@ skillLibrary = {
                 effectMagnitude: 0.01,
             }],
             maxLevel: 1,
-            cost: [1],
+            cost: [3],
             requires: { 'h_5': 1, },
         },
         'h_6': {
@@ -129,10 +129,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1,
+                effectMagnitude: 5,
             }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            maxLevel: 1,
+            cost: Array(1).fill(1),
 
         },
         'h_7': {
@@ -143,11 +143,11 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 0.05,
+                effectMagnitude: 0.1,
             }],
-            maxLevel: 5,
-            cost: [1, 1, 1, 1, 1],
-            requires: { 'h_6': 3, },
+            maxLevel: 1,
+            cost: [1],
+            requires: { 'h_6': 1, },
         },
         'h_8': {
             id: 'h_8', sub: 0, position: { row: 3, column: 4 }, name: 'Acquire J\'s',
@@ -157,11 +157,11 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "agility",
                 effectType: "multPercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1.3,
+                effectMagnitude: 1.2,
             }],
             maxLevel: 1,
-            cost: [1],
-            requires: { 'h_7': 3, },
+            cost: [2],
+            requires: { 'h_7': 1, },
         },
         'h_3_4': {
             id: 'h_3_4', sub: 0, position: { row: 3, column: 5 }, name: 'Opportunity Seeker',
@@ -174,7 +174,7 @@ skillLibrary = {
                 effectMagnitude: 0.2,
             }],
             maxLevel: 1,
-            cost: [1],
+            cost: [3],
             requires: { 'h_8': 1, },
         },
         'h_9': {
@@ -185,10 +185,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "additiveFlat", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1,
+                effectMagnitude: 5,
             }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            maxLevel: 1,
+            cost: Array(1).fill(1),
         },
         'h_10': {
             id: 'h_10', sub: 0, position: { row: 4, column: 3 }, name: 'Attend debate club',
@@ -198,11 +198,11 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "additivePercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 0.2,
+                effectMagnitude: 0.1,
             }],
             maxLevel: 1,
             cost: [1],
-            requires: { 'h_9': 3, },
+            requires: { 'h_9': 1, },
         },
         'h_11': {
             id: 'h_11', sub: 0, position: { row: 4, column: 4 }, name: 'Win at street chess',
@@ -212,10 +212,10 @@ skillLibrary = {
                 type: 0, // attribute boost
                 effectTarget: "mind",
                 effectType: "multPercent", //additiveDlat, additivePercent, multPercent
-                effectMagnitude: 1.15,
+                effectMagnitude: 1.2,
             }],
-            maxLevel: 2,
-            cost: [1],
+            maxLevel: 1,
+            cost: [2],
             requires: { 'h_10': 1, },
         },
         'h_4_4': {
@@ -229,8 +229,8 @@ skillLibrary = {
                 effectMagnitude: 0.20,
             }],
             maxLevel: 1,
-            cost: [1],
-            requires: { 'h_11': 2, },
+            cost: [3],
+            requires: { 'h_11': 1, },
         },
         //#endregion
     },
