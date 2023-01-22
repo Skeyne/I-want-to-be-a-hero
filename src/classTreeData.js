@@ -32,7 +32,7 @@ skillLibrary = {
                 effectMagnitude: 0.05,
             }],
             maxLevel: 3,
-            cost: [1,1,1],
+            cost: [1, 1, 1],
             requires: { 'h_0': 3, }
         },
         'h_2': {
@@ -314,7 +314,7 @@ skillLibrary = {
             id: 'sh_0_4', sub: 0, rank: 1, position: { row: 5, column: 3 }, name: 'Utmost Might', iconName: 'calisthenics',
             desc: '',
             effect: [{ type: 1, effectTarget: "damageDealt", effectType: "multPercent", effectMagnitude: 1.02, }],
-            maxLevel: 3, cost: [1,1,1], requires: { 'sh_0_2': 3 }
+            maxLevel: 3, cost: [1, 1, 1], requires: { 'sh_0_2': 3 }
         },
         'sh_0_5': {
             id: 'sh_0_5', sub: 0, rank: 1, position: { row: 2, column: 4 },
@@ -406,7 +406,7 @@ skillLibrary = {
                 effectMagnitude: 0.1,
             }],
             maxLevel: 1,
-            cost: [1    ],
+            cost: [1],
             requires: { 'sh_0_22': 1 }
         },
         'sh_0_24': {
@@ -732,7 +732,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             }],
             maxLevel: 3,
-            cost: [1,1,1],
+            cost: [1, 1, 1],
             requires: { 'sh_2_1': 1 }
         },
         'sh_2_4': {
@@ -879,122 +879,49 @@ skillLibrary = {
     "esper": {
         //#region 0
         'es_0_0': {
-            id: 'es_0_0',
-            sub: 0,
-            position: { row: 1, column: 3 },
-            name: 'Reflective Mind',
-            iconName: 'studying',
+            id: 'es_0_0', sub: 0, position: { row: 1, column: 3 }, name: 'Origin: Psionic', iconName: 'studying',
             desc: 'More than ever you\'re drawn inwards, to your own thoughts.',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "mind",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 2,
-            },
-            {
-                type: 2, // attribute boost
-                effectTarget: "mindTraining",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.01,
-            }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            effect: [{ type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.005, }],
+            maxLevel: 100,
+            cost: Array(100).fill(1),
         },
         'es_0_1': {
-            id: 'es_0_1',
-            sub: 0,
-            position: { row: 2, column: 3 },
-            name: 'Psionic Talent',
-            iconName: 'studying',
+            id: 'es_0_1', sub: 0, position: { row: 2, column: 3 }, name: 'Psionic Talent', iconName: 'studying',
             desc: 'You start being able to hear whispers of thoughts and feel minds and the fields they generate',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "mind",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.005,
-            }],
-            maxLevel: 25,
-            cost: Array(25).fill(1),
-            requires: { 'es_0_0': 5 }
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_0_0': 10 }
         },
         'es_0_2': {
-            id: 'es_0_2',
-            sub: 0,
-            position: { row: 3, column: 3 },
-            name: 'Master of the Mind',
-            iconName: 'studying',
+            id: 'es_0_2', sub: 0, position: { row: 3, column: 3 }, name: 'Master of the Mind', iconName: 'studying',
             desc: 'Nothing in this world is infinite except for your intellect.',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "mind",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.1,
-            }],
-            maxLevel: 1,
-            cost: [1],
-            requires: { 'es_0_1': 10 }
+            effect: [{ type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.02 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_0_1': 5 }
         },
         'es_0_3': {
-            id: 'es_0_3',
-            sub: 0,
-            position: { row: 5, column: 2 },
-            name: 'Divergence',
-            iconName: 'studying',
+            id: 'es_0_3', sub: 0, position: { row: 5, column: 2 }, name: 'Divergence', iconName: 'studying',
             desc: 'As your foes get weaker you get stronger',
-            effect: [{
-                type: 1, // attribute boost
-                effectTarget: "takedown",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.05,
-            }],
-            maxLevel: 3,
-            cost: [1, 1, 1],
-            requires: { 'es_0_4': 10 }
+            effect: [{ type: 1, effectTarget: "takedown", effectType: "additiveFlat", effectMagnitude: 0.15 }],
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_0_4': 5 }
         },
         'es_0_4': {
-            id: 'es_0_4',
-            sub: 0,
-            position: { row: 4, column: 3 },
-            name: 'Psionic Talent II',
-            iconName: 'studying',
-            desc: 'Placeholder',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "mind",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.005,
-            }],
-            maxLevel: 25,
-            cost: Array(25).fill(1),
-            requires: { 'es_0_2': 1 }
+            id: 'es_0_4', sub: 0, position: { row: 4, column: 3 }, name: 'Psionic Talent II', iconName: 'studying',
+            desc: '',
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.04 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_0_2': 1 }
         },
         'es_0_5': {
-            id: 'es_0_5',
-            sub: 0,
-            position: { row: 3, column: 4 },
-            name: 'Fragile Thoughts',
-            iconName: 'studying',
-            desc: '',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "toughness",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.8,
-            },
-            {
-                type: 1, // attribute boost
-                effectTarget: "cooldownReduction",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.05,
-            }],
+            id: 'es_0_5', sub: 0, position: { row: 3, column: 4 }, name: 'Fragile Thoughts',
+            iconName: 'studying', desc: '',
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 0.8 },
+            { type: 1, effectTarget: "cooldownReduction", effectType: "additiveFlat", effectMagnitude: 0.1 }],
             maxLevel: 1,
-            cost: [1],
+            cost: [3],
             requires: { 'es_0_1': 1 }
         },
         'es_0_6': {
             id: 'es_0_6',
             sub: 0,
-            position: { row: 5, column: 3 },
+            position: { row: 5, column: 4 },
             name: 'Agile Scion',
             iconName: 'studying',
             desc: '',
@@ -1003,27 +930,23 @@ skillLibrary = {
                     type: 1, // attribute boost
                     effectTarget: "cooldownReduction",
                     effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                    effectMagnitude: 0.03,
+                    effectMagnitude: 0.1,
                 }],
-            maxLevel: 3,
-            cost: [1, 1, 1],
+            maxLevel: 1,
+            cost: Array(1).fill(3),
             requires: { 'es_0_4': 1 }
         },
         'es_0_7': {
             id: 'es_0_7', sub: 0, position: { row: 6, column: 3 }, name: 'Solipsism', iconName: 'studying',
             desc: '',
-            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.005, }],
-            maxLevel: 999, cost: Array(999).fill(1), requires: { 'es_0_4': 1 }
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.2, }],
+            maxLevel: 1, cost: Array(1).fill(5), requires: { 'es_0_4': 1 }
         },
         'es_0_20': {
             id: 'es_0_20', sub: 0, prestige: 1, position: { row: 6, column: 3 }, name: 'Reflective Mind', iconName: 'studying',
             desc: 'More than ever you\'re drawn inwards, to your own thoughts.',
-            effect: [{
-                type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 2,
-            },
-            {
-                type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.01,
-            }],
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 2 },
+            { type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.01 }],
             maxLevel: 10,
             cost: Array(10).fill(1),
         },
@@ -1143,133 +1066,67 @@ skillLibrary = {
             id: 'es_1_0',
             sub: 1,
             position: { row: 1, column: 3 },
-            name: 'Practice controlling energy',
+            name: 'Origin: Matter',
             iconName: 'studying',
             desc: 'You discover that you can alter the flow of energies in the world, but a swift mind is needed to counteract any imbalances.',
-            effect: [{ type: 0, effectTarget: "agility", effectType: "additiveFlat", effectMagnitude: 1, },
-            { type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 1, },
-            { type: 2, effectTarget: "agilityTraining", effectType: "additivePercent", effectMagnitude: 0.005, },
-            { type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.005, }],
-            maxLevel: 10,
-            cost: Array(10).fill(1),
+            effect: [{ type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.003, },
+            { type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.002, }],
+            maxLevel: 100,
+            cost: Array(100).fill(1),
         },
         'es_1_2': {
-            id: 'es_1_2',
-            sub: 1,
-            position: { row: 3, column: 2 },
-            name: 'Energy Alteration: Celerity',
-            iconName: 'studying',
+            id: 'es_1_2', sub: 1, position: { row: 4, column: 2 }, name: 'Energy Alteration: Celerity', iconName: 'studying',
             desc: 'Alter the energy around you to speed up your movements',
             effect: [{
                 type: 1, // attribute boost
                 effectTarget: "actionSpeed",
                 effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.02,
+                effectMagnitude: 0.06,
             }],
-            maxLevel: 3,
-            cost: [1, 1, 1],
-            requires: { 'es_1_5': 1 },
+            maxLevel: 3, cost: Array(1).fill(3), requires: { 'es_1_5': 1 },
         },
         'es_1_3': {
-            id: 'es_1_3',
-            sub: 1,
-            position: { row: 3, column: 4 },
-            name: 'Energy Alteration: Alacrity',
-            iconName: 'studying',
+            id: 'es_1_3', sub: 1, position: { row: 4, column: 4 }, name: 'Energy Alteration: Alacrity', iconName: 'studying',
             desc: 'Alter the energy around you to speed up the passing of time',
-            effect: [{
-                type: 1, // attribute boost
-                effectTarget: "cooldownReduction",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.015,
-            }],
-            maxLevel: 3,
-            cost: [1, 1, 1],
-            requires: { 'es_1_5': 1 },
+            effect: [{ type: 1, effectTarget: "cooldownReduction", effectType: "additiveFlat", effectMagnitude: 0.04 }],
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_1_5': 1 },
         },
         'es_1_4': {
-            id: 'es_1_4',
-            sub: 1,
-            position: { row: 2, column: 3 },
-            name: 'Energy Annihilation I',
-            iconName: 'studying',
+            id: 'es_1_4', sub: 1, position: { row: 2, column: 3 }, name: 'Energy Annihilation I', iconName: 'studying',
             desc: '',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "mind",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.0025,
-            },
-            {
-                type: 0, // attribute boost
-                effectTarget: "agility",
-                effectType: "additivePercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.0025,
-            }],
-            maxLevel: 25,
-            cost: Array(25).fill(1),
-            requires: { 'es_1_0': 10 },
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.01, },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.01, }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'es_1_0': 10 },
         },
         'es_1_5': {
-            id: 'es_1_5',
-            sub: 1,
-            position: { row: 3, column: 3 },
-            name: 'Sustained Augmentation',
-            iconName: 'studying',
+            id: 'es_1_5', sub: 1, position: { row: 3, column: 3 }, name: 'Sustained Augmentation', iconName: 'studying',
             desc: 'You can set a part of you mind aside to constantly enhance your physical body',
-            effect: [{
-                type: 0, // attribute boost
-                effectTarget: "strength",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.05,
-            },
-            {
-                type: 0, // attribute boost
-                effectTarget: "toughness",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.05,
-            }
-                ,
-            {
-                type: 0, // attribute boost
-                effectTarget: "agility",
-                effectType: "multPercent", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 1.05,
-            }],
-            maxLevel: 1,
-            cost: [1],
-            requires: { 'es_1_4': 10 },
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.01 },
+            { type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.01 },
+            { type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.01 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_1_4': 10 },
         },
         'es_1_6': {
-            id: 'es_1_6',
-            sub: 1,
-            position: { row: 4, column: 2 },
-            name: 'Uncontrolled Creation',
-            iconName: 'studying',
+            id: 'es_1_6', sub: 1, position: { row: 5, column: 2 }, name: 'Uncontrolled Creation', iconName: 'studying',
             desc: 'Sometimes the energy you create is more volatile than you expect',
-            effect: [{
-                type: 1, // attribute boost
-                effectTarget: "criticalChance",
-                effectType: "additiveFlat", //additiveFlat, additivePercent, multPercent
-                effectMagnitude: 0.05,
-            }],
-            maxLevel: 1,
-            cost: [1],
-            requires: { 'es_1_7': 10 },
+            effect: [{ type: 1, effectTarget: "criticalChance", effectType: "additiveFlat", effectMagnitude: 0.10 }],
+            maxLevel: 1, cost: [3], requires: { 'es_1_7': 10 },
         },
         'es_1_7': {
             id: 'es_1_7', sub: 1, position: { row: 4, column: 3 }, name: 'Energy Creation I', iconName: 'studying',
             desc: '',
-            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0025 },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 25, cost: Array(25).fill(1), requires: { 'es_1_5': 1 },
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_1_5': 1 },
         },
         'es_1_8': {
             id: 'es_1_8', sub: 1, position: { row: 6, column: 3 }, name: 'Transmutation', iconName: 'studying',
             desc: '',
-            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0025 },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 999, cost: Array(999).fill(1), requires: { 'es_1_7': 1 },
+            effect: [{ type: 0, effectTarget: "strength", effectType: "multPercent", effectMagnitude: 1.05 },
+            { type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.05 },
+            { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.05 },
+            { type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.05 }],
+            maxLevel: 1, cost: Array(1).fill(5), requires: { 'es_1_7': 1 },
         },
         'es_1_20': {
             id: 'es_1_20',
@@ -1415,45 +1272,52 @@ skillLibrary = {
         //#endregion
         //#region 2
         'es_2_0': {
-            id: 'es_2_0', sub: 2, position: { row: 1, column: 3 }, name: 'Spirit Sight', iconName: 'studying',
+            id: 'es_2_0', sub: 2, position: { row: 1, column: 3 }, name: 'Origin: Spiritual', iconName: 'studying',
             desc: 'You start to see spirits, and they sometimes help you.',
-            effect: [{ type: 2, effectTarget: "toughnessTraining", effectType: "additivePercent", effectMagnitude: 0.005 },
-            { type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.005 }],
-            maxLevel: 10, cost: Array(10).fill(1),
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.0002 },
+            { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.0003 }],
+            maxLevel: 100, cost: Array(100).fill(1),
 
         },
         'es_2_1': {
             id: 'es_2_1', sub: 2, position: { row: 2, column: 3 }, name: 'Friendly Possession', iconName: 'studying',
             desc: 'You learn that by gathering spirits in your body they can help protect it.',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0025 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 25, cost: Array(25).fill(1), requires: { 'es_2_0': 5 },
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.01 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.01 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_2_0': 5 },
         },
         'es_2_2': {
             id: 'es_2_2', sub: 2, position: { row: 3, column: 3 }, name: 'Spirit Form', iconName: 'studying',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.005 },
-            { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.005 }],
-            maxLevel: 10, cost: Array(10).fill(1), requires: { 'es_2_1': 10 },
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "multPercent", effectMagnitude: 1.01 },
+            { type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.01 }],
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_2_1': 10 },
         },
         'es_2_3': {
-            id: 'es_2_3', sub: 2, position: { row: 3, column: 4 }, name: 'Spirit Form', iconName: 'studying',
+            id: 'es_2_3', sub: 2, position: { row: 3, column: 4 }, name: 'Etherealness', iconName: 'studying',
             desc: '',
-            effect: [{ type: 1, effectTarget: "dodgeChance", effectType: "additiveFlat", effectMagnitude: 0.05 }],
-            maxLevel: 1, cost: [1], requires: { 'es_2_1': 10 },
+            effect: [{ type: 1, effectTarget: "dodgeChance", effectType: "additiveFlat", effectMagnitude: 0.1 },
+            { type: 1, effectTarget: "damageTaken", effectType: "multPercent", effectMagnitude: 1.05     }],
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_1': 10 },
         },
         'es_2_4': {
-            id: 'es_2_4', sub: 2, position: { row: 4, column: 3 }, name: 'Metaphysical Body', iconName: 'studying',
+            id: 'es_2_4', sub: 2, position: { row: 4, column: 3 }, name: 'Forced Possession', iconName: 'studying',
             desc: '',
-            effect: [{ type: 1, effectTarget: "maxHP", effectType: "multPercent", effectMagnitude: 1.05 }],
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 }],
             maxLevel: 1, cost: [1], requires: { 'es_2_2': 10 },
         },
         'es_2_5': {
-            id: 'es_2_5', sub: 2, position: { row: 5, column: 2 }, name: 'Ethereal Vitality', iconName: 'studying',
+            id: 'es_2_5', sub: 2, position: { row: 5, column: 4 }, name: 'Ethereal Vitality', iconName: 'studying',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.1 },
-            { type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 5000 }],
-            maxLevel: 1, cost: [1], requires: { 'es_2_2': 10 },
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.2 }],
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_3': 1},
+        },
+        'es_2_6': {
+            id: 'es_2_6', sub: 2, position: { row: 4, column: 2 }, name: 'Metaphysical Body', iconName: 'studying',
+            desc: '',
+            effect: [{ type: 1, effectTarget: "maxHP", effectType: "multPercent", effectMagnitude: 1.1 }],
+            maxLevel: 1, cost: Array(1).fill(3), requires: { 'es_2_2': 10 },
         },
         'es_2_9': {
             id: 'es_2_9', sub: 2, position: { row: 6, column: 3 }, name: 'Spirit Summoning', iconName: 'studying',
@@ -1476,7 +1340,7 @@ skillLibrary = {
                 effectMagnitude: 0.02,
             }],
             maxLevel: 5,
-            cost: [1,1,1,1,1],
+            cost: [1, 1, 1, 1, 1],
 
         },
         'es_2_21': {
@@ -2204,7 +2068,7 @@ skillLibrary = {
                 effectMagnitude: 0.025,
             }],
             maxLevel: 2,
-            cost: [25, 25],
+            cost: [1, 1],
             requires: {},
             requiresSkill: { 'deflect': 1 }
         },

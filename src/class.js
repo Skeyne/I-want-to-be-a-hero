@@ -5,6 +5,13 @@ const classTreeNames = {
     'esper': ['Psionic', 'Matter', 'Spiritual'],
     'ninja': ['Bladelore', 'Ninjutsu', 'Shadowcraft'],
 }
+function unlockPointsLookup(index) {
+    if (playerStats.class != 'esper') {
+        return [0, 0, 0, 0, 0, 0][index]
+    } else {
+        return [0, 10, 25, 50, 75, 100][index]
+    }
+}
 classTrees = {
     'human': 1,
     'superhuman': 3,
@@ -12,37 +19,37 @@ classTrees = {
     'esper': 3,
     'ninja': 3,
 }
-abilityUnlocks = {
-    'human': {
-        0: ['punch'],
-        5: ['kick', 'jab'],
-        10: ['haymaker', 'firecrackers'],
-        15: ['crowbar', 'throwingKnife'],
-    },
-    'superhuman': {
-        0: ['simplePunch'],
-        10: ['titanicSwing', 'multipleSimplePunches'],
-        25: ['airCannon', 'secondWind'],
-    },
-    'mutant': {
-        0: ['bulkFist'],
-        10: ['corrosiveBurst', 'tentaclePull'],
-        25: ['engulf']
-    },
-    'esper': {
-        0: ['spiritFist'],
-        10: ['telekineticProjectile', 'psionicPulse'],
-        25: ['psionicBarrier', 'repulsionWave']
-    },
-    'ninja': {
-        0: ['katana'],
-        10: ['shadowStrike', 'shuriken'],
-        25: ['flashStep', 'bladeStorm', 'diversion'],
-    },
-    'cyborg': {
-        0: ['punch'],
-    },
-}
+// abilityUnlocks = {
+//     'human': {
+//         0: ['punch'],
+//         5: ['kick', 'jab'],
+//         10: ['haymaker', 'firecrackers'],
+//         15: ['crowbar', 'throwingKnife'],
+//     },
+//     'superhuman': {
+//         0: ['simplePunch'],
+//         10: ['titanicSwing', 'multipleSimplePunches'],
+//         25: ['airCannon', 'secondWind'],
+//     },
+//     'mutant': {
+//         0: ['bulkFist'],
+//         10: ['corrosiveBurst', 'tentaclePull'],
+//         25: ['engulf']
+//     },
+//     'esper': {
+//         0: ['spiritFist'],
+//         10: ['telekineticProjectile', 'psionicPulse'],
+//         25: ['psionicBarrier', 'repulsionWave']
+//     },
+//     'ninja': {
+//         0: ['katana'],
+//         10: ['shadowStrike', 'shuriken'],
+//         25: ['flashStep', 'bladeStorm', 'diversion'],
+//     },
+//     'cyborg': {
+//         0: ['punch'],
+//     },
+// }
 // previewRowHeader.setAttribute("id", "previewRowHeader");
 // let previewRowBody = document.createElement("div");
 // previewRowBody.setAttribute("id", "previewRowBody");
@@ -432,10 +439,10 @@ function generatePassiveTooltip(skillId) {
                         numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude;
                         break;
                     case "additivePercent":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude * 100 + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100,2) + "%";
                         break;
                     case "multPercent":
-                        numberDisplay = "x" + effect.effectMagnitude;
+                        numberDisplay = (playerStats.unlockedSkills[skillId] ? format(Math.pow(effect.effectMagnitude,playerStats.unlockedSkills[skillId]),3) : 0) + "x " +  "( x" + effect.effectMagnitude + " per)";
                         break;
                     default:
                         console.log("Undefined effect type");
@@ -779,13 +786,7 @@ function updateSubclassButton(index) {
     let b = document.getElementById(`subclassTreeButton${index}`);
     b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index],0)})`;
 }
-function unlockPointsLookup(index) {
-    if (playerStats.class == 'human') {
-        return [0, 0, 0, 0, 0, 0][index]
-    } else {
-        return [0, 10, 35, 35, 35, 35][index]
-    }
-}
+
 function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
