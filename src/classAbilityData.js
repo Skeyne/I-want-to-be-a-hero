@@ -909,6 +909,7 @@ playerMoves = {
     'shockwaveCannon': {
         class: 'superhuman',
         type: 0,
+        prestige: 1,
         sub: 1,
         position: { row: 8, column: 2 },
         category: 'ranged',
@@ -929,7 +930,7 @@ playerMoves = {
         requiresPassive: { 'sh_1_7': 1 }
     },
     'titansGrit': {
-        class: 'superhuman', prestige: 1, type: 3, sub: 0, position: { row: 8, column: 1 },
+        class: 'superhuman', prestige: 1, type: 3, sub: 0, position: { row: 8, column: 1 },prestige: 1,
         category: 'buff', name: "Titan's Grit",
         description: "", iconName: "placeHolder",
         duration: 6000,
@@ -1279,7 +1280,7 @@ playerMoves = {
     'shurikenBarrage': {
         class: 'ninja',
         type: 0,
-        sub: 1,
+        sub: 1, prestige: 1,
         position: { row: 8, column: 1 },
         category: 'ranged',
         name: "Shuriken Barrage",
@@ -1301,7 +1302,7 @@ playerMoves = {
         class: 'ninja',
         type: 0,
         sub: 1,
-        position: { row: 8, column: 1 },
+        position: { row: 8, column: 1 },prestige: 1,
         category: 'melee',
         name: "Technique: Sudden Flooding",
         description: "Summon a great amount of water, flooding the battlefield and slowing enemies.",
