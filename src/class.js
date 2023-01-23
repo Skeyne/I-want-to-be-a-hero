@@ -6,7 +6,7 @@ const classTreeNames = {
     'ninja': ['Bladelore', 'Ninjutsu', 'Shadowcraft'],
 }
 function unlockPointsLookup(index) {
-    if (playerStats.class != 'esper') {
+    if (playerStats.class == 'human') {
         return [0, 0, 0, 0, 0, 0][index]
     } else {
         return [0, 10, 25, 50, 75, 100][index]
@@ -436,10 +436,10 @@ function generatePassiveTooltip(skillId) {
                 effectText += `<span class="${effect.effectTarget}Text">${attributeDisplayNames[effect.effectTarget]}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude;
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude,2);
                         break;
                     case "additivePercent":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100,2) + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100,3) + "%";
                         break;
                     case "multPercent":
                         numberDisplay = (playerStats.unlockedSkills[skillId] ? format(Math.pow(effect.effectMagnitude,playerStats.unlockedSkills[skillId]),3) : 0) + "x " +  "( x" + effect.effectMagnitude + " per)";
@@ -453,7 +453,7 @@ function generatePassiveTooltip(skillId) {
                 effectText += `<span>${effect.effectTarget}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100) + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100,2) + "%";
                         break;
                     case "additivePercent":
                         numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude * 100 + "%";
@@ -488,10 +488,7 @@ function generatePassiveTooltip(skillId) {
                 break;
         }
         effectText += `${numberDisplay}` + "<br><br>";
-
     }
-
-
     let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
     let costString = "";
     if (isNaN(cost)) { costString = "MAXED!" } else { costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points" };

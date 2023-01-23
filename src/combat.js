@@ -573,6 +573,7 @@ class Player extends CombatEntity {
         this.mind = getEffectiveValue("mind");
         this.agility = getEffectiveValue("agility");
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
+        this.maxHealth  *= getSecondaryAttribute("maxHP");
         this.health = this.maxHealth;
         this.shield = 0;
         this.flatReduction = formulas.flatReduction(this);

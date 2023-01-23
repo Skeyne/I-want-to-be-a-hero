@@ -28,6 +28,7 @@ const cleanPlayerStats = {
     flatReduction: 0,
     damageTaken: 1,
     damageDealt:1,
+    maxHP:1,
     healthRegeneration: 0,
     cooldownReduction: 1,
     actionSpeed: 1,
