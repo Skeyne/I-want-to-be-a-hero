@@ -8,62 +8,62 @@ var activityScaling = {
 }
 var activityData = {
     "activity_0_0": {
-        id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.01, 0, 0, 0],
+        id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.001, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_1": {
-        id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.01, 0, 0],
+        id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.001, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_2": {
-        id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.01],
+        id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.001],
         attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_3": {
-        id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.01, 0],
+        id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.001, 0],
         attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_1_0": {
-        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.03, 0, 0, 0],
+        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.003, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_1_1": {
-        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.03, 0, 0],
+        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.003, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_1_2": {
-        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.03],
+        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.003],
         attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_1_3": {
-        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.03, 0],
+        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.003, 0],
         attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_2_0": {
-        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, -0.1, -0, 0],
+        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.025, -0.01, -0, 0],
         attributeScaling: ["standard1", "detriment1", 0, 0],
         timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
     "activity_2_1": {
-        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.1, 0.25, 0, 0],
+        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.01, 0.025, 0, 0],
         attributeScaling: ["detriment1", "standard1", 0, 0],
         timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
     "activity_2_2": {
-        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.1, 0.25],
+        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.01, 0.025],
         attributeScaling: ["detriment1","detriment1", "detriment1", "standard1"],
         timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
     "activity_2_3": {
-        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.25, -0.1],
+        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.025, -0.01],
         attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
         timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
