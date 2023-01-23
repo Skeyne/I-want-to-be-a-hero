@@ -154,7 +154,7 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index]*(playerStats.level+1)*getFameEffect("trainingSpeed"),2)} `;
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index]*(playerStats.level+1)*getFameEffect("trainingSpeed"),3)} `;
             attributeText.append(s);
         }
         attributeText.innerHTML += ' /s';
@@ -173,7 +173,7 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index]*(playerStats.level+1)*getFameEffect("trainingSpeed"),2)}`
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index]*(playerStats.level+1)*getFameEffect("trainingSpeed"),3)}`
             attributeText.append(s);
         }
         attributeText.innerHTML += ' /s';
@@ -236,7 +236,7 @@ Object.keys(activityData).forEach(id => {
         if (ratio == 0) continue;
         let s = document.createElement("span");
         s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-        s.innerHTML = `${format(activity.RewardPerPlayerLevel[index]*(playerStats.level+1)*getFameEffect("trainingSpeed"),2)}x`
+        s.innerHTML = `${format(activity.RewardPerPlayerLevel[index]*(playerStats.level+1)*getFameEffect("trainingSpeed"),3)}x`
         attributeText.append(s);
     }
     attributeText.innerHTML += ' /s';
