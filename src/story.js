@@ -223,7 +223,7 @@ function checkAreaUnlocks() {
         })
         d.id = `areaButton_${area.id}`;
         d.classList.add('areaButton');
-        d.style.backgroundImage = `linear-gradient(180deg,transparent ,rgba(15,15,15,.5) 25% 75%,transparent),url(resources/backgroundImages/${area.background})`;
+        d.style.backgroundImage = `linear-gradient(180deg,transparent ,rgba(0,0,0,.7) 25% 75%,transparent),url(resources/backgroundImages/${area.background})`;
         d.innerHTML = area.displayText;
         if (index == playerStats.currentArea){d.classList.toggle('active')}
         areaButtonDict[area.id] = d;
