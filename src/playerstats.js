@@ -1,4 +1,4 @@
-const version = '0.06';
+const version = '0.06a';
 var isOutdated = false;
 var lastVersion;
 var debug = false;
