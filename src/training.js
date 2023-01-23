@@ -304,3 +304,4 @@ function updateTrainingCanBuy() {
         document.getElementById("trainingCanUpgradeText").innerHTML = "";
     }
 }
+

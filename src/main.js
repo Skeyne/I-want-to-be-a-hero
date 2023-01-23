@@ -486,6 +486,7 @@ function logicLoop() {
             break;
     }
     currentTrainingArea.tick();
+    decayAttributes();
 }
 function changeInterval(interval) {
     window.clearInterval(ticker);
@@ -705,4 +706,15 @@ function drawAllies() {
 }
 function mod(n, m) {
     return ((n % m) + m) % m;
+}
+
+function decayAttributes(){
+    for (let index = 0; index < 4; index++) {
+        const attribute = attributeIndexToId[index];
+        const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
+        const over = playerStats[attribute]/softcap - 1;
+        if(over > 0){
+            playerStats[attribute] -= (playerStats[attribute] - softcap) * Math.exp(3*over)/1000 * logicTickTime/1000;
+        }
+    }
 }
