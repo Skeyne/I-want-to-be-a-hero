@@ -87,7 +87,7 @@ function generateFameUpgradeUI(upgrade) {
     let d = document.createElement("div");
     d.className = "fameItemGrid";
     let iconButtonWrapper = document.createElement("div");
-    iconButtonWrapper.style.width = '10vw';
+    iconButtonWrapper.style.width = '6vw';
     let icon = document.createElement("div");
     icon.className = "fameUpgradeIcon";
     let bUp = document.createElement("button");

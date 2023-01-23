@@ -940,7 +940,7 @@ progress[value]::-webkit-progress-bar {
     aspect-ratio: 4 / 1;
     border: 2px solid black;
     font-family: 'Pickle Pushing';
-    font-size: 1em;
+    font-size: 1.5vh;
     background-color: whitesmoke;
     padding: 0
 }
