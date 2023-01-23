@@ -10,62 +10,62 @@ var activityData = {
     "activity_0_0": {
         id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.01, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
+        timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_1": {
         id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.01, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
-        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
+        timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_2": {
         id: "activity_0_2", name: "Play dodgeball", attributeRatios: [0, 0, 0, 0.01],
         attributeScaling: [0, 0, 0, "standard1"],
-        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
+        timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_3": {
         id: "activity_0_3", name: "Learn Chess", attributeRatios: [0, 0, 0.01, 0],
         attributeScaling: [0, 0, "standard1", 0],
-        timeToComplete: 10, cost: 0, expBase: 5, expPower: 3.3
+        timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_1_0": {
         id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.03, 0, 0, 0],
         attributeScaling: ["standard1", 0, 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
+        timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_1_1": {
         id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.03, 0, 0],
         attributeScaling: [0, "standard1", 0, 0],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
+        timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_1_2": {
         id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.03],
         attributeScaling: [0, 0, 0, "standard1"],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
+        timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_1_3": {
         id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.03, 0],
         attributeScaling: [0, 0, "standard1", 0],
-        timeToComplete: 15, cost: 5, expBase: 50, expPower: 3.3,
+        timeToComplete: 1, cost: 0.35, expBase: 50, expPower: 3.3,
     },
     "activity_2_0": {
         id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.25, -0.1, -0, 0],
         attributeScaling: ["standard1", "detriment1", 0, 0],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
+        timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
     "activity_2_1": {
         id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.1, 0.25, 0, 0],
         attributeScaling: ["detriment1", "standard1", 0, 0],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
+        timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
     "activity_2_2": {
         id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.1, 0.25],
         attributeScaling: ["detriment1","detriment1", "detriment1", "standard1"],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
+        timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
     "activity_2_3": {
         id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.25, -0.1],
         attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
-        timeToComplete: 20, cost: 100, expBase: 500, expPower: 3.3,
+        timeToComplete: 1, cost: 5, expBase: 500, expPower: 3.3,
     },
 }
 
@@ -147,6 +147,19 @@ class Activity {
         let rankText = this.element.getElementsByTagName("span")[0];
         rankText.innerHTML = `Rank: ${activityLevelToRank[Math.min(playerStats.activityLevels[this.id].level,9)]}
         (${format(100 * playerStats.activityLevels[this.id].exp / this.expToNext,2)}%)`;
+        let attributeText = this.element.getElementsByTagName("div")[1];
+        attributeText.innerHTML = "";
+        for (let index = 0; index < this.attributeRatios.length; index++) {
+            const ratio = this.RewardPerPlayerLevel[index];
+            if (ratio == 0) continue;
+            let s = document.createElement("span");
+            s.setAttribute("class", `${attributeIndexToId[index]}Text`);
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index]*playerStats.level*getFameEffect("trainingSpeed"),2)} `;
+            attributeText.append(s);
+        }
+        attributeText.innerHTML += ' /s';
+        let costText = this.element.getElementsByClassName("activityCostText")[0];
+        costText.innerHTML = `Cost: ${format(this.cost*getFameEffect("trainingSpeed"),3)}/s (<span style="color:rgb(44, 190, 0)">$</span>)`;
     }
     updateRank() {
         let rankText = this.element.getElementsByTagName("span")[0];
@@ -160,9 +173,12 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index],2)}x`
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index]*playerStats.level*getFameEffect("trainingSpeed"),2)}`
             attributeText.append(s);
         }
+        attributeText.innerHTML += ' /s';
+        let costText = this.element.getElementsByClassName("activityCostText")[0];
+        costText.innerHTML = `Cost: ${format(this.cost*getFameEffect("trainingSpeed"),3)}/s (<span style="color:rgb(44, 190, 0)">$</span>)`;
     }
     onSelect() {
         this.element.style.borderColor = 'goldenrod';
@@ -220,11 +236,13 @@ Object.keys(activityData).forEach(id => {
         if (ratio == 0) continue;
         let s = document.createElement("span");
         s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-        s.innerHTML = `${format(activity.RewardPerPlayerLevel[index],2)}x`
+        s.innerHTML = `${format(activity.RewardPerPlayerLevel[index]*getFameEffect("trainingSpeed"),2)}x`
         attributeText.append(s);
     }
+    attributeText.innerHTML += ' /s';
     let costText = document.createElement("span");
-    costText.innerHTML = `Cost: ${format(activity.cost,3)}$`;
+    costText.classList.add('activityCostText');
+    costText.innerHTML = `Cost: ${format(activity.cost*getFameEffect("trainingSpeed"),3)}/s (<span style="color:rgb(44, 190, 0)">$</span>)`;
     let activityProgress = document.createElement("progress");
     activityProgress.setAttribute("class", "activityProgressBar");
     activityProgress.max = activity.timeToComplete;
@@ -232,6 +250,7 @@ Object.keys(activityData).forEach(id => {
     d.append(title, rankText, rankProgress, attributeText, costText, activityProgress);
     activityGrid.append(d);
     activities[id].element = d;
+    activities[id].updateRankProgress();
 });
 var currentTrainingArea;
 if (activities.hasOwnProperty(playerStats.currentActivity)) {
