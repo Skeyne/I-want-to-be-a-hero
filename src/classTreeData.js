@@ -941,7 +941,7 @@ skillLibrary = {
             id: 'mu_0_1', sub: 0, position: { row: 2, column: 3 }, name: 'Alien Constitution', iconName: 'milerun',
             desc: '',
             effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 }],
-            maxLevel: 5, cost: Array(5).fill(1), requires: { 'mu_0_0': 5 }
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'mu_0_0': 10 }
         },
         'mu_0_2': {
             id: 'mu_0_2', sub: 0, position: { row: 3, column: 3 }, name: 'Synthetic Body', iconName: 'milerun',
@@ -1055,7 +1055,7 @@ skillLibrary = {
             desc: '',
             effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.01 },
             { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.01 }],
-            maxLevel: 5, cost: Array(5).fill(1), requires: { 'mu_2_0': 5 }
+            maxLevel: 5, cost: Array(5).fill(1), requires: { 'mu_2_0': 10 }
         },
         'mu_2_2': {
             id: 'mu_2_2', sub: 2, position: { row: 3, column: 3 }, name: 'Proficient Morphing', iconName: 'milerun',
