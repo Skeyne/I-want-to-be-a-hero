@@ -382,7 +382,7 @@ skillLibrary = {
         'sh_1_0': {
             id: 'sh_1_0', sub: 1, rank: 1, position: { row: 1, column: 3 }, name: 'Origin: Titan',
             iconName: 'calisthenics', desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.0001 },
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.001 },
             { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0015 }],
             maxLevel: 100, cost: Array(100).fill(1),
         },
@@ -1150,8 +1150,8 @@ skillLibrary = {
         'ni_0_7': {
             id: 'ni_0_7', sub: 0, position: { row: 6, column: 3 }, name: 'Lessons from One Thousand Fights', iconName: 'shadowB',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.01 },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.015 }],
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.1 },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.15 }],
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'ni_0_4': 5 }
         },
         //Prestige 1

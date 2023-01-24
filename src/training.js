@@ -1,4 +1,4 @@
-const activityLevelToRank = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS',];
+const activityLevelToRank = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS'];
 var trainingAreaData = {
     0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1 },
 }
@@ -130,9 +130,9 @@ class Activity {
             }
         }
         playerStats.activityLevels[this.id].exp += expReward;
-        if (playerStats.activityLevels[this.id].exp >= this.expToNext) {
+        if (playerStats.activityLevels[this.id].exp >= this.expToNext && (playerStats.activityLevels[this.id].level < 9)) {
             playerStats.activityLevels[this.id].exp -= this.expToNext;
-            playerStats.activityLevels[this.id].level += 1
+            if(playerStats.activityLevels[this.id].level < 9) playerStats.activityLevels[this.id].level += 1;
             this.expToNext = this.ExpToNext;
             this.updateRank();
         }

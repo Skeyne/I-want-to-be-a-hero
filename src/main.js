@@ -718,7 +718,7 @@ function decayAttributes(){
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const over = playerStats[attribute]/softcap - 1;
         if(over > 0){
-            playerStats[attribute] -= (playerStats[attribute] - softcap) * Math.exp(3*over)/1000 * logicTickTime/1000;
+            playerStats[attribute] -= (playerStats[attribute] - softcap) * (Math.exp(3*over)-1)/1000 * logicTickTime/1000;
         }
     }
 }
