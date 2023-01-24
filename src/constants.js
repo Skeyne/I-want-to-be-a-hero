@@ -80,7 +80,7 @@ formulas.maxHealth = function (value) {
 }
 formulas.softcappedAttribute = function (index) {
     let baseValue = playerStats[attributeIndexToId[index]];
-
+    return baseValue;
     let softCap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;

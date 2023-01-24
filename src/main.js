@@ -1,5 +1,5 @@
 var renderTickTime = 1000 / 15;
-var logicTickTime = 1000 / 50;
+var logicTickTime = 1000 / 40;
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var cBuffer = document.createElement('canvas');
