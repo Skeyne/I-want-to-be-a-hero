@@ -299,6 +299,7 @@ function updateStoryQuest() {
         checkAreaUnlocks();
         checkTabUnlocks();
         updateDiaryEntries();
+        flashTabButton(tabNames.indexOf('story'));
     }
     let textBox = document.getElementById("storyText");
     let overviewText = document.getElementById("storyRequirementsOverviewText");

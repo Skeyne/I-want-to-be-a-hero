@@ -1,6 +1,6 @@
 const baseExperienceCost = 5;
 const baseLinearExperienceCost = 1;
-const baseExperienceCostExponent = 5;
+const baseExperienceCostExponent = 1.16938845;
 const experienceLevelExponent = 1.25;
 const DAMAGE_REDUCTION_BASE = 0.05;
 const ACTION_SPEED_BASE = 0.06;
@@ -51,10 +51,35 @@ const attribute = {
     mind: "mind",
     agility: "agility",
 }
+function convertOldLevel(level){
+    console.log('Pre v0.6b save, converting level')
+    let cumul = 0;
+
+    for (let index = 0; index < level; index++) {
+        cumul += formulas.playerExpOld(index);
+    }
+    let tempLevel = 0;
+    while (cumul > 0) {
+        if(cumul >= formulas.playerExp(tempLevel)){
+            cumul -= formulas.playerExp(tempLevel);
+            tempLevel += 1;
+        } else {
+            //playerStats.experience = cumul;
+            cumul = 0;
+        }
+    }
+    console.log(cumul); 
+    console.log(tempLevel);
+    resetSkills();
+    return tempLevel;
+}
 
 var formulas = {};
+formulas.playerExpOld = function (value) {
+    return (baseExperienceCost + baseLinearExperienceCost * value) * Math.pow(5,Math.log10(Math.max(value,1)))* Math.pow(Math.max(value,1),1.25);
+}
 formulas.playerExp = function (value) {
-    return (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, Math.floor(Math.log10(Math.max(1, playerStats.level)))) * Math.pow(Math.max(1, playerStats.level), experienceLevelExponent);
+    return (baseExperienceCost * (value+1)) * Math.pow(baseExperienceCostExponent,value) * Math.pow(1.414213562,Math.floor(value/25));
 }
 formulas.cooldownReduction = function (value) {
     return Math.pow(1 - COOLDOWN_BASE, Math.max(0, Math.log10(1 + value)));
@@ -80,7 +105,7 @@ formulas.maxHealth = function (value) {
 }
 formulas.softcappedAttribute = function (index) {
     let baseValue = playerStats[attributeIndexToId[index]];
-    return baseValue;
+    return baseValue;   
     let softCap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;

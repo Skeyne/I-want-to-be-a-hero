@@ -30,7 +30,7 @@ skillLibrary = {
             }],
             maxLevel: 1,
             cost: [1],
-            requires: { 'h_0': 3, }
+            requires: { 'h_0': 1, }
         },
         'h_2': {
             id: 'h_2',

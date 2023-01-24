@@ -9,7 +9,7 @@ var ctxBuffer = cBuffer.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 ctxBuffer.imageSmoothingEnabled = false;
 var leftWindow = document.getElementById("tabScrollWrapper");
-var tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info', 'options'];
+const tabNames = ['story', 'status', 'activity', 'areas', 'class', 'fame', 'prestige', 'info', 'options'];
 var sidebar = document.getElementById('sidebar');
 
 const customPortraitInput = document.getElementById("customPortraitInput");
@@ -204,8 +204,12 @@ function changeTab(index) {
     leftWindow.scrollTo({ left: index * leftWindow.clientWidth, behaviour: 'smooth', });
     document.getElementById(`${tabNames[activeTab]}TabButton`).setAttribute("class", "sidebarButton pickle");
     document.getElementById(`${tabNames[index]}TabButton`).setAttribute("class", "sidebarButton sidebarButtonActive pickle");
+    document.getElementById(`${tabNames[index]}TabButton`).classList.remove('flash');
     activeTab = index;
 
+}
+function flashTabButton(index){
+    document.getElementById(`${tabNames[index]}TabButton`).classList.add('flash');
 }
 var log = document.getElementById("logBox");
 var pageY = 0;
@@ -414,10 +418,10 @@ function renderLoop() {
         let effectiveValue = format(getEffectiveValue(attributeName), 3)
         let softCappedValue = format(formulas.softcappedAttribute(attributeIdToIndex[attributeName]), 3);
         let softCap = playerStats.attributeSoftcaps[attributeIdToIndex[attributeName]] + playerStats.permanentSoftcaps[attributeIdToIndex[attributeName]];
-        let softCapText = (baseAttributeValue > softCap) ? `EFFECTIVE BASE: ${softCappedValue}` : `${softCappedValue}`;
+        let softCapText = (baseAttributeValue > softCap) ? ` ${softCappedValue}` : `${softCappedValue}`;
         if (baseAttributeValue > softCap) {
-            softCapText += `<br>(RAW: ${format(baseAttributeValue, 3)})`
-            softCapText += `<br>[SOFTCAP: ${format(softCap, 3)}]`;
+            //softCapText += `<br>(RAW: ${format(baseAttributeValue, 3)})`
+            softCapText += `<br>[LIMIT: ${format(softCap, 3)}]`;
             effectiveValue = effectiveValue + "(!)";
         }
         document.getElementById(attributeName + "Text").innerHTML = effectiveValue;

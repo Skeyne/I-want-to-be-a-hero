@@ -4,7 +4,8 @@ function prestigeSoftCaps() {
         const softcapped = formulas.softcappedAttribute(index);
         if (softcapped >= softcap) {
             console.log(`${attributeIndexToId[index]} Softcap:${softcap} Softcapped:${softcapped}`)
-            playerStats.permanentSoftcaps[index] += (PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE);
+            // playerStats.permanentSoftcaps[index] += (PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE);
+            playerStats.permanentSoftcaps[index] = softcapped;
         } else {
             continue;
         }

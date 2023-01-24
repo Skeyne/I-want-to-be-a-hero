@@ -80,7 +80,7 @@ playerMoves = {
         damageRatios: [.4, 0, 0, 1],
         damageRange: [.95, 1.05],
         effects: {
-            'stun': 1,
+            'stun': 2.5,
         },
         time: 1000,
         cooldownTime: 7000,
@@ -1088,7 +1088,7 @@ playerMoves = {
         description: "Be ready to lessen the blow of the next attack.",
         iconName: "deflect",
         damage: 0,
-        damageRatios: [0.1, 0, 0, 0.05],
+        damageRatios: [0.2, 0, 0, 0.1],
         damageRange: [1, 1],
         effects: {
             'shield': 0,
@@ -1110,12 +1110,12 @@ playerMoves = {
         description: "Unleash a flurry of slashes in a surge of energy.",
         iconName: "bladeStorm",
         damage: 0,
-        damageRatios: [0.13, 0, 0, 0.15],
+        damageRatios: [0.25, 0, 0, 0.30],
         damageRange: [0.7, 1.3],
         effects: {
-            'repeat': 0.9,
+            'repeat': 0.8,
         },
-        time: 100,
+        time: 200,
         cooldownTime: 10000,
         range: [5, 5],
         cost: 0,

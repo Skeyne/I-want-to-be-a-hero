@@ -311,7 +311,24 @@ main {
 .abilitySlot option {
     color: whitesmoke;
 }
-
+@keyframes glowing {
+    0% {
+      /* background-color: #000000; */
+      box-shadow: 0 0 5px #b1b1b1;
+    }
+    50% {
+      border-color: #dcdc9a;
+      background-color: #dcdc9a;
+      box-shadow: 0 0 15px #ffffff;
+    }
+    100% {
+      /* background-color: #000000; */
+      box-shadow: 0 0 5px #c0c0c0;
+    }
+  }
+.flash{
+    animation: glowing 1300ms infinite;
+}
 .sidebarButton {
     height: min-content;
     width: 100%;
@@ -353,7 +370,7 @@ main {
     border: 5px outset rgb(45, 45, 45);
     transition: all 0s;
     transition-property: background-color, color;
-
+    
 
 }
 
@@ -584,7 +601,14 @@ progress[value]::-webkit-progress-bar {
     border-radius: 2px;
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
 }
-
+#playerExperienceBar,
+#playerExperienceBar[value]::-webkit-progress-bar {
+    height: 3vh;
+    width: 100%;
+    background-color: #f6caff;
+    border-radius: 2px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.25) inset;
+}
 #playerExperienceBar::-webkit-progress-value {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
@@ -637,6 +661,9 @@ progress[value]::-webkit-progress-bar {
             rgb(21, 153, 41));
 
 }
+#playerHealthBar::-webkit-progress-bar{
+    background: rgb(170, 255, 170);
+}
 
 #playerHealthBar::-moz-progress-bar {
     border-radius: 2px;
@@ -673,7 +700,9 @@ progress[value]::-webkit-progress-bar {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
-
+#playerInitiativeBar::-webkit-progress-bar{
+    background: rgb(190, 255, 240);
+}
 #playerInitiativeBar::-moz-progress-bar {
     background-image: linear-gradient(0deg,
             transparent 33%,
@@ -823,12 +852,13 @@ progress[value]::-webkit-progress-bar {
 }
 
 #moneyText:after {
-    content: "";
+    content: "$";
+    color: rgb(44, 190, 0);
     display: inline-block;
-    background: url("./resources/textIcons/moneyTextIcon.png") no-repeat;
+    /* background: url("./resources/textIcons/moneyTextIcon.png") no-repeat;
     background-size: contain;
     width: 32px;
-    height: 32px;
+    height: 32px; */
     margin: 0 6px 0 6px;
     vertical-align: middle;
 }

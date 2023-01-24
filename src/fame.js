@@ -1,17 +1,17 @@
 var toNextFame = Infinity;
 
 function getNextFame(fame) {
-    return 75 + Math.pow((fame+1)/2, 2)*100;
+    return 75 + Math.pow((fame + 1) / 2, 2) * 100;
 }
-function getFameEffect(effectName){
-    if (playerStats.fameEffects.hasOwnProperty(effectName)){
-        return 1+arraySum(Object.values(playerStats.fameEffects[effectName]))
+function getFameEffect(effectName) {
+    if (playerStats.fameEffects.hasOwnProperty(effectName)) {
+        return 1 + arraySum(Object.values(playerStats.fameEffects[effectName]))
     } else {
         return 1;
     }
 }
 function sanityCheckFame() {
-    playerStats.fame = Math.floor((2*Math.sqrt(playerStats.reputation / 100)));
+    playerStats.fame = Math.floor((2 * Math.sqrt(playerStats.reputation / 100)));
     toNextFame = getNextFame(playerStats.fame);
     updateUI();
 }
@@ -20,6 +20,7 @@ function checkFame() {
         playerStats.fame += 1;
         toNextFame = getNextFame(playerStats.fame);
         updateUI();
+        flashTabButton(tabNames.indexOf('areas'));
     }
 }
 function resetFameUpgrades() {
@@ -30,7 +31,7 @@ function resetFameUpgrades() {
             updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
         }
     )
-    playerStats.reputation = 0.99*playerStats.reputation;
+    playerStats.reputation = 0.99 * playerStats.reputation;
     sanityCheckFame();
 }
 function updateUI(upgrade = null) {
@@ -68,14 +69,14 @@ class FameUpgrade {
         { playerStats.fameEffects[this.data.effectTarget][this.data.id] = this.effectValue; }
     }
     get description() {
-        let level =0;
-        if (playerStats.fameUpgradeLevels[this.data.id] != undefined){level = playerStats.fameUpgradeLevels[this.data.id]}
-        return `<div class="subHeader">${this.data.name} (${level})</div><br><div class="oxanium">Effect: +${format(100 * this.effectValue,2)}% ${this.data.effectTarget}</div>`
+        let level = 0;
+        if (playerStats.fameUpgradeLevels[this.data.id] != undefined) { level = playerStats.fameUpgradeLevels[this.data.id] }
+        return `<div class="subHeader">${this.data.name} (${level})</div><br><div class="oxanium">Effect: +${format(100 * this.effectValue, 2)}% ${this.data.effectTarget}</div>`
     }
     get effectValue() {
         if (playerStats.fameUpgradeLevels[this.data.id] != undefined) {
             let level = playerStats.fameUpgradeLevels[this.data.id];
-            return (level > 0 ? 0.05 : 0) + ((level * 2) * Math.exp(-0.05*Math.sqrt(level)))/100;
+            return (level > 0 ? 0.05 : 0) + ((level * 2) * Math.exp(-0.05 * Math.sqrt(level))) / 100;
         }
         else { return 0; }
     }
@@ -119,14 +120,15 @@ for (let index = 0; index < fameUpgradeData.length; index++) {
     fameUpgradeDict[upgrade.data.id] = { upgrade: upgrade, element: element };
 }
 
-if(isOutdated){
+if (isOutdated) {
     Object.keys(playerStats.fameUpgradeLevels).forEach(
-    (id) => {
-        playerStats.fameUpgradeLevels[id] = 0;
-        fameUpgradeDict[id].upgrade.calculateEffect();
-        updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
-    }
-)
+        (id) => {
+            playerStats.fameUpgradeLevels[id] = 0;
+            fameUpgradeDict[id].upgrade.calculateEffect();
+            updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
+        }
+    )
+    flashTabButton(tabNames.indexOf('class'));
 }
 
 sanityCheckFame();

@@ -9,7 +9,7 @@ function unlockPointsLookup(index) {
     if (playerStats.class == 'human') {
         return [0, 0, 0, 0, 0, 0][index]
     } else {
-        return [0, 10, 25, 50, 75, 100][index]
+        return [0, 10, 20, 30, 40, 50][index]
     }
 }
 classTrees = {
@@ -196,7 +196,7 @@ let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 let abilityButtonDict = {};
 populatePassiveTree();
-if (isOutdated) { resetSkills(); }
+if (isOutdated) { resetSkills(); flashTabButton(tabNames.indexOf('class'));}
 function populatePassiveTree() {
     let treeContainer = document.getElementById("passiveTreeContainer");
     let tabs = treeContainer.children;
@@ -913,21 +913,22 @@ function changeClass(className, keep = false) {
     RebuildSlots();
     populateAbilitySlots();
     if (!keep) {
-        playerStats.strength = 0.1 * formulas.softcappedAttribute(0);
-        playerStats.toughness = 0.1 * formulas.softcappedAttribute(1);
-        playerStats.mind = 0.1 * formulas.softcappedAttribute(2);
-        playerStats.agility = 0.1 * formulas.softcappedAttribute(3);
+        playerStats.strength = formulas.softcappedAttribute(0);
+        playerStats.toughness = formulas.softcappedAttribute(1);
+        playerStats.mind = formulas.softcappedAttribute(2);
+        playerStats.agility = formulas.softcappedAttribute(3);
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
 
     }
     if (className != 'human') {
         playerStats.attributeSoftcaps = [10000, 10000, 10000, 10000];
     } else {
-        playerStats.attributeSoftcaps = [1000, 1000, 1000, 1000];
+        playerStats.attributeSoftcaps = [500, 500, 500, 500];
         playerStats.strength = 1;
         playerStats.toughness = 1;
         playerStats.mind = 1;
         playerStats.agility = 1;
+        changeArea(0);
     }
     checkClassQuest()
 }

@@ -1,4 +1,4 @@
-const version = '0.06a';
+const version = '0.06c';
 var isOutdated = false;
 var lastVersion;
 var debug = false;
@@ -21,14 +21,14 @@ const cleanPlayerStats = {
     toughness: 1,
     mind: 1,
     agility: 1,
-    attributeSoftcaps: [1000, 1000, 1000, 1000],
+    attributeSoftcaps: [500, 500, 500, 500],
     attributeTrainingModifier: [1, 1, 1, 1],
     permanentSoftcaps: [0, 0, 0, 0],
     permanentAttributes: [0, 0, 0, 0],
     flatReduction: 0,
     damageTaken: 1,
-    damageDealt:1,
-    maxHP:1,
+    damageDealt: 1,
+    maxHP: 1,
     healthRegeneration: 0,
     cooldownReduction: 1,
     actionSpeed: 1,
@@ -88,14 +88,21 @@ function load(file = null) {
         });
         if (playerStats.class == 'Human') { playerStats.class = 'human' };
         if (playerStats.version != null) {
-            if(!loadgame.hasOwnProperty("version")){playerStats.currentArea = 0; }
+            if (!loadgame.hasOwnProperty("version")) { playerStats.currentArea = 0; }
             if (playerStats.version != version) {
                 lastVersion = playerStats.version;
                 isOutdated = true; console.log("outdated save");
+
                 if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
             }
             if (Number(playerStats.version.substring(3, 4)) < 4) { resetSave(); }
-            if (Number(playerStats.version.substring(3, 4)) < 6) {playerStats.currentArea = 0; }
+            if (Number(playerStats.version.substring(3, 4)) < 6) { playerStats.currentArea = 0; playerStats.level = convertOldLevel(playerStats.level); }
+            if (Number(playerStats.version.substring(3, 4)) < 7) {
+                if (['', 'a', 'b'].includes(playerStats.version.substring(4, 5))) {
+                    playerStats.level = convertOldLevel(playerStats.level);
+                    if (playerStats.class == 'human') { playerStats.attributeSoftcaps = [500, 500, 500, 500]; }
+                }
+            }
         }
         const imageData = localStorage.getItem("heroPortraitImageData");
         if (imageData != null) { document.getElementById("heroPortraitImage").src = imageData };
@@ -162,7 +169,7 @@ function playerSetLevel(value) {
     addPlayerExp(0);
 }
 function setMoney(value) {
-    playerStats.money = Math.max(0,value);
+    playerStats.money = Math.max(0, value);
 }
 function addPlayerExp(amount) {
     let fameBonus = 1;
@@ -173,9 +180,9 @@ function addPlayerExp(amount) {
     while (playerStats.experience >= playerStats.experienceToNext) {
         playerStats.experience -= playerStats.experienceToNext;
         playerStats.level += 1;
-        playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
+        // playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
-        //checkAbilityRequirements();
+        flashTabButton(tabNames.indexOf('class'));
     }
     checkLevelQuest();
     return amount;
