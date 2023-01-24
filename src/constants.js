@@ -70,7 +70,6 @@ function convertOldLevel(level){
     }
     console.log(cumul); 
     console.log(tempLevel);
-    resetSkills();
     return tempLevel;
 }
 

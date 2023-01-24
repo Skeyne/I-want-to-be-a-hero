@@ -1,4 +1,4 @@
-const version = '0.06c';
+const version = '0.06d';
 var isOutdated = false;
 var lastVersion;
 var debug = false;
@@ -98,7 +98,8 @@ function load(file = null) {
             if (Number(playerStats.version.substring(3, 4)) < 4) { resetSave(); }
             if (Number(playerStats.version.substring(3, 4)) < 6) { playerStats.currentArea = 0; playerStats.level = convertOldLevel(playerStats.level); }
             if (Number(playerStats.version.substring(3, 4)) < 7) {
-                if (['', 'a', 'b'].includes(playerStats.version.substring(4, 5))) {
+                console.log(playerStats.version.substring(4, 5));
+                if (['', 'a', 'b','c'].includes(playerStats.version.substring(4, 5))) {
                     playerStats.level = convertOldLevel(playerStats.level);
                     if (playerStats.class == 'human') { playerStats.attributeSoftcaps = [500, 500, 500, 500]; }
                 }
@@ -182,7 +183,6 @@ function addPlayerExp(amount) {
         playerStats.level += 1;
         // playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
-        flashTabButton(tabNames.indexOf('class'));
     }
     checkLevelQuest();
     return amount;

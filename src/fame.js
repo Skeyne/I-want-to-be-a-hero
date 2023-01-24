@@ -128,7 +128,6 @@ if (isOutdated) {
             updateFameUpgradeDescription(fameUpgradeDict[id].upgrade);
         }
     )
-    flashTabButton(tabNames.indexOf('class'));
 }
 
 sanityCheckFame();

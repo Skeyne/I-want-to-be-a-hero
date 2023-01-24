@@ -196,7 +196,7 @@ let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 let abilityButtonDict = {};
 populatePassiveTree();
-if (isOutdated) { resetSkills(); flashTabButton(tabNames.indexOf('class'));}
+if (isOutdated) { resetSkills();}
 function populatePassiveTree() {
     let treeContainer = document.getElementById("passiveTreeContainer");
     let tabs = treeContainer.children;
