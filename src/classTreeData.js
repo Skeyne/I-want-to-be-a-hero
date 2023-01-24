@@ -863,8 +863,8 @@ skillLibrary = {
         'es_2_0': {
             id: 'es_2_0', sub: 2, position: { row: 1, column: 3 }, name: 'Origin: Spiritual', iconName: 'studying',
             desc: 'You start to see spirits, and they sometimes help you.',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0001 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.00015 }],
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.001 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0015 }],
             maxLevel: 100, cost: Array(100).fill(1),
         },
         'es_2_1': {
