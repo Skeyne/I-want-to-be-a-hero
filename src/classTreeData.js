@@ -1216,7 +1216,7 @@ skillLibrary = {
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'mu_2_3': 1 }
         },
         'mu_2_20': {
-            id: 'mu_2_0', prestige:1,sub: 2, position: { row: 7, column: 3 }, name: 'Wild Constitution',
+            id: 'mu_2_20', prestige:1,sub: 2, position: { row: 7, column: 3 }, name: 'Wild Constitution',
             iconName: 'milerun',
             desc: '',
             effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.00125 },
@@ -1238,8 +1238,8 @@ skillLibrary = {
             { type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.01, }],
             maxLevel: 5, cost: Array(5).fill(1), requires: { 'mu_2_21': 5 }
         },
-        'mu_2_3': {
-            id: 'mu_2_3',prestige:1, sub: 2, position: { row: 11, column: 3 }, name: 'Mutation: Scales', iconName: 'milerun',
+        'mu_2_23': {
+            id: 'mu_2_23',prestige:1, sub: 2, position: { row: 11, column: 3 }, name: 'Mutation: Scales', iconName: 'milerun',
             desc: 'Your turn the outside of your skin into a scaled mesh, reducing the damage of every impact',
             effect: [{ type: 1, effectTarget: "flatReductionHealth", effectType: "additiveFlat", effectMagnitude: 0.002, }],
             maxLevel: 1, cost: [1], requires: { 'mu_2_22': 5 }
@@ -1554,8 +1554,8 @@ skillLibrary = {
             { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 }],
             maxLevel: 5, cost: Array(5).fill(1), requires: { 'ni_2_2': 5 },
         },
-        'ni_22_0': {
-            id: 'ni_2_20', sub: 2, position: { row: 7, column: 3 }, name: 'Occult Knowledge',
+        'ni_2_20': {
+            id: 'ni_2_20', prestige: 1, sub: 2, position: { row: 7, column: 3 }, name: 'Occult Knowledge',
             iconName: 'shadowB',
             desc: 'Ancestors from ages past have started whispering forbidden secrets in your trainings',
             effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.00125 },
