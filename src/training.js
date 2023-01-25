@@ -311,7 +311,6 @@ function buyActivityAutomation(id) {
         })
     const lookup = activityAutomationUpgradesLookup[activity.tier]
     let cost = lookup.base * Math.pow(lookup.mult, totalLevels);
-    console.log(cost);
     if (playerStats.money >= cost) {
         playerStats.money -= cost;
         if (playerStats.activityAutomationLevels[activity.id]) {
@@ -366,6 +365,11 @@ function updateTrainingCanBuy() {
 function tickTraining() {
     Object.values(activities).forEach((activity) => {
         activity.tick();
+    })
+}
+function resetAutoUpgrades() {
+    Object.keys(playerStats.activityAutomationLevels).forEach((activity) => {
+        playerStats.activityAutomationLevels[activity] = 0;
     })
 }
 

@@ -313,7 +313,7 @@ function updateMoneyEstimate() {
     document.getElementById("moneyEstimateText").innerHTML = format(moneyCount * 4, 2);
 }
 window.setInterval(updateExperienceEstimate, 15000);
-window.setInterval(updateMoneyEstimate, 15000);
+window.setInterval(updateMoneyEstimate, 5000);
 //window.setInterval(function () { mainLoop(); }, logicTickTime);
 function changeEngagementRange() {
     playerStats.engagementRange = Math.ceil(Number(engagementRangeInput.value) / 5) * 5;

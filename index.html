@@ -255,8 +255,8 @@
                             </div>
                             <div id="attributePrestigePanel">
                                 <div class="subHeader">Overtraining</div>
-                                <div>Going over your limits is hard, and every second you don't spend training you lose some of your power over the limit.
-                                    For every attribute point you lose this way, you gain a permanent bonus.
+                                <div class="oxanium">Going over your limits is hard, and every second you don't spend training you lose some of your power over the limit.
+                                    For every attribute point you lose this way, you gain a permanent bonus. This bonus is stronger the less attributes you have, reaching a minimum when you reach your limit.
                                 </div>
                                 <div id="attributeDecayText" class="oxanium" style="text-align: center;padding:3%">
 
@@ -417,6 +417,9 @@
                         <input style="display: none;" type="file" id="customPortraitInput"
                             accept="image/jpeg, image/png, image/jpg">
                         <button id="resetPortraitButton" class="bannerButton"> Reset Portrait</button>
+                        <br>
+                        <br>
+                        <button id="resetAutoButton" class="bannerButton" onclick="resetAutoUpgrades()"> Reset Automation Upgrades</button>
                         <br>
                         <br>
                         <div class="subHeader">Credits</div>

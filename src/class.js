@@ -384,7 +384,7 @@ function populateAbilitySlots() {
 function changeAbilitySlot(slotN, internal = false) {
     const slot = slots[slotN];
     const newAbility = slot.value;
-    console.log("Slot:" + slotN + ": " + newAbility);
+    //console.log("Slot:" + slotN + ": " + newAbility);
     if (newAbility == "null") {
         let allow = false;
         if (!internal) {
@@ -577,7 +577,7 @@ function generateAbilityRequirementTooltip(ability) {
         default:
             break;
     }
-    stringDisplay += highlightProperty(`Use time: `, `${format(abilityData.time / 1000)}s<br>`)
+    stringDisplay += highlightProperty(`Use time: `, `${format(abilityData.time / 1000,2)}s<br>`)
     switch (abilityData.type) {
         case 1:
             if (abilityData.range[0] > 0) stringDisplay += `Advance: ${abilityData.range[0]}<br>`;
@@ -788,10 +788,7 @@ function updateSubclassButton(index) {
 function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
-    if ((unlockPointsLookup(skill.position.row - 1)) > playerStats.passivePointsSpent[skill.sub]) {
-        logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup(skill.position.row - 1)})`, 'warning');
-        return false;
-    }
+
     if (skill.hasOwnProperty('requires')) {
         for (const [key, value] of Object.entries(skill.requires)) {
             if (playerStats.unlockedSkills[key] < value || playerStats.unlockedSkills[key] == undefined) {
@@ -808,6 +805,10 @@ function checkSkillPurchase(skillId, times = 1) {
         } else {
             cost = skillLibrary[playerStats.class][skillId].cost[0];
         }
+        if ((unlockPointsLookup(skill.position.row - 1)) > playerStats.passivePointsSpent[skill.sub]+cost) {
+            logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup(skill.position.row - 1)})`, 'warning');
+            return false;
+        }
         if (cost <= (getTotalPassivePoints() - getAvailablePassivePoints())) {
             playerStats.passivePointsSpent[skill.sub] += cost;
             addSkill(skillId);
@@ -820,12 +821,11 @@ function checkSkillPurchase(skillId, times = 1) {
 function checkAbilityPurchase(abilityId) {
     let cost = 0;
     let ability = playerMoves[abilityId];
-
+    //console.log(cost,unlockPointsLookup(ability.position.row - 1));
     if (unlockPointsLookup(ability.position.row - 1) > playerStats.passivePointsSpent[ability.sub]) {
         logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup(ability.position.row - 1)})`, 'warning');
         return false;
     }
-
     if (playerStats.unlockedAbilities.hasOwnProperty(abilityId)) {
         if (playerStats.unlockedAbilities[abilityId] > 0) { logConsole(`${ability.name} is already max level!`, 'warning'); return false; }
     } else {

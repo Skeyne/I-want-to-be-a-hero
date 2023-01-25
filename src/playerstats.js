@@ -155,7 +155,10 @@ function getSecondaryAttribute(property) {
 }
 function getDecayBonus(attributeIndex){
     if(playerStats.class == 'human') return 1;
-    return Math.exp(0.05*Math.log10(Math.max(1,playerStats.decayedAttributes[attributeIndex])));
+    const limitBonus = Math.exp(0.05*Math.log10(Math.max(1,playerStats.decayedAttributes[attributeIndex])))
+    const undercapMult = Math.max(1, 10 - 10*playerStats[attributeIndexToId[attributeIndex]]/
+    (playerStats.attributeSoftcaps[attributeIndex] + playerStats.permanentSoftcaps[attributeIndex]));
+    return undercapMult*(limitBonus - 1) + 1;
 }
 
 function getTrainingModifier(attributeName) {
