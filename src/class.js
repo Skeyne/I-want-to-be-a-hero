@@ -550,8 +550,9 @@ function generateAbilityRequirementTooltip(ability) {
             if (abilityData.hasOwnProperty("effects")) {
                 stringDisplay += "Effects:<br>"
                 Object.keys(abilityData.effects).forEach(effect => {
-                    stringDisplay += `${effect} `;
-                    if (abilityData.effects[effect] > 0) stringDisplay += `${100 * abilityData.effects[effect]}% MaxHP `;
+                    stringDisplay += `${effect}: `;
+                    if (['heal','shield'].includes(effect) && abilityData.effects[effect] > 0) stringDisplay += `${100 * abilityData.effects[effect]}% MaxHP `;
+                    if (['closeCombat'].includes(effect)) stringDisplay += `${100 * abilityData.effects[effect]}% increased effect `;
                     stringDisplay += '<br>'
                 })
             }

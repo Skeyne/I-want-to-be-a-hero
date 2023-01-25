@@ -1,70 +1,67 @@
 const activityLevelToRank = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS'];
-var trainingAreaData = {
-    0: { name: "Park", base: 0.05, timeToComplete: 10, costMultiplier: 1 },
-}
 var activityScaling = {
-    "standard1": [1, 2, 3, 4, 5, 10, 12, 14, 16, 20],
+    "standard1": [1, 2, 3, 5, 7, 9, 12, 15, 18, 22],
     "detriment1": [1, 0.9, 0.8, 0.6, 0.3, 0.1, 0, 0, 0, 0],
 }
 var activityData = {
     "activity_0_0": {
-        id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.002, 0, 0, 0],
-        attributeScaling: ["standard1", 0, 0, 0],
+        id: "activity_0_0", name: "Do some pushups", attributeRatios: [0.005, 0, 0, 0],
+        tier: 0, attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_1": {
-        id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.002, 0, 0],
-        attributeScaling: [0, "standard1", 0, 0],
+        id: "activity_0_1", name: "Run laps at the park", attributeRatios: [0, 0.005, 0, 0],
+        tier: 0, attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_2": {
-        id: "activity_0_2", name: "Do parkour", attributeRatios: [0, 0, 0, 0.002],
-        attributeScaling: [0, 0, 0, "standard1"],
+        id: "activity_0_2", name: "Do parkour", attributeRatios: [0, 0, 0, 0.005],
+        tier: 0, attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_0_3": {
-        id: "activity_0_3", name: "Learn chess", attributeRatios: [0, 0, 0.002, 0],
-        attributeScaling: [0, 0, "standard1", 0],
+        id: "activity_0_3", name: "Learn chess", attributeRatios: [0, 0, 0.005, 0],
+        tier: 0, attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 1, cost: 0, expBase: 5, expPower: 3.3
     },
     "activity_1_0": {
-        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.008, 0, 0, 0],
-        attributeScaling: ["standard1", 0, 0, 0],
+        id: "activity_1_0", name: "Hit the gym", attributeRatios: [0.015, 0, 0, 0],
+        tier: 1, attributeScaling: ["standard1", 0, 0, 0],
         timeToComplete: 1, cost: 1, expBase: 25, expPower: 3.3,
     },
     "activity_1_1": {
-        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.008, 0, 0],
-        attributeScaling: [0, "standard1", 0, 0],
+        id: "activity_1_1", name: "Participate in quarter-marathon", attributeRatios: [0, 0.015, 0, 0],
+        tier: 1, attributeScaling: [0, "standard1", 0, 0],
         timeToComplete: 1, cost: 1, expBase: 25, expPower: 3.3,
     },
     "activity_1_2": {
-        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.008],
-        attributeScaling: [0, 0, 0, "standard1"],
+        id: "activity_1_2", name: "Do street juggling", attributeRatios: [0, 0, 0, 0.015],
+        tier: 1, attributeScaling: [0, 0, 0, "standard1"],
         timeToComplete: 1, cost: 1, expBase: 25, expPower: 3.3,
     },
     "activity_1_3": {
-        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.008, 0],
-        attributeScaling: [0, 0, "standard1", 0],
+        id: "activity_1_3", name: "Play competitive chess", attributeRatios: [0, 0, 0.015, 0],
+        tier: 1, attributeScaling: [0, 0, "standard1", 0],
         timeToComplete: 1, cost: 1, expBase: 25, expPower: 3.3,
     },
     "activity_2_0": {
-        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.032, -0.01, -0, 0],
-        attributeScaling: ["standard1", "detriment1", 0, 0],
+        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.045, -0.01, -0, 0],
+        tier: 2, attributeScaling: ["standard1", "detriment1", 0, 0],
         timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
     },
     "activity_2_1": {
-        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.01, 0.032, 0, 0],
-        attributeScaling: ["detriment1", "standard1", 0, 0],
+        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.01, 0.045, 0, 0],
+        tier: 2, attributeScaling: ["detriment1", "standard1", 0, 0],
         timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
     },
     "activity_2_2": {
-        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.01, 0.032],
-        attributeScaling: ["detriment1", "detriment1", "detriment1", "standard1"],
+        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.01, 0.045],
+        tier: 2, attributeScaling: ["detriment1", "detriment1", "detriment1", "standard1"],
         timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
     },
     "activity_2_3": {
-        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.032, -0.01],
-        attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
+        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.045, -0.01],
+        tier: 2, attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
         timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
     },
 }
@@ -101,8 +98,12 @@ class Activity {
         }
     }
     tick() {
+        let speed = 0;
+        if (currentTrainingArea == this) speed += 1;
+        if (playerStats.activityAutomationLevels[this.id]) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
+        if (speed <= 0) return;
         if (this.costPaid == false) { if (!this.payCost()) return; }
-        this.progress += logicTickTime * getFameEffect("trainingSpeed");
+        this.progress += speed * logicTickTime * getFameEffect("trainingSpeed");
         this.reward();
         if (this.progress >= this.timeToComplete) {
             this.progress -= this.timeToComplete;
@@ -117,14 +118,17 @@ class Activity {
     }
     reward() {
         if (!this.payCost()) return;
+        let speed = 0;
+        if (currentTrainingArea == this) speed += 1;
+        if (playerStats.activityAutomationLevels[this.id]) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
         let rewards = this.RewardPerPlayerLevel;
         let expReward = 0;
         for (let index = 0; index < this.attributeRatios.length; index++) {
             if (rewards[index] != 0) {
                 let attribute = attributeIndexToId[index];
-                let reward = getFameEffect("trainingSpeed") * logicTickTime / 1000 * rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
+                let reward = speed * getFameEffect("trainingSpeed") * logicTickTime / 1000 * rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
                 if ((rewards[index] > 0)) {
-                    expReward += getFameEffect("trainingSpeed") * (logicTickTime / 1000) * (1 / 10) * getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1 + (Math.log10(playerStats[attribute] + 1) / 5), 1 + (Math.log10(playerStats[attribute] + 1) / 10));
+                    expReward += speed * getFameEffect("trainingSpeed") * (logicTickTime / 1000) * (1 / 10) * getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1 + (Math.log10(playerStats[attribute] + 1) / 5), 1 + (Math.log10(playerStats[attribute] + 1) / 10));
                 }
                 playerStats[attribute] = Math.max(playerStats.permanentAttributes[index], playerStats[attribute] + reward);
             }
@@ -132,7 +136,7 @@ class Activity {
         playerStats.activityLevels[this.id].exp += expReward;
         if (playerStats.activityLevels[this.id].exp >= this.expToNext && (playerStats.activityLevels[this.id].level < 9)) {
             playerStats.activityLevels[this.id].exp -= this.expToNext;
-            if(playerStats.activityLevels[this.id].level < 9) playerStats.activityLevels[this.id].level += 1;
+            if (playerStats.activityLevels[this.id].level < 9) playerStats.activityLevels[this.id].level += 1;
             this.expToNext = this.ExpToNext;
             this.updateRank();
         }
@@ -141,8 +145,12 @@ class Activity {
         // updateAttributePrestigeText();
     }
     payCost() {
-        if (playerStats.money < (logicTickTime / 1000)*this.cost) { this.costPaid = false; changeActivity(playerStats.lastFreeActivity); return false; }
-        playerStats.money -= (logicTickTime / 1000)*this.cost; this.costPaid = true; moneyCountBuffer -= this.cost*(logicTickTime / 1000); return true;
+        let speed = 0;
+        if (currentTrainingArea == this) speed += 1;
+        if (playerStats.activityAutomationLevels[this.id] != undefined) speed += 0.2*playerStats.activityAutomationLevels[this.id];
+        if (speed <= 0) return;
+        if (playerStats.money < (logicTickTime / 1000) * speed * this.cost) { this.costPaid = false; changeActivity(playerStats.lastFreeActivity); return false; }
+        playerStats.money -= (logicTickTime / 1000) * speed * this.cost; this.costPaid = true; moneyCountBuffer -= this.cost * speed * (logicTickTime / 1000); return true;
     }
     updateBars() {
         let bars = this.element.getElementsByTagName("progress");
@@ -199,20 +207,18 @@ class Activity {
                 icon.style.color = (ratio > 0 ? 'green' : 'red');
                 iconWrapper.append(icon);
             }
-
         }
-
     }
     onDeselect() {
         this.element.style.borderColor = "";
     }
 }
 var activities = {}
-Object.values(trainingAreaData).forEach(element => {
-    if (!playerStats.trainingAreaLevels.hasOwnProperty(element.name)) {
-        playerStats.trainingAreaLevels[element.name] = 0;
-    }
-});
+// Object.values(trainingAreaData).forEach(element => {
+//     if (!playerStats.trainingAreaLevels.hasOwnProperty(element.name)) {
+//         playerStats.trainingAreaLevels[element.name] = 0;
+//     }
+// });
 Object.keys(activityData).forEach(id => {
     if (!playerStats.activityLevels.hasOwnProperty(id)) {
         playerStats.activityLevels[id] = { level: 0, exp: 0 };
@@ -249,11 +255,20 @@ Object.keys(activityData).forEach(id => {
     let costText = document.createElement("span");
     costText.classList.add('activityCostText');
     costText.innerHTML = `Cost: ${format(activity.cost * getFameEffect("trainingSpeed"), 3)}/s (<span style="color:rgb(44, 190, 0)">$</span>)`;
+    //UPGRADE BUTTON
+    let upgradeButton = document.createElement("button");
+    upgradeButton.setAttribute("class", "bannerButton");
+    upgradeButton.style.float = 'right';
+    upgradeButton.style.marginRight = '1vh';
+    upgradeButton.innerHTML = 'Upgrade';
+    upgradeButton.addEventListener('click', () => { buyActivityAutomation(activity.id) });
+    upgradeButton.dataset['activityUpgradeTooltip'] = activity.id;
+    //
     let activityProgress = document.createElement("progress");
     activityProgress.setAttribute("class", "activityProgressBar");
     activityProgress.max = activity.timeToComplete;
     activityProgress.value = 0;
-    d.append(title, rankText, rankProgress, attributeText, costText, activityProgress);
+    d.append(title, rankText, rankProgress, attributeText, costText, upgradeButton, activityProgress);
     activityGrid.append(d);
     activities[id].element = d;
     activities[id].updateRankProgress();
@@ -269,6 +284,53 @@ currentTrainingArea.onSelect();
 //changeTrainingAttribute(playerStats.currentTrainingAttribute);
 //updateTrainingText();
 //updateTrainingCanBuy();
+const activityAutomationUpgradesLookup =[
+    {base: 100, mult: Math.pow(10,0.25)},
+    {base: 10000, mult: Math.pow(10,0.25)},
+    {base: 1000000, mult: Math.pow(10,0.25)},
+]
+function activityAutoCost(tier){
+    let totalLevels = 0;
+    Object.keys(playerStats.activityAutomationLevels)
+        .forEach((key) => {
+            if(activityData[key].tier != tier) return;
+            totalLevels += playerStats.activityAutomationLevels[key];
+        })
+    const lookup = activityAutomationUpgradesLookup[tier]
+    const cost = lookup.base * Math.pow(lookup.mult,totalLevels);
+    return cost;
+}
+function buyActivityAutomation(id) {
+    let activity = activityData[id];
+    let totalLevels = 0;
+    Object.keys(playerStats.activityAutomationLevels)
+        .forEach((key) => {
+            if(activityData[key].tier != activity.tier) return;
+            totalLevels += playerStats.activityAutomationLevels[key];
+        })
+    const lookup = activityAutomationUpgradesLookup[activity.tier]
+    let cost = lookup.base * Math.pow(lookup.mult,totalLevels);
+    console.log(cost);
+    if(playerStats.money >= cost){
+        playerStats.money -= cost;
+        if(playerStats.activityAutomationLevels[activity.id]){
+            playerStats.activityAutomationLevels[activity.id] += 1;
+        } else {
+            playerStats.activityAutomationLevels[activity.id] = 1;
+        }
+    }
+}
+function generateActivityAutoUpgradeTooltip(id){
+    let activity = activityData[id];
+    let autoLevel = playerStats.activityAutomationLevels[activity.id] ? playerStats.activityAutomationLevels[activity.id] : 0;
+    const cost = activityAutoCost(activity.tier);
+    let displayText = "";
+    displayText += `Auto Level: ${autoLevel}<br>`
+    displayText += `This activity is automatically done at <span style='color: white;'>${20*autoLevel}% efficiency</span> (+20% per level)<br>`
+    displayText += `Upgrade cost: <span style='color: white;'>${format(cost,2)}$</span><br>`
+    displayText += `<i style = "font-size: 1.5vh"> Upgrading increases the auto cost of every activity in the same tier!</i>`
+    return displayText;
+}
 function changeTrainingAttribute(attribute) {
     playerStats.currentTrainingAttribute = attribute;
     currentTrainingArea.attribute = attribute;
@@ -293,21 +355,16 @@ function upgradeTrainingArea() {
         updateTrainingCanBuy();
     }
 }
-// function updateTrainingText() {
-//     document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
-//     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward);
-// }
-
-// function updateTrainingNextText() {
-//     document.getElementById("trainingUpgradeCost").innerHTML = format(currentTrainingArea.Cost) + '$';
-//     document.getElementById("trainingReward").innerHTML = format(currentTrainingArea.Reward) +
-//         " -> " + format(currentTrainingArea.Reward * TRAINING_REWARD_GROWTH_BASE);
-// }
 function updateTrainingCanBuy() {
     if (playerStats.money >= currentTrainingArea.Cost) {
         document.getElementById("trainingCanUpgradeText").innerHTML = "Upgrade available!";
     } else {
         document.getElementById("trainingCanUpgradeText").innerHTML = "";
     }
+}
+function tickTraining() {
+    Object.values(activities).forEach((activity) => {
+        activity.tick();
+    })
 }
 

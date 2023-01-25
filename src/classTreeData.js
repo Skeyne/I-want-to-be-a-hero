@@ -1105,15 +1105,15 @@ skillLibrary = {
         'ni_0_0': {
             id: 'ni_0_0', sub: 0, position: { row: 1, column: 3 }, name: 'Footwork', iconName: 'shadowB',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.00125 },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.00125 }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.005 },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.005 }],
+            maxLevel: 20, cost: Array(20).fill(1),
         },
         'ni_0_1': {
             id: 'ni_0_1', sub: 0, position: { row: 2, column: 3 }, name: 'Feline Agility', iconName: 'shadowB',
             desc: 'The whole world seems one muscle twitch away.',
             effect: [{ type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.02 }],
-            maxLevel: 5, cost: Array(5).fill(1), requires: { 'ni_0_0': 5 }
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'ni_0_0': 10 }
         },
         'ni_0_2': {
             id: 'ni_0_2', sub: 0, name: 'Unnatural Speed', position: { row: 5, column: 2 }, iconName: 'shadowB',
@@ -1257,7 +1257,7 @@ skillLibrary = {
         'ni_2_2': {
             id: 'ni_2_2', sub: 2, position: { row: 3, column: 3 }, name: 'Shadowglide', iconName: 'shadowB',
             desc: 'Shadows envelop the air around you, smoothing and speeding your movements',
-            effect: [{ type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.01 }],
+            effect: [{ type: 0, effectTarget: "agility", effectType: "multPercent", effectMagnitude: 1.02 }],
             maxLevel: 10, cost: Array(10).fill(1), requires: { 'ni_2_5': 5 },
         },
         'ni_2_3': {

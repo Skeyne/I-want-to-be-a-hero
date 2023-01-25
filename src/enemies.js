@@ -533,7 +533,7 @@ enemyData.thug3 = {
     id: "thug3",
     name: "Armed Thug",
     maxHealth: 150,
-    attributes: [25, 100, 200, 300],
+    attributes: [100, 100, 150, 200],
     healthRegen: 0,
     expReward: 100,
     moneyReward: 4,

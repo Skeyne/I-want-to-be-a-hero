@@ -64,6 +64,8 @@ const cleanPlayerStats = {
     fameEffects: {},
     lastFreeActivity: "activity_0_0",
     areaCompletions: {},
+    activityAutomation: {},
+    activityAutomationLevels: {},
 }
 var playerStats = {};
 var justLoaded = false;

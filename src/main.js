@@ -168,6 +168,11 @@ document.addEventListener('mouseover', function (e) {
         showMasterTooltip(e);
 
     }
+    if ('activityUpgradeTooltip' in e.target.dataset) {
+        masterTooltip.innerHTML = generateActivityAutoUpgradeTooltip(e.target.dataset.activityUpgradeTooltip);
+        showMasterTooltip(e);
+
+    }
 });
 document.addEventListener('mouseup', function (e) {
     setTimeout(() => {
@@ -489,7 +494,7 @@ function logicLoop() {
         default:
             break;
     }
-    currentTrainingArea.tick();
+    tickTraining();
     decayAttributes();
 }
 function changeInterval(interval) {

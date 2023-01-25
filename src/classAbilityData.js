@@ -1092,7 +1092,7 @@ playerMoves = {
         damageRange: [1, 1],
         effects: {
             'shield': 0,
-            'closeCombat': 0,
+            'closeCombat': 1,
         },
         cost: 0,
         time: 500,
@@ -1110,8 +1110,8 @@ playerMoves = {
         description: "Unleash a flurry of slashes in a surge of energy.",
         iconName: "bladeStorm",
         damage: 0,
-        damageRatios: [0.25, 0, 0, 0.30],
-        damageRange: [0.7, 1.3],
+        damageRatios: [0.30, 0, 0, 0.35],
+        damageRange: [1, 1.5],
         effects: {
             'repeat': 0.8,
         },

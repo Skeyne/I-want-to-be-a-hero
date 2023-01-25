@@ -142,9 +142,9 @@ const areas = [
         encounters: [{ weight: 100, enemies: { "experiment999": { 1: 1 } } }]
     }),
     new Area({
-        id: 'mafia1', name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power: 160, expPerPower: 1.50, moneyPerPower: 0.11/2,
+        id: 'mafia1', name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power: 140, expPerPower: 1.50, moneyPerPower: 0.11/2,
         storyUnlock: 16, patrolTime: 6000, completionsReq: 10,
-        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 1: 1, 2: 1 }, } }]
+        encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 1 }, "thug3": { 1: 1, 2: 1 }, } }]
     }),
     new Area({
         id: 'mafia2', name: "Shady Suburbs", background: "cyberpunk-street.png", power: 210, expPerPower: 1.76, moneyPerPower: 0.1111/2,
@@ -154,7 +154,7 @@ const areas = [
     new Area({
         id: 'mafia3', name: "Mafia Territory", background: "cyberpunk-street.png", power: 299, expPerPower: 2.07, moneyPerPower: 0.1121/2,
         storyUnlock: 17, patrolTime: 6000, completionsReq: 10,
-        encounters: [{ weight: 900, enemies: { "thug4": { 1: 2, 2: 1, 3: 1 }, "thug5": { 1: 1, 2: 1 }, } },
+        encounters: [{ weight: 900, enemies: { "thug4": { 1: 1, 2: 2, 3: 3 }, "thug5": { 1: 1, 2: 2 }, } },
         { weight: 100, enemies: { "thug4": { 3: 1, }, "thug5": { 2: 1 }, "don": { 1: 1, }, } }]
     }),
     new Area({
