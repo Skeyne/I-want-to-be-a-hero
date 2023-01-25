@@ -21,6 +21,7 @@ const cleanPlayerStats = {
     toughness: 1,
     mind: 1,
     agility: 1,
+    decayedAttributes: [0,0,0,0],
     attributeSoftcaps: [500, 500, 500, 500],
     attributeTrainingModifier: [1, 1, 1, 1],
     permanentSoftcaps: [0, 0, 0, 0],
@@ -152,6 +153,11 @@ function getSecondaryAttribute(property) {
         * (1 + arraySum(Object.values(playerStats.effectMultipliers[property].additivePercent)))
         * arrayMult(Object.values(playerStats.effectMultipliers[property].multPercent));
 }
+function getDecayBonus(attributeIndex){
+    if(playerStats.class == 'human') return 1;
+    return Math.exp(0.05*Math.log10(Math.max(1,playerStats.decayedAttributes[attributeIndex])));
+}
+
 function getTrainingModifier(attributeName) {
     let baseValue = playerStats.attributeTrainingModifier[attributeIdToIndex[attributeName]];
     let property = attributeName + "Training";
@@ -185,6 +191,7 @@ function addPlayerExp(amount) {
         playerStats.level += 1;
         // playerStats.experienceToNext = (baseExperienceCost + baseLinearExperienceCost * playerStats.level) * Math.pow(baseExperienceCostExponent, playerStats.level);
         playerStats.experienceToNext = formulas.playerExp(playerStats.level);
+        gameEvents.levelup.trigger();
     }
     checkLevelQuest();
     return amount;

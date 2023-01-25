@@ -126,7 +126,7 @@ class Activity {
         for (let index = 0; index < this.attributeRatios.length; index++) {
             if (rewards[index] != 0) {
                 let attribute = attributeIndexToId[index];
-                let reward = speed * getFameEffect("trainingSpeed") * logicTickTime / 1000 * rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
+                let reward = speed * getDecayBonus(index) * getFameEffect("trainingSpeed") * logicTickTime / 1000 * rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
                 if ((rewards[index] > 0)) {
                     expReward += speed * getFameEffect("trainingSpeed") * (logicTickTime / 1000) * (1 / 10) * getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1 + (Math.log10(playerStats[attribute] + 1) / 5), 1 + (Math.log10(playerStats[attribute] + 1) / 10));
                 }
@@ -147,7 +147,7 @@ class Activity {
     payCost() {
         let speed = 0;
         if (currentTrainingArea == this) speed += 1;
-        if (playerStats.activityAutomationLevels[this.id] != undefined) speed += 0.2*playerStats.activityAutomationLevels[this.id];
+        if (playerStats.activityAutomationLevels[this.id] != undefined) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
         if (speed <= 0) return;
         if (playerStats.money < (logicTickTime / 1000) * speed * this.cost) { this.costPaid = false; changeActivity(playerStats.lastFreeActivity); return false; }
         playerStats.money -= (logicTickTime / 1000) * speed * this.cost; this.costPaid = true; moneyCountBuffer -= this.cost * speed * (logicTickTime / 1000); return true;
@@ -168,7 +168,7 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1) * getFameEffect("trainingSpeed"), 3)} `;
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1) * getFameEffect("trainingSpeed") * getDecayBonus(index), 3)} `;
             attributeText.append(s);
         }
         attributeText.innerHTML += ' /s';
@@ -187,7 +187,8 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1) * getFameEffect("trainingSpeed"), 3)}`
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1)
+                * getFameEffect("trainingSpeed") * getDecayBonus(index), 3)}`
             attributeText.append(s);
         }
         attributeText.innerHTML += ' /s';
@@ -284,20 +285,20 @@ currentTrainingArea.onSelect();
 //changeTrainingAttribute(playerStats.currentTrainingAttribute);
 //updateTrainingText();
 //updateTrainingCanBuy();
-const activityAutomationUpgradesLookup =[
-    {base: 100, mult: Math.pow(10,0.25)},
-    {base: 10000, mult: Math.pow(10,0.25)},
-    {base: 1000000, mult: Math.pow(10,0.25)},
+const activityAutomationUpgradesLookup = [
+    { base: 100, mult: Math.pow(10, 0.25) },
+    { base: 10000, mult: Math.pow(10, 0.25) },
+    { base: 1000000, mult: Math.pow(10, 0.25) },
 ]
-function activityAutoCost(tier){
+function activityAutoCost(tier) {
     let totalLevels = 0;
     Object.keys(playerStats.activityAutomationLevels)
         .forEach((key) => {
-            if(activityData[key].tier != tier) return;
+            if (activityData[key].tier != tier) return;
             totalLevels += playerStats.activityAutomationLevels[key];
         })
     const lookup = activityAutomationUpgradesLookup[tier]
-    const cost = lookup.base * Math.pow(lookup.mult,totalLevels);
+    const cost = lookup.base * Math.pow(lookup.mult, totalLevels);
     return cost;
 }
 function buyActivityAutomation(id) {
@@ -305,29 +306,29 @@ function buyActivityAutomation(id) {
     let totalLevels = 0;
     Object.keys(playerStats.activityAutomationLevels)
         .forEach((key) => {
-            if(activityData[key].tier != activity.tier) return;
+            if (activityData[key].tier != activity.tier) return;
             totalLevels += playerStats.activityAutomationLevels[key];
         })
     const lookup = activityAutomationUpgradesLookup[activity.tier]
-    let cost = lookup.base * Math.pow(lookup.mult,totalLevels);
+    let cost = lookup.base * Math.pow(lookup.mult, totalLevels);
     console.log(cost);
-    if(playerStats.money >= cost){
+    if (playerStats.money >= cost) {
         playerStats.money -= cost;
-        if(playerStats.activityAutomationLevels[activity.id]){
+        if (playerStats.activityAutomationLevels[activity.id]) {
             playerStats.activityAutomationLevels[activity.id] += 1;
         } else {
             playerStats.activityAutomationLevels[activity.id] = 1;
         }
     }
 }
-function generateActivityAutoUpgradeTooltip(id){
+function generateActivityAutoUpgradeTooltip(id) {
     let activity = activityData[id];
     let autoLevel = playerStats.activityAutomationLevels[activity.id] ? playerStats.activityAutomationLevels[activity.id] : 0;
     const cost = activityAutoCost(activity.tier);
     let displayText = "";
     displayText += `Auto Level: ${autoLevel}<br>`
-    displayText += `This activity is automatically done at <span style='color: white;'>${20*autoLevel}% efficiency</span> (+20% per level)<br>`
-    displayText += `Upgrade cost: <span style='color: white;'>${format(cost,2)}$</span><br>`
+    displayText += `This activity is automatically done at <span style='color: white;'>${20 * autoLevel}% efficiency</span> (+20% per level)<br>`
+    displayText += `Upgrade cost: <span style='color: white;'>${format(cost, 2)}$</span><br>`
     displayText += `<i style = "font-size: 1.5vh"> Upgrading increases the auto cost of every activity in the same tier!</i>`
     return displayText;
 }

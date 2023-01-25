@@ -213,6 +213,9 @@ function changeTab(index) {
     activeTab = index;
 
 }
+//SUBSCRIBE FLASH EVENTS
+gameEvents.levelup.subscribe(()=>{flashTabButton(tabNames.indexOf('class'));});
+gameEvents.fameup.subscribe(()=>{flashTabButton(tabNames.indexOf('fame'));});
 function flashTabButton(index){
     document.getElementById(`${tabNames[index]}TabButton`).classList.add('flash');
 }
@@ -723,8 +726,11 @@ function decayAttributes(){
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const over = playerStats[attribute]/softcap - 1;
         if(over > 0){
-            playerStats[attribute] -= (playerStats[attribute] - softcap) * (Math.exp(3*over)-1)/1000 * logicTickTime/1000;
-            playerStats[attribute] = Math.max(playerStats[attribute],softcap);
+            const decay = Math.min(playerStats[attribute]- softcap,
+                (playerStats[attribute] - softcap) * (Math.exp(3*over)-1)/1000 * logicTickTime/1000);
+            
+            playerStats[attribute] -= decay;
+            playerStats.decayedAttributes[index] += decay;
         }
     }
 }

@@ -773,7 +773,7 @@ class Player extends CombatEntity {
                                 }
                                 if (amount > this.shield) {
                                     this.shield = amount;
-                                    logConsole(`Hero shielded for ${format(amount, 2)} from ${this.nextMove.name}`);
+                                    logConsole(`Hero <span style="color:blue;">shielded </span> for <span style="color:white;">${format(amount, 2)}</span> from <span style="color:white;">${this.nextMove.name}</span>`);
                                 }
                                 break;
                             default:

@@ -51,7 +51,7 @@ const attribute = {
     mind: "mind",
     agility: "agility",
 }
-function convertOldLevel(level){
+function convertOldLevel(level) {
     console.log('Pre v0.6b save, converting level')
     let cumul = 0;
 
@@ -60,7 +60,7 @@ function convertOldLevel(level){
     }
     let tempLevel = 0;
     while (cumul > 0) {
-        if(cumul >= formulas.playerExp(tempLevel)){
+        if (cumul >= formulas.playerExp(tempLevel)) {
             cumul -= formulas.playerExp(tempLevel);
             tempLevel += 1;
         } else {
@@ -68,17 +68,17 @@ function convertOldLevel(level){
             cumul = 0;
         }
     }
-    console.log(cumul); 
+    console.log(cumul);
     console.log(tempLevel);
     return tempLevel;
 }
 
 var formulas = {};
 formulas.playerExpOld = function (value) {
-    return (baseExperienceCost + baseLinearExperienceCost * value) * Math.pow(5,Math.log10(Math.max(value,1)))* Math.pow(Math.max(value,1),1.25);
+    return (baseExperienceCost + baseLinearExperienceCost * value) * Math.pow(5, Math.log10(Math.max(value, 1))) * Math.pow(Math.max(value, 1), 1.25);
 }
 formulas.playerExp = function (value) {
-    return (baseExperienceCost * (value+1)) * Math.pow(baseExperienceCostExponent,value) * Math.pow(1.414213562,Math.floor(value/25));
+    return (baseExperienceCost * (value + 1)) * Math.pow(baseExperienceCostExponent, value) * Math.pow(1.414213562, Math.floor(value / 25));
 }
 formulas.cooldownReduction = function (value) {
     return Math.pow(1 - COOLDOWN_BASE, Math.max(0, Math.log10(1 + value)));
@@ -104,7 +104,7 @@ formulas.maxHealth = function (value) {
 }
 formulas.softcappedAttribute = function (index) {
     let baseValue = playerStats[attributeIndexToId[index]];
-    return baseValue;   
+    return baseValue;
     let softCap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
     if (baseValue < 0 || softCap <= 0) return 0;
     if (baseValue <= softCap) return baseValue;
@@ -176,4 +176,23 @@ function logConsole(text, type = '', category = 'system') {
     }
     log.innerHTML += "[" + new Date().toLocaleTimeString() + "] " + text + "<br \r>";
     log.scrollTop = log.scrollHeight;
+}
+
+//EVENTS
+class GameEvent {
+    constructor() {
+        this.subscribers = [];
+
+    }
+    trigger() {
+        this.subscribers.forEach((callback) => { callback(); })
+    }
+    subscribe(callback) {
+        this.subscribers.push(callback);
+    }
+}
+
+const gameEvents = {
+    'levelup': new GameEvent(),
+    'fameup': new GameEvent(),
 }

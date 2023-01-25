@@ -5,7 +5,7 @@ function prestigeSoftCaps() {
         if (softcapped >= softcap) {
             console.log(`${attributeIndexToId[index]} Softcap:${softcap} Softcapped:${softcapped}`)
             // playerStats.permanentSoftcaps[index] += (PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE);
-            playerStats.permanentSoftcaps[index] = softcapped;
+            playerStats.permanentSoftcaps[index] = softcapped - playerStats.attributeSoftcaps[index];
         } else {
             continue;
         }
@@ -42,8 +42,19 @@ function canAttributePrestige() {
 }
 
 function updateAttributePrestigeText() {
-    let container = document.getElementById("attributePrestigeText");
+    let container = document.getElementById("attributeDecayText");
     let text = "";
+    for (let index = 0; index < 4; index++) {
+        const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
+        const softcapped = formulas.softcappedAttribute(index);
+        const change = softcapped >= softcap ? softcapped - softcap : 0; //((PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE)) : 0;
+        text += `Lost <span class="${attributeIndexToId[index]}Text">${format(playerStats.decayedAttributes[index],3)} ${attributeDisplayShort[attributeIndexToId[index]]}</span>
+        giving <span>${format(100*(getDecayBonus(index)-1),3)}</span> % increased gain.<br>`
+    }
+    container.innerHTML = text;
+    //
+    container = document.getElementById("attributePrestigeText");
+    text = "";
     for (let index = 0; index < 4; index++) {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const softcapped = formulas.softcappedAttribute(index);

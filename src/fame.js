@@ -20,7 +20,8 @@ function checkFame() {
         playerStats.fame += 1;
         toNextFame = getNextFame(playerStats.fame);
         updateUI();
-        flashTabButton(tabNames.indexOf('areas'));
+        gameEvents.fameup.trigger();
+        //flashTabButton(tabNames.indexOf('fame'));
     }
 }
 function resetFameUpgrades() {
