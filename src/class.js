@@ -428,6 +428,12 @@ function generatePassiveTooltip(skillId) {
             requirementsText += `${skillLibrary[playerStats.class][key].name} (${value})<br>`;
         }
     }
+    if (skill.hasOwnProperty("excludes")) {
+        requirementsText = '<span style="color: yellow;">Excludes skill(s):</span><br>'
+        for (const [key, value] of Object.entries(skill.excludes)) {
+            requirementsText += `${skillLibrary[playerStats.class][key].name}<br>`;
+        }
+    }
     for (let index = 0; index < skill.effect.length; index++) {
         let effect = skill.effect[index];
         numberDisplay = "";
@@ -492,7 +498,7 @@ function generatePassiveTooltip(skillId) {
     let cost = skill.cost[getPlayerPassiveLevel(skill.id)];
     let costString = "";
     if (isNaN(cost)) { costString = "MAXED!" } else { costString = skill.cost[getPlayerPassiveLevel(skill.id)] + " Points" };
-    return `${skill.name} ${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel}` + "<br><br>" +
+    return `<u>${skill.name}</u> (${getPlayerPassiveLevel(skill.id)}/${skill.maxLevel})` + "<br><br>" +
         (skill.desc == "" ? "" : skill.desc + "<br /><br>") +
         `${effectText}` +
         "Cost: " + costString + "<br><br>"
@@ -788,10 +794,17 @@ function updateSubclassButton(index) {
 function checkSkillPurchase(skillId, times = 1) {
     let cost = 0;
     let skill = skillLibrary[playerStats.class][skillId];
-
+    if (skill.hasOwnProperty('excludes')) {
+        for (const [key, value] of Object.entries(skill.excludes)) {
+            if (playerStats.unlockedSkills[key] > value) {
+                logConsole(`This skill is exclusive with other skills!`, type = 'warning');
+                return false;
+            }
+        }
+    }
     if (skill.hasOwnProperty('requires')) {
         for (const [key, value] of Object.entries(skill.requires)) {
-            if (playerStats.unlockedSkills[key] < value || playerStats.unlockedSkills[key] == undefined) {
+            if (playerStats.unlockedSkills[key] < value || (playerStats.unlockedSkills[key] == undefined && value>0)) {
                 logConsole(`Requirements are not met!`, type = 'warning');
                 return false;
             }

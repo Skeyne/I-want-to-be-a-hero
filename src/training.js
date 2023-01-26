@@ -2,6 +2,7 @@ const activityLevelToRank = ['G', 'F', 'E', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS'
 var activityScaling = {
     "standard1": [1, 2, 3, 5, 7, 9, 12, 15, 18, 22],
     "detriment1": [1, 0.9, 0.8, 0.6, 0.3, 0.1, 0, 0, 0, 0],
+    "invert1": [1, 0.9, 0.8, 0.6, 0.3, -0.3, -0.6, -0.8, -0.9, -1],
 }
 var activityData = {
     "activity_0_0": {
@@ -45,24 +46,24 @@ var activityData = {
         timeToComplete: 1, cost: 1, expBase: 25, expPower: 3.3,
     },
     "activity_2_0": {
-        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.045, -0.01, -0, 0],
-        tier: 2, attributeScaling: ["standard1", "detriment1", 0, 0],
-        timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
+        id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.045, -0.015, -0, 0],
+        tier: 2, attributeScaling: ["standard1", "invert1", 0, 0],
+        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
     },
     "activity_2_1": {
-        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.01, 0.045, 0, 0],
-        tier: 2, attributeScaling: ["detriment1", "standard1", 0, 0],
-        timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
+        id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.015, 0.045, 0, 0],
+        tier: 2, attributeScaling: ["invert1", "standard1", 0, 0],
+        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
     },
     "activity_2_2": {
-        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.01, 0.045],
-        tier: 2, attributeScaling: ["detriment1", "detriment1", "detriment1", "standard1"],
-        timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
+        id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.015, 0.045],
+        tier: 2, attributeScaling: [0, 0, "invert1", "standard1"],
+        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
     },
     "activity_2_3": {
-        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.045, -0.01],
-        tier: 2, attributeScaling: ["detriment1", "detriment1", "standard1", "detriment1"],
-        timeToComplete: 1, cost: 25, expBase: 125, expPower: 3.3,
+        id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.045, -0.015],
+        tier: 2, attributeScaling: [0, 0, "standard1", "invert1"],
+        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
     },
 }
 

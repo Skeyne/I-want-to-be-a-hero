@@ -35,6 +35,7 @@ const cleanPlayerStats = {
     actionSpeed: 1,
     powerMultiplier: 1,
     criticalChance: 0,
+    lifesteal:0,
     overwhelm: 0,
     takedown: 0,
     dodgeChance: 0,

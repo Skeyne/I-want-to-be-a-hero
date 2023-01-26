@@ -372,7 +372,7 @@ playerMoves = {
         effects: {
             'knockback': 15,
             'aoe': 30,
-            'repeat': 0.75,
+            'repeat': 4,
         },
         time: 500,
         cooldownTime: 30000,
@@ -659,7 +659,7 @@ playerMoves = {
         class: 'mutant',
         type: 0,
         sub: 2,
-        position: { row: 1, column: 5 },
+        position: { row: 1, column: 1 },
         category: 'melee',
         name: "Clawstrike",
         description: "Rapidly grow claws out of your fist for a feral strike.",
@@ -725,7 +725,7 @@ playerMoves = {
         damageRatios: [0, .5, 0, .5],
         damageRange: [0.8, 1],
         effects: {
-            'repeat': 0.75,
+            'repeat': 5, //4
         },
         time: 500,
         cooldownTime: 15000,
@@ -777,10 +777,10 @@ playerMoves = {
         description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one 10,000 punches, 10,000 times.",
         iconName: "multipleSimplePunches",
         damage: 1,
-        damageRatios: [.3, 0, 0, .3],
+        damageRatios: [.3, 0, 0, .2],
         damageRange: [0.8, 1.2],
         effects: {
-            'repeat': 0.5,
+            'repeat': 1,
         },
         time: 500,
         cooldownTime: 2000,
@@ -1113,7 +1113,7 @@ playerMoves = {
         damageRatios: [0.6, 0, 0, 0.7],
         damageRange: [1, 1.5],
         effects: {
-            'repeat': 0.8,
+            'repeat': 5,
         },
         time: 400,
         cooldownTime: 10000,
@@ -1211,7 +1211,7 @@ playerMoves = {
         damageRatios: [0, 0, 0.1, .3],
         damageRange: [1, 1.1],
         effects: {
-            'repeat': 0.75,
+            'repeat': 4, //4
         },
         time: 500,
         cooldownTime: 2000,
@@ -1262,7 +1262,7 @@ playerMoves = {
         class: 'ninja',
         type: 1,
         sub: 1,
-        position: { row: 4, column: 5 },
+        position: { row: 3, column: 1 },
         category: 'movement',
         name: "Flash Step",
         description: "Use the secret techniques to rapidly travel a greater distance \n or move away from an attack.",
@@ -1321,7 +1321,7 @@ playerMoves = {
         damageRatios: [0, 0, 0.1, .3],
         damageRange: [1, 1.1],
         effects: {
-            'repeat': 0.75,
+            'repeat': 4,
             'aoe': 5,
         },
         time: 500,
@@ -1355,7 +1355,7 @@ playerMoves = {
         class: 'ninja',
         type: 0,
         sub: 2,
-        position: { row: 1, column: 1 },
+        position: { row: 2, column: 1 },
         category: 'melee',
         name: "Draining Palm",
         description: "Learning occult techniques, you use shadow powers to drain your enemies' lifeforce",
@@ -1375,7 +1375,7 @@ playerMoves = {
         class: 'ninja',
         type: 0,
         sub: 2,
-        position: { row: 3, column: 1 },
+        position: { row: 4, column: 1 },
         category: 'melee',
         name: "Shadow Strike",
         description: "Instantly appear near you enemy and strike them before reappearing at your position.",

@@ -727,7 +727,7 @@ function decayAttributes(){
         const over = playerStats[attribute]/softcap - 1;
         if(over > 0){
             const decay = Math.min(playerStats[attribute]- softcap,
-                (playerStats[attribute] - softcap) * (Math.exp(3*over)-1)/1000 * logicTickTime/1000);
+                (playerStats[attribute] - softcap) * (Math.exp(2.5*over)-1)/1000 * logicTickTime/1000);
             
             playerStats[attribute] -= decay;
             playerStats.decayedAttributes[index] += decay;

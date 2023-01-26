@@ -172,7 +172,7 @@ class Ally extends CombatEntity {
         super();
         this.data = data;
         this.name = data.name;
-        this.offset = 5*(Math.random()-0.5)
+        this.offset = 5 * (Math.random() - 0.5)
         //ATTRIBUTES
         this.strength = attributeRatios[0] * getEffectiveValue("strength");
         this.toughness = attributeRatios[1] * getEffectiveValue("toughness");
@@ -521,7 +521,7 @@ class Ally extends CombatEntity {
     }
 
     draw(context) {
-        let canvasX = scaleDistance(this.distance +this.offset);
+        let canvasX = scaleDistance(this.distance + this.offset);
         let canvasY = cBuffer.height - 40;
         context.drawImage(this.image, canvasX - 128 / 2, canvasY - 128, 128, 128);
         drawInfoBars(context, this, canvasX, canvasY);
@@ -573,7 +573,7 @@ class Player extends CombatEntity {
         this.mind = getEffectiveValue("mind");
         this.agility = getEffectiveValue("agility");
         this.maxHealth = PLAYER_BASE_HEALTH + formulas.maxHealth(getEffectiveValue("toughness"));
-        this.maxHealth  *= getSecondaryAttribute("maxHP");
+        this.maxHealth *= getSecondaryAttribute("maxHP");
         this.health = this.maxHealth;
         this.shield = 0;
         this.flatReduction = formulas.flatReduction(this);
@@ -589,6 +589,7 @@ class Player extends CombatEntity {
         this.damageDealt = getSecondaryAttribute("damageDealt");
         this.healthRegeneration = getSecondaryAttribute("healthRegeneration");
         this.criticalChance = getSecondaryAttribute("criticalChance");
+        this.lifesteal = getSecondaryAttribute("lifesteal");
         this.overwhelm = getSecondaryAttribute("overwhelm");
         this.takedown = getSecondaryAttribute("takedown");
         this.dodgeChance = getSecondaryAttribute("dodgeChance");
@@ -597,10 +598,14 @@ class Player extends CombatEntity {
         this.moveIntention = 1;
         this.nextMoveKey = null;
         this.equippedAbilities = [...playerStats.equippedAbilities];
+        this.repeatDict = {};
         this.equippedAbilities.forEach(ability => {
             if (ability != null) {
                 if (!playerStats.abilityCooldowns.hasOwnProperty(ability)) {
                     playerStats.abilityCooldowns[ability] = 0;
+                }
+                if (!this.repeatDict.hasOwnProperty(ability)) {
+                    this.repeatDict[ability] = 0;
                 }
             }
         });
@@ -668,7 +673,8 @@ class Player extends CombatEntity {
                                     moveOverwhelm += this.nextMove.effects[effect];
                                     break;
                                 case "repeat":
-                                    if (Math.random() < this.nextMove.effects[effect]) {
+                                    //console.log((this.nextMove.effects[effect]/Math.pow(2,this.repeatDict[this.nextMoveKey])));
+                                    if (Math.random() < (this.nextMove.effects[effect]/Math.pow(2,this.repeatDict[this.nextMoveKey]))) {
                                         repeat = true;
                                     }
                                     break;
@@ -798,6 +804,7 @@ class Player extends CombatEntity {
                 break;
         }
         if (repeat) {
+            this.repeatDict[this.nextMoveKey] += 1;
             if (target.health <= 0 || target == null) {
                 return true;
             } else {
@@ -805,6 +812,7 @@ class Player extends CombatEntity {
             }
 
         } else {
+            this.repeatDict[this.nextMoveKey] = 0;
             playerStats.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
             return true;
         }
