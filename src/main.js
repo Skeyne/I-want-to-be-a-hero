@@ -51,6 +51,7 @@ if (playerStats.storyProgress >= 19) { document.getElementById("prestigeBox").st
 if (playerStats.storyProgress >= 19) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 if (playerStats.storyProgress >= 8) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
 if (playerStats.storyProgress >= 8) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+checkTabUnlocks();
 var windowInFocus = true;
 function checkTabFocused() {
     if (document.visibilityState === 'visible') {
@@ -730,7 +731,7 @@ function decayAttributes(){
                 (playerStats[attribute] - softcap) * (Math.exp(2.5*over)-1)/1000 * logicTickTime/1000);
             
             playerStats[attribute] -= decay;
-            playerStats.decayedAttributes[index] += decay;
+            if(playerStats.areaCompletions["mafia1"] > 0) playerStats.decayedAttributes[index] += decay;
         }
     }
 }

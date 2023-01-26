@@ -169,7 +169,10 @@ class Activity {
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1) * getFameEffect("trainingSpeed") * getDecayBonus(index), 3)} `;
+            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1)
+                * getTrainingModifier(attributeIndexToId[index])
+                * getFameEffect("trainingSpeed")
+                * getDecayBonus(index), 3)} `;
             attributeText.append(s);
         }
         attributeText.innerHTML += ' /s';

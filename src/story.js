@@ -3,79 +3,50 @@ const storyQuests = [
         title: `The Beginning I`,
         text: `You've had enough. Every year crime is up and yet the city council does nothing about it.
         The corruption runs deep. It's time for change. <br><br> (Tabs found on the left.)`,
-        requirementType: `defeat`,
-        requirementTarget: [`criminal`],
+        requirementType: 'area',
+        requirementTarget: [`alley1`],
         requirementAmount: [1],
     },
     {
         title: `The Beginning II`,
-        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.<br><br>(Activity tab).`,
-        requirementType: `training`,
-        requirementTarget: [`strength`, `toughness`],
+        text: `OW. Ok. OW. Ok that wasn't so easy. Maybe you should train up a bit first.`,
+        requirementType: 'area',
+        requirementTarget: [`streets1`],
         requirementAmount: [1, 1]
     },
     {
         title: `The Beginning III`,
         text: `Time to fight crime`,
-        requirementType: `defeat`,
-        requirementTarget: [`criminal`],
-        requirementAmount: [5],
-    },
-    {
-        title: `The Beginning IV`,
-        text: `I should work on my skills so I can take down criminals more effectively. (Skills menu below)`,
-        requirementType: `level`,
-        requirementTarget: [`level`],
-        requirementAmount: [3],
-    },
-    {
-        title: `The Beginning V`,
-        text: `Time to clean the streets.`,
-        requirementType: `defeat`,
-        requirementTarget: [`criminal`],
-        requirementAmount: [15],
-    },
-    {
-        title: `Streetfights I`,
-        text: `Moving up to a tougher crowd. (Streets in Areas menu)`,
-        requirementType: `defeat`,
-        requirementTarget: [`thug`],
+        requirementType: 'area',
+        requirementTarget: [`streets2`],
         requirementAmount: [1],
     },
     {
-        title: `Streetfights II`,
-        text: `I need to learn some new moves to take out the more dangerous criminals. (See details of unlocked moves in the 'Abilities' menu and equip them in the 'Status' menu slots.)`,
-        requirementType: `level`,
-        requirementTarget: [`level`],
-        requirementAmount: [5],
+        title: `The Beginning IV`,
+        text: `I should work on my skills so I can take down criminals more effectively.`,
+        requirementType: 'area',
+        requirementTarget: [`streets3`],
+        requirementAmount: [1],
     },
     {
-        title: `Streetfights III`,
-        text: `That guy had a freakin' crowbar. Back to the training board.`,
-        requirementType: `training`,
-        requirementTarget: [`strength`, `toughness`, 'mind', `agility`],
-        requirementAmount: [5, 5, 5, 5],
-    },
-
-    {
-        title: `Streetfights IV`,
+        title: `Streetfights V`,
         text: `Time to take out the whole gang.`,
-        requirementType: `defeat`,
-        requirementTarget: [`thug`],
-        requirementAmount: [30],
+        requirementType: 'area',
+        requirementTarget: [`streets4`],
+        requirementAmount: [1],
     },
     {
         title: `Vigilante I`,
-        text: `You heard news of a loud bang coming from the maximum security prison. You should probaby check it out. As you get to the bridge you see dozens of prisoners running from the direction of the prison. Stop them!`,
-        requirementType: `defeat`,
-        requirementTarget: [`prisoner`],
-        requirementAmount: [20],
+        text: `You heard a loud bang coming from the maximum security prison. You should probaby check it out. As you get to the bridge you see dozens of prisoners running from the direction of the prison. Stop them!`,
+        requirementType: 'area',
+        requirementTarget: [`bridge1`],
+        requirementAmount: [1],
     },
     {
         title: `Vigilante II`,
         text: `After taking down some of the escaped prisoners you finally get near. Now you can see green fumes streaming from somewhere in the compoud. As you enter the courtyard a very large prisoner blocks your way.`,
-        requirementType: `defeat`,
-        requirementTarget: [`prisoner9`],
+        requirementType: 'area',
+        requirementTarget: [`prison1`],
         requirementAmount: [1],
     },
     {
@@ -84,23 +55,23 @@ const storyQuests = [
              The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself at the start of some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex.
              A few paces in you spot some prison guards stood with some knocked out prisoners at their feet . Thinking they must have got it under control you start to turn back but they spot you. 'HEY! That one got through'.
              'Got through?' you think, but you came from outside. Before you question it any longer they start to advance on you.`,
-        requirementType: `defeat`,
-        requirementTarget: [`prisonguard`],
-        requirementAmount: [25],
+        requirementType: 'area',
+        requirementTarget: [`prison2`],
+        requirementAmount: [1],
     },
     {
         title: `Vigilante IV`,
         text: `After knocking out the guards, you notice that the prisoners they had knocked have a green-ish tint to their skin.
         'It must be the lighting' you think, but as you get closer to re-assure yourself, other similar prisoners emerge stumbling from a side corridor,and they look rather strange.`,
-        requirementType: `defeat`,
-        requirementTarget: [`infectedPrisoner`],
-        requirementAmount: [30],
+        requirementType: 'area',
+        requirementTarget: [`prison3`],
+        requirementAmount: [1],
     },
     {
         title: `Vigilante V`,
         text: `Needing to know what is happening, you fight your way through the underground tunnel, and find a heavy door that leads into a room. You seem to be in a lab. You see vats, some broken, with a similarly coloured green liquid splashed around them. Some, with- people? - still inside. In the shock at seeing this, you barely dodge out of the way as a massive blade swings from the side. From the shadows a massive disfigured prisoner appears. Did he cause all of this?`,
-        requirementType: `defeat`,
-        requirementTarget: [`experiment999`],
+        requirementType: 'area',
+        requirementTarget: [`prison4`],
         requirementAmount: [1],
     },
     {
@@ -109,7 +80,7 @@ const storyQuests = [
          a vat next to you, and the liquid inside poured over you. You remember screaming in pain and not much else. Looking around,
           the monstrosity seems to be gone. You feel weak, like all the training you've done the past months has been sapped from you.
           But you also feel something else, new potential, like you fell off a tower, and when you look up, the tower is even higher.`,
-        requirementType: `class`,
+        requirementType: 'class',
         requirementTarget: [`Pick your class:
         <button class="classButton" style="margin:2%" onclick="changeClass('superhuman')">Superhuman</button>
         <button class="classButton" style="margin:2%" onclick="changeClass('mutant')">Mutant</button>
@@ -121,57 +92,50 @@ const storyQuests = [
         title: `A New Beginning I`,
         text: `Escaping the prison before the police shows up, you return to your routine. You are weak but as you get into fight after fight you notice that your body is changing, faster, stronger than it should be.
         And soon you start to notice even greater changes. What the hell were they doing in that lab, and where did that monster go? You need to start recovering your strength for next time he shows up.`,
-        requirementType: `level`,
-        requirementTarget: [`level`],
-        requirementAmount: [20],
+        requirementType: 'area',
+        requirementTarget: [`mafia1`],
+        requirementAmount: [1],
     },
     {
         title: `A New Beginning II`,
         text: `Ever since the prison incident, crime in the city has continued to grow. There are reports of bizarre accidents and unusual individuals. In the meanwhile, the mafia has continued to expand in your neighbourhood. You think that with these new powers you can put up a fight.`,
-        requirementType: `defeat`,
-        requirementTarget: [`thug2`, `thug3`],
-        requirementAmount: [30, 10],
+        requirementType: 'area',
+        requirementTarget: [`mafia2`],
+        requirementAmount: [1],
     },
     {
         title: `A New Beginning III`,
         text: `You keep beating up these thugs but there is a mastermind organizing them, if he doesn't go down this won't stop. If I keep taking down his henchmen closer to his territory he'll show up`,
-        requirementType: `defeat`,
-        requirementTarget: [`thug4`, `thug5`],
-        requirementAmount: [50, 20],
-    },
-    {
-        title: `A New Beginning IV`,
-        text:`As you start bloodying the Don he retreats into one of the mafia warehouses. Upon entering you see crates filled with vials of liquid that remind you of the prison's underground lab. Then, you notice the hulking figure of the Don's right hand man close the door behind you. Through his body you see glowing lines and a change of skin tone not unlike the prisoner's escaping the lab, although he does not look sickly like them. Before you can think any further he lunges at you as the Don orders 'get 'im boy!'`,
-        requirementType: `defeat`,
-        requirementTarget: [`donbodyguard`, 'don2'],
-        requirementAmount: [1, 1],
-    },
-    {
-        title: `A New Beginning V`,
-        text: `After beating up the Don you question him about his henchman and the crates in the warehouse. He tells you, 'You don't even know what's coming... if you find them they'll take care of you.. he.. he.. hugh' before exhaling the last breath. Inspecting some of the crates you recognize out that they're from one of the companies in the old abandoned industrial zone. You take some of the vials for yourself, destroying the rest, and decide to investigate the crate's origin in the industrial zone next.`,
-        requirementType: `defeat`,
-        requirementTarget: [`infusedthug`,`psychicthug`],
-        requirementAmount: [60,20],
-    },
-    {
-        title: `A New Beginning VI`,
-        text: `It's now pretty clear that those vials are the same liquid as that from the lab, and that the Don had been smuggling it and using it within his mafia. But how did he get his hands on it? As you're making your way through a scrapyard pondering this, you hear a whistle in the air, and suddenly a shockwave impact from something falling launches a cloud of dust in into the air. As the dust dissipates you see what seems to be one of the Don's street thugs. He says 'We were supposed to wait for you at the Steelworks but I got a bit ahead of myself", eyes you up and grins`,
-        requirementType: `defeat`,
-        requirementTarget: [`superthug`],
+        requirementType: 'area',
+        requirementTarget: [`mafia3`],
         requirementAmount: [1],
     },
     {
-        title: `A New Beginning VII`,
+        title: `A New Beginning IV`,
+        text: `After beating up the Don you question him about his henchman and the crates in the warehouse. He tells you, 'You don't even know what's coming... if you find them they'll take care of you.. he.. he.. hugh' before exhaling the last breath. Inspecting some of the crates you recognize out that they're from one of the companies in the old abandoned industrial zone. You take some of the vials for yourself, destroying the rest, and decide to investigate the crate's origin in the industrial zone next.`,
+        requirementType: 'area',
+        requirementTarget: [`mafia4`],
+        requirementAmount: [1],
+    },
+    {
+        title: `A New Beginning V`,
+        text: `It's now pretty clear that those vials are the same liquid as that from the lab, and that the Don had been smuggling it and using it within his mafia. But how did he get his hands on it? As you're making your way through a scrapyard pondering this, you hear a whistle in the air, and suddenly a shockwave impact from something falling launches a cloud of dust in into the air. As the dust dissipates you see what seems to be one of the Don's street thugs. He says 'We were supposed to wait for you at the Steelworks but I got a bit ahead of myself", eyes you up and grins`,
+        requirementType: 'area',
+        requirementTarget: [`industrial3`],
+        requirementAmount: [1],
+    },
+    {
+        title: `A New Beginning VI`,
         text: `After taking care of that smug thug you head over to the Steelworks, anticipating another fight. As you knock the warehouse door down you find inside a distillery, which seems to be making the same 'Y' you found in crates in the Don's warehouse. And a lot, a LOT of mafia henchmen inside.`,
-        requirementType: `defeat`,
-        requirementTarget: [`morphedthug`,`gatlingthug`,`infusedthug`,`psychicthug`],
-        requirementAmount: [30,30,50,50],
+        requirementType: 'area',
+        requirementTarget: [`industrial5`],
+        requirementAmount: [1],
     },
     {
         title: `Prologue.. For now`,
         text: `Ever since you defeated The Don, mafia activity around your area has simmered down, but the strange incidents around the city continue. One day while walking the streets you hear a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYONE!". This must be him. This time I won't lose.`,
-        requirementType: `defeat`,
-        requirementTarget: [`crabman`],
+        requirementType: 'area',
+        requirementTarget: [`industrial6`],
         requirementAmount: [1],
     },
 
@@ -200,13 +164,17 @@ var areaSelect = document.getElementById("selectArea");
 var areaButtonDict = {};
 
 function checkTabUnlocks() {
-    if (playerStats.storyProgress >= 8) {
+    if (playerStats.areaCompletions["streets3"] >= 10) {
         document.getElementById("fameBox").style.visibility = 'visible';
         document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle");
+    } else {
+        document.getElementById("fameBox").style.visibility = 'hidden';
     }
-    if (playerStats.storyProgress >= 19) {
+    if (playerStats.areaCompletions["mafia4"] >= 1) {
         document.getElementById("prestigeBox").style.visibility = 'visible';
         document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle");
+    } else {
+        document.getElementById("prestigeBox").style.visibility = 'hidden';
     }
 }
 checkAreaUnlocks();
@@ -214,9 +182,9 @@ function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
     areaButtonDict = {};
     for (let index = 0; index < areas.length; index++) {
-        let area = areas[index];   
+        let area = areas[index];
         let d = document.createElement('div');
-        d.addEventListener('click',()=>{
+        d.addEventListener('click', () => {
             document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
             changeArea(index)
             document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
@@ -225,7 +193,7 @@ function checkAreaUnlocks() {
         d.classList.add('areaButton');
         d.style.backgroundImage = `linear-gradient(180deg,transparent ,rgba(0,0,0,.7) 25% 75%,transparent),url(resources/backgroundImages/${area.background})`;
         d.innerHTML = area.displayText;
-        if (index == playerStats.currentArea){d.classList.toggle('active')}
+        if (index == playerStats.currentArea) { d.classList.toggle('active') }
         areaButtonDict[area.id] = d;
         areaSelect.append(d);
         if (!(playerStats.areaCompletions[area.id] >= area.completionsReq)) {
@@ -242,6 +210,14 @@ function resetStoryline() {
 function getStoryQuest(index) {
     if (index < storyQuests.length) { return storyQuests[index] }
     else { return endOfStoryQuest }
+}
+function checkAreaQuest() {
+    let quest = getStoryQuest(playerStats.storyProgress);
+    if (quest.requirementType != 'area') return false;
+    for (let index = 0; index < quest.requirementTarget.length; index++) {
+        playerStats.currentStoryQuestProgress[index] += 1;
+    }
+    updateStoryQuest();
 }
 function checkClassQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
@@ -295,7 +271,7 @@ function updateStoryQuest() {
     if (completed) {
         playerStats.storyProgress += 1;
         console.log(getStoryQuest(playerStats.storyProgress).length);
-        playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);   
+        playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
         checkAreaUnlocks();
         checkTabUnlocks();
         updateDiaryEntries();
@@ -328,6 +304,9 @@ function storyQuestText(progress, diary = false) {
             break;
         case 'class':
             requirementsString = quest.requirementTarget[0];
+            break;
+        case 'area':
+            requirementsString = "";
             break;
         case 'none':
             requirementsString = "";

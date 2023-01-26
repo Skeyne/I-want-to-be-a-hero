@@ -36,6 +36,7 @@ class Area {
         }
         if (playerStats.areaCompletions[this.id] == this.completionsReq) {
             checkAreaUnlocks();
+            checkTabUnlocks();
             flashTabButton(tabNames.indexOf('areas'));
         }
         areaButtonDict[this.id].innerHTML = this.displayText;
@@ -175,7 +176,7 @@ const areas = [
         { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
     }),
     new Area({
-        id: 'industruial3', name: "Scrapyard", background: "prisonCourtyardBackground.png", power: 752, expPerPower: 3.94, moneyPerPower: 0.1165/2,
+        id: 'industrial3', name: "Scrapyard", background: "prisonCourtyardBackground.png", power: 752, expPerPower: 3.94, moneyPerPower: 0.1165/2,
         storyUnlock: 20, patrolTime: 7000, completionsReq: 1,
         encounters: [{ weight: 100, enemies: { "superthug": { 1: 1 } } }]
     }),

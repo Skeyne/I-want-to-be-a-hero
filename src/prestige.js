@@ -65,13 +65,13 @@ function updateAttributePrestigeText() {
 }
 updateAttributePrestigeText();
 const classPrestigeRequirements = [
-    { level: 150, storyProgress: 21, cumulativeSoftcaps: 1e6 },
+    { level: 70, storyProgress: 21, cumulativeSoftcaps: 1e6 },
     { level: 1000, storyProgress: 999, cumulativeSoftcaps: 1e10 },
 ]
 const classPrestigeBonus = [
-    { attributeGain: 1, bonusPassives: 0, activityExp: 1 },
-    { attributeGain: 2, bonusPassives: 100, activityExp: 2 },
-    { attributeGain: 4, bonusPassives: 1000, activityExp: 4 },
+    { attributeGain: 1, bonusPassives: 0, activityExp: 1, manualPower: 1 },
+    { attributeGain: 1.5, bonusPassives: 10, activityExp: 4, manualPower: 2 },
+    { attributeGain: 2.25, bonusPassives: 20, activityExp: 16, manualPower: 4 },
 ]
 function getPrestigeBonus(index) {
     if (index >= classPrestigeBonus.length) { return classPrestigeBonus[classPrestigeBonus.length - 1]; }
