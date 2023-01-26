@@ -754,7 +754,7 @@ skillLibrary = {
             id: 'es_1_9', sub: 1, position: { row: 1, column: 5 }, name: 'Origin: Matter', iconName: 'studying', rank: 2,
             desc: '',
             effect: [{ type: 1, effectTarget: "cooldownReduction", effectType: "additivePercent", effectMagnitude: 0.05, },
-            { type: 1, effectTarget: "criticalChance", effectType: "additivePercent", effectMagnitude: 0.05, },
+            { type: 1, effectTarget: "criticalChance", effectType: "additiveFlat", effectMagnitude: 0.05, },
             { type: 1, effectTarget: "actionSpeed", effectType: "additivePercent", effectMagnitude: 0.05, }],
             maxLevel: 1, cost: Array(1).fill(10), excludes: { 'es_0_8': 0, 'es_2_10': 0 }
         },
@@ -1350,7 +1350,7 @@ skillLibrary = {
             id: 'ni_0_8', sub: 0, position: { row: 1, column: 5 }, name: 'Origin: Bladelore', iconName: 'shadowB', rank: 2,
             desc: '',
             effect: [{ type: 1, effectTarget: "actionSpeed", effectType: "additivePercent", effectMagnitude: 0.05 },
-            { type: 1, effectTarget: "criticalChance", effectType: "additivePercent", effectMagnitude: 0.05 }],
+            { type: 1, effectTarget: "criticalChance", effectType: "additiveFlat", effectMagnitude: 0.05 }],
             maxLevel: 1, cost: Array(1).fill(10), excludes: { 'ni_1_8': 0, 'ni_2_8': 0, }
         },
         'ni_0_1': {
