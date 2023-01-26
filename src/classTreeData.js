@@ -245,9 +245,9 @@ skillLibrary = {
         'sh_0_9': {
             id: 'sh_0_9', sub: 0, position: { row: 1, column: 5 }, rank: 2, name: 'Origin: Might', iconName: 'calisthenics', rank: 2,
             desc: 'Even without trying you\'re stronger than you\'ve ever been before',
-            effect: [{ type: 1, effectTarget: "damageDealt", effectType: "additivePercent", effectMagnitude: 1.05 },
-            { type: 1, effectTarget: "actionSpeed", effectType: "additivePercent", effectMagnitude: 1.05 }],
-            maxLevel: 1, cost: Array(10).fill(1), excludes: { 'sh_1_8': 0, 'sh_2_9': 0 }
+            effect: [{ type: 1, effectTarget: "damageDealt", effectType: "additivePercent", effectMagnitude: 0.05 },
+            { type: 1, effectTarget: "actionSpeed", effectType: "additivePercent", effectMagnitude: 0.05 }],
+            maxLevel: 1, cost: Array(10).fill(10), excludes: { 'sh_1_8': 0, 'sh_2_9': 0 }
         },
         'sh_0_1': {
             id: 'sh_0_1', sub: 0, rank: 1, position: { row: 2, column: 3 }, name: 'Inhuman strength', iconName: 'calisthenics',
