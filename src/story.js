@@ -54,7 +54,7 @@ const storyQuests = [
         text: `After taking down the oversized brute, you follow the fumes to some exhaust chimneys and a hatch that leads underground.
              The prisoners must have rioted and broken in. Eager to be the hero, you jump in. You find yourself at the start of some sort of underground transit. Odd, you can't think why the prison needs such a large underground complex.
              A few paces in you spot some prison guards stood with some knocked out prisoners at their feet . Thinking they must have got it under control you start to turn back but they spot you. 'HEY! That one got through'.
-             'Got through?' you think, but you came from outside. Before you question it any longer they start to advance on you.`,
+             'Got through?' you think, but you came from outside. Before you can question it any longer they start to advance on you.`,
         requirementType: 'area',
         requirementTarget: [`prison2`],
         requirementAmount: [1],
@@ -157,11 +157,12 @@ if (isOutdated) {
         if (playerStats.storyProgress >= 13) playerStats.storyProgress = 13; updateStoryQuest();
     }
 }
+var areaSelect = document.getElementById("selectArea");
+var areaButtonDict = {};
+sanityCheckStory();
 updateStoryQuest();
 updateDiaryEntries();
 
-var areaSelect = document.getElementById("selectArea");
-var areaButtonDict = {};
 
 function checkTabUnlocks() {
     if (playerStats.areaCompletions["streets3"] >= 10) {
@@ -211,13 +212,35 @@ function getStoryQuest(index) {
     if (index < storyQuests.length) { return storyQuests[index] }
     else { return endOfStoryQuest }
 }
+function sanityCheckStory() {
+    let done = false;
+    while (!done) {
+        let quest = getStoryQuest(playerStats.storyProgress);
+        console.log(quest);
+        if (quest.requirementType != 'area') { done = true; break; }
+        for (let index = 0; index < quest.requirementTarget.length; index++) {
+            if (playerStats.areaCompletions[quest.requirementTarget[index]] >= quest.requirementAmount[index]) {
+                playerStats.currentStoryQuestProgress[index] += 1;
+                playerStats.storyProgress += 1;
+            } else {
+                playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
+                done = true;
+            }
+        }
+    };
+}
 function checkAreaQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
     if (quest.requirementType != 'area') return false;
     for (let index = 0; index < quest.requirementTarget.length; index++) {
-        playerStats.currentStoryQuestProgress[index] += 1;
+        if (playerStats.areaCompletions[quest.requirementTarget[index]] >= quest.requirementAmount[index]) {
+            playerStats.currentStoryQuestProgress[index] += 1;
+        } else {
+            return false;
+        }
     }
     updateStoryQuest();
+    return true;
 }
 function checkClassQuest() {
     let quest = getStoryQuest(playerStats.storyProgress);
