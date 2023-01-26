@@ -337,6 +337,9 @@ function storyRequirementsText(progress) {
         case 'class':
             requirementsString = quest.requirementTarget[0];
             break;
+        case 'area':
+            requirementsString = "";
+            break;
         case 'none':
             requirementsString = "Congratulations! You reached the end of current content.";
             break;
