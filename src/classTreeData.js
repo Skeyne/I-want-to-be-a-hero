@@ -875,7 +875,7 @@ skillLibrary = {
         'es_2_10': {
             id: 'es_2_10', sub: 2, position: { row: 1, column: 5 }, name: 'Origin: Spiritual', iconName: 'studying', rank: 2,
             desc: '',
-            effect: [{ type: 0, effectTarget: "dodgeChance", effectType: "additivePercent", effectMagnitude: 0.01 }],
+            effect: [{ type: 1, effectTarget: "dodgeChance", effectType: "additivePercent", effectMagnitude: 0.01 }],
             maxLevel: 1, cost: Array(1).fill(10), excludes: { 'es_0_8': 0, 'es_1_9': 0 }
         },
         'es_2_1': {
@@ -1466,7 +1466,8 @@ skillLibrary = {
             id: 'ni_1_8', sub: 1, position: { row: 1, column: 5 }, name: 'Origin: Ninjutsu', rank: 2,
             iconName: 'shadowB',
             desc: 'You must learn to execute moves exactly every time.',
-            effect: [{ type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.07, }],
+            effect: [{ type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.05, },
+            { type: 1, effectTarget: "dodgeChance", effectType: "additivePercent", effectMagnitude: 0.05, }],
             maxLevel: 1,
             cost: Array(1).fill(20), excludes: { 'ni_0_8': 0, 'ni_2_8': 0, }
         },
