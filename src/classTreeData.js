@@ -1469,7 +1469,7 @@ skillLibrary = {
             effect: [{ type: 1, effectTarget: "cooldownReduction", effectType: "multPercent", effectMagnitude: 1.05, },
             { type: 1, effectTarget: "dodgeChance", effectType: "additivePercent", effectMagnitude: 0.05, }],
             maxLevel: 1,
-            cost: Array(1).fill(20), excludes: { 'ni_0_8': 0, 'ni_2_8': 0, }
+            cost: Array(1).fill(10), excludes: { 'ni_0_8': 0, 'ni_2_8': 0, }
         },
         'ni_1_1': {
             id: 'ni_1_1', sub: 1, position: { row: 2, column: 3 }, name: 'Traditional Technique Scrolls', iconName: 'shadowB',
