@@ -216,7 +216,7 @@ function sanityCheckStory() {
     let done = false;
     while (!done) {
         let quest = getStoryQuest(playerStats.storyProgress);
-        console.log(quest);
+        //console.log(quest);
         if (quest.requirementType != 'area') { done = true; break; }
         for (let index = 0; index < quest.requirementTarget.length; index++) {
             if (playerStats.areaCompletions[quest.requirementTarget[index]] >= quest.requirementAmount[index]) {

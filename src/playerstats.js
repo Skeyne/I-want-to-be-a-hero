@@ -97,7 +97,8 @@ function load(file = null) {
                 lastVersion = playerStats.version;
                 isOutdated = true; console.log("outdated save");
 
-                if (playerStats.class == 'human') playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
+                if (playerStats.class == 'human') {playerStats.attributeSoftcaps = [1e3, 1e3, 1e3, 1e3];
+                if(playerStats.storyProgress > 10) playerStats.storyProgress = 10;}
             }
             if (Number(playerStats.version.substring(3, 4)) < 4) { resetSave(); }
             if (Number(playerStats.version.substring(3, 4)) < 6) { playerStats.currentArea = 0; playerStats.level = convertOldLevel(playerStats.level); }
