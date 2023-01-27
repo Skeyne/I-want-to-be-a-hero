@@ -120,14 +120,14 @@ class Activity {
     reward() {
         if (!this.payCost()) return;
         let speed = 0;
-        if (currentTrainingArea == this) speed += 1;
+        if (currentTrainingArea == this) speed += 1 * getPrestigeBonus(playerStats.classPrestige).manualPower;
         if (playerStats.activityAutomationLevels[this.id]) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
         let rewards = this.RewardPerPlayerLevel;
         let expReward = 0;
         for (let index = 0; index < this.attributeRatios.length; index++) {
             if (rewards[index] != 0) {
                 let attribute = attributeIndexToId[index];
-                let reward = speed * getDecayBonus(index) * getFameEffect("trainingSpeed") * logicTickTime / 1000 * rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
+                let reward = speed * getPrestigeBonus(playerStats.classPrestige).attributeGain * getDecayBonus(index) * getFameEffect("trainingSpeed") * logicTickTime / 1000 * rewards[index] * (playerStats.level + 1) * (rewards[index] < 0 ? 1 : getTrainingModifier(attribute));
                 if ((rewards[index] > 0)) {
                     expReward += speed * getFameEffect("trainingSpeed") * (logicTickTime / 1000) * (1 / 10) * getPrestigeBonus(playerStats.classPrestige).activityExp * Math.pow(1 + (Math.log10(playerStats[attribute] + 1) / 5), 1 + (Math.log10(playerStats[attribute] + 1) / 10));
                 }
@@ -147,8 +147,8 @@ class Activity {
     }
     payCost() {
         let speed = 0;
-        if (currentTrainingArea == this) speed += 1;
-        if (playerStats.activityAutomationLevels[this.id] != undefined) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
+        if (currentTrainingArea == this) speed += 1 * getPrestigeBonus(playerStats.classPrestige).manualPower;
+        if (playerStats.activityAutomationLevels[this.id]) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
         if (speed <= 0) return;
         if (playerStats.money < (logicTickTime / 1000) * speed * this.cost) { this.costPaid = false; changeActivity(playerStats.lastFreeActivity); return false; }
         playerStats.money -= (logicTickTime / 1000) * speed * this.cost; this.costPaid = true; moneyCountBuffer -= this.cost * speed * (logicTickTime / 1000); return true;
@@ -164,20 +164,27 @@ class Activity {
         (${format(100 * playerStats.activityLevels[this.id].exp / this.expToNext, 2)}%)`;
         let attributeText = this.element.getElementsByTagName("div")[1];
         attributeText.innerHTML = "";
+        let speed = 0;
+        if (currentTrainingArea == this) speed += 1 * getPrestigeBonus(playerStats.classPrestige).manualPower;
+        if (playerStats.activityAutomationLevels[this.id]) speed += 0.2 * playerStats.activityAutomationLevels[this.id];
         for (let index = 0; index < this.attributeRatios.length; index++) {
             const ratio = this.RewardPerPlayerLevel[index];
             if (ratio == 0) continue;
             let s = document.createElement("span");
             s.setAttribute("class", `${attributeIndexToId[index]}Text`);
-            s.innerHTML = `${format(this.RewardPerPlayerLevel[index] * (playerStats.level + 1)
+            let baseAmount = this.RewardPerPlayerLevel[index] * (playerStats.level + 1)
+                * getPrestigeBonus(playerStats.classPrestige).attributeGain
                 * getTrainingModifier(attributeIndexToId[index])
                 * getFameEffect("trainingSpeed")
-                * getDecayBonus(index), 3)} `;
+                * getDecayBonus(index);
+            let effectiveAmount = baseAmount * speed;
+            s.innerHTML = `${format(effectiveAmount, 3)} (${format(baseAmount, 3)}) `;
             attributeText.append(s);
         }
         attributeText.innerHTML += ' /s';
         let costText = this.element.getElementsByClassName("activityCostText")[0];
-        costText.innerHTML = `Cost: ${format(this.cost * getFameEffect("trainingSpeed"), 3)}/s (<span style="color:rgb(44, 190, 0)">$</span>)`;
+        costText.innerHTML = `Cost: (${format(this.cost * speed *getFameEffect("trainingSpeed"), 3)})
+        ${format(this.cost * getFameEffect("trainingSpeed"), 3)}/s (<span style="color:rgb(44, 190, 0)">$</span>)`;
     }
     updateRank() {
         let rankText = this.element.getElementsByTagName("span")[0];

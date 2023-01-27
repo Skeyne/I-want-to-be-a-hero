@@ -6,7 +6,7 @@ var summons = {
         spriteFile: "shadowClone.png",
         moves: ['katana','shuriken', 'shadowWalk'],
         engagementRange: 5,
-        duration: 5,
+        duration: 5000,
     },
     'allyTentacle': {
         id: "allyTentacle", name: "Summoned Tentacle",
@@ -15,7 +15,7 @@ var summons = {
         spriteFile: "allyTentacle.png",
         moves: ['tendrilWhip','slowWalk'],
         engagementRange: 10,
-        duration: 10,
+        duration: 10000,
     },
     'allyWolf': {
         id: "allyWolf", name: "Wolf",
@@ -25,16 +25,26 @@ var summons = {
         moves: ['clawStrike','walk'],
         modifiers:{actionSpeed:3},
         engagementRange: 5,
-        duration: 5,
+        duration: 5000,
     },
     'allyMitosis': {
-        id: "allyWolf", name: "Wolf",
+        id: "allyWolf", name: "Mitosis Clone",
         attributes: [1,1,1,1],
         combatProperties: new CombatProperties(),
         spriteFile: "mutantSprite1.png",
         moves: ['bulkFist','walk'],
         modifiers:{},
         engagementRange: 5,
-        duration: 30,
+        duration: 30000,
+    },
+    'allyFrog': {
+        id: "allyWolf", name: "Great Frog",
+        attributes: [1,1,1,1],
+        combatProperties: new CombatProperties(),
+        spriteFile: "giantFrog.png",
+        moves: ['tongueWhip','acidBlob','walk'],
+        modifiers:{},
+        engagementRange: 30,
+        duration: 15000,
     }
 }

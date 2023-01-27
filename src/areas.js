@@ -1,3 +1,19 @@
+const areaPowerLookup = {
+    'chapter1': (areaLevel) => { return Math.round(15 * Math.pow(Math.pow(10, 0.1), areaLevel)) },
+    'chapter2': (areaLevel) => { return Math.round(15 * Math.pow(Math.pow(10, 0.1), areaLevel)) },
+    'chapter3': (areaLevel) => { return Math.round(15 * Math.pow(Math.pow(10, 0.1), areaLevel)) },
+}
+const areaExpLookup = {
+    'chapter1': (areaLevel) => { return 0.3 * Math.pow(Math.pow(5, 0.1), areaLevel) },
+    'chapter2': (areaLevel) => { return 0.15 * Math.pow(Math.pow(5, 0.1), areaLevel) },
+    'chapter3': (areaLevel) => { return 0.15 * Math.pow(Math.pow(5, 0.1), areaLevel) },
+}
+const areaMoneyLookup = {
+    'chapter1': (areaLevel) => { return 0.05 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
+    'chapter2': (areaLevel) => { return 0.025 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
+    'chapter3': (areaLevel) => { return 0.025 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
+}
+
 class Area {
     constructor(data) {
         this.id = data.id;
@@ -13,9 +29,15 @@ class Area {
         //this.patrolDifficulty = data.patrolDifficulty;
         this.patrolTime = data.patrolTime;
         this.patrolCounter = 0;
-        this.power = data.power;
-        this.expPerPower = data.expPerPower;
-        this.moneyPerPower = data.moneyPerPower;
+        if (data.hasOwnProperty("power")) {
+            this.power = data.power;
+        } else { this.power = areaPowerLookup[data.scaling](data.areaLevel); }
+        if (data.hasOwnProperty("expPerPower")) {
+            this.expPerPower = data.expPerPower;
+        } else { this.expPerPower = areaExpLookup[data.scaling](data.areaLevel); }
+        if (data.hasOwnProperty("moneyPerPower")) {
+            this.moneyPerPower = data.moneyPerPower;
+        } else { this.moneyPerPower = areaMoneyLookup[data.scaling](data.areaLevel); }
     }
     get displayText() {
         let name = this.name
@@ -93,96 +115,96 @@ class Area {
 
 const areas = [
     new Area({
-        id: 'alley1', name: "Alley", background: "alleyBackground.png", power: 1, expPerPower: 0.5, moneyPerPower: 0.4,
-        storyUnlock: 0, patrolTime: 3000, completionsReq: 10,
+        id: 'alley1', name: "Alley", background: "alleyBackground.png", areaLevel: 1, power: 1, expPerPower: 0.5, moneyPerPower: 0.4,
+        storyUnlock: 0, patrolTime: 3000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "criminal": { 1: 1 } } }]
     }),
     new Area({
-        id: 'streets1', name: "Streets", background: "cyberpunk-street.png", power: 6, expPerPower: 0.352, moneyPerPower: 0.101,
-        storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
+        id: 'streets1', name: "Streets", background: "cyberpunk-street.png", areaLevel: 2, power: 6, expPerPower: 0.352, moneyPerPower: 0.101,
+        storyUnlock: 5, patrolTime: 3000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        id: 'streets2', name: "Mean Streets", background: "cyberpunk-street.png", power: 10, expPerPower: 0.414, moneyPerPower: 0.1019,
-        storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
+        id: 'streets2', name: "Mean Streets", background: "cyberpunk-street.png", areaLevel: 3, power: 10, expPerPower: 0.414, moneyPerPower: 0.1019,
+        storyUnlock: 5, patrolTime: 3000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        id: 'streets3', name: "Shady Streets", background: "cyberpunk-street.png", power: 18, expPerPower: 0.486, moneyPerPower: 0.1029,
-        storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
+        id: 'streets3', name: "Shady Streets", background: "cyberpunk-street.png", areaLevel: 4, power: 18, expPerPower: 0.486, moneyPerPower: 0.1029,
+        storyUnlock: 5, patrolTime: 3000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        id: 'streets4', name: "Dangerous Streets", background: "cyberpunk-street.png", power: 26, expPerPower: 0.571, moneyPerPower: 0.0939,
-        storyUnlock: 5, patrolTime: 3000, completionsReq: 10,
+        id: 'streets4', name: "Dangerous Streets", background: "cyberpunk-street.png", areaLevel: 5, power: 26, expPerPower: 0.571, moneyPerPower: 0.0939,
+        storyUnlock: 5, patrolTime: 3000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "thug": { 1: 2, 2: 1, 3: 1 } } }]
     }),
     new Area({
-        id: 'bridge1', name: "Bridge", background: "bridgeAreaBackground-1.png", power: 32, expPerPower: 0.671, moneyPerPower: 0.0949,
-        storyUnlock: 9, patrolTime: 4000, completionsReq: 10,
+        id: 'bridge1', name: "Bridge", background: "bridgeAreaBackground-1.png", areaLevel: 6, power: 32, expPerPower: 0.671, moneyPerPower: 0.0949,
+        storyUnlock: 9, patrolTime: 4000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "prisoner": { 1: 3, 2: 2, 3: 1 } } }]
     }),
     new Area({
-        id: 'prison1', name: "Prison Courtyard", background: "prisonCourtyardBackground.png", power: 42, expPerPower: 0.788, moneyPerPower: 0.00859,
-        storyUnlock: 10, patrolTime: 5000, completionsReq: 1,
+        id: 'prison1', name: "Prison Courtyard", background: "prisonCourtyardBackground.png", areaLevel: 7, power: 42, expPerPower: 0.788, moneyPerPower: 0.00859,
+        storyUnlock: 10, patrolTime: 5000, completionsReq: 1, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "prisoner9": { 1: 1 } } }]
     }),
     new Area({
-        id: 'prison2', name: "Prison Underground Entry", background: "bulkheadBackground.png", power: 53, expPerPower: 0.926, moneyPerPower: 0.0869,
-        storyUnlock: 11, patrolTime: 6000, completionsReq: 10,
+        id: 'prison2', name: "Prison Underground Entry", background: "bulkheadBackground.png", areaLevel: 8, power: 53, expPerPower: 0.926, moneyPerPower: 0.0869,
+        storyUnlock: 11, patrolTime: 6000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "prisonguard": { 2: 1 } } }]
     }),
     new Area({
-        id: 'prison3', name: "Prison Underground Tunnel", background: "bulkheadBackground.png", power: 78, expPerPower: 1.087, moneyPerPower: 0.0879,
-        storyUnlock: 12, patrolTime: 6000, completionsReq: 10,
+        id: 'prison3', name: "Prison Underground Tunnel", background: "bulkheadBackground.png", areaLevel: 9, power: 78, expPerPower: 1.087, moneyPerPower: 0.0879,
+        storyUnlock: 12, patrolTime: 6000, completionsReq: 10, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "infectedPrisoner": { 1: 3, 2: 1 } } }]
     }),
     new Area({
-        id: 'prison4', name: "Underground Lab", background: "scifilabBackground.png", power: 100, expPerPower: 1.28, moneyPerPower: 0.1090/2,
-        storyUnlock: 13, patrolTime: 7000, completionsReq: 1,
+        id: 'prison4', name: "Underground Lab", background: "scifilabBackground.png", areaLevel: 10, power: 100, expPerPower: 1.28, moneyPerPower: 0.1090 / 2,
+        storyUnlock: 13, patrolTime: 7000, completionsReq: 1, scaling: 'chapter1',
         encounters: [{ weight: 100, enemies: { "experiment999": { 1: 1 } } }]
     }),
     new Area({
-        id: 'mafia1', name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", power: 140, expPerPower: 1.50, moneyPerPower: 0.11/2,
-        storyUnlock: 16, patrolTime: 6000, completionsReq: 10,
+        id: 'mafia1', name: "Neighbourhood Suburbs", background: "cyberpunk-street.png", areaLevel: 11, power: 140, expPerPower: 1.50, moneyPerPower: 0.11 / 2,
+        storyUnlock: 16, patrolTime: 6000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 1 }, "thug3": { 1: 1, 2: 1 }, } }]
     }),
     new Area({
-        id: 'mafia2', name: "Shady Suburbs", background: "cyberpunk-street.png", power: 210, expPerPower: 1.76, moneyPerPower: 0.1111/2,
-        storyUnlock: 16, patrolTime: 6000, completionsReq: 10,
+        id: 'mafia2', name: "Shady Suburbs", background: "cyberpunk-street.png", areaLevel: 12, power: 210, expPerPower: 1.76, moneyPerPower: 0.1111 / 2,
+        storyUnlock: 16, patrolTime: 6000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "thug2": { 1: 3, 2: 2, 3: 1 }, "thug3": { 1: 1, 2: 1 }, } }]
     }),
     new Area({
-        id: 'mafia3', name: "Mafia Territory", background: "cyberpunk-street.png", power: 299, expPerPower: 2.07, moneyPerPower: 0.1121/2,
-        storyUnlock: 17, patrolTime: 6000, completionsReq: 10,
+        id: 'mafia3', name: "Mafia Territory", background: "cyberpunk-street.png", areaLevel: 13,
+        storyUnlock: 17, patrolTime: 6000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 900, enemies: { "thug4": { 1: 1, 2: 2, 3: 3 }, "thug5": { 1: 1, 2: 2 }, } },
         { weight: 100, enemies: { "thug4": { 3: 1, }, "thug5": { 2: 1 }, "don": { 1: 1, }, } }]
     }),
     new Area({
-        id: 'mafia4', name: "Mafia Warehouse", background: "bulkheadBackground.png", power: 377, expPerPower: 2.43, moneyPerPower: 0.1132/2,
-        storyUnlock: 18, patrolTime: 7000, completionsReq: 1,
+        id: 'mafia4', name: "Mafia Warehouse", background: "bulkheadBackground.png", areaLevel: 14,
+        storyUnlock: 18, patrolTime: 7000, completionsReq: 1, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "don2": { 1: 1 }, "donbodyguard": { 1: 1 } } }]
     }),
     new Area({
-        id: 'industrial1', name: "Abandoned Industrial Zone", background: "prisonCourtyardBackground.png", power: 474, expPerPower: 2.86, moneyPerPower: 0.1143/2,
-        storyUnlock: 19, patrolTime: 7000, completionsReq: 10,
+        id: 'industrial1', name: "Abandoned Industrial Zone", background: "prisonCourtyardBackground.png", areaLevel: 15,
+        storyUnlock: 19, patrolTime: 7000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 }, "psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
     }),
     new Area({
-        id: 'industrial2', name: "Overgrown Carpark", background: "prisonCourtyardBackground.png", power: 597, expPerPower: 3.35, moneyPerPower: 0.1154/2,
-        storyUnlock: 19, patrolTime: 7000, completionsReq: 10,
+        id: 'industrial2', name: "Overgrown Carpark", background: "prisonCourtyardBackground.png", areaLevel: 16,
+        storyUnlock: 19, patrolTime: 7000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "infusedthug": { 1: 1 }, "psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 2: 1 } } }]
     }),
     new Area({
-        id: 'industrial3', name: "Scrapyard", background: "prisonCourtyardBackground.png", power: 752, expPerPower: 3.94, moneyPerPower: 0.1165/2,
-        storyUnlock: 20, patrolTime: 7000, completionsReq: 1,
+        id: 'industrial3', name: "Scrapyard", background: "prisonCourtyardBackground.png", areaLevel: 17,
+        storyUnlock: 20, patrolTime: 7000, completionsReq: 1, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "superthug": { 1: 1 } } }]
     }),
     new Area({
-        id: 'industrial4', name: "Old Steelworks", background: "bulkheadBackground.png", power: 946, expPerPower: 4.63, moneyPerPower: 0.1176/2,
-        storyUnlock: 21, patrolTime: 7000, completionsReq: 10,
+        id: 'industrial4', name: "Old Steelworks", background: "bulkheadBackground.png", areaLevel: 18,
+        storyUnlock: 21, patrolTime: 7000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "morphedthug": { 1: 1 }, "infusedthug": { 1: 1 }, "psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 2: 1, 3: 1 }, "gatlingthug": { 1: 1 } } },
         { weight: 100, enemies: { "morphedthug": { 1: 1 }, "psychicthug": { 2: 1 } } },
@@ -190,8 +212,8 @@ const areas = [
         ]
     }),
     new Area({
-        id: 'industrial5', name: "Old Steelworks II", background: "bulkheadBackground.png", power: 1191, expPerPower: 5.44, moneyPerPower: 0.1187/2,
-        storyUnlock: 21, patrolTime: 7000, completionsReq: 10,
+        id: 'industrial5', name: "Old Steelworks II", background: "bulkheadBackground.png", areaLevel: 19,
+        storyUnlock: 21, patrolTime: 7000, completionsReq: 10, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "morphedthug": { 1: 1 }, "infusedthug": { 1: 1 }, "psychicthug": { 1: 1 } } },
         { weight: 100, enemies: { "infusedthug": { 2: 1, 3: 1 }, "gatlingthug": { 1: 1 } } },
         { weight: 100, enemies: { "morphedthug": { 1: 1 }, "psychicthug": { 2: 1 } } },
@@ -199,13 +221,13 @@ const areas = [
         ]
     }),
     new Area({
-        id: 'industrial6', name: "Riverside", background: "bridgeAreaBackground-1.png", power: 1500, expPerPower: 6.39, moneyPerPower: 0.1199/2,
-        storyUnlock: 22, patrolTime: 7000, completionsReq: 100,
+        id: 'industrial6', name: "Riverside", background: "bridgeAreaBackground-1.png", areaLevel: 20,
+        storyUnlock: 22, patrolTime: 7000, completionsReq: 1, scaling: 'chapter2',
         encounters: [{ weight: 100, enemies: { "crabman": { 1: 1 } } }]
     }),
     new Area({
-        id: 'misc1', name: "The Depths", background: "voidBackground.png", power: 15000, expPerPower: 31.93, moneyPerPower: 0.1318/2,
-        storyUnlock: 23, patrolTime: 10000, completionsReq: 1,
+        id: 'misc1', name: "The Depths", background: "voidBackground.png", areaLevel: 30,
+        storyUnlock: 23, patrolTime: 10000, completionsReq: 1, scaling: 'chapter3',
         encounters: [{ weight: 100, enemies: { "ultracrabman": { 1: 1 } } }]
     }),];
 

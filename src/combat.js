@@ -123,6 +123,9 @@ class CombatEntity {
         } else {
             this.health = Math.min(this.health + this.maxHealth * this.combatState.healthRegeneration * logicTickTime / 1000, this.maxHealth);
         }
+        if (this.target == null || this.target?.health <= 0){
+            this.think();
+        }
         if (this.nextMove != null) {
             let tickTime = logicTickTime;
             if (this.interrupt > 0) {
@@ -399,7 +402,7 @@ class Ally extends CombatEntity {
                 logConsole("ERROR: Not a valid move type");
                 break;
         }
-        if (Date.now() - this.startTime > 5000) {
+        if (Date.now() - this.startTime > this.data.duration) {
             this.maxHealth = -1;
         }
         if (repeat) {
@@ -618,6 +621,10 @@ class Player extends CombatEntity {
         });
     }
     act(target) {
+        if (this.target?.health < 0) {
+            this.target = null;
+            return;
+        }
         if (target == null) {
             return;
         }
@@ -818,7 +825,7 @@ class Player extends CombatEntity {
         }
     }
     think() {
-        if (this.target == null) {
+        if (this.target == null || this.target?.health <= 0) {
             switch (gameState) {
                 case "InCombat":
                     let closest = -1;

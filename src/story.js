@@ -285,6 +285,7 @@ function updateStoryQuest() {
     let completed = true;
     if (playerStats.currentStoryQuestProgress.length != quest.requirementTarget.length) { playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0); }
     for (let index = 0; index < quest.requirementTarget.length; index++) {
+        console.log(playerStats.currentStoryQuestProgress[index],quest.requirementAmount[index])
         if (playerStats.currentStoryQuestProgress[index] >= quest.requirementAmount[index]) {
             continue;
         } else {

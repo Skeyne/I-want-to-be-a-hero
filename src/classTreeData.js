@@ -454,7 +454,7 @@ skillLibrary = {
             maxLevel: 1, requires: { 'sh_1_22': 5 }, cost: [3],
         },
         'sh_1_24': {
-            id: 'sh_1_24', prestige: 1, sub: 1, rank: 1, position: { row: 1, column: 3 }, name: 'Body Of Steel', iconName: 'calisthenics',
+            id: 'sh_1_24', prestige: 1, sub: 1, rank: 1, position: { row: 10, column: 3 }, name: 'Body Of Steel', iconName: 'calisthenics',
             desc: '',
             effect: [{ type: 1, effectTarget: "damageTaken", effectType: "multPercent", effectMagnitude: 0.95, },
             { type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.05, }],
@@ -695,7 +695,7 @@ skillLibrary = {
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'es_0_4': 1 }
         },
         'es_0_20': {
-            id: 'es_0_20', prestige: 1, sub: 0, position: { row: 6, column: 3 }, name: 'Expanded Mind', iconName: 'studying',
+            id: 'es_0_20', prestige: 1, sub: 0, position: { row: 7, column: 3 }, name: 'Expanded Mind', iconName: 'studying',
             desc: 'More than ever you\'re drawn inwards, to your own thoughts.',
             effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.04, }],
             maxLevel: 10,
@@ -708,7 +708,7 @@ skillLibrary = {
             maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_0_20': 10 }
         },
         'es_0_22': {
-            id: 'es_0_22', prestige: 1, sub: 0, position: { row: 8, column: 3 }, name: 'Master of the Mind', iconName: 'studying',
+            id: 'es_0_22', prestige: 1, sub: 0, position: { row: 9, column: 3 }, name: 'Master of the Mind', iconName: 'studying',
             desc: 'Nothing in this world is infinite except for your intellect.',
             effect: [{ type: 0, effectTarget: "mind", effectType: "multPercent", effectMagnitude: 1.02 }],
             maxLevel: 5, cost: Array(5).fill(1), requires: { 'es_0_21': 5 }
@@ -1600,7 +1600,7 @@ skillLibrary = {
             id: 'ni_2_1', sub: 2, position: { row: 5, column: 2 }, name: 'Occult Endurance', iconName: 'shadowB',
             desc: 'Knowing the ways of life and death you can prepare contigencies against the latter.',
             effect: [{ type: 1, effectTarget: "maxHP", effectType: "multPercent", effectMagnitude: 1.05 },
-            { type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 10000 }],
+            { type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 5000 }],
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'ni_2_7': 5 },
         },
         'ni_2_2': {
@@ -1641,8 +1641,8 @@ skillLibrary = {
         'ni_2_7': {
             id: 'ni_2_7', sub: 2, position: { row: 4, column: 3 }, name: 'Runic Tattoos', iconName: 'shadowB',
             desc: '',
-            effect: [{ type: 2, effectTarget: "toughnessTraining", effectType: "additivePercent", effectMagnitude: 0.02 },
-            { type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 }],
             maxLevel: 5, cost: Array(5).fill(1), requires: { 'ni_2_2': 5 },
         },
         'ni_2_20': {
@@ -1658,7 +1658,7 @@ skillLibrary = {
             desc: 'Knowing the ways of life and death you can prepare contigencies against the latter.',
             effect: [{ type: 1, effectTarget: "maxHP", effectType: "multPercent", effectMagnitude: 1.05 },
             { type: 0, effectTarget: "toughness", effectType: "additiveFlat", effectMagnitude: 10000 }],
-            maxLevel: 1, cost: Array(1).fill(5), requires: { 'ni_2_7': 5 },
+            maxLevel: 1, cost: Array(1).fill(5), requires: { 'ni_2_27': 5 },
         },
         'ni_2_22': {
             id: 'ni_2_22', prestige: 1, sub: 2, position: { row: 9, column: 3 }, name: 'Shadowglide', iconName: 'shadowB',
