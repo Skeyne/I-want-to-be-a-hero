@@ -26,5 +26,15 @@ var summons = {
         modifiers:{actionSpeed:3},
         engagementRange: 5,
         duration: 5,
+    },
+    'allyMitosis': {
+        id: "allyWolf", name: "Wolf",
+        attributes: [1,1,1,1],
+        combatProperties: new CombatProperties(),
+        spriteFile: "mutantSprite1.png",
+        moves: ['bulkFist','walk'],
+        modifiers:{},
+        engagementRange: 5,
+        duration: 30,
     }
 }

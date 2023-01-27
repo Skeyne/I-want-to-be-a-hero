@@ -255,8 +255,11 @@
                             </div>
                             <div id="attributePrestigePanel">
                                 <div class="subHeader">Overtraining</div>
-                                <div class="oxanium">Going over your limits is hard, and every second you don't spend training you lose some of your power over the limit.
-                                    For every attribute point you lose this way, you gain a permanent bonus. This bonus is stronger the less attributes you have, reaching a minimum when you reach your limit.
+                                <div class="oxanium">Going over your limits is hard, and every second you don't spend
+                                    training you lose some of your power over the limit.
+                                    For every attribute point you lose this way, you gain a permanent bonus. This bonus
+                                    is stronger the less attributes you have, reaching a minimum when you reach your
+                                    limit.
                                 </div>
                                 <div id="attributeDecayText" class="oxanium" style="text-align: center;padding:3%">
 
@@ -271,7 +274,8 @@
                                 <div style="line-height:1.5;" class="oxanium"> You can take the Y you found to unlock
                                     more of your power.<br><br>
                                     This will reset your attributes.<br><br>
-                                    Your limit will increase to their current value above the limit (limit cannot decrease).<br><br>
+                                    Your limit will increase to their current value above the limit (limit cannot
+                                    decrease).<br><br>
                                     You gain 1% of the limit as permanent attributes when you reset this way. (They
                                     cannot be lowered below that value by activities)<br><br>
 
@@ -298,10 +302,10 @@
 
                                     You can advance one of your subclass trees with this prestige
                                 </div>
-                                
+
                                 <div id="classPrestigePick" style="display:flex; gap: 10%; justify-content: center;">
-                                    <div class="bannerButton subclassPickButton" ></div>
-                                    <div class="bannerButton subclassPickButton" ></div>
+                                    <div class="bannerButton subclassPickButton"></div>
+                                    <div class="bannerButton subclassPickButton"></div>
                                     <div class="bannerButton subclassPickButton"></div>
                                 </div>
                                 <div class="subHeader">Preview</div>
@@ -389,7 +393,7 @@
                         <br \>Overwhelm: increases damage based on enemy current hp (higher hp = more damage).
                         <br \>
                         <br \>Takedown: increases damage based on enemy current hp (lower hp = more damage).
-                        <br \> 
+                        <br \>
                         <br \>Rush: moves along with attacking.
                         <br \>
                         <br \>Repeat: Chance to use again without cooldown. Successive repeats half the chance.
@@ -410,7 +414,8 @@
                             onchange="setVolume(this.value)">
                         <br>
                         <br>
-                        <button class="bannerButton" onclick="(function(){save();logConsole('Saved!')})()">Save Game</button>
+                        <button class="bannerButton" onclick="(function(){save();logConsole('Saved!')})()">Save
+                            Game</button>
                         <button class="bannerButton" onclick="exportGame()">Export</button>
                         <button class="bannerButton" onclick="importGame()">Import</button>
 
@@ -425,15 +430,25 @@
                         <button id="resetPortraitButton" class="bannerButton"> Reset Portrait</button>
                         <br>
                         <br>
-                        <button id="resetAutoButton" class="bannerButton" onclick="resetAutoUpgrades()"> Reset Automation Upgrades</button>
+                        <button id="resetAutoButton" class="bannerButton" onclick="resetAutoUpgrades()"> Reset
+                            Automation Upgrades</button>
                         <br>
                         <br>
-                        <button id="resetAreaButton" class="bannerButton" onclick="(function(){console.log('test');currentArea = areas[0];changeArea(0);})()"> Reset Area</button>
+                        <button id="resetAreaButton" class="bannerButton"
+                            onclick="(function(){console.log('test');currentArea = areas[0];changeArea(0);})()"> Reset
+                            Area</button>
                         <br>
                         <br>
+                        <div id="classTestButtons">
+                            <button class="bannerButton" onclick="changeClass('superhuman',true)"> Superhuman</button>
+                            <button class="bannerButton" onclick="changeClass('mutant',true)"> Mutant</button>
+                            <button class="bannerButton" onclick="changeClass('esper',true)"> Esper</button>
+                            <button class="bannerButton" onclick="changeClass('ninja',true)"> Ninja</button>
+                        </div>
                         <div class="subHeader">Credits</div>
                         <div id="credits">
-                            Music & Many Backgrounds, Luis Zuno, <a href="https://ansimuz.itch.io/" target=”_blank”>itch.io</a>
+                            Music & Many Backgrounds, Luis Zuno, <a href="https://ansimuz.itch.io/"
+                                target=”_blank”>itch.io</a>
                         </div>
 
                         <audio controls muted id="audioSource" style="display: none;">

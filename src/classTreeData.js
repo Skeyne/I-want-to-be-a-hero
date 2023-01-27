@@ -284,7 +284,7 @@ skillLibrary = {
             id: 'sh_0_6', sub: 0, rank: 1, position: { row: 5, column: 4 }, name: 'Mighty Tough', iconName: 'calisthenics',
             desc: '',
             effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.1 },
-            { type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 5000 }
+            { type: 0, effectTarget: "strength", effectType: "additiveFlat", effectMagnitude: 5000 }
         ],
             maxLevel: 1, cost: [5],
         },
@@ -307,8 +307,8 @@ skillLibrary = {
         'sh_0_20': {
             id: 'sh_0_20', prestige: 1, sub: 0, position: { row: 7, column: 3 }, rank: 1, name: 'Origin: Might', iconName: 'calisthenics',
             desc: 'Even without trying you\'re stronger than you\'ve ever been before',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 100, cost: Array(100).fill(1)
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.04 }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'sh_0_7': 1 }
         },
         'sh_0_21': {
             id: 'sh_0_21', prestige: 1, sub: 0, rank: 1, position: { row: 8, column: 3 }, name: 'Inhuman strength', iconName: 'calisthenics',
@@ -428,9 +428,9 @@ skillLibrary = {
         'sh_1_20': {
             id: 'sh_1_20', prestige: 1, sub: 1, rank: 1, position: { row: 7, column: 3 }, name: 'Origin: Titan',
             iconName: 'calisthenics', desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.001 },
-            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0015 }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.015 },
+            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.025 }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'sh_1_7': 1 }
         },
         'sh_1_21': {
             id: 'sh_1_21', prestige: 1, sub: 1, rank: 1, position: { row: 8, column: 3 }, name: 'Giant Training', iconName: 'calisthenics',
@@ -562,12 +562,12 @@ skillLibrary = {
             maxLevel: 1, cost: [3], requires: { 'sh_2_2': 1 }
         },
         'sh_2_20': {
-            id: 'sh_2_20', prestige: 1, sub: 2, rank: 1, position: { row: 7, column: 3 }, name: 'Origin: Spirit',
+            id: 'sh_2_20', prestige: 1, sub: 2, rank: 1, position: { row: 7, column: 3 }, name: 'Meditation',
             iconName: 'calisthenics',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.0015 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.001 },],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.025 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.015 },],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'sh_2_6': 1 }
         },
         'sh_2_21': {
             id: 'sh_2_21', prestige: 1, sub: 2, rank: 1, position: { row: 8, column: 3 },
@@ -695,11 +695,11 @@ skillLibrary = {
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'es_0_4': 1 }
         },
         'es_0_20': {
-            id: 'es_0_20', prestige: 1, sub: 0, position: { row: 6, column: 3 }, name: 'Origin: Psionic', iconName: 'studying',
+            id: 'es_0_20', prestige: 1, sub: 0, position: { row: 6, column: 3 }, name: 'Expanded Mind', iconName: 'studying',
             desc: 'More than ever you\'re drawn inwards, to your own thoughts.',
-            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0025, }],
-            maxLevel: 100,
-            cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.04, }],
+            maxLevel: 10,
+            cost: Array(10).fill(1), requires: { 'es_0_7': 1 }
         },
         'es_0_21': {
             id: 'es_0_21', prestige: 1, sub: 0, position: { row: 8, column: 3 }, name: 'Psionic Talent', iconName: 'studying',
@@ -813,9 +813,9 @@ skillLibrary = {
         'es_1_20': {
             id: 'es_1_20', prestige: 1, sub: 1, position: { row: 6, column: 3 }, name: 'Origin: Matter', iconName: 'studying',
             desc: 'You discover that you can alter the flow of energies in the world, but a swift mind is needed to counteract any imbalances.',
-            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0015, },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.001, }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.025, },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.015, }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'es_1_8': 1 }
         },
         'es_1_22': {
             id: 'es_1_22', prestige: 1, sub: 1, position: { row: 10, column: 2 }, name: 'Energy Alteration: Celerity', iconName: 'studying',
@@ -930,11 +930,11 @@ skillLibrary = {
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'es_2_4': 1 },
         },
         'es_2_20': {
-            id: 'es_2_20', prestige: 1, sub: 2, position: { row: 7, column: 3 }, name: 'Origin: Spiritual', iconName: 'studying',
+            id: 'es_2_20', prestige: 1, sub: 2, position: { row: 7, column: 3 }, name: 'Spirit Vision', iconName: 'studying',
             desc: 'You start to see spirits, and they sometimes help you.',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.001 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0015 }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.015 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.025 }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'es_2_9': 1 }
         },
         'es_2_21': {
             id: 'es_2_21', prestige: 1, sub: 2, position: { row: 8, column: 3 }, name: 'Friendly Possession', iconName: 'studying',
@@ -1034,7 +1034,7 @@ skillLibrary = {
             desc: '',
             effect: [{ type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.1, },
             { type: 0, effectTarget: "mind", effectType: "additiveFlat", effectMagnitude: 5000, }],
-            maxLevel: 1, cost: [3], requires: { 'mu_0_2': 5 }
+            maxLevel: 1, cost: [3], requires: { 'mu_0_2': 5 } 
         },
         'mu_0_9': {
             id: 'mu_0_9', sub: 0, position: { row: 6, column: 3 }, name: 'Efficient Replication', iconName: 'milerun',
@@ -1043,10 +1043,11 @@ skillLibrary = {
             maxLevel: 1, cost: Array(1).fill(1), requires: { 'mu_0_5': 5 }
         },
         'mu_0_20': {
-            id: 'mu_0_20', prestige: 1, sub: 0, position: { row: 6, column: 3 }, name: 'Rapid Evolution', iconName: 'milerun',
-            desc: 'Your constitution rapidly adapts to any new challenge',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            id: 'mu_0_20', prestige: 1, sub: 0, position: { row: 7, column: 3 }, name: 'Cellular Mastery', iconName: 'milerun',
+            desc: '',
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.002 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.002 }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'mu_0_9': 1 }
         },
         'mu_0_21': {
             id: 'mu_0_21', prestige: 1, sub: 0, position: { row: 8, column: 3 }, name: 'Alien Constitution', iconName: 'milerun',
@@ -1159,11 +1160,11 @@ skillLibrary = {
             maxLevel: 1, cost: Array(1).fill(5), requires: { 'mu_1_4': 1 }
         },
         'mu_1_20': {
-            id: 'mu_1_20', prestige: 1, sub: 1, position: { row: 6, column: 3 }, name: 'Cursed cells', iconName: 'milerun',
+            id: 'mu_1_20', prestige: 1, sub: 1, position: { row: 7, column: 3 }, name: 'Cursed cells', iconName: 'milerun',
             desc: '',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.0025 },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.0025 }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02}],
+            maxLevel: 10, cost: Array(10).fill(1),requires: { 'mu_1_9': 1 }
         },
         'mu_1_21': {
             id: 'mu_1_21', prestige: 1, sub: 1, position: { row: 8, column: 3 }, name: 'Malignant Multiplication', iconName: 'milerun',
@@ -1287,9 +1288,9 @@ skillLibrary = {
             id: 'mu_2_20', prestige: 1, sub: 2, position: { row: 7, column: 3 }, name: 'Wild Constitution',
             iconName: 'milerun',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.00125 },
-            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.00125 }],
-            maxLevel: 100, cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            maxLevel: 10, cost: Array(10).fill(1), requires: { 'mu_2_9': 1 }
         },
         'mu_2_21': {
             id: 'mu_2_21', prestige: 1, sub: 2, position: { row: 8, column: 3 }, name: 'Jungle Gym', iconName: 'milerun',
@@ -1406,9 +1407,9 @@ skillLibrary = {
         'ni_0_20': {
             id: 'ni_0_20', prestige: 1, sub: 0, position: { row: 7, column: 3 }, name: 'Footwork', iconName: 'shadowB',
             desc: '',
-            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.005 },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.005 }],
-            maxLevel: 20, cost: Array(20).fill(1),
+            effect: [{ type: 0, effectTarget: "strength", effectType: "additivePercent", effectMagnitude: 0.02},
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.02}],
+            maxLevel: 10, cost: Array(10).fill(1),requires: { 'ni_0_7': 1 }
         },
         'ni_0_21': {
             id: 'ni_0_21', prestige: 1, sub: 0, position: { row: 8, column: 3 }, name: 'Feline Agility', iconName: 'shadowB',
@@ -1526,10 +1527,9 @@ skillLibrary = {
             id: 'ni_1_20', prestige: 1, sub: 1, position: { row: 7, column: 3 }, name: 'Strict Techniques',
             iconName: 'shadowB',
             desc: 'You must learn to execute moves exactly every time.',
-            effect: [{ type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.00125, },
-            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.00125, }],
-            maxLevel: 100,
-            cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.02, },
+            { type: 0, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02, }],
+            maxLevel: 10,            cost: Array(10).fill(1), requires: { 'ni_1_6': 1 }
         },
         'ni_1_21': {
             id: 'ni_1_21', prestige: 1, sub: 1, position: { row: 8, column: 3 }, name: 'Traditional Technique Scrolls', iconName: 'shadowB',
@@ -1641,18 +1641,17 @@ skillLibrary = {
         'ni_2_7': {
             id: 'ni_2_7', sub: 2, position: { row: 4, column: 3 }, name: 'Runic Tattoos', iconName: 'shadowB',
             desc: '',
-            effect: [{ type: 2, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 },
-            { type: 2, effectTarget: "mind", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            effect: [{ type: 2, effectTarget: "toughnessTraining", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 2, effectTarget: "mindTraining", effectType: "additivePercent", effectMagnitude: 0.02 }],
             maxLevel: 5, cost: Array(5).fill(1), requires: { 'ni_2_2': 5 },
         },
         'ni_2_20': {
             id: 'ni_2_20', prestige: 1, sub: 2, position: { row: 7, column: 3 }, name: 'Occult Knowledge',
             iconName: 'shadowB',
             desc: 'Ancestors from ages past have started whispering forbidden secrets in your trainings',
-            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.00125 },
-            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.00125 }],
-            maxLevel: 100,
-            cost: Array(100).fill(1),
+            effect: [{ type: 0, effectTarget: "toughness", effectType: "additivePercent", effectMagnitude: 0.02 },
+            { type: 0, effectTarget: "agility", effectType: "additivePercent", effectMagnitude: 0.02 }],
+            maxLevel: 10,            cost: Array(10).fill(1), requires: { 'ni_2_6': 1 }
         },
         'ni_2_21': {
             id: 'ni_2_21', prestige: 1, sub: 2, position: { row: 11, column: 2 }, name: 'Occult Endurance', iconName: 'shadowB',

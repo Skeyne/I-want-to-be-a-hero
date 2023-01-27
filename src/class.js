@@ -9,7 +9,7 @@ function unlockPointsLookup(index) {
     if (playerStats.class == 'human') {
         return [0, 0, 0, 0, 0, 0][index]
     } else {
-        return [0, 10, 20, 30, 40, 50][index]
+        return [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100][index]
     }
 }
 classTrees = {
@@ -211,9 +211,9 @@ function populatePassiveTree() {
             if (skill.prestige > playerStats.classPrestige) {
                 return;
             }
-            if (skill.prestige > playerStats.subclassPrestige[subclass]) {
-                return;
-            }
+            // if (skill.prestige > playerStats.subclassPrestige[subclass]) {
+            //     return;
+            // }
         }
         let b = document.createElement("button");
         passiveButtonDict[skill.id] = b;

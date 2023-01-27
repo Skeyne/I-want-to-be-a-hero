@@ -542,23 +542,22 @@ playerMoves = {
         range: [0, 60],
         cost: 0,
     },
-    'summonTentacle': {
-        class: 'mutant', type: 4, sub: 1, prestige: 1, position: { row: 8, column: 5 },
+    'mitosis': {
+        class: 'mutant', type: 4, sub: 0, prestige: 1, position: { row: 7, column: 5 },
         category: 'summon',
-        name: "Summon Tentacle",
-        description: "",
+        name: "Mitosis",
+        description: "Rapidly split you cells to make a weaker duplicate of yourself.",
         iconName: "placeholder",
-        damageRatios: [0.1, 0.1, 0.1, 0.1],
-        duration: 10000,
+        damageRatios: [0.2, 0.2, 0.2, 0.2],
+        duration: 30000,
         effects: {
-            "summon": {"allyTentacle":1},
+            "summon": {"allyMitosis":1},
         },
         time: 1000,
-        cooldownTime: 10000,
-        range: [5, 30],
+        cooldownTime: 20000,
+        range: [5, 5],
         cost: 0,
     },
-
     //ABOMINATION
     'tendrilWhip': {
         class: 'mutant',
@@ -639,7 +638,7 @@ playerMoves = {
         cost: 0,
     },
     'summonTentacle': {
-        class: 'mutant', type: 4, sub: 1, prestige: 1, position: { row: 8, column: 5 },
+        class: 'mutant', type: 4, sub: 1, prestige: 1, position: { row: 7, column: 5 },
         category: 'summon',
         name: "Summon Tentacle",
         description: "",
@@ -1431,7 +1430,7 @@ playerMoves = {
         cost: 0,
     },
     'shadowClone': {
-        class: 'ninja', type: 4, sub: 2, prestige: 1, position: { row: 8, column: 5 },
+        class: 'ninja', type: 4, sub: 2, prestige: 1, position: { row: 7, column: 5 },
         category: 'summon',
         name: "Manifest Shadow",
         description: "Using your budding mastery over the forbidden arts, you summon a shadow copy of yourself.",
