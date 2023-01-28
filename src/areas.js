@@ -223,11 +223,7 @@ const areas = [
     new Area({
         id: 'industrial6', name: "Riverside", background: "bridgeAreaBackground-1.png", areaLevel: 20,
         patrolTime: 7000, completionsReq: 1, scaling: 'chapter2',
-        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
-        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
-        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
-        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
-        ]
+        encounters: [{ weight: 100, enemies: { "crabman": { 1: 1 } } }]
     }),
     new Area({
         id: 'misc1', name: "The Depths", background: "voidBackground.png", areaLevel: 30,
