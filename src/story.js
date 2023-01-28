@@ -142,7 +142,7 @@ const storyQuests = [
     },
     {
         title: `Prologue.. For now`,
-        text: `The Y has been spreading around the city, and not everyone is as well-intentioned as you. Rogue villains have been showing up all over the city.`,
+        text: `This is the end of the demo. Hope you enjoyed it. If you have feedback drop it in the Discord, and if you want more, get the fullversion! Thanks for playing`,
         requirementType: 'area',
         requirementTarget: [`city5`],
         requirementAmount: [1],

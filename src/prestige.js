@@ -70,14 +70,15 @@ const classPrestigeRequirements = [
 ]
 const classPrestigeBonus = [
     { attributeGain: 1, bonusPassives: 0, activityExp: 1, manualPower: 1, expGain: 1, },
-    { attributeGain: 2, bonusPassives: 20, activityExp: 4, manualPower: 2, expGain: 2, },
-    { attributeGain: 4, bonusPassives: 40, activityExp: 16, manualPower: 4, expGain: 4, },
+    { attributeGain: 1, bonusPassives: 0, activityExp: 1, manualPower: 1, expGain: 1, },
+    { attributeGain: 1, bonusPassives: 0, activityExp: 1, manualPower: 1, expGain: 1, },
 ]
 function getPrestigeBonus(index) {
     if (index >= classPrestigeBonus.length) { return classPrestigeBonus[classPrestigeBonus.length - 1]; }
     else { return classPrestigeBonus[index] }
 }
 function classPrestige() {
+    logConsole("Only available in the full version!", type = 'warning'); return;
     if (!canClassPrestige()) { logConsole("You do not meet the requirements to class prestige!", type = 'warning'); return; }
     //if (subclassPick[0] == null) { logConsole("You must pick a subclass to advance!", type = 'warning'); return; }
     let confirmed = confirm(`Are you sure you want to class prestige? \n Most of your progress will be reset and you will gain permanent bonuses and unlock more class skills`)
@@ -102,20 +103,21 @@ function classPrestige() {
         return;
     }
 }
-function canClassPrestige() {
-    if ((classPrestigeRequirements.length - 1) <= playerStats.classPrestige) { return false; }
-    let classCheck = (["superhuman", "mutant", "esper", "ninja"].includes(playerStats.class));
-    let requirements = classPrestigeRequirements[playerStats.classPrestige]
-    let cumulativeSC = 0;
-    for (let index = 0; index < 4; index++) {
-        const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
-        cumulativeSC += softcap
-    }
-    if (!classCheck) { logConsole("You cannot prestige this class!", type = 'warning'); return false; }
-    if (cumulativeSC < requirements.cumulativeSoftcaps) { logConsole("Your cumulative softcap does not meet the requirement!", type = 'warning'); return false; }
-    if (playerStats.level < requirements.level) { logConsole("Your level does not meet the requirement!", type = 'warning'); return false; }
-    if (playerStats.storyProgress < requirements.storyProgress) { logConsole("Your story progress does not meet the requirement!", type = 'warning'); return false; }
-    return true;
+const canClassPrestige = function() {
+    return false;
+    // if ((classPrestigeRequirements.length - 1) <= playerStats.classPrestige) { return false; }
+    // let classCheck = (["superhuman", "mutant", "esper", "ninja"].includes(playerStats.class));
+    // let requirements = classPrestigeRequirements[playerStats.classPrestige]
+    // let cumulativeSC = 0;
+    // for (let index = 0; index < 4; index++) {
+    //     const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
+    //     cumulativeSC += softcap
+    // }
+    // if (!classCheck) { logConsole("You cannot prestige this class!", type = 'warning'); return false; }
+    // if (cumulativeSC < requirements.cumulativeSoftcaps) { logConsole("Your cumulative softcap does not meet the requirement!", type = 'warning'); return false; }
+    // if (playerStats.level < requirements.level) { logConsole("Your level does not meet the requirement!", type = 'warning'); return false; }
+    // if (playerStats.storyProgress < requirements.storyProgress) { logConsole("Your story progress does not meet the requirement!", type = 'warning'); return false; }
+    // return true;
 }
 function changePrestigeTab(index) {
     const tabNames = ["attribute", "class"];
