@@ -393,7 +393,7 @@ var abilityLibrary = {
         type: 0, category: 'ranged', name: "Shove", iconName: "jab",
         baseDamage: 1, damageRatios: [.2, 0, 0, 0], damageRange: [1, 1],
         time: 3000, cooldownTime: 5000, range: [5, 5],
-        effects:{'stun': 0.5, 'knockback':10}
+        effects: { 'stun': 0.5, 'knockback': 10 }
     },
     'gatling': {
         type: 0, category: 'ranged', name: "Gatling", iconName: "handgun",
@@ -404,19 +404,298 @@ var abilityLibrary = {
         type: 0, category: 'ranged', name: "Gatling Salvo", iconName: "handgun",
         baseDamage: 0, damageRatios: [.3, .1, .1, 0], damageRange: [0.9, 1.1],
         time: 500, cooldownTime: 5000, range: [10, 50],
-        effects:{"repeat": 0.8}
+        effects: { "repeat": 0.8 }
     },
     'bladeArm': {
         type: 0, category: 'melee', name: "Blade Arm", iconName: "placeholder",
         baseDamage: 0, damageRatios: [.4, 0, 0, .4], damageRange: [0.9, 1.1],
         time: 2500, cooldownTime: 0, range: [5, 5],
-        effects:{"criticalChance": 0.2}
+        effects: { "criticalChance": 0.2 }
     },
     'bladeWhirlwind': {
         type: 0, category: 'melee', name: "Blade Whirlwind", iconName: "placeholder",
         baseDamage: 0, damageRatios: [.3, 0, 0, .1], damageRange: [0.9, 1.1],
         time: 200, cooldownTime: 5000, range: [10, 10],
-        effects:{"repeat": 0.8}
+        effects: { "repeat": 0.8 }
+    },
+    //superhuman
+    'simplePunch': {
+        class: 'superhuman',
+        type: 0,
+        sub: 0,
+        position: { row: 1, column: 2 },
+        category: 'melee',
+        name: "Simple Punch",
+        description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one punch 10,000 times.",
+        iconName: "punch",
+        baseDamage: 1,
+        damageRatios: [1.2, 0, 0, 0.3],
+        damageRange: [0.8, 1.2],
+        time: 3000,
+        cooldownTime: 0,
+        range: [5, 5],
+        cost: 0,
+    },
+    'multipleSimplePunches': {
+        class: 'superhuman',
+        type: 0,
+        sub: 0,
+        position: { row: 2, column: 2 },
+        category: 'melee',
+        name: "Multiple Simple Punches",
+        description: "I fear not the man who has practiced 10,000 punches once, but I fear the man who has practiced one 10,000 punches, 10,000 times.",
+        iconName: "multipleSimplePunches",
+        baseDamage: 1,
+        damageRatios: [.3, 0, 0, .2],
+        damageRange: [0.8, 1.2],
+        effects: {
+            'repeat': 1,
+        },
+        time: 500,
+        cooldownTime: 2000,
+        range: [5, 5],
+        cost: 0,
+        requiresAbility: { 'simplePunch': 1 },
+
+    },
+    'solarPlexusStrike': {
+        class: 'superhuman',
+        type: 0,
+        sub: 0,
+        position: { row: 3, column: 5 },
+        category: 'melee',
+        name: "Solar Plexus Strike",
+        description: "Knock the wind out of your foe with an unexpected blow",
+        iconName: "solarPlexusStrike",
+        baseDamage: 1,
+        damageRatios: [2.5, 0, 0, 1.5],
+        damageRange: [0.8, 1.2],
+        effects: {
+            'stun': 4,
+        },
+        time: 3000,
+        cooldownTime: 20000,
+        range: [5, 5],
+        unlockPoints: 10,
+        cost: 0,
+    },
+    'templeCrush': {
+        class: 'superhuman',
+        type: 0,
+        sub: 0,
+        position: { row: 5, column: 1 },
+        category: 'melee',
+        name: "Temple Breaker",
+        description: "An atrocious blow that can kill out-right",
+        iconName: "solarPlexusStrike",
+        baseDamage: 1,
+        damageRatios: [6, 0, 0, 0],
+        damageRange: [1, 1.2],
+        effects: {
+            'overwhelm': 0.5,
+        },
+        time: 3000,
+        cooldownTime: 30000,
+        range: [5, 5],
+        unlockPoints: 10,
+        cost: 0,
+        requiresPassive: { 'sh_0_3': 1 }
+    },
+    //mutant
+    'bulkFist': {
+        class: 'mutant',
+        type: 0,
+        sub: 0,
+        position: { row: 1, column: 1 },
+        category: 'melee',
+        name: "Bulk Fist",
+        description: "Enlarge your fist to deliver a solid blow.",
+        iconName: "bulkFist",
+        baseDamage: 1,
+        damageRatios: [.7, .8, 0, 0],
+        damageRange: [1, 1.1],
+        time: 4000,
+        cooldownTime: 0,
+        range: [5, 5],
+        cost: 0,
+    },
+
+    'corrosiveBurst': {
+        class: 'mutant',
+        type: 0,
+        sub: 0,
+        position: { row: 2, column: 5 },
+        category: 'melee',
+        name: "Corrosive Burst",
+        description: "Your skin explodes, covering nearby foes in acid.",
+        iconName: "corrosiveBurst",
+        baseDamage: 1,
+        damageRatios: [0, 2, 1.5, 0],
+        damageRange: [0.8, 1.2],
+        effects: {
+            'aoe': 10
+        },
+        time: 4000,
+        cooldownTime: 10000,
+        range: [10, 10],
+        cost: 0,
+    },
+    'engulf': {
+        class: 'mutant',
+        type: 0,
+        sub: 0,
+        position: { row: 5, column: 1 },
+        category: 'melee',
+        name: "Engulf",
+        description: "Try to completely subdue your target by englufing them. Deals extra damage to damaged enemies.",
+        iconName: "engulf",
+        baseDamage: 1,
+        damageRatios: [0, 7, 0, 0],
+        damageRange: [0.9, 1],
+        effects: {
+            'takedown': 1,
+        },
+        time: 6000,
+        cooldownTime: 30000,
+        range: [5, 5],
+        cost: 0,
+        requiresPassive: { 'mu_0_4': 1 }
+    },
+    'acidBlob': {
+        class: 'mutant',
+        type: 0,
+        category: 'ranged',
+        name: "Acid Blob",
+        description: "",
+        iconName: "placeholder",
+        baseDamage: 0,
+        damageRatios: [0, 4, 2, 0],        damageRange: [0.8, 1.2],
+                effects: {
+            'aoe': 10
+        },
+        time: 3000,        cooldownTime: 15000,        range: [0, 60],
+    },
+    //esper
+    'immaterialStrike': {
+        class: 'esper',
+        type: 0,
+        sub: 0,
+        position: { row: 1, column: 1 },
+        category: 'melee',
+        name: "Immaterial Strike",
+        description: "They don't even know what's hitting them.",
+        iconName: "spiritFist",
+        baseDamage: 0,
+        damageRatios: [0, 0, 1.1, 0],
+        damageRange: [0.9, 1.1],
+        time: 3000,
+        cooldownTime: 0,
+        range: [10, 10],
+        cost: 0,
+    },
+    'telekineticProjectile': {
+        class: 'esper',
+        type: 0,
+        sub: 0,
+        position: { row: 2, column: 1 },
+        category: 'ranged',
+        name: "Telekinetic Projectile",
+        description: "Use your psionic powers to thrust nearby matter towards your enemy.",
+        iconName: "telekineticProjectile",
+        baseDamage: 0,
+        damageRatios: [0, 0, 1.8, 0],
+        damageRange: [0.8, 1.1],
+        time: 3000,
+        cooldownTime: 5000,
+        range: [0, 60],
+        cost: 0,
+    },
+    'psionicPulse': {
+        class: 'esper',
+        type: 0,
+        sub: 0,
+        position: { row: 3, column: 1 },
+        category: 'melee',
+        name: "Psionic Pulse",
+        description: "Emit a short-range pulse that damages and knocks back nearby enemies.",
+        iconName: "psionicPulse",
+        baseDamage: 0,
+        damageRatios: [0, .5, 1.5, 0],
+        damageRange: [1, 1.2],
+        effects: {
+            'knockback': 10,
+            'aoe': 20,
+        },
+        time: 3000,
+        cooldownTime: 10000,
+        range: [20, 20],
+        cost: 0,
+    },
+    'psionicBarrier': {
+        class: 'esper',
+        type: 2,
+        sub: 0,
+        position: { row: 3, column: 5 },
+        category: 'ranged',
+        name: "Psionic Barrier",
+        description: "Form a temporary barrier to block attacks.",
+        iconName: "psionicBarrier",
+        baseDamage: 0,
+        damageRatios: [0, 0, 0.5, 0],
+        damageRange: [1, 1],
+        effects: {
+            'shield': 0,
+        },
+        time: 1000,
+        cooldownTime: 20000,
+        range: [0, 0],
+        cost: 0,
+    },
+    'mindMelt': {
+        class: 'esper',
+        type: 0,
+        sub: 0,
+        position: { row: 5, column: 1 },
+        category: 'ranged',
+        name: "Mind Melt",
+        description: "Overwhelm your foe's mind with infinite thoughts.",
+        iconName: "placeholder",
+        baseDamage: 0,
+        damageRatios: [0, 0, 10, 0],
+        damageRange: [1, 1],
+        time: 6000,
+        cooldownTime: 30000,
+        range: [0, 60],
+        cost: 0,
+    },
+    //ninja
+    'katana': {
+        type: 0, category: 'melee', name: "Katana", iconName: "katana",
+        baseDamage: 0, damageRatios: [.4, 0, 0, .6], damageRange: [0.9, 1.1],
+        time: 2500, cooldownTime: 0, range: [5, 5]
+    },
+    'deflect': {
+        type: 2,
+        category: 'melee', name: "Deflect", iconName: "deflect",
+        baseDamage: 0, damageRatios: [0.2, 0, 0, 0.1], damageRange: [1, 1], effects: {
+            'shield': 0,
+            'closeCombat': 1,
+        },
+        time: 500, cooldownTime: 5000, range: [0, 0]
+    },
+    'bladeStorm': {
+        type: 0, category: 'melee', name: "Blade Flurry",
+        iconName: "bladeStorm", baseDamage: 0, damageRatios: [0.6, 0, 0, 0.7], damageRange: [1, 1.5],
+        effects: { 'repeat': 5 },
+        time: 400, cooldownTime: 10000, range: [5, 5],
+    },
+    'windSlash': {
+        type: 0, category: 'ranged', name: "Wind Slash", iconName: "windSlash",
+        baseDamage: 0, damageRatios: [2, 0, 0, 2.5], damageRange: [0.9, 1.4],
+        effects: {
+            criticalChance: 0.2,
+        },
+        time: 4000, cooldownTime: 20000, range: [0, 50],
     },
 };
 
@@ -464,7 +743,7 @@ enemyData.prisoner = {
 };
 enemyData.prisoner9 = {
     id: "prisoner9",
-    rank:"boss",
+    rank: "boss",
     name: "Prisoner 9",
     maxHealth: 120,
     attributes: [3, 3, 1, 1],
@@ -504,7 +783,7 @@ enemyData.infectedPrisoner = {
 };
 enemyData.experiment999 = {
     id: "experiment999",
-    rank:"boss",
+    rank: "boss",
     name: "Experiment #999",
     maxHealth: 350,
     attributes: [2, 1, 1, 2],
@@ -574,7 +853,7 @@ enemyData.thug5 = {
 };
 enemyData.don = {
     id: "don",
-    rank:"boss",
+    rank: "boss",
     name: "The Don",
     maxHealth: 1000,
     attributes: [1000, 1500, 1000, 1000],
@@ -590,7 +869,7 @@ enemyData.don = {
 };
 enemyData.donbodyguard = {
     id: "donbodyguard",
-    rank:"boss",
+    rank: "boss",
     name: "Don's Right Hand",
     maxHealth: 4000,
     attributes: [3000, 5000, 500, 2500],
@@ -604,7 +883,7 @@ enemyData.donbodyguard = {
 };
 enemyData.don2 = {
     id: "don2",
-    rank:"boss",
+    rank: "boss",
     name: "The Don",
     maxHealth: 2000,
     attributes: [2400, 3000, 2000, 3000],
@@ -642,13 +921,13 @@ enemyData.psychicthug = {
     reputationReward: 2,
     spriteFile: "psychicthug.png",
     portraitFile: "prisoner9Portrait.png",
-    moves: ['punch','psionicBarrierAlly', 'telekineticProjectile', 'psychicShove', 'confuse', 'walk'],
+    moves: ['punch', 'psionicBarrierAlly', 'telekineticProjectile', 'psychicShove', 'confuse', 'walk'],
     engagementRange: 60,
     spawnDistance: 80,
 };
 enemyData.superthug = {
     id: "superthug",
-    rank:"boss",
+    rank: "boss",
     name: "Superthug",
     maxHealth: 11000,
     attributes: [25000, 20000, 4000, 20000],
@@ -691,11 +970,11 @@ enemyData.morphedthug = {
 };
 enemyData.crabman = {
     id: "crabman",
-    rank:"boss",
+    rank: "boss",
     name: "The Crabman",
     maxHealth: 70000,
     attributes: [2.5, 3, 0.5, 1],
-    healthRegen: 0.005,
+    healthRegen: 0.01,
     expReward: 32000,
     moneyReward: 200,
     reputationReward: 10,
@@ -705,11 +984,11 @@ enemyData.crabman = {
 };
 enemyData.ultracrabman = {
     id: "ultracrabman",
-    rank:"boss",
+    rank: "boss",
     name: "The Ultra Crabman",
     maxHealth: 250000,
     attributes: [2.5, 3, 0.5, 1],
-    healthRegen: 0.005,
+    healthRegen: 0.01,
     expReward: 250000,
     moneyReward: 300,
     reputationReward: 40,
@@ -717,4 +996,43 @@ enemyData.ultracrabman = {
     portraitFile: "prisoner9Portrait.png",
     moves: ['walk', 'crabWalk', 'punch', 'smash', 'groundStomp', 'mutantSlash', 'crabWaterJet'],
 };
-
+enemyData.rogueNinja = {
+    id: "rogueNinja",
+    rank: "boss",
+    name: "Rogue Ninja",
+    attributes: [2, 1, 1, 2.5],
+    healthRegen: 0,
+    reputationReward: 40,
+    spriteFile: "ninjaSprite1.png",
+    moves: ['walk', 'deflect', 'windSlash', 'bladeStorm', 'katana'],
+};
+enemyData.rogueEsper = {
+    id: "rogueEsper",
+    rank: "boss",
+    name: "Rogue Esper",
+    attributes: [1, 1, 3, 1.5],
+    healthRegen: 0,
+    reputationReward: 40,
+    spriteFile: "esperSprite1.png",
+    moves: ['walk', 'telekineticProjectile', 'mindMelt', 'psionicPulse', 'psionicBarrier'],
+};
+enemyData.rogueMutant = {
+    id: "rogueMutant",
+    rank: "boss",
+    name: "Rogue Mutant",
+    attributes: [1, 2.5, 1.5, 1],
+    healthRegen: 0.01,
+    reputationReward: 40,
+    spriteFile: "mutantSprite1.png",
+    moves: ['walk', 'bulkFist', 'corrosiveBurst', 'engulf', 'acidBlob'],
+};
+enemyData.rogueSuperhuman = {
+    id: "rogueSuperhuman",
+    rank: "boss",
+    name: "Rogue Superhuman",
+    attributes: [2, 1, 1, 2],
+    healthRegen: 0,
+    reputationReward: 40,
+    spriteFile: "superhumanSprite1.png",
+    moves: ['walk','dash', 'simplePunch', 'multipleSimplePunches', 'solarPlexusStrike', 'templeCrush'],
+};

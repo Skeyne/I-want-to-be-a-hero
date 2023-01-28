@@ -251,6 +251,23 @@ playerMoves = {
         range: [5, 5],
         cost: 0,
     },
+    'summonSpectre': {
+        class: 'esper', type: 4, sub: 2, prestige: 1, position: { row: 6, column: 5 },
+        category: 'summon',
+        name: "Summon Spectre",
+        description: "",
+        iconName: "placeholder",
+        damageRatios: [0.45, 0.45, 0.45, 0.45],
+        duration: 30000,
+        effects: {
+            "summon": {"allySpectre":1},
+        },
+        time: 1000,
+        cooldownTime: 20000,
+        range: [5, 5],
+        cost: 0,
+    },
+    //PSIONIC
     'immaterialStrike': {
         class: 'esper',
         type: 0,
@@ -344,7 +361,7 @@ playerMoves = {
         cost: 0,
     },
     'clarity': {
-        class: 'esper', prestige: 1, type: 3, sub: 0, position: { row: 7, column: 1 },
+        class: 'esper', prestige: 1, type: 3, sub: 0, position: { row: 6, column: 1 },
         category: 'buff', name: "Clarity",
         description: "", iconName: "placeHolder",
         duration: 1000,
@@ -354,7 +371,7 @@ playerMoves = {
         time: 1000, cooldownTime: 10000, range: [5, 5], cost: 0,
     },
     'suspend': {
-        class: 'esper', prestige: 1, type: 3, sub: 0, position: { row: 8, column: 5 },
+        class: 'esper', prestige: 1, type: 3, sub: 0, position: { row: 7, column: 5 },
         category: 'ranged',
         name: "Suspend",
         description: "Psionically levitate and imobilise your foe in the air.",
@@ -489,7 +506,7 @@ playerMoves = {
         cost: 0,
     },
     'phaseShiftred': {
-        class: 'esper', prestige: 1, type: 3, sub: 1, position: { row: 8, column: 1 },
+        class: 'esper', prestige: 1, type: 3, sub: 1, position: { row: 6, column: 1 },
         category: 'buff', name: "Phase Shift: Red",
         description: "", iconName: "placeHolder",
         duration: 10000,
@@ -500,7 +517,7 @@ playerMoves = {
         time: 1000, cooldownTime: 30000, range: [5, 5], cost: 0,
     },
     'phaseShiftblue': {
-        class: 'esper', prestige: 1, type: 3, sub: 1, position: { row: 8, column: 5 },
+        class: 'esper', prestige: 1, type: 3, sub: 1, position: { row: 6, column: 5 },
         category: 'buff', name: "Phase Shift: Blue",
         description: "", iconName: "placeHolder",
         duration: 10000,
@@ -592,7 +609,7 @@ playerMoves = {
         cost: 0,
     },
     'mitosis': {
-        class: 'mutant', type: 4, sub: 0, prestige: 1, position: { row: 7, column: 5 },
+        class: 'mutant', type: 4, sub: 0, prestige: 1, position: { row: 6, column: 5 },
         category: 'summon',
         name: "Mitosis",
         description: "Rapidly split you cells to make a weaker duplicate of yourself.",
@@ -687,7 +704,7 @@ playerMoves = {
         cost: 0,
     },
     'summonTentacle': {
-        class: 'mutant', type: 4, sub: 1, prestige: 1, position: { row: 7, column: 5 },
+        class: 'mutant', type: 4, sub: 1, prestige: 1, position: { row: 6, column: 5 },
         category: 'summon',
         name: "Summon Tentacle",
         description: "",
@@ -781,7 +798,7 @@ playerMoves = {
         cost: 0,
     },
     'summonWolfpack': {
-        class: 'mutant', type: 4, sub: 2, prestige: 1, position: { row: 8, column: 5 },
+        class: 'mutant', type: 4, sub: 2, prestige: 1, position: { row: 6, column: 5 },
         category: 'summon',
         name: "Call Wolves",
         description: "",
@@ -881,7 +898,7 @@ playerMoves = {
         requiresPassive: { 'sh_0_3': 1 }
     },
     'simplerPunch': {
-        class: 'superhuman', type: 0, sub: 0, prestige: 1, position: { row: 7, column: 2 },
+        class: 'superhuman', type: 0, sub: 0, prestige: 1, position: { row: 6, column: 1 },
         name: "Simpler Punch", category: 'melee',
         description: "You are so good at punching",
         iconName: "punch",
@@ -1010,7 +1027,7 @@ playerMoves = {
         type: 0,
         prestige: 1,
         sub: 1,
-        position: { row: 8, column: 2 },
+        position: { row: 7, column: 2 },
         category: 'ranged',
         name: "Shockwave Cannon",
         description: "You punch the air so hard that a shockwave pierces through everything in its way",
@@ -1029,7 +1046,7 @@ playerMoves = {
         requiresPassive: { 'sh_1_7': 1 }
     },
     'titansGrit': {
-        class: 'superhuman', prestige: 1, type: 3, sub: 1, position: { row: 7, column: 5 },prestige: 1,
+        class: 'superhuman', prestige: 1, type: 3, sub: 1, position: { row: 6, column: 5 },prestige: 1,
         category: 'buff', name: "Titan's Grit",
         description: "", iconName: "placeHolder",
         duration: 6000,
@@ -1156,7 +1173,7 @@ playerMoves = {
         cost: 0,
     },
     'kiRelease': {
-        class: 'superhuman', prestige: 1, type: 3, sub: 2, position: { row: 7, column: 1 },
+        class: 'superhuman', prestige: 1, type: 3, sub: 2, position: { row: 6, column: 1 },
         category: 'buff', name: "Ki Release: First Stage",
         description: "", iconName: "placeHolder",
         duration: 10000,
@@ -1274,7 +1291,7 @@ playerMoves = {
         prestige: 1,
         type: 0,
         sub: 0,
-        position: { row: 7, column: 1 },
+        position: { row: 6, column: 1 },
         category: 'melee',
         name: "Katana: Lightning Style",
         description: "You swing your blade so quickly that <br> static electricity builds on every swing",
@@ -1463,7 +1480,7 @@ playerMoves = {
         class: 'ninja',
         type: 0,
         sub: 1, prestige: 1,
-        position: { row: 8, column: 1 },
+        position: { row: 7, column: 1 },
         category: 'ranged',
         name: "Shuriken Barrage",
         description: "Launch a number of shuriken at your foes.",
@@ -1476,7 +1493,7 @@ playerMoves = {
             'aoe': 5,
         },
         time: 500,
-        cooldownTime: 2000,
+        cooldownTime: 4000,
         range: [10, 60],
         cost: 0,
     },
@@ -1484,7 +1501,7 @@ playerMoves = {
         class: 'ninja',
         type: 0,
         sub: 1,
-        position: { row: 8, column: 1 },prestige: 1,
+        position: { row: 8, column: 5 },prestige: 1,
         category: 'melee',
         name: "Technique: Sudden Flooding",
         description: "Summon a great amount of water, flooding the battlefield and slowing enemies.",
@@ -1502,7 +1519,7 @@ playerMoves = {
         cost: 0,
     },
     'summonFrog': {
-        class: 'ninja', type: 4, sub: 1, prestige: 1, position: { row: 8, column: 5 },
+        class: 'ninja', type: 4, sub: 1, prestige: 1, position: { row: 6, column: 5 },
         category: 'summon',
         name: "Summon: Great Frog",
         description: "Using a carefully prepared summoning scroll, you temporarily bring a Great Frog into battle",
@@ -1518,6 +1535,26 @@ playerMoves = {
         cost: 0,
     },
     //SHADOWCRAFT
+    'kusarigama': {
+        class: 'ninja',
+        type: 0,
+        sub: 2,
+        position: { row: 1, column: 1 },
+        category: 'melee',
+        name: "Kusarigama",
+        description: "",
+        iconName: "throwingKnife",
+        damage: 0,
+        damageRatios: [0, .5, 0, .6],
+        damageRange: [1, 1.1],
+        time: 3000,
+        effects: {
+            'stun': 0.2,
+        },
+        cooldownTime: 0,
+        range: [5, 5],
+        cost: 0,
+    },
     'drainingPalm': {
         class: 'ninja',
         type: 0,
@@ -1559,7 +1596,7 @@ playerMoves = {
         class: 'ninja',
         type: 0,
         sub: 2,
-        position: { row: 2, column: 5 },
+        position: { row: 3, column: 5 },
         category: 'melee',
         name: "Shadow Feint",
         description: "Mislead your opponent, while striking him simultaneously",
@@ -1568,7 +1605,7 @@ playerMoves = {
         damageRatios: [0, 0.5, 0.5, 2],
         damageRange: [1, 1.2],
         effects: {
-            'stun': 2
+            'stun': 3
         },
         time: 2000,
         cooldownTime: 15000,
@@ -1598,7 +1635,7 @@ playerMoves = {
         cost: 0,
     },
     'shadowClone': {
-        class: 'ninja', type: 4, sub: 2, prestige: 1, position: { row: 7, column: 5 },
+        class: 'ninja', type: 4, sub: 2, prestige: 1, position: { row: 6, column: 5 },
         category: 'summon',
         name: "Manifest Shadow",
         description: "Using your budding mastery over the forbidden arts, you summon a shadow copy of yourself.",
@@ -1614,7 +1651,7 @@ playerMoves = {
         cost: 0,
     },
     'heartStop': {
-        class: 'ninja', type: 4, sub: 2, prestige: 1, position: { row: 8, column: 1 },
+        class: 'ninja', type: 0, sub: 2, prestige: 1, position: { row: 8, column: 1 },
         category: 'melee',
         name: "Heart Stop",
         description: "Mark your target with a dark curse that stops their heart for a moment, lethal if they're already weak",//"Mark your target with a dark curse that stops their heart for a time",

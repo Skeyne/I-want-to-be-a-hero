@@ -1,4 +1,4 @@
-const version = '0.06e1';
+const version = '0.07';
 var isOutdated = false;
 var lastVersion;
 var debug = false;
@@ -124,7 +124,7 @@ function getTotalPassivePoints() {
     // let decades = Math.floor(playerStats.level / 10);
     // return ((decades + 1) / 2 * decades * 10) + (playerStats.level - decades * 10) * (decades + 1)
     //     + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
-    return playerStats.level;
+    return playerStats.level + classPrestigeBonus[playerStats.classPrestige].bonusPassives;
 }
 function getAvailablePassivePoints() {
     return arraySum(playerStats.passivePointsSpent);
@@ -189,6 +189,7 @@ function addPlayerExp(amount) {
     let fameBonus = 1;
     if (playerStats.fameEffects.hasOwnProperty('experienceGain')) { fameBonus = 1 + arraySum(Object.values(playerStats.fameEffects["experienceGain"])) };
     amount *= fameBonus;
+    if(classPrestigeBonus) amount *= classPrestigeBonus[playerStats.classPrestige].expGain;
     playerStats.experience += amount;
     expCountBuffer += amount;
     while (playerStats.experience >= playerStats.experienceToNext) {

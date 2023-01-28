@@ -48,8 +48,8 @@ function updateAttributePrestigeText() {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const softcapped = formulas.softcappedAttribute(index);
         const change = softcapped >= softcap ? softcapped - softcap : 0; //((PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE)) : 0;
-        text += `Lost <span class="${attributeIndexToId[index]}Text">${format(playerStats.decayedAttributes[index],3)} ${attributeDisplayShort[attributeIndexToId[index]]}</span>
-        giving <span>${format(100*(getDecayBonus(index)-1),3)}</span> % increased gain.<br>`
+        text += `Lost <span class="${attributeIndexToId[index]}Text">${format(playerStats.decayedAttributes[index], 3)} ${attributeDisplayShort[attributeIndexToId[index]]}</span>
+        giving <span>${format(100 * (getDecayBonus(index) - 1), 3)}</span> % increased gain.<br>`
     }
     container.innerHTML = text;
     //
@@ -59,24 +59,20 @@ function updateAttributePrestigeText() {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         const softcapped = formulas.softcappedAttribute(index);
         const change = softcapped >= softcap ? softcapped - softcap : 0; //((PRESTIGE_SOFTCAP_RATE * softcap + Math.max(0, softcapped - softcap) * PRESTIGE_SOFTCAP_OVERCAP_RATE)) : 0;
-        text += `${attributeDisplayShort[attributeIndexToId[index]]}: <span class="${attributeIndexToId[index]}Text">${format(softcap,3)}</span> -> <span class="${attributeIndexToId[index]}Text">${format(softcap + change,3)}</span> (+${format(change,3)})<br>`
+        text += `${attributeDisplayShort[attributeIndexToId[index]]}: <span class="${attributeIndexToId[index]}Text">${format(softcap, 3)}</span> -> <span class="${attributeIndexToId[index]}Text">${format(softcap + change, 3)}</span> (+${format(change, 3)})<br>`
     }
     container.innerHTML = text;
 }
 updateAttributePrestigeText();
 const classPrestigeRequirements = [
-    { level: 70, storyProgress: 21, cumulativeSoftcaps: 1e6 },
+    { level: 50, storyProgress: 16, cumulativeSoftcaps: 5e5 },
     { level: 1000, storyProgress: 999, cumulativeSoftcaps: 1e10 },
 ]
 const classPrestigeBonus = [
-    { attributeGain: 1, bonusPassives: 0, activityExp: 1, manualPower: 1 },
-    { attributeGain: 1.5, bonusPassives: 10, activityExp: 4, manualPower: 2 },
-    { attributeGain: 2.25, bonusPassives: 20, activityExp: 16, manualPower: 4 },
+    { attributeGain: 1, bonusPassives: 0, activityExp: 1, manualPower: 1, expGain: 1, },
+    { attributeGain: 2, bonusPassives: 20, activityExp: 4, manualPower: 2, expGain: 2, },
+    { attributeGain: 4, bonusPassives: 40, activityExp: 16, manualPower: 4, expGain: 4, },
 ]
-function getPrestigeBonus(index) {
-    if (index >= classPrestigeBonus.length) { return classPrestigeBonus[classPrestigeBonus.length - 1]; }
-    else { return classPrestigeBonus[index] }
-}
 function getPrestigeBonus(index) {
     if (index >= classPrestigeBonus.length) { return classPrestigeBonus[classPrestigeBonus.length - 1]; }
     else { return classPrestigeBonus[index] }
@@ -95,6 +91,9 @@ function classPrestige() {
         updateClassPrestigeRewards();
         populateAbilityPreview(-1);
         populatePassiveTree();
+        if (playerStats.class -= 'human') { playerStats.abilitySlots = 3 }
+        else { playerStats.abilitySlots = 4 + playerStats.classPrestige; };
+        RebuildSlots();
         //Go back to Alley
         document.getElementById(`areaButton_${currentArea.id}`).classList.toggle('active');
         changeArea(0);
@@ -112,9 +111,9 @@ function canClassPrestige() {
         const softcap = playerStats.attributeSoftcaps[index] + playerStats.permanentSoftcaps[index];
         cumulativeSC += softcap
     }
-    if (!classCheck) {logConsole("You cannot prestige this class!", type = 'warning'); return false; }
+    if (!classCheck) { logConsole("You cannot prestige this class!", type = 'warning'); return false; }
     if (cumulativeSC < requirements.cumulativeSoftcaps) { logConsole("Your cumulative softcap does not meet the requirement!", type = 'warning'); return false; }
-    if (playerStats.level < requirements.level) {logConsole("Your level does not meet the requirement!", type = 'warning'); return false; }
+    if (playerStats.level < requirements.level) { logConsole("Your level does not meet the requirement!", type = 'warning'); return false; }
     if (playerStats.storyProgress < requirements.storyProgress) { logConsole("Your story progress does not meet the requirement!", type = 'warning'); return false; }
     return true;
 }
@@ -133,8 +132,10 @@ function updateClassPrestigeRequirements() {
 function updateClassPrestigeRewards() {
     let panel = document.getElementById("classPrestigePanel");
     panel.getElementsByClassName("cpReward1")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].attributeGain}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].attributeGain + 'x'}`;
-    panel.getElementsByClassName("cpReward2")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].bonusPassives} -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].bonusPassives}`;
-    panel.getElementsByClassName("cpReward3")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].activityExp}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].activityExp + 'x'}`;
+    panel.getElementsByClassName("cpReward2")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].manualPower}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].manualPower + 'x'}`;
+    panel.getElementsByClassName("cpReward3")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].bonusPassives} -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].bonusPassives}`;
+    panel.getElementsByClassName("cpReward4")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].activityExp}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].activityExp + 'x'}`;
+    panel.getElementsByClassName("cpReward4")[0].innerHTML = `${classPrestigeBonus[playerStats.classPrestige].expGain}x -> ${(playerStats.classPrestige + 1 >= classPrestigeBonus.length) ? 'MAX' : classPrestigeBonus[playerStats.classPrestige + 1].expGain + 'x'}`;
 }
 function populateAbilityPreview(subclassIndex) {
     let previewGrid = document.getElementById("subclassPreviewGrid");
@@ -168,11 +169,11 @@ function populateSubclassPickButtons() {
     for (let index = 0; index < buttons.length; index++) {
         const element = buttons[index];
         element.innerHTML = classTreeNames[playerStats.class][index];
-        element.addEventListener("click",() => {populateAbilityPreview(index)});
+        element.addEventListener("click", () => { populateAbilityPreview(index) });
 
     }
 }
-if (!debug) {
+if (debug) {
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[0].style.display = 'none';
     document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[1].style.display = 'none';
 }

@@ -58,7 +58,8 @@ classTrees = {
 // abilityRequirementsGrid.append(previewRowBody);
 let loadoutContainer = document.getElementById("abilityLoadoutContainer");
 //version fixing stuff
-if (playerStats.class != 'human') { playerStats.abilitySlots = 4 } else { playerStats.abilitySlots = 3 };
+if (playerStats.class == 'human') { playerStats.abilitySlots = 3 }
+else { playerStats.abilitySlots = 4 + playerStats.classPrestige; };
 let slots = [];
 RebuildSlots();
 function generateSubclassTabs() {
@@ -196,7 +197,7 @@ let passiveTreeGrid = document.getElementById("passiveTreeGrid");
 let passiveButtonDict = {};
 let abilityButtonDict = {};
 populatePassiveTree();
-if (isOutdated) { resetSkills();}
+if (isOutdated) { resetSkills(); }
 function populatePassiveTree() {
     let treeContainer = document.getElementById("passiveTreeContainer");
     let tabs = treeContainer.children;
@@ -442,13 +443,13 @@ function generatePassiveTooltip(skillId) {
                 effectText += `<span class="${effect.effectTarget}Text">${attributeDisplayNames[effect.effectTarget]}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude,2);
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude, 2);
                         break;
                     case "additivePercent":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100,3) + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100, 3) + "%";
                         break;
                     case "multPercent":
-                        numberDisplay = (playerStats.unlockedSkills[skillId] ? format(Math.pow(effect.effectMagnitude,playerStats.unlockedSkills[skillId]),3) : 0) + "x " +  "( x" + effect.effectMagnitude + " per)";
+                        numberDisplay = (playerStats.unlockedSkills[skillId] ? format(Math.pow(effect.effectMagnitude, playerStats.unlockedSkills[skillId]), 3) : 0) + "x " + "( x" + effect.effectMagnitude + " per)";
                         break;
                     default:
                         console.log("Undefined effect type");
@@ -459,7 +460,7 @@ function generatePassiveTooltip(skillId) {
                 effectText += `<span>${effect.effectTarget}</span>`;
                 switch (effect.effectType) {
                     case "additiveFlat":
-                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100,2) + "%";
+                        numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + format(effect.effectMagnitude * 100, 2) + "%";
                         break;
                     case "additivePercent":
                         numberDisplay = (effect.effectMagnitude > 0 ? "+" : "") + effect.effectMagnitude * 100 + "%";
@@ -557,7 +558,7 @@ function generateAbilityRequirementTooltip(ability) {
                 stringDisplay += "Effects:<br>"
                 Object.keys(abilityData.effects).forEach(effect => {
                     stringDisplay += `${effect}: `;
-                    if (['heal','shield'].includes(effect) && abilityData.effects[effect] > 0) stringDisplay += `${100 * abilityData.effects[effect]}% MaxHP `;
+                    if (['heal', 'shield'].includes(effect) && abilityData.effects[effect] > 0) stringDisplay += `${100 * abilityData.effects[effect]}% MaxHP `;
                     if (['closeCombat'].includes(effect)) stringDisplay += `${100 * abilityData.effects[effect]}% increased effect `;
                     stringDisplay += '<br>'
                 })
@@ -583,7 +584,7 @@ function generateAbilityRequirementTooltip(ability) {
         default:
             break;
     }
-    stringDisplay += highlightProperty(`Use time: `, `${format(abilityData.time / 1000,2)}s<br>`)
+    stringDisplay += highlightProperty(`Use time: `, `${format(abilityData.time / 1000, 2)}s<br>`)
     switch (abilityData.type) {
         case 1:
             if (abilityData.range[0] > 0) stringDisplay += `Advance: ${abilityData.range[0]}<br>`;
@@ -649,10 +650,10 @@ function generateAbilityDynamicTooltip(ability) {
                 if (ratio > 0) {
                     parts[index] = ratio * (Math.sqrt(getEffectiveValue(attributeIndexToId[index]) + 1) - 1);
                     ratioDamage += `<span class='${attributeIndexToId[index]}Text'>${attributeDisplayShort[attributeIndexToId[index]]}</span>: `
-                    ratioDamage += highlightProperty("", `${format(parts[index] * abilityData.damageRange[0],3)}-${format(parts[index] * abilityData.damageRange[1],3)}`) + "<br>";
+                    ratioDamage += highlightProperty("", `${format(parts[index] * abilityData.damageRange[0], 3)}-${format(parts[index] * abilityData.damageRange[1], 3)}`) + "<br>";
                 }
             }
-            ratioDamage += highlightProperty("Total: ", `${format(arraySum(parts) * abilityData.damageRange[0],3)}-${format((arraySum(parts) * abilityData.damageRange[1]),3)}`) + "<br>";
+            ratioDamage += highlightProperty("Total: ", `${format(arraySum(parts) * abilityData.damageRange[0], 3)}-${format((arraySum(parts) * abilityData.damageRange[1]), 3)}`) + "<br>";
             break;
         case 2:
             break;
@@ -661,8 +662,8 @@ function generateAbilityDynamicTooltip(ability) {
         default:
             break;
     }
-    useTime += highlightProperty(`Use time: `, `${format(abilityData.time / 1000 / player.actionSpeed,2)}s<br>`);
-    if (abilityData.cooldownTime > 0) { cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction,2)}s<br>`); }
+    useTime += highlightProperty(`Use time: `, `${format(abilityData.time / 1000 / player.actionSpeed, 2)}s<br>`);
+    if (abilityData.cooldownTime > 0) { cooldownText += highlightProperty(`Cooldown time: `, `${format(abilityData.cooldownTime / 1000 * player.cooldownReduction, 2)}s<br>`); }
     return header + ratioDamage + useTime + cooldownText;
 }
 function getPlayerPassiveLevel(skillId) {
@@ -788,7 +789,7 @@ function removeEffect(skillId) {
 }
 function updateSubclassButton(index) {
     let b = document.getElementById(`subclassTreeButton${index}`);
-    b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index],0)})`;
+    b.innerHTML = `${classTreeNames[playerStats.class][index]} (${format(playerStats.passivePointsSpent[index], 0)})`;
 }
 
 function checkSkillPurchase(skillId, times = 1) {
@@ -804,7 +805,7 @@ function checkSkillPurchase(skillId, times = 1) {
     }
     if (skill.hasOwnProperty('requires')) {
         for (const [key, value] of Object.entries(skill.requires)) {
-            if (playerStats.unlockedSkills[key] < value || (playerStats.unlockedSkills[key] == undefined && value>0)) {
+            if (playerStats.unlockedSkills[key] < value || (playerStats.unlockedSkills[key] == undefined && value > 0)) {
                 logConsole(`Requirements are not met!`, type = 'warning');
                 return false;
             }
@@ -818,7 +819,7 @@ function checkSkillPurchase(skillId, times = 1) {
         } else {
             cost = skillLibrary[playerStats.class][skillId].cost[0];
         }
-        if ((unlockPointsLookup(skill.position.row - 1)) > playerStats.passivePointsSpent[skill.sub]+cost) {
+        if ((unlockPointsLookup(skill.position.row - 1)) > playerStats.passivePointsSpent[skill.sub] + cost) {
             logConsole(`You do not have enough points in this subclass! (Need ${unlockPointsLookup(skill.position.row - 1)})`, 'warning');
             return false;
         }

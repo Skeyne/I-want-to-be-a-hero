@@ -132,10 +132,19 @@ const storyQuests = [
         requirementAmount: [1],
     },
     {
-        title: `Prologue.. For now`,
-        text: `Ever since you defeated The Don, mafia activity around your area has simmered down, but the strange incidents around the city continue. One day while walking the streets you hear a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYONE!". This must be him. This time I won't lose.`,
+        title: `A New Beginning VII`,
+        text: `After the warehouse raid, you destroyed of the rest of the Y found there, putting a stop to the mafia's nefarious goals, but also coming to the end of the trail.
+        But the fact still lies that it is being produced somewhere and being shipped into the city . Meanwhile you continue your daily vigilante activities.
+        One day while walking the streets you hear a woman running from the direction of the riverside, yelling, "A MONSTER! A MONSTER CAME OUT OF THE RIVER! HE'S KILLING EVERYONE!". This must be him. This time I won't lose.`,
         requirementType: 'area',
         requirementTarget: [`industrial6`],
+        requirementAmount: [1],
+    },
+    {
+        title: `Prologue.. For now`,
+        text: `The Y has been spreading around the city, and not everyone is as well-intentioned as you. Rogue villains have been showing up all over the city.`,
+        requirementType: 'area',
+        requirementTarget: [`city5`],
         requirementAmount: [1],
     },
 
@@ -159,9 +168,6 @@ if (isOutdated) {
 }
 var areaSelect = document.getElementById("selectArea");
 var areaButtonDict = {};
-sanityCheckStory();
-updateStoryQuest();
-updateDiaryEntries();
 
 
 function checkTabUnlocks() {
@@ -177,8 +183,18 @@ function checkTabUnlocks() {
     } else {
         document.getElementById("prestigeBox").style.visibility = 'hidden';
     }
+    if (playerStats.areaCompletions["industrial6"] >= 1) {
+        document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[0].style.display = '';
+        document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[1].style.display = '';
+    } else {
+        document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[0].style.display = 'none';
+        document.getElementById("prestigeTabHeader").getElementsByClassName("prestigePanelTab")[1].style.display = 'none';
+    }
+    if (playerStats.storyProgress > 18 && playerStats.classPrestige < 1) {
+        console.log('test');
+        flashTabButton(tabNames.indexOf('prestige'));
+    }
 }
-checkAreaUnlocks();
 function checkAreaUnlocks() {
     areaSelect.innerHTML = "";
     areaButtonDict = {};
@@ -207,7 +223,6 @@ function resetStoryline() {
     playerStats.currentStoryQuestProgress = [0];
     updateStoryQuest();
 }
-
 function getStoryQuest(index) {
     if (index < storyQuests.length) { return storyQuests[index] }
     else { return endOfStoryQuest }
@@ -259,7 +274,6 @@ function checkTrainingQuest() {
     }
     updateStoryQuest();
 }
-
 function checkDefeatQuest(enemyId) {
     let quest = getStoryQuest(playerStats.storyProgress);
     if (quest.requirementType != 'defeat') return false;
@@ -285,7 +299,7 @@ function updateStoryQuest() {
     let completed = true;
     if (playerStats.currentStoryQuestProgress.length != quest.requirementTarget.length) { playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0); }
     for (let index = 0; index < quest.requirementTarget.length; index++) {
-        console.log(playerStats.currentStoryQuestProgress[index],quest.requirementAmount[index])
+        console.log(playerStats.currentStoryQuestProgress[index], quest.requirementAmount[index])
         if (playerStats.currentStoryQuestProgress[index] >= quest.requirementAmount[index]) {
             continue;
         } else {
@@ -294,7 +308,7 @@ function updateStoryQuest() {
     }
     if (completed) {
         playerStats.storyProgress += 1;
-        console.log(getStoryQuest(playerStats.storyProgress).length);
+
         playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);
         checkAreaUnlocks();
         checkTabUnlocks();
@@ -307,7 +321,6 @@ function updateStoryQuest() {
     overviewText.innerHTML = storyRequirementsText(playerStats.storyProgress);
 
 }
-
 function storyQuestText(progress, diary = false) {
     let quest = getStoryQuest(progress);
     let requirementsString = "";
@@ -373,7 +386,6 @@ function storyRequirementsText(progress) {
     }
     return `${requirementsString}`;
 }
-
 function updateDiaryEntries() {
     let container = document.getElementById("diaryEntries");
     container.innerHTML = "";
@@ -386,14 +398,7 @@ function updateDiaryEntries() {
         container.append(b);
     }
 }
-
 function updateDiaryText(progress) {
     let container = document.getElementById("diaryText");
     container.innerHTML = storyQuestText(progress, diary = true);
 }
-
-// if (playerStats.areaCompletions[areas[Math.max(playerStats.currentArea - 1,0)].id] < areas[Math.max(playerStats.currentArea - 1,0)].completionsReq ){
-//     console.log(playerStats.areaCompletions[areas[Math.max(playerStats.currentArea - 1,0)].id],
-//     areas[Math.max(playerStats.currentArea - 1,0)].completionsReq)
-//     changeArea(0);
-// }

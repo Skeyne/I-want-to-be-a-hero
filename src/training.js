@@ -48,22 +48,22 @@ var activityData = {
     "activity_2_0": {
         id: "activity_2_0", name: "Train with wrist+ankle weights", attributeRatios: [0.045, -0.015, -0, 0],
         tier: 2, attributeScaling: ["standard1", "invert1", 0, 0],
-        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
+        timeToComplete: 1, cost: 10, expBase: 125, expPower: 3.3,
     },
     "activity_2_1": {
         id: "activity_2_1", name: "Load cargo at the port", attributeRatios: [-0.015, 0.045, 0, 0],
         tier: 2, attributeScaling: ["invert1", "standard1", 0, 0],
-        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
+        timeToComplete: 1, cost: 10, expBase: 125, expPower: 3.3,
     },
     "activity_2_2": {
         id: "activity_2_2", name: "Dodge street traffic", attributeRatios: [0, 0, -0.015, 0.045],
         tier: 2, attributeScaling: [0, 0, "invert1", "standard1"],
-        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
+        timeToComplete: 1, cost: 10, expBase: 125, expPower: 3.3,
     },
     "activity_2_3": {
         id: "activity_2_3", name: "Solve Maxwell Equations", attributeRatios: [0, 0, 0.045, -0.015],
         tier: 2, attributeScaling: [0, 0, "standard1", "invert1"],
-        timeToComplete: 1, cost: 15, expBase: 125, expPower: 3.3,
+        timeToComplete: 1, cost: 10, expBase: 125, expPower: 3.3,
     },
 }
 
@@ -297,9 +297,9 @@ currentTrainingArea.onSelect();
 //updateTrainingText();
 //updateTrainingCanBuy();
 const activityAutomationUpgradesLookup = [
-    { base: 100, mult: Math.pow(10, 0.25) },
-    { base: 10000, mult: Math.pow(10, 0.25) },
-    { base: 1000000, mult: Math.pow(10, 0.25) },
+    { base: 50, mult: Math.pow(10, 0.125) },
+    { base: 5000, mult: Math.pow(10, 0.125) },
+    { base: 500000, mult: Math.pow(10, 0.125) },
 ]
 function activityAutoCost(tier) {
     let totalLevels = 0;

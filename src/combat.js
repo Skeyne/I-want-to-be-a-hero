@@ -123,7 +123,7 @@ class CombatEntity {
         } else {
             this.health = Math.min(this.health + this.maxHealth * this.combatState.healthRegeneration * logicTickTime / 1000, this.maxHealth);
         }
-        if (this.target == null || this.target?.health <= 0){
+        if (this.target == null || this.target?.health <= 0) {
             this.think();
         }
         if (this.nextMove != null) {
@@ -681,7 +681,7 @@ class Player extends CombatEntity {
                                     break;
                                 case "repeat":
                                     //console.log((this.nextMove.effects[effect]/Math.pow(2,this.repeatDict[this.nextMoveKey])));
-                                    if (Math.random() < (this.nextMove.effects[effect]/Math.pow(2,this.repeatDict[this.nextMoveKey]))) {
+                                    if (Math.random() < (this.nextMove.effects[effect] / Math.pow(2, this.repeatDict[this.nextMoveKey]))) {
                                         repeat = true;
                                     }
                                     break;
@@ -1001,7 +1001,7 @@ class Enemy extends CombatEntity {
         if (enemyData.hasOwnProperty("rank")) {
             if (enemyData.rank == "boss") {
                 this.maxHealth *= 2;
-                this.expReward *= 4;
+                this.expReward *= 3;
                 this.moneyReward *= 1.5;
             }
         }
@@ -1016,6 +1016,19 @@ class Enemy extends CombatEntity {
         this.image = new Image();
         this.image.src = "resources/characterSprites/" + enemyData.spriteFile;
         this.nextMoveKey = null;
+        this.combatState.init(this);
+        this.combatState.strength = this.attributes[0];
+        this.combatState.toughness = this.attributes[1];
+        this.combatState.mind = this.attributes[2];
+        this.combatState.agility = this.attributes[3];
+        this.repeatDict = {};
+        this.data.moves.forEach(ability => {
+            if (ability != null) {
+                if (!this.repeatDict.hasOwnProperty(ability)) {
+                    this.repeatDict[ability] = 0;
+                }
+            }
+        });
     }
     tickCooldowns() {
         this.data.moves.forEach(ability => {
@@ -1063,7 +1076,7 @@ class Enemy extends CombatEntity {
                                     moveTakedown += this.nextMove.effects[effect];
                                     break;
                                 case "repeat":
-                                    if (Math.random() < this.nextMove.effects[effect]) {
+                                    if (Math.random() < (this.nextMove.effects[effect] / Math.pow(2, this.repeatDict[this.nextMoveKey])))  {
                                         repeat = true;
                                     }
                                     break;
@@ -1073,11 +1086,7 @@ class Enemy extends CombatEntity {
                         });
                     }
                     let isCrit = (Math.random() < moveCritChance);
-                    let d1 = this.nextMove.baseDamage
-                        + this.nextMove.damageRatios[0] * (Math.sqrt(this.attributes[0] + 1) - 1)
-                        + this.nextMove.damageRatios[1] * (Math.sqrt(this.attributes[1] + 1) - 1)
-                        + this.nextMove.damageRatios[2] * (Math.sqrt(this.attributes[2] + 1) - 1)
-                        + this.nextMove.damageRatios[3] * (Math.sqrt(this.attributes[3] + 1) - 1);
+                    let d1 = this.nextMove.baseDamage +formulas.attackPower(this.nextMove.damageRatios, this.combatState);
                     d1 = d1 * (this.nextMove.damageRange[0] + Math.random() * (this.nextMove.damageRange[1] - this.nextMove.damageRange[0]));
                     let d2 = (isCrit ? 1.5 : 1) * d1;
                     let dr = target.takeDamage(d2);
@@ -1129,14 +1138,22 @@ class Enemy extends CombatEntity {
                         let amount;
                         switch (effect) {
                             case "heal":
-                                amount = this.nextMove.baseDamage / 100 * this.maxHealth;
+                                amount = this.maxHealth * this.nextMove.effects.heal
+                                    + formulas.healPower(this.nextMove.damageRatios, this.combatState);
                                 if (this.nextMove.effects.hasOwnProperty("hope")) { amount *= (1 + (1 - this.health / this.maxHealth) * this.nextMove.effects.hope); }
                                 this.health = Math.min(this.health + amount, this.maxHealth);
-                                logConsole(`${this.name} healed for ${format(amount, 2)} from ${this.nextMove.name}`);
+                                logConsole(`${this.name} healed for ${format(amount, 2)}`);
                                 break;
                             case "shield":
-                                amount = this.nextMove.baseDamage / 100 * this.maxHealth;
-                                if (amount > this.shield) this.shield = amount;
+                                amount = formulas.healPower(this.nextMove.damageRatios, this.combatState);
+                                if (this.nextMove.effects.hasOwnProperty("closeCombat")) {
+                                    if ((this.distance - this.target.distance) <= 5) amount *= 1 + this.nextMove.effects.closeCombat;
+                                }
+                                console.log(this.shield,amount)
+                                if (amount > this.shield) {
+                                    this.shield = amount;
+                                    logConsole(`${this.name} <span style="color:blue;">shielded </span> for <span style="color:white;">${format(amount, 2)}</span> from <span style="color:white;">${this.nextMove.name}</span>`);
+                                }
                                 break;
                             case "allyshield":
                                 amount =
@@ -1159,6 +1176,7 @@ class Enemy extends CombatEntity {
                 break;
         }
         if (repeat) {
+            this.repeatDict[this.nextMoveKey] += 1;
             if (target.health <= 0 || target == null) {
                 return true;
             } else {
@@ -1166,9 +1184,21 @@ class Enemy extends CombatEntity {
             }
 
         } else {
+            this.repeatDict[this.nextMoveKey] = 0;
             this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
             return true;
         }
+        // if (repeat) {
+        //     if (target.health <= 0 || target == null) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+
+        // } else {
+        //     this.abilityCooldowns[this.nextMoveKey] = this.nextMove.cooldownTime * this.cooldownReduction;
+        //     return true;
+        // }
     }
     think() {
         if (this.target == null) {
@@ -1204,16 +1234,18 @@ class Enemy extends CombatEntity {
             if (ability.type == 2) {
                 if (ability.hasOwnProperty("effects")) {
                     let amount;
-                    if (ability.effects.hasOwnProperty('heal')) {
-                        amount = ability.baseDamage / 100 * this.maxHealth;
-                        if (this.maxHealth - this.health > amount) {
-                            weights[index] = 100;
+                    if (ability.hasOwnProperty("effects")) {
+                        if (ability.effects.hasOwnProperty('heal')) {
+                            let amount = this.maxHealth * ability.effects.heal + formulas.healPower(ability.damageRatios, this.combatState);
+                            if (this.maxHealth - this.health > amount) {
+                                weights[index] = 100;
+                            }
                         }
-                    }
-                    if (ability.effects.hasOwnProperty('shield')) {
-                        amount = ability.baseDamage / 100 * this.maxHealth;
-                        if (this.shield <= 0.2 * amount) {
-                            weights[index] = 100;
+                        if (ability.effects.hasOwnProperty('shield')) {
+                            let amount = ability.baseDamage + formulas.healPower(ability.damageRatios, this.combatState);
+                            if (this.shield <= 0.2 * amount) {
+                                weights[index] = 100;
+                            }
                         }
                     }
                     if (ability.effects.hasOwnProperty('allyshield')) {
@@ -1229,6 +1261,7 @@ class Enemy extends CombatEntity {
                 }
             }
         }
+        //console.log(weights);
         const max = Math.max(...weights);
         const indexes = [];
         let moveKey;

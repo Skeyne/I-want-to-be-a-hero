@@ -180,16 +180,16 @@
                         <div class="subHeader pickle">Base attributes from training</div>
                         <div id="statsGrid" style="display: grid;">
                             <div id="strengthStatText" class="statDisplay pickle">
-                                Strength: <span class="strengthText" id="strengthSoftcapText">0</span>
+                                STR: <span class="strengthText" id="strengthSoftcapText">0</span>
                             </div>
                             <div id="toughhnessStatText" class="statDisplay pickle">
-                                Toughness: <span class="toughnessText" id="toughnessSoftcapText">0</span>
+                                TGH: <span class="toughnessText" id="toughnessSoftcapText">0</span>
                             </div>
                             <div id="mindStatText" class="statDisplay pickle">
-                                Mind: <span class="mindText" id="mindSoftcapText">0</span>
+                                MND: <span class="mindText" id="mindSoftcapText">0</span>
                             </div>
                             <div id="agilityStatText" class="statDisplay pickle">
-                                Agility: <span class="agilityText" id="agilitySoftcapText">0</span>
+                                AGI: <span class="agilityText" id="agilitySoftcapText">0</span>
                             </div>
                         </div>
                         <div id="trainingAreaName" class="statDisplay pickle"
@@ -199,7 +199,7 @@
                                 value="100" max="1000"></progress>
                         </div>
                         <div id="activityGrid" class="blockPanel" style="display:grid;grid-template-columns: 49.5% 49.5%;grid-auto-rows: min-content;
-                        height: 50%;gap:1%;overflow-y: scroll;overflow-x:hidden;">
+                        height: 75%;gap:1%;overflow-y: scroll;overflow-x:hidden;">
 
                         </div>
 
@@ -294,8 +294,10 @@
                                     Your class prestige bonus will become:<br>
                                     <div class="blockPanel">
                                         Attribute Gain: <span class="cpReward1">0</span><br>
-                                        Bonus Passive Points: <span class="cpReward2">0</span><br>
-                                        Activity EXP: <span class="cpReward3">0</span><br>
+                                        Manual Training: <span class="cpReward2">0</span><br>
+                                        Bonus Passive Points: <span class="cpReward3">0</span><br>
+                                        Activity EXP: <span class="cpReward4">0</span><br>
+                                        EXP Gain: <span class="cpReward4">0</span><br>
                                     </div>
                                     <br>
                                     You will take some time away from fighting crime to dig deeper into what your powers can do.
@@ -450,6 +452,13 @@
                             <button class="bannerButton" onclick="changeClass('mutant',true)"> Mutant</button>
                             <button class="bannerButton" onclick="changeClass('esper',true)"> Esper</button>
                             <button class="bannerButton" onclick="changeClass('ninja',true)"> Ninja</button>
+                            <button class="bannerButton" onclick="playerSetLevel(playerStats.level+10)">Add 10 levels</button>
+                            <button class="bannerButton" onclick="addPlayerReputation(1e6)">Add rep</button>
+                            <button class="bannerButton" onclick="playerStats.reputation = 0;addPlayerReputation(0)">Reset rep</button>
+                            <button class="bannerButton" onclick="
+                            classPrestigeBonus[0].attributeGain = 100;classPrestigeBonus[1].attributeGain = 100;
+                            classPrestigeBonus[0].activityExp = 100;classPrestigeBonus[1].activityExp = 100;">
+                            Set training to 100x</button>
                         </div> -->
                         <div class="subHeader">Credits</div>
                         <div id="credits">

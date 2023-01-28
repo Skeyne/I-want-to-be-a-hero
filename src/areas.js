@@ -4,14 +4,14 @@ const areaPowerLookup = {
     'chapter3': (areaLevel) => { return Math.round(15 * Math.pow(Math.pow(10, 0.1), areaLevel)) },
 }
 const areaExpLookup = {
-    'chapter1': (areaLevel) => { return 0.3 * Math.pow(Math.pow(5, 0.1), areaLevel) },
-    'chapter2': (areaLevel) => { return 0.15 * Math.pow(Math.pow(5, 0.1), areaLevel) },
-    'chapter3': (areaLevel) => { return 0.15 * Math.pow(Math.pow(5, 0.1), areaLevel) },
+    'chapter1': (areaLevel) => { return 0.4 * Math.pow(Math.pow(5, 0.1), areaLevel) },
+    'chapter2': (areaLevel) => { return 0.2 * Math.pow(Math.pow(5, 0.1), areaLevel) },
+    'chapter3': (areaLevel) => { return 0.2 * Math.pow(Math.pow(5, 0.1), areaLevel) },
 }
 const areaMoneyLookup = {
     'chapter1': (areaLevel) => { return 0.05 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
-    'chapter2': (areaLevel) => { return 0.025 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
-    'chapter3': (areaLevel) => { return 0.025 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
+    'chapter2': (areaLevel) => { return 0.04 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
+    'chapter3': (areaLevel) => { return 0.04 * Math.pow(Math.pow(1.1, 0.1), areaLevel) },
 }
 
 class Area {
@@ -222,13 +222,107 @@ const areas = [
     }),
     new Area({
         id: 'industrial6', name: "Riverside", background: "bridgeAreaBackground-1.png", areaLevel: 20,
-        storyUnlock: 22, patrolTime: 7000, completionsReq: 1, scaling: 'chapter2',
-        encounters: [{ weight: 100, enemies: { "crabman": { 1: 1 } } }]
+        patrolTime: 7000, completionsReq: 1, scaling: 'chapter2',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
     }),
     new Area({
-        id: 'misc1', name: "The Depths", background: "voidBackground.png", areaLevel: 30,
-        storyUnlock: 23, patrolTime: 10000, completionsReq: 1, scaling: 'chapter3',
-        encounters: [{ weight: 100, enemies: { "ultracrabman": { 1: 1 } } }]
+        id: 'city1', name: "Coastline Boulevard", background: "city2.png", areaLevel: 21,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city2', name: "Union Street", background: "city.png", areaLevel: 22,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city3', name: "Clearance Avenue", background: "city.png", areaLevel: 23,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city4', name: "Fountain Row", background: "city.png", areaLevel: 24,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city5', name: "Diamond Lane", background: "city.png", areaLevel: 25,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city6', name: "Acorn Boulevard", background: "city.png", areaLevel: 26,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city7', name: "Bridgeway Lane", background: "city.png", areaLevel: 27,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city8', name: "Crescent Row", background: "city.png", areaLevel: 28,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city9', name: "Nova Lane", background: "city.png", areaLevel: 29,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
+    }),
+    new Area({
+        id: 'city10', name: "Victory Street", background: "city.png", areaLevel: 30,
+        patrolTime: 7000, completionsReq: 10, scaling: 'chapter3',
+        encounters: [{ weight: 100, enemies: { "rogueSuperhuman": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueMutant": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueEsper": { 1: 1 } } },
+        { weight: 100, enemies: { "rogueNinja": { 1: 1 } } },
+        ]
     }),];
+    // new Area({
+    //     id: 'misc1', name: "The Depths", background: "voidBackground.png", areaLevel: 30,
+    //     storyUnlock: 23, patrolTime: 10000, completionsReq: 1, scaling: 'chapter3',
+    //     encounters: [{ weight: 100, enemies: { "ultracrabman": { 1: 1 } } }]
+    // }),];
 
 

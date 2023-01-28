@@ -28,7 +28,7 @@ var summons = {
         duration: 5000,
     },
     'allyMitosis': {
-        id: "allyWolf", name: "Mitosis Clone",
+        id: "allyMitosis", name: "Mitosis Clone",
         attributes: [1,1,1,1],
         combatProperties: new CombatProperties(),
         spriteFile: "mutantSprite1.png",
@@ -38,7 +38,7 @@ var summons = {
         duration: 30000,
     },
     'allyFrog': {
-        id: "allyWolf", name: "Great Frog",
+        id: "allyFrog", name: "Great Frog",
         attributes: [1,1,1,1],
         combatProperties: new CombatProperties(),
         spriteFile: "giantFrog.png",
@@ -46,5 +46,15 @@ var summons = {
         modifiers:{},
         engagementRange: 30,
         duration: 15000,
+    },
+    'allySpectre': {
+        id: "allySpectre", name: "Spectre",
+        attributes: [1,1,1,1],
+        combatProperties: new CombatProperties(),
+        spriteFile: "placeholder.png",
+        moves: ['haunting','spiritBurst','walk'],
+        modifiers:{},
+        engagementRange: 10,
+        duration: 30000,
     }
 }

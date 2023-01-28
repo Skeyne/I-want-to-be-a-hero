@@ -34,6 +34,7 @@ function updatePowerText() {
         (Math.sqrt(getEffectiveValue("strength") + 1) - 1), (Math.sqrt(getEffectiveValue("toughness") + 1) - 1),
         (Math.sqrt(getEffectiveValue("mind") + 1) - 1), (Math.sqrt(getEffectiveValue("agility") + 1) - 1)]), 2);
 }
+//INIT STUFF
 updatePowerText();
 setInterval(updatePowerText, 15000);
 let activeTab = 0;
@@ -47,10 +48,15 @@ for (let index = 0; index < tabNames.length; index++) {
     sidebar.append(b);
 }
 changeTab(0);
-if (playerStats.storyProgress >= 19) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
-if (playerStats.storyProgress >= 19) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+if (playerStats.storyProgress >= 14) { document.getElementById("prestigeBox").style.visibility = 'visible' } else { document.getElementById("prestigeBox").style.visibility = 'hidden' }
+if (playerStats.storyProgress >= 14 ) { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[6]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
 if (playerStats.storyProgress >= 8) { document.getElementById("fameBox").style.visibility = 'visible' } else { document.getElementById("fameBox").style.visibility = 'hidden' }
 if (playerStats.storyProgress >= 8) { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButton pickle"); } else { document.getElementById(`${tabNames[5]}TabButton`).setAttribute("class", "sidebarButtonLocked pickle"); }
+
+sanityCheckStory();
+updateStoryQuest();
+updateDiaryEntries();
+checkAreaUnlocks();
 checkTabUnlocks();
 var windowInFocus = true;
 function checkTabFocused() {
