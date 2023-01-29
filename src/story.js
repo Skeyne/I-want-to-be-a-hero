@@ -232,7 +232,8 @@ function sanityCheckStory() {
     while (!done) {
         let quest = getStoryQuest(playerStats.storyProgress);
         //console.log(quest);
-        if (quest.requirementType != 'area') { done = true; break; }
+        //console.log(quest);
+        if (quest.requirementType != 'area') { done = true; playerStats.currentStoryQuestProgress = Array(getStoryQuest(playerStats.storyProgress).requirementTarget.length).fill(0);return; }
         for (let index = 0; index < quest.requirementTarget.length; index++) {
             if (playerStats.areaCompletions[quest.requirementTarget[index]] >= quest.requirementAmount[index]) {
                 playerStats.currentStoryQuestProgress[index] += 1;
