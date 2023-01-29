@@ -57,6 +57,7 @@ class Area {
             playerStats.areaCompletions[this.id] = 1;
         }
         if (playerStats.areaCompletions[this.id] == this.completionsReq) {
+            checkAreaQuest();
             checkAreaUnlocks();
             checkTabUnlocks();
             flashTabButton(tabNames.indexOf('areas'));
